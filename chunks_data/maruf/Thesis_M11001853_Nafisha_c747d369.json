@@ -1,0 +1,1250 @@
+{
+  "document": {
+    "id": "Thesis_M11001853_Nafisha_c747d369",
+    "source_file": "C:\\academic-pdf-chunker\\data\\raw\\Thesis_M11001853_Nafisha.pdf",
+    "source_type": "pdf",
+    "chunk_count": 123
+  },
+  "chunks": [
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0000",
+      "index": 0,
+      "page": 1,
+      "section": null,
+      "content_role": "abstract",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "國立臺灣科技大學 工 業 管 理 系 碩士 學位論文 學號： M11001853 智動化揀貨系統倉庫中不同產品組合下存 貨單位之貨架指派策略 Product Mixture of SKU to Pod Assignment Policy in Robotic Mobile Fulfillment System Warehouse 研 究 生：Nafisha Herma Hanifha 指導教授： Shuo -Yan Chou 中華民國 112 年 01 月 *M11001853* *M11001853* 碩士學位論文指導教授推薦書 M11001853 Master's Thesis Recommendation Form 系所： 工業管理系 Department/Graduate Institute Department of Industrial Management 姓名： Nafisha Herma Hanifha Name Nafisha Herma Hanifha 論文題目： (Thesis Title) 智動化揀貨系統倉庫中不同產品組合下存貨單位之貨架指派策略 Product Mixture of SKU to Pod Assignment Policy in Robotic Mobile Fulfillment System Warehouse 係由本人指導撰述，同意提付審查。 This is to certify that the thesis submitted by the student named above, has been written under my supervision. I hereby approve this thesis to be applied for examination. 指導教授簽章： Advisor's Signature . 共同指導教授簽章（如有）： Co-advisor’s Signature (if any) . 日期： Date(yyyy/mm/dd) . / / iii ABSTRACT With the vast positive trend of e -commerce sales, the efficiency of warehouse operations needs to keep pace."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0001",
+      "index": 1,
+      "page": 4,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Therefore, a part -to-picker warehouse named Robotic Mobile Fulfillment System Warehouse (RMFS) was explicitly designed e -commerce warehouse. This warehouse system can reduce the number of human operators and use robots, or in RMFS , called Automated Guided Vehicle s ( AGV), to carry the pods. There are several ways to increase the efficiency of the warehouse."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0002",
+      "index": 2,
+      "page": 4,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This research will focus on the decision problem, SKU to the Pod, or product assignment policy. This research has three scenarios: SKU to Pod using Random—baseline, Mixed Class, and Mixed Class Affinity policy. ABC classification and association rule using Weighted Support Count is applied to desig n the second and third scenarios. Then, using a simulation approach, those three scenarios are compared to find the best policy to increase warehouse efficiency."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0003",
+      "index": 3,
+      "page": 4,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "It is indicated by looking at each policy's number of pods transported. The smaller the number of pods, the higher pile -on the SKU to pod policy achieves. As a result, the last scenario yields the best pile -on with an average number of pods transported of 6.59 pods per order ."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0004",
+      "index": 4,
+      "page": 4,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Meanwhile, the first and second scenarios' results are 7.06 and 6.90, respectively. From that numbers, it can be concluded that the pile-on of the last scenario is 7% and 5% higher than the other two scenarios, even though only 8% of SKUs form the association's rule . This result is verified by using one-way ANOVA. Keywords: RMFS, SKU to Pod Assignment Policy, Pile -On, ABC Classification, Association Rule iv ACKNOWLEDGMENT Praise the presence of Allah SWT for all His Grace and Guidance to let the author complete this thesis."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0005",
+      "index": 5,
+      "page": 5,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Furthermore, I would like to express much gratitude to Professor Shuo-Yan Chou and Professor Iwan Vanany as my advisors, who have been willing to provide guidance, support, and motivation for the author to finish this research. Next, the author also wants to thank Kak Edwin, Pak Indie, and Bu Fera, who always helped and guided me to finish this thesis."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0006",
+      "index": 6,
+      "page": 5,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Furthermore, thanks to my lab mates, especially Dinna as my topic partner, who accompanied me to finish my thesis, and Rasyid helped me with my simulation code. Lastly, thank my double -degree-student mates, Dean and Satrio, who supported me in finishing this thesis."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0007",
+      "index": 7,
+      "page": 5,
+      "section": null,
+      "content_role": "abstract",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "I present this thesis to Ayah Ibu, who always supports me endlessly. I am very grateful for all the prayers and hopes so I can finish this thesis. Also, for my siblings, my nephew and nieces, Rifat, Jingga, Violet, and Fuschia, whom I always miss while I am away. Aldyan, Dinda, Alia, and Tara always accompanied me through ups and downs, laughter and tears all this time. Even though we are almost 4000 km away, you guys are the ones who keep me okay in completing this thesis. Thank you. Nafisha Herma Hanifha Taipei, January 2023 v TABLE OF CONTENTS Recommendation Form ........................................................................................................... i Qualification Form .................................................................................................................. ii ABSTRACT .............................................................................................................................iii ACKNOWLEDGMENT ........................................................................................................ iv TABLE OF CONTENTS ....................................................................................................... v LIST OF FIGURES ............................................................................................................... vii LIST OF TABLES ................................................................................................................ viii CHAPTER 1 INTRODUCTION ..........................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0008",
+      "index": 8,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1 1.1 Background and Motivation .................................................................................. 1 1.2 Objective .................................................................................................................. 3 1.3 Scope and Limitation .............................................................................................. 4 1.4 Organization of Thesis ............................................................................................ 4 CHAPTER 2 LITERATURE REVIEW ............................................................................... 6 2.1 Robotic Mobile Fulfillment System (RMFS) .............................................................. 6 2.2 SKU to Pod Assignment ..............................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0009",
+      "index": 9,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "7 2.3 ABC Classification ........................................................................................................ 8 2.4 Association Rule ............................................................................................................ 9 CHAPTER 3 METHODOLOGY ........................................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0010",
+      "index": 10,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "10 3.1 Data Gathering ............................................................................................................ 10 3.2 Inventory Analysis ...................................................................................................... 12 3.2.1 SKU Classification ............................................................................................... 12 3.2.2 Number of Slots Calculation ..............................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0011",
+      "index": 11,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "13 3.3 SKU-to-Pod Assignment Scenarios .......................................................................... 13 3.3.1 Random Assignment Scenario ............................................................................ 13 3.3.2 Mixed-Class Assignment Scenario ..................................................................... 14 3.3.3 Mixed-Class-Affinity Assignment Scenario ......................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0012",
+      "index": 12,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "14 vi 3.4 Simulation .................................................................................................................... 16 3.4.1 Simulation Layout ................................................................................................ 16 3.4.2 Simulation Parameter .......................................................................................... 17 3.4.3 Simulation Flowchart .........................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0013",
+      "index": 13,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "19 3.5 Statistical Test ............................................................................................................. 23 3.5.1 Replication Adequacy Test ...................................................................................... 23 CHAPTER 4 RESULT AND DISCUSSION ....................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0014",
+      "index": 14,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "25 4.1 Data Gathering ............................................................................................................ 25 4.2 Inventory Analysis ......................................................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0015",
+      "index": 15,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "26 4.3 SKU to Pod Assignment Scenarios ............................................................................ 28 4.3.1 Random Assignment Scenario ................................................................................ 29 4.3.2 Mixed-Class Assignment Scenario ......................................................................... 29 4.3.3 Mixed-Class Affinity Assignment Scenario ..........................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0016",
+      "index": 16,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "31 4.4 Simulation .................................................................................................................... 31 4.4.1 Random Assignment Scenario Simulation Result ............................................. 32 4.4.2 Mixed Class Assignment Scenario Simulation Result ...................................... 32 4.4.3 Mixed Class Affinity Assignment Scenario Simulation Result ........................ 33 4.4.4 Simulation Result Analysis .................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0017",
+      "index": 17,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "33 4.5 Statistical Test ............................................................................................................. 35 4.5.1 Replication Adequacy Test ...................................................................................... 35 4.5.2 ANOVA ....................................................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0018",
+      "index": 18,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "35 CHAPTER 5 CONCLUSION ............................................................................................. 37 5.1 Conclusion ..................................................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0019",
+      "index": 19,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "37 5.2 Recommendation and Future Research .................................................................... 37 REFERENCES ...................................................................................................................... 39 vii LIST OF FIGURES Figure 1.1 E-commerce Sales Worldwide .................................................................... 1 Figure 2.1 RMFS Warehouse Layout (Kim et al., 2020) .............................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0020",
+      "index": 20,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "7 Figure 3.1 Research Flowchart ................................................................................... 10 Figure 3.2 Pareto Chart of ABC Classification ........................................................... 12 Figure 3.3 Mixed Class Affinity Scenario Flowchart ................................................. 15 Figure 3.4 Warehouse Layout ....................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0021",
+      "index": 21,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "17 Figure 3.5 Flowchart of Simulation Initialization ....................................................... 21 Figure 3.6 Flowchart of Simulation Run .................................................................... 22 Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0022",
+      "index": 22,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1 Real Data Distribution Test ...................................................................... 25 Figure 4.2 Generated Data Distribution Test .............................................................. 26 Figure 4.3 Random Assignment Scenario Result ....................................................... 32 Figure 4.4 Mixed Class Assignment Scenario Result ................................................. 32 Figure 4.5 Mixed Class Affinity Scenario Simulation Result..................................... 33 Figure 4.6 One-Way ANOVA Result ........................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0023",
+      "index": 23,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "36 viii LIST OF TABLES Table 2.1 SKU to Pod Assignment Literature .............................................................. 7 Table 2.2 ABC Classification Literature ......................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0024",
+      "index": 24,
+      "page": 9,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "8 Table 3.1 Data Order Input ......................................................................................... 11 Table 3.2 Simulation Parameter .................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0025",
+      "index": 25,
+      "page": 9,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "18 Table 4.1 ABC Classification ..................................................................................... 27 Table 4.2 Number of Slots Calculation ....................................................................... 27 Table 4.3 SKU to Pod Dataset ...................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0026",
+      "index": 26,
+      "page": 9,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "28 Table 4.4 Product Mixture .......................................................................................... 30 Table 4.5 Slot Percentage ............................................................................................ 31 Table 4.6 Number of Slots of Each Class on Each Product Mixture Pod ................... 31 Table 4.7 Simulation Result Summary ....................................................................... 34 ix LIST OF APPENDIXES Appendix 1 Positive Z Table ...................................................................................... 42 Appendix 2 Students T Distribution Table ................................................................. 43 1 CHAPTER 1 INTRODUCTION 1.1 Background and Motivation Coronavirus has impacted the entire e -commerce world , changing the nature of business."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0027",
+      "index": 27,
+      "page": 11,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "According to research, 52% of consumers avoid shopping in person and also avoid crowded areas. Furthermore, 36% avoid shopping in person until they get a coronavirus vaccine (Bhatti et al., 2020)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0028",
+      "index": 28,
+      "page": 11,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Therefore, online shopping is one of the most popular online activities worldwide. In 2020, retail e-commerce sales worldwide reached US$4.28 trillion, and e-retail revenue is projected to grow to US$6 .4 trillion by 2024, as depicted in Figure 1.1 (Chevalier, 2021)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0029",
+      "index": 29,
+      "page": 11,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Figure 1.1 E-commerce Sales Worldwide With the growth of e-commerce sales, the efficiency of warehouse operations also needs to keep pace. The Robotic Mobile Fulfillment System (RMFS) warehouse was designed specifically for e-commerce. This warehouse system can reduce the number of human operators and use robots or RMFS, usually called AGV (Automated Guided Vehicles), to carry the shelves, called pods, to the picking stations instead (Merschformann et al., 2019)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0030",
+      "index": 30,
+      "page": 11,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "This type of warehouse can also be categorized as a partto-picker warehouse because the parts, or p roducts, are moved to the picking stations then the operator collects the products (Murray, 2019). In the entire warehouse, order 0 1000 2000 3000 4000 5000 6000 7000 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 Billion US Dollar Year E-commerceSales Worldwide 2 picking activity is usually the most time -consuming compared t o others (Frazelle, 2016)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0031",
+      "index": 31,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Therefore, increasing the efficiency of order picking also increases warehouse efficiency. There are several ways to increase the efficiency of the warehouse. It is divided into three levels of decision problems. These are the strategic, tactical, and operational levels (Merschformann et al., 2019) ."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0032",
+      "index": 32,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Product assigning is a strategic decision that affects order-picking efficiency (Li et al., 2020) . Therefore, des igning a good policy for product assignment is vital to achieving order-picking efficiency(Silva et al., 2022). Product assigning itself has three decision problems. Those are products (SKU) to pod, pods to zones, and product dispersion over multiple pods (Mirzaei et al., 2022) ."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0033",
+      "index": 33,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This research will focus on the first decision problem, products to pod or product assignment policy. There are three popular product assignment policies which are random, dedicated, and class-based storage assignment policies (Gu et al., 2007)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0034",
+      "index": 34,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The random assignment policy is clear and straightforward; the SKU randomly assigns the Pod (Mirzaei et al., 2022). On the other hand, a dedicated assignment policy is when each storage location is only used for one particular product. This policy will obtain optimal picking travel distance (Muppani & Adil, 2008) . Chan and Chan (2011) had a simulation between random and dedicated assignment policies. The result showed that these policies help to maximize the utilization of storage space and the system throughput , respectively."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0035",
+      "index": 35,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Using a random instead of dedicated policy might require a smaller warehouse but more effort to track inventor y accuratel y (Gu et al., 2007) . Class -based storage assignment policy assigns the products after it grouped into classes based on the order frequency (Silva et al., 2022) ."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0036",
+      "index": 36,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This policy with two or three classes can achieve the most advantages (Yuan et al., 2018) . The two advantages are significant cost savings and space sharing (Mirzaei et al., 2021; Muppani & Adil, 2008)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0037",
+      "index": 37,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Other than those three popular policies, there is another policy for product assignment called the cluster-based storage assignment policy. This policy clusters correlated items and then assign s the products into the Pod based on the cluster to minimize the inventory and material handling cost (Kim, 1993). RMFS warehouses 3 can get advantages from clustering the frequent order together products on the same Pod (Mirzaei et al., 2021). Applying this policy saves order-picking efforts and reduces retrieval time significantly (Frazelle & Sharp, 1989; Mirzaei et al., 2021). Almost all cluster -based policy researches prove that storage assignment using cluster-based policy is better than other policies based on their objectives."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0038",
+      "index": 38,
+      "page": 13,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, none of them are trying to find the best product mixture that could be applied in any other similar cases. The product mixture is the optimal combination of the product classes on pods that minimize the number of pods transported."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0039",
+      "index": 39,
+      "page": 13,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The fewer pods that need to be transported, which may dec rease the number of AGVs needed, the higher pile-on is (Merschformann et al., 2019) . Pile -on is when the pods offer most units necessary to fulfill the orders(Merschformann et al., 2019)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0040",
+      "index": 40,
+      "page": 13,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "An appropriate product classification also increases order-picking efficiency (Chan & Chan, 2011) . Generally, ABC classification is the most common ly used in warehouse product classification based on order frequency."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0041",
+      "index": 41,
+      "page": 13,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, this classification usually solves the second de cision problem of product assignment: Pod to zones. Besides, they all use the one-class-one-pod rule, and none try to find the best product class mixture (Products to Pod) for each Pod. Therefore, this research aims to maximize pile-on by finding the best product mixture. 1.2 Objective Based on the background previously described, the objectives of this research can be described as follows: 1. To determine the optimal product mixture percentage within the warehouse by analyzing the various factors influencing warehouse space utilization. 2. To establish the best policy for the SKU to pod decision problem by employing a simulation-based approach. This objective aims to determine the most suitable and effective strategy for allocating products to specific storage po ds, considering various constraints such as demand patterns, inventory levels, and available space. Furthermore, the simulation approach will enable us to analyze the performance of different strategies and determine the one that offers the best results. 4 1.3 Scope and Limitation The following limitations of the research must be acknowledged: 3."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0042",
+      "index": 42,
+      "page": 14,
+      "section": "3. The AGVs utilized in the research are capable of picking and replenishing",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The AGVs utilized in the research are capable of picking and replenishing activities. However, this does not consider the possibility of specialization of AGVs for specific tasks, which may result in improved efficiency and productivity. 4. The assumption in this research is that the pods will be directly replenished as soon as they become empty, thus ensuring that sufficient quantities of products are always available to fulfill customer orders. 5. The dimensions of the SKUs are assumed to be uniform in this research. However, this may result in a simplified model that may not accurately reflect the diversity and complexity of real-world scenarios, where the dimensions and shapes of products may vary significantly. 6."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0043",
+      "index": 43,
+      "page": 14,
+      "section": "6. The scope of this research is limited to the replenishment aspect of warehouse",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The scope of this research is limited to the replenishment aspect of warehouse operations and does not consider the order-picking process. This means that the overall efficiency and productivity of the warehouse are not considered in this study. It is important to acknowledge these limitations to understand the research findings' limitations and the extent to which they can be applied in real -world scenarios. Nevertheless, the results of this research still provide v aluable insights into the optimization of warehouse operations and may inform future studies in this area."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0044",
+      "index": 44,
+      "page": 14,
+      "section": "6. The scope of this research is limited to the replenishment aspect of warehouse",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1.4 Organization of Thesis The present study is structured into five distinct chapters, each addressing a specific aspect of the research. The organization of the study is as follows: 1."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0045",
+      "index": 45,
+      "page": 14,
+      "section": "1. Chapter 1: Background and Motivation. This chapter provides the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Chapter 1: Background and Motivation. This chapter provides the study's context, including the research's background and motivation. I n addition, i t outlines the research objectives and provides a clear overview of the structure of the study. 5 2."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0046",
+      "index": 46,
+      "page": 15,
+      "section": "2. Chapter 2: Literature Review. This chapter presents a comprehensive review of",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Chapter 2: Literature Review. This chapter presents a comprehensive review of the existing literature related to the research topic. The literature review provides a comprehensive overview of the state -of-the-art in the field, highlighting the key findings and contributions of previous studies. 3."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0047",
+      "index": 47,
+      "page": 15,
+      "section": "3. Chapter 3: Research Methodology. In this chapter, the research methodology",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Chapter 3: Research Methodology. In this chapter, the research methodology used in the study is described in detail. This includes a discussion of t he research design, data collection methods, and the methods used to analyze the data. In addition, t he chapter provides a clear and concise explanation of the steps taken to carry out the research and the procedures used to ensure the validity and reliability of the findings. 4. Chapter 4: Data Processing and Results."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0048",
+      "index": 48,
+      "page": 15,
+      "section": "4. Chapter 4: Data Processing and Results. This chapter analyzes the data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This chapter analyzes the data collected and presents the results of the study. In addition, the chapter provides a discussion of the result findings and statistical analyses. 5."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0049",
+      "index": 49,
+      "page": 15,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Chapter 5: Conclusion and Future Work. This chapter summarizes the study's key findings and the implications of the research for future work. The chapter also includes suggestions for future research."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0050",
+      "index": 50,
+      "page": 16,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "6 CHAPTER 2 LITERATURE REVIEW 2.1 Robotic Mobile Fulfillment System (RMFS) As e -commerce has become more prevalent, researchers seek more efficient methods of managing warehouses and improving picking operations to reduce costs and inefficiencies (Galliussi, 2022) . A robotic mobile fulfillment system (RMFS) warehouse is a solution for e -commerce sales growth because it fits many SKUs and demands multiple small-quantity orders (Azadeh et al., 2019)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0051",
+      "index": 51,
+      "page": 16,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In addition, this type of warehouse is introduced as a solution for automated storage/retrieval system (AS/RS) warehouse problems which are th e rigidity of changing inventory locations, the high cost of setup, and manual re-slotting (Enright & Wurman, 2011; Wurman et al., 2008). The solution offered by RMFS is robots that carry pods on the conventional warehouse called shelves, with items on the pods (Enright & Wurman, 2011) . The robots carry one Pod for each robot from storage locations to replenishment or picking stations for later the pods being filled or picked by the workers (Kim et al., 2020)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0052",
+      "index": 52,
+      "page": 16,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Each picking station receives a customer order when it arrives. Then pods containing items in the order are transported to the station by robots. The operators remain at their stations because all items are carried by robots (Enright & Wurman, 2011). The RMFS layout is commonly arranged with storage zones of inventory pods, replenishment stations, and picking stations. The illustration can be seen in Figure 2.1."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0053",
+      "index": 53,
+      "page": 16,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "There are several benefits of the RMFS warehouse. In 2016, it was found t hat RMFS's throughput is higher than AS/RS depending on the number of AGVs and SKUs (Beuters et al., 2016) . The throughput increases when the inventory is dispersed into multiple pods, the warehouse has an optimal number of stations, and the pods are replenished before empty Tessensohn et al. (2020). The other benefit is that the system can quickly adapt to new replenishment policies, and even if a robot breaks down, it will not affect productivity significantly (Enright & Wurman, 2011)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0054",
+      "index": 54,
+      "page": 17,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "7 Figure 2.1 RMFS Warehouse Layout (Kim et al., 2020) 2.2 SKU to Pod Assignment Random, dedicated, and class-based storage assignment policies are three popular SKU-to-pod assignment policies. Besides these three popular policies, there is another policy for product assignment called cluster -based storage assignment."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0055",
+      "index": 55,
+      "page": 17,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Using this policy, warehouse operation efficiency can be improved in several objectives, as seen in Table 2.1. Table 2.1 SKU to Pod Assignment Literature Year Authors Objective: Minimizing Warehouse Number of Racks Number of Picker SKU 2012 Chuang et al., Travel distance One-block one-aisle 25 8 2014 Bindi et al., Travel distance Conventional 72 2500 2016 Kress et al., Number of groups accessed Vertical Carousel 24 1 24 2019 Wang et al., Travel distance Conventional 4000 4000 2020 Li et al., Travel distance & Energy consumption RMFS 720 10 2020 Foroughi et al., Travel distance Mobile racks 100 5 8 Year Authors Objective: Minimizing Warehouse Number of Racks Number of Picker SKU 2021 Mirzaei et al., Retrieval time ASRS & RMFS 60 1 300 Li et al. (2020) aimed to not only minimize travel distance in the RMFS warehouse but also to minimize energy consumption by calculating the robot's energy consumption. Additionally, Mirzaei et al. (2021) investigated cluster-based implementation in RMFS and ASRS warehouses. The research demonstrates that this policy significantly reduces time in order-picking activities compared to other policies."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0056",
+      "index": 56,
+      "page": 18,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "2.3 ABC Classification Appropriate product classification is also necessary to in crease order -picking efficiency. For example, in warehouses, ABC classification is most commonly used for racks or pod allocation with different objectives, as seen in Table 2.2. Table 2.2 ABC Classification Literature Year Authors Objective Warehouse 2008 Muppani & Adil Minimize travel distance Classes rack allocation Conventional 2011 Chan & Chan Minimize travel time Vertical and horizontal ABC rack allocation Conventional 2018 Yuan et al., Minimize travel distance ABC pods assignment RMFS 2019 Ang & Lim Minimize travel cost ABC rack allocation Unit-load 2022 Silva et al., Improve orderpicking efficiency ABC zone sizing Conventional Muppani and Adil (2008) and Yuan et al. (2018) researched conventional and RMFS warehouses to minimize travel distance for class racks allocation in a conventional warehouse and ABC pods assignment in an RMFS warehouse, respectively. Furthermore, Chan and Chan (2011) and Ang and Lim (2019) also studied rack allocation. The difference is that their objective is minimizing travel time in 9 conventional warehouses and minimiz e travel costs in unit -load warehouses. Finally, the latest research by Silva et al. (2022) could improve order-picking efficiency in the conventional warehouse by doing ABC zone sizing. 2.4 Association Rule The study conducted by Yang (2022) evaluated two association rule mining methods: the Jaccard Index and the Weighted Support Count (WSC)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0057",
+      "index": 57,
+      "page": 19,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The Jaccard Index, developed by Swis s mathematician Paul Jaccard, is a well -known measure of similarity between sets that considers their similarities and differences. This method has been widely used in various fields, including information retrieval and data mining, to quantify the similar ity between different sets of items. The study also employs the Jaccard Index to measure the association between goods in a storage assignment study. On the other hand, the Weighted Support Count (WSC), which represents the relationship between any pair of goods, incorporates the concepts of support and lift developed by Ming-Huang Chiang et al. (2014) . The study results show that the Weighted Support Count outperforms the Jaccard Index in terms o f accuracy and effectiveness, as Yang (2022) demonstrated. This comparative study provides valuable insights into selecting the most appropriate method for a specific data analysis problem and contributes to the ongoing research in association rule mining. 10 CHAPTER 3 METHODOLOGY The steps outlined in this chapter serve as a comprehensive guide for the research process to ensure that it aligns with the stated objectives."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0058",
+      "index": 58,
+      "page": 20,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In addition, a flowchart has been created, as depicted in Figure 3.1 , t o provide a visual representation of the research procedure. The flowchart presents a concise overview of the various stages of conducting the research and is a valuable reference throughout the study."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0059",
+      "index": 59,
+      "page": 20,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Figure 3.1 Research Flowchart 3.1 Data Gathering This study's data collection generated 10,000 order data sets, each containing 5000 unique SKU numbers. This generated data is achieved by analyzing 55,000 historical orders with the same total number of SKUs. The data analysis is performed using Microsoft Excel and the @RISK software add-in. In order to guarantee that the generated data accurately reflects the historical data, it is made to undergo the same statistical distribution analysis. As a result, t he inputs essential to each order data set are thoroughly list ed and explained in Table 3.1. This provides a complete understanding of the data used in this study and its connection to the research goals."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0060",
+      "index": 60,
+      "page": 21,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "11 Table 3.1 Data Order Input Category Column Name Description Data Value Orders / Orders Finish order_id The sequence of the order after the order created in the simulation Float order_dum The sequence of the order, which represent the order_id of database_order Float order_type Differentiate the order type, picking & replenishment [1] picking [2] replenishment item Product/ SKU ID [0,1,2,.......] qty Quantity of SKUs that are being ordered Integer facing The facing of the Pod where the order being assigned [-1]: no order assigned; [0, 1]: order assigned due_date Order due date [-1]: no order assigned; Float: order assigned station The station that chooses based on the order [-1]: no order assigned; [0,1,2,.........]: order assigned pod_id The Pod that gets assigned by the order [-1]: no order assigned; [0,1,2,.........]: order assigned status Order Status -3: the order has not been assigned; -2: the order has not been assigned to Pod but has already been assigned to a station; -1: order assigned but has not been picked by AGV; 0: order assigned and picked by AGV; 1: order finished finish_time The time when the order is already being fulfilled [-1]: no order assigned; [0,1,2,.........]: order assigned 12 3.2 Inventory Analysis Following the generation of new data orders, the subsequent step in the research process is the comprehensive analysis of inventory. This stage comprises two essential sub-processes, namely , SKU classification and the determination of the number of slots."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0061",
+      "index": 61,
+      "page": 22,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "SKU classification is a crucial component of inventory analysis, as it provides a clear unde rstanding of the types of products in stock. In addition, b y categorizing products into distinct groups, the researcher can analyze the stock more effectively and make informed decisions regarding inventory management."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0062",
+      "index": 62,
+      "page": 22,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Determining the number of slots in Po ds is another crucial aspect of inventory analysis. This process involves calculating the number of storage spaces required for each SKU in the Pod system to ensure that the inventory remains organized and efficiently managed."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0063",
+      "index": 63,
+      "page": 22,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.2.1 SKU Classification The SKU classification in this stage is performed by dividing the SKUs into three distinct classes based on their order frequency. The ABC rule is used, which results in 10%, 30%, and 60% of the total SKUs being classified as class A, B, and C, respectively. Therefore, class A SKUs account for 60% of the cumulative order frequency, class B SKUs account for 25%, and class C SKUs account for 15%. The Pareto chart of the ABC classification can be seen in Figure 3.2."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0064",
+      "index": 64,
+      "page": 22,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This classification provides a visual representation of the relative importance of each SKU class and serves as a guide for inventory management decisions. Figure 3.2 Pareto Chart of ABC Classification 13 3.2.2 Number of Slots Calculation After classifying the SKU into three classes, the number of slots needed for each SKU must be determined. SKUs classified into one group will have the same number of slots needed."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0065",
+      "index": 65,
+      "page": 23,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The minimum level inventory formula in Equation (1) is used(Radasanu, 2016) to determine the number of slots. Finding minimum stock aims to monitor inventory and reduce operational costs so that overstock does not occur. 𝑀𝑖𝑛𝑖𝑚𝑢𝑚 𝐿𝑒𝑣𝑒𝑙 𝐼𝑛𝑣𝑒𝑛𝑡𝑜𝑟𝑦 = 𝑥̅𝐷 + (𝜎𝐷√𝐿. 𝑍𝑆𝐿) (1) Notation: 𝑥 ̅_𝐷 = Demand Average 𝜎_𝐷 = Demand Standard Deviation 𝑍_𝑆𝐿= Z score of Service Level 𝐿 = Lead Time 3.3 SKU-to-Pod Assignment Scenarios The SKU-to-Pod assignment in this study process is carried out in three distinct scenarios: random, mixed-class, and mixed-class affinity. The following sub-sections provide a comprehensive explanation of each scenario and its characteristics."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0066",
+      "index": 66,
+      "page": 23,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "3.3.1 Random Assignment Scenario In the random scenario of the SKU-to-Pod assignment process, the SKUs are assigned to Pods randomly, taking into account the data order and inventory analysis conducted in the preceding step. However, it should be noted that this scenario operates within a set of guidelines, specifically that each SKU is dispersed across several Pods. This random scenario acts as a baseline for comparison with the other scenarios, serving as a starting point for further analysis. The results of the random scenario provide a foundation for determining the impact of different approaches to the SKUto-Pod assignment process 14 3.3.2 Mixed-Class Assignment Scenario The mixed-class assignment scenario requires the completion of three key steps. Firstly, the product mixture percentag e must be calculated using the principles of Independent Event probability as described in Equations (2) and (3). As per Shafer (1996), independent events do not depend on one another for their occurrence. Therefore, this calculation determines the appropriate number of Pods for each class combination, as the orders between classes are not interdependent. Thus, the independent event probability is used to establish the probability of each product mixture."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0067",
+      "index": 67,
+      "page": 24,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In the second step, the SKU to Pod ratio must be calculated using Equation (4) to determine the number of slots required for each class assigned to a given Pod. Lastly, the SKUs are assigned based on their respective class. The results of these three steps provide a comprehensive analysis of the mixed - class assignment scenario, allowing for a th orough evaluation of the impact of prioritizing high-frequency SKUs on the efficiency of the Pod system. Furthermore, the findings will inform decisions regarding the assignment of SKUs to Pods and optimize the utilization of the Pod system. 𝑃(𝑋 𝑎𝑛𝑑 𝑌 𝑎𝑛𝑑 𝑍) = 𝑃(𝑋 ∩ 𝑌 ∩ 𝑍) = 𝑃(𝑋)𝑃(𝑌) (2) 𝑃(𝑋 𝑎𝑛𝑑 𝑌 𝑛𝑜𝑡 𝑍) = 𝑃(𝑋 ∩ 𝑌 ∩ 𝑍^′ ) = 𝑃(𝑋 ∩ 𝑌) − 𝑃(𝑋 ∩ 𝑌 ∩ 𝑍) (3) %𝑋𝑋𝑌 = %𝑆𝑙𝑜𝑡𝑋 %𝑆𝑙𝑜𝑡𝑋 + %𝑆𝑙𝑜𝑡𝑌 (4) 3.3.3 Mixed-Class-Affinity Assignment Scenario In the final SKU to pod assignment scenario , the process is an improvement over the previous mixed-class scenario. The first two steps, calculating the product mixture percentage and the SKU in pod ratio, are similar to the mixed -class scenario. The crucial difference lies in assigning SKUs to the Pod, which occurs based on the affinity between the items, as inferred from the order data history."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0068",
+      "index": 68,
+      "page": 24,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Classifying SKUs before the association analysis is imperative, as numerous SKUs in the e -commerce warehouse can make the analysis challenging. By classifying the SKUs, the a ssociation rules analysi s is streamlined, hence the need to complete the 15 classification before the association analysis. The flowchart in Figure 3.3 provides a visual representation of the SKU assignment to the Pod in this scenario."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0069",
+      "index": 69,
+      "page": 25,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The third step of this scenario involves the analysis of association by utilizing a Weighted Support Count. This analysis uses three key metrics: support, confidence, and lift, which can be calculated using Equations (5), (6), and (7), respectively. T he support metric determines the strength of association between items, confidence illustrates the likelihood of certain SKUs being ordered together, and lift indicates the type of relationship between the SKUs."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0070",
+      "index": 70,
+      "page": 25,
+      "section": "5. Chapter 5: Conclusion and Future Work. This chapter summarizes the study's",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Figure 3.3 Mixed Class Affinity Scenario Flowchart 𝑃(𝐴 ∪ 𝐵) = 𝑎/𝑁 (5) 𝑃(𝐵│𝐴) = 𝑃(𝐴 ∪ 𝐵)/𝑃(𝐴) (6) 16 〖𝐿𝑖𝑓𝑡〗_𝐴𝐵 = (𝑃(𝐵│𝐴))/𝑃(𝐵) = 𝑃(𝐴 ∪ 𝐵)/𝑃(𝐴)𝑃(𝐵) (7) Notations and details: P = Probability 𝑎 = frequency of SKU A and B are ordered together Lift > 1, complementary Lift = 1, independent Lift < 1, substitutive After finished the association analysis, the last step is assigning SKUs to the pods based on the first two steps. In this last step, there are several procedures to assign the SKU, those are: 1."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0071",
+      "index": 71,
+      "page": 26,
+      "section": "1. Assign the highest frequent SKUs on the highest percentage product mixture,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Assign the highest frequent SKUs on the highest percentage product mixture, 2. Assign SKUs with the highest affinity with the assigned SKUs, 3. Assign the next highest affinity SKUs of the next highest frequent SKUs assigned, 4. Assign SKUs for the following product mixture."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0072",
+      "index": 72,
+      "page": 26,
+      "section": "4. Assign SKUs for the following product mixture.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.4 Simulation In this study, the simulation of the three SKU-to-Pod assignment scenarios will be conducted using the NetLogo software. The simulation will generate the number of pods visited for each scenario to evaluate the efficiency of the scenarios. This evaluation will be based on the number of pods visited and comparing them with the other two scenarios. The objective is to determine which scenario produces the highest pile and hence, the most efficient storage allocation of the SKUs in the Pod system."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0073",
+      "index": 73,
+      "page": 26,
+      "section": "4. Assign SKUs for the following product mixture.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.4.1 Simulation Layout The design of the warehouse simulation in NetLogo is depicted in Figure 3.4. The simulation consists of three distinct sections: the picking station, the storage area, and the replenishment station."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0074",
+      "index": 74,
+      "page": 26,
+      "section": "4. Assign SKUs for the following product mixture.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "First, the picker awaits the arrival of AGVs carrying pods at the picking station . Next, the storage area is where the pods are stored, ready to be carried by AGVs. Finally, the replenishment station is where empty pods are refilled, 17 ensuring that the storage area remains fully stocked. The following are the key elements found in the storage area of the warehouse in NetLogo: 1. Pod: A container where items are stored. 2. Selected Pod: A Pod that has been chosen and matches the items with the assigned orders. 3. AGV (Automated Guided Vehicle): A robot responsible for transporting pods to the picking and replenishment station. 4. Aisle: The designated path for AGV to move and access pods in the storage area. 5. Empty Storage Location: An available space in the storage area where pods can be stored."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0075",
+      "index": 75,
+      "page": 27,
+      "section": "5. Empty Storage Location: An available space in the storage area where pods can",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Figure 3.4 Warehouse Layout 3.4.2 Simulation Parameter Several key assumptions must be considered and specified as parameters to perform an accurate simulation . The parameters are listed in Table 3.2 below, each playing a 18 significant role in the overall simulation results. These assumptions are crucial in ensuring the validity and reliability of the simulation outcomes. Table 3.2 Simulation Parameter Parameter Value Simulation Run Length 24 Hours Replications 10 Replication Layout Inventory Area 1050 Locations Inventory Capacity 935 Pods Empty Storage 115 Locations Pod Batch 2 x 5 Blocks Aisles 16 Vertical Aisles 8 Horizontal Aisles Station 6 Picking Stations 2 Replenishment Stations 7 Charging Stations Hallway Size 4 m Orders Initial Order 100 Orders Orders Proportion A = 60% Orders B = 30% Orders C = 10% Orders Order Date 6 Days Pods Capacity 100 Slots SKU Number of SKU 5000 SKUs Class A = 0-499 (10%) SKUs Class B = 500 - 1999 (30%) SKUs Class C = 2000 - 4999 (60%) SKUs SKUs to Pod Policy Random Scenario Mixed-Class Scenario Mixed-Class Affinity Scenario 19 Parameter Value Picking Queuing 12 AGVs Picking Policy Random Replenishment Queuing 6 AGVs AGV Setting Number of AGV 50 AGVs Robot speed without load 2 m/s Robot speed with load 1,5 m/s Acceleration 1 m/s Deceleration 1 m/s Time for 90˚ turning 2,5 second Time for 180˚ turning 3 second Time for pod lifting 4 second AGV to pod policy Shortest Pod AGV Energy Calculation With Load 1 kWh Without Load 0,5 kWh Idle 0,1 kWh Lifting 1 kWh Acceleration with load 1 kWh Acceleration without load 0,75 kWh Turn 90˚ with the load 0,3 kWh Turn 180˚ with the load 0,3 kWh Turn 90˚ without load 0,2 kWh Turn 180˚ without load 0,25 kWh Energy Setting Constanta Rate 0,0014 mAh Charge Level 85 mAh Charge Rate 28 mAh Battery Capacity 126,76 mAh Charge Trigger 60 mAh 3.4.3 Simulation Flowchart The simulation in NetLogo is illustrated through two flowcharts, Figures 3.5 and 3.6. The first flowchart showcases the setup process of the initial simulation, starting 20 from the layout, the replenishment process, and the order-picking process."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0076",
+      "index": 76,
+      "page": 30,
+      "section": "5. Empty Storage Location: An available space in the storage area where pods can > 3.6. The first flowchart showcases the setup process of the initial simulation, starting",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Factors such as the warehouse's routing and replenishment setting, including the order, backlog order, SKU in Pod, and replenishment stations, are considered during the layout setting. Furthermore, the order -picking setting encompasses the order assignment, Pod location, and the location of the picking and replenishment stations. It is important to note that the input data for all three scenarios is the same, except for the item in pod data, which is determined through the SKU to Pod assignment scenarios discussed in subchapter 3.3."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0077",
+      "index": 77,
+      "page": 30,
+      "section": "5. Empty Storage Location: An available space in the storage area where pods can > 3.6. The first flowchart showcases the setup process of the initial simulation, starting",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The second flowchart in Figure 3.6 showcases the functioning of the entire simulation following the completion of the initialization processes. The simulation operates in accordance with the order data, both new and backlog order data, and comprises several steps, including: 1."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0078",
+      "index": 78,
+      "page": 30,
+      "section": "1. All data are input for the initialization process, including setting the parameter",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "All data are input for the initialization process, including setting the parameter on NetLogo, 2. NetLogo read the data, 3. If there is an order available, then assign the order to the Pod . Otherwise, the simulation will stop, 4. The nearest Pod containing the SKUs ordered is chosen, 5."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0079",
+      "index": 79,
+      "page": 30,
+      "section": "5. The AGV is chosen randomly , and the AGV status on the simulation is",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The AGV is chosen randomly , and the AGV status on the simulation is changed, 6. The AGV chosen is moving to get the Pod chosen, 7. Move the Pod to the picking station. 8. Update the destination and AGV status, 9. Back to step 2. 10."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0080",
+      "index": 80,
+      "page": 30,
+      "section": "10. If the pod status is empty, the Pod is chosen,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "If the pod status is empty, the Pod is chosen, 11. The idle AGV is chosen randomly to get the Pod, 12. Move the Pod to the replenishment station, 13. Back to step 8. 21 Figure 3.5 Flowchart of Simulation Initialization 22 Figure 3.6 Flowchart of Simulation Run 23 3.5 Statistical Test In order to establish the validity of the simulation, it is imperative to perform statistical tests. The replication adequacy test is the initial step, which assesses whether the number of replications is sufficient to produce reliable results. Subsequently, an Analysis of Variance (ANOVA) is conducted to validate the significant differences between the scenarios through a hypothesis test. These tests are critical to ensure the accuracy and credibility of the simulation results. 3.5.1 Replication Adequacy Test The replication adequa cy test utilizes Equation s (8) and (9) as its mathematical formula, as described by Harrel et al. (2012). Therefore, this test is crucial in ensuring that the replications conducted in the simulation are sufficient to produce accurate results. 𝑒 = (𝑡𝑛−1,𝛼 2⁄ ) 𝑠 √𝑛 (8) 𝑛′ = ( (𝑍𝛼 2⁄ ) 𝑠 𝑒 ) 2 (9) where, 𝑒 = hw (halfwidth) 𝑡 = t value from student's t distribution table α = confidence level 𝑠 = standard deviation 𝑛 = number of replication 𝑛^′= estimate the number of replication 〖𝑛 > 𝑛〗^′ number of replication is sufficient 3.5.2 Hypothesis Test After ensuring the number replication is sufficient, the next thing to do is a hypothesis test using One-Way ANOVA. This type of ANOVA addresses a simulation that has solely one factor. In this research, one factor is the policy of SKU to p od 24 assignment. ANOVA validate the simulation result by comparing the means of three scenarios and proving that those three scenarios' result is significantly different. 𝐻_0: 𝜇_1 = 𝜇_2 = 𝜇_3 𝐻_𝐴: At least two means are different 25 CHAPTER 4 RESULT AND DISCUSSION 4.1 Data Gathering In this study, we created a sample of the 55000 actual data order by generating a 10000-data order."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0081",
+      "index": 81,
+      "page": 35,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This step was crucial in ensuring that the simulation results reflected reality as closely as possible. In addition, the generated data was intended to provide a representative picture of the actual data."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0082",
+      "index": 82,
+      "page": 35,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "To examine the distribution patterns of both the generated and actual data, the researchers employed @RISK, a commonly used software for risk analysis. The analysis showed that both the generated and actual data exhibited a lognormal distribution."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0083",
+      "index": 83,
+      "page": 35,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This analysis was depicted in Figures 4.1 and 4.2, which displayed the distribution of both data sets. The similarities in the distribution patterns of both data sets indicated that the generated data successfully represented the actual data. Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0084",
+      "index": 84,
+      "page": 35,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1 Real Data Distribution Test 26 Figure 4.2 Generated Data Distribution Test 4.2 Inventory Analysis Based on the total frequency of orders, the 5000 SKUs can be classified into ABC classes. 10% of SKUs, which is 500 SKUs, that dominate 60% of total order frequency are categorized into class A. Class B is 1500 SKUs or 30% of total SKUs and contributes 30% of total order frequency. Mo reover, the SKUs that are minor contributors to the total order frequency are classified into class C. Different from determining ABC classification, the number of slots per SKU is based on the quantity of order, not the frequency. Therefore, each class has different slots depending on their order quantity. Then, to define the number of slots, Equation (1) is used."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0085",
+      "index": 85,
+      "page": 36,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The calculation below shows how to determine the number of slots given that the confidence level is 95%, which the Z score can be seen in Appendix 1, and the slot capacity is ten units. The slot capacity is assumed to be ten units because the average number of units ordered per SKU is five, and more than 96% of the SKUs are ordered in less than ten units on each order."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0086",
+      "index": 86,
+      "page": 36,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "With this assumption, the replenishment 27 number of each Pod will vary. Pods containing class C most likely have the highest number of replenishments, and pods containing class A have the lowest number of replenishments."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0087",
+      "index": 87,
+      "page": 37,
+      "section": "13. Back to step 8.",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 4.1 ABC Classification Class Number of SKU A (10%) 500 B (30%) 1500 C (60%) 3000 5000 𝑀𝑖𝑛 𝐿𝐼 𝐴 = 286.7 + (405√1 𝑥1.65) = 1054.9 𝑢𝑛𝑖𝑡𝑠 𝑀𝑖𝑛 𝐿𝐼 𝐵 = 90.7 + (43.3√1 𝑥1.65) = 162.2 𝑢𝑛𝑖𝑡𝑠 𝑀𝑖𝑛 𝐿𝐼 𝐶 = 19.8 + (15.1√1 𝑥1.65) = 44.8 𝑢𝑛𝑖𝑡𝑠 𝑆𝑙𝑜𝑡𝑠/𝑆𝐾𝑈 𝐴 = (1054.9 𝑢𝑛𝑖𝑡𝑠)/(10 𝑢𝑛𝑖𝑡𝑠) = 105.5 ~ 106 𝑆𝑙𝑜𝑡𝑠/𝑆𝐾𝑈 𝑆𝑙𝑜𝑡𝑠/𝑆𝐾𝑈 𝐵 = (162.2 𝑢𝑛𝑖𝑡𝑠)/(10 𝑢𝑛𝑖𝑡𝑠) = 16.2 ~ 17 𝑆𝑙𝑜𝑡𝑠/𝑆𝐾𝑈 𝑆𝑙𝑜𝑡𝑠/𝑆𝐾𝑈 𝐶 = (44.8 𝑢𝑛𝑖𝑡𝑠)/(10 𝑢𝑛𝑖𝑡𝑠) = 4.5 ~ 5 𝑆𝑙𝑜𝑡𝑠/𝑆𝐾𝑈 The calculation shows that even though class A has the smallest number of SKUs with 500, its number of slots is the largest with 106 sl ots/SKU. The order quantity of SKUs in class A dominates the total order. Besides, class B, with 1500 SKUs, and class C, with 3000 SKUs, require 17 slots/SKU and five slots/SKU, respectively. Table 4.2 Number of Slots Calculation Class Number of SKU Slots/SKU Total Number of Slots A (10%) 500 106 53000 B (30%) 1500 17 25500 C (60%) 3000 5 15000 5000 93500 Table 4.2 shows the number of slots requires for each class, with A for 53000 slots, B for 25500 slots, and C for 15000 slots."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0088",
+      "index": 88,
+      "page": 37,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Therefore, the total number of slots for the 28 entire warehouse is 935000 slots. With 100 slots capacity on each Pod, it can be determined that the whole Pod needed is 935. 4.3 SKU to Pod Assignment Scenarios In all three scenarios, a data set needs to be fulfilled."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0089",
+      "index": 89,
+      "page": 38,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The data set and the description are shown in Table 4.3. A column that will be different between scenarios is the items stored on the pods. Table 4.3 SKU to Pod Dataset Category Column Name Description Data Value SKU in Pod pod_id Identification of the Pod that is being used in the warehouse [0] to [Total Pod - 1] pod_type There is only 1 type of Pod. The value is 0."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0090",
+      "index": 90,
+      "page": 38,
+      "section": "13. Back to step 8.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[0] slot_id Represent the slot type (based on volume) used in a pod. Where the facing of the Pod has the same slot design 1. Only one Pod, the value is [0,1,2, ...] 2."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0091",
+      "index": 91,
+      "page": 38,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "More than one Pod. Pod 1 [0,1,2,3,4,5] Pod 2 [6,7,8,9,10] item Product/ SKU ID [0,1,2,...] length Length of SKU Integer width Width of SKU Integer height Height of SKU Integer qty Quantity left of SKU stored in the slot Integer max_qty The maximum quantity of SKUs stored in the slot Integer due_date Expired/ due date of the SKU Float facing Facing the side of the Pod [0, 1] pick_ind Index if the slot being assigned by an order 0: no order being assigned; 1: the order being assigned 29 4.3.1 Random Assignment Scenario In this study, 5000 SKUs were categorized into three classes: A, B, and C. The first 500 SKUs were classified as Class A, the following 1500 SKUs as Class B, and the remaining 3000 SKUs as Class C. These classifications were made based on predetermined criteria."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0092",
+      "index": 92,
+      "page": 39,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "We randomly assigned the 5000 into 935 pods to ensure a balanced distribution of SKUs. This random assignment aimed to prevent the clustering of similar SKUs and promote a more even distribution throughout the warehouse. The 935 pods served as storage units for the 5000 SKUs, allowing for efficient organization and retrieval of items in the warehouse."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0093",
+      "index": 93,
+      "page": 39,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.3.2 Mixed-Class Assignment Scenario In this scenario, we analyzed 10000 orders and found that 9304 orders contained SKUs from Class A, while 7548 and 4627 o rders contained SKUs from Class B and Class C, respectively. To determine the likelihood of orders containing each class, the researchers divided the total orders of each class by the total number of orders. Having established the probability of orders containing each class, we then defined the mixed -class order probability using Equation (2). This probability was then converted into the product mixture percentage in the warehouse."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0094",
+      "index": 94,
+      "page": 39,
+      "section": "2. More than one Pod.",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 4.4 summarizes the probability of mixed -class orders and the correspon ding number of pods required for each mixture. This information can help determine the optimal storage arrangements for the warehouse to ensure efficient order picking and minimize the risk of stock shortages. 𝑃(𝐴) = 9304/10000 = 0.9304 𝑃(𝐵) = 7548/10000 = 0.7548 𝑃(𝐶) = 4627/10000 = 0.4627 𝑃(𝐴 ∩ 𝐵 ∩ 𝐶) = 𝑃(𝐴)𝑃(𝐵)𝑃(𝐶) 𝑃(𝐴 ∩ 𝐵 ∩ 𝐶) = 0.9304 𝑥 0.7548 𝑥 0.4627 = 33% 30 Table 4.4 Product Mixture Product Mixture Percentage Pods P(ABC) = ABC 32,5% 306 P(ABC') = AB 37,7% 352 P(ACB') = AC 10,6% 100 P(BCA') = BC 2,4% 24 P(AB'C') = A 12,3% 116 P(BA'C') = B 2,8% 27 P(CA'B') = C 0,8% 10 Total 100,0% 935 The highest probability is the mixture of class A and class B orders by 37.7%."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0095",
+      "index": 95,
+      "page": 40,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "From that percentage, the pods needed for AB pod is 352 pods. The second highest probability is the mixture of all three classes by 32.5% or equal to 306 pods. Then it was followed by only A pod and AC pod, with 116 and 100 pods needed, respectively. Finally, the three lowest are only B pod, BC mixture pod, and only C pod with less than 3% each. After determining the number of pods for each mixture, the next one to be determined is the number of slots for each class on every Pod using Equation (4). Table 4.5 depicts the percentage of slots in each class."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0096",
+      "index": 96,
+      "page": 40,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "It can be seen that class A will always dominate more than 50% of every Pod's product mixture, which are the ABC, AB, and AC pod. Class B dominates approximately a third of the ABC and AB pod and two third of the BC pod. On the other hand, class C contributes the smallest percentage of every Pod's product mixture by 16%, 22%, and 37% for ABC, AC, and BC pods, respectively. With 100 slots per pod capacity, the number of slots of each class on each product mixture pod will be easily defined. That shows in Table 4.6. Then the SKUs are assigned randomly based on the number of slot rules. 〖%𝐴〗_𝐴𝐵 = (57%)/(57% + 27%) = 68% 31 Table 4.5 Slot Percentage Class Total Slots Slot Percentage ABC AB AC BC A 53000 57% 57% 68% 78% B 25500 27% 27% 32% 63% C 15000 16% 16% 22% 37% 93500 100% 100% 100% 100% Table 4.6 Number of Slots of Each Class on Each Product Mixture Pod Class ABC AB AC BC A 57 68 78 0 B 27 32 0 63 C 16 0 22 37 100 100 100 100 4.3.3 Mixed-Class Affinity Assignment Scenario To do this scenario, the first two steps, determining product mixture and slots percentage, are the same as the second. The difference is how the SKU is assigned to the Pod. The rules must be found in this scenario using association analysis with the Google Colab tool."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0097",
+      "index": 97,
+      "page": 41,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The result is only 8% of SKUs or equal to 400 SKUs that form the rules. Meanwhile, no rules were formed for most of the SKUs in Class B and C because the frequency of those SKUs ordered together is too low. Therefore, the 400 SKUs must be assigned close to each other while the rest are assigned randomly. 4.4 Simulation By running the simulation based on the flowcharts in Figures 3.5 and 3.6, the output of the simulation is excel data. The output data has the same format as the data order shown in Table 3.1."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0098",
+      "index": 98,
+      "page": 41,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "From the output, the number of pods transported for the whole order can be defined by calculating the total number of pods assigned to each order based on order_dum and pod_id data. Therefore, the performance indicator used for 32 the simulation result is the average number of pods transported for 10000 orders can be calculated. The lower the average, the higher the pile-on achieved. 4.4.1 Random Assignment Scenario Simulation Result Figure 4.3 shows the simulation result for the random assi gnment scenario. It can be seen that within ten replications, the result is not very similar."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0099",
+      "index": 99,
+      "page": 42,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "With a random SKUto-pod assignment policy, the average simulation result ranges from 6.92 to 7.21 and averages 7.08. Figure 4.3 Random Assignment Scenario Result 4.4.2 Mixed Class Assignment Scenario Simulation Result Figure 4.4 Mixed Class Assignment Scenario Result 7,14 7,06 7,13 6,92 7,03 7,20 6,93 7,03 7,21 7,18 6,70 6,80 6,90 7,00 7,10 7,20 7,30 Average Pods Transported of Random Scenario 6,99 6,76 6,89 6,90 7,07 6,94 6,76 6,78 6,60 6,67 6,30 6,40 6,50 6,60 6,70 6,80 6,90 7,00 7,10 7,20 Average Pods Transported of Mixed Class Scenario 33 Figure 4.4 depicts the result of the mixed class assignment scenario simulation. The graph shows that the highest result in this scenario is 7.07 pods per order, and the lowest is 6.67 pods per order. It has a value average of 6.84."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0100",
+      "index": 100,
+      "page": 43,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.4.3 Mixed Class Affinity Assignment Scenario Simulation Result Figure 4.5 shows the simulation result for the last scenario. It can be seen that with rules of affinity within ten replications, the result varies from 6.45 to 6.89."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0101",
+      "index": 101,
+      "page": 43,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The average simulation result for this scenario is 6.63. Figure 4.5 Mixed Class Affinity Scenario Simulation Result 4.4.4 Simulation Result Analysis Table 4.7 compares each scenario from replication one to ten. It can be seen that the last scene has the best result, which is the lowest average of pods transported. The mixed affinity scenario increases the baseline scenario by 6.4%, while the mixed scenario only increases the baseline result by 3.49%."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0102",
+      "index": 102,
+      "page": 43,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The result shows that ABC classification in SKU to pod assignment policy affects the number of pods transported. For example, scenario 1, or the baseline scenario, with random policy, has the highest average number of pods transported because the SKUs are too dispersed in multiple pods without rules. This result makes the required pods more than other policies in SKU to pod assignment. Meanwhile, the simulation result 6,54 6,46 6,45 6,72 6,89 6,54 6,51 6,74 6,76 6,69 6,20 6,30 6,40 6,50 6,60 6,70 6,80 6,90 7,00 Average Pods Transported of Mixed Class Affinity Scenario 34 proves that applying ABC classification on the second and third scenarios yields better warehouse performance. Table 4.7 Simulation Result Summary Simulation Number of Pods/Order Scenario 1 Scenario 2 Scenario 3 Replication 1 7,14 6,99 6,54 Replication 2 7,06 6,76 6,46 Replication 3 7,13 6,89 6,45 Replication 4 6,92 6,90 6,72 Replication 5 7,03 7,07 6,89 Replication 6 7,20 6,94 6,54 Replication 7 6,93 6,76 6,51 Replication 8 7,03 6,78 6,74 Replication 9 7,21 6,6 6,76 Replication 10 7,18 6,67 6,69 Average 7,08 6,84 6,63 With only 8% or more than 400 SKUs forming the association rules, it might seem impossible for the third scenario to achieve the best simulation result, especially compared to the second scenario. Because the second and third scenario is similar, and the difference is only the use of association rules in the third one."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0103",
+      "index": 103,
+      "page": 44,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, after reviewing the order data, it was found that those 400 SKUs dominated 55% of the total order. Therefore, even though not even a tenth of the total SKUs are associate d with each other, it still significantly affect s the pile-on if those SKUs dominate the total order. Furthermore, referring to the simulation results and analysis above, it can be sai d that choosing the suitable SKU for the pod assignment policy can affect warehouse performance. Compared to random and mixed class policy, mixed class affinity policy is the best to maximize pile-on. It can also be implemented in an actual e-commerce warehouse, considering that in that type of warehouse , a high pile-on is required due to the high number of orders and a wide variety of SKUs in each order to increase the 35 warehouse's efficiency. With notes, there are associations between SKUs , and those SKUs dominate the total orders."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0104",
+      "index": 104,
+      "page": 45,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.5 Statistical Test After getting the simulation result, the next thing to do is check whether the number of replication is sufficient. If it is insufficient, then the simulation needs to be replicated more. On the other hand, if it is already sufficient, then the result is verified using One- Way ANOVA."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0105",
+      "index": 105,
+      "page": 45,
+      "section": "2. More than one Pod.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.5.1 Replication Adequacy Test Due to limited time, there are only ten replications completed. Therefore, to prove that the ten replications are enough, the replications adequacy test must be done using Equation (8). The value of t and Z can be found on the Students T distribution table in Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%. 𝑒 = (2.262)0.096/√10 = 0.069 𝑛^′ = ((1.96 𝑥 0.096)/0.069)^2 = 7.51 ~ 8 𝑟𝑒𝑝𝑙𝑖𝑐𝑎𝑡𝑖𝑜𝑛𝑠 With the mean and standard deviation of the simulation result, the r eplications needed are at least eight times those. Therefore, the ten replications done are sufficient for this research."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0106",
+      "index": 106,
+      "page": 45,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.5.2 ANOVA The simulation results must be validated to ensure their reliability and accuracy. This validation process involves performing a one -way ANOVA after ensuring an adequate number of replications. The hypothesis test, shown in Figure 4. 6, is the foundation for this validation. A one-way factor ANOVA is a statistical technique used to determine if there are significant differences between the means of three or more groups. The groups are referred to as \"scenarios.\" The goal of the ANOVA test is to establish if the differences in the simulation results of the three scenarios are statistically significant or if they may have occurred by chance."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0107",
+      "index": 107,
+      "page": 46,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "36 The p-value, which measures the strength of evidence against the null hypothesis, is an important factor in the hypothesis test. The null hypothesis assumes that there are no significant differences between the scenarios."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0108",
+      "index": 108,
+      "page": 46,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "A p-value of less than 0.05 is widely accepted as statistically significant, meaning there is less than a 5% probability that the results could have occurred by chance. In this instance, the p -value of 0.000000182 is significantly less than 0.05, indicating strong evidence against the null hypothesis. As a result, we can reject the null hypothesis and conclude that the three scenarios are significantly different. Figure 4.6 One-Way ANOVA Result 37 CHAPTER 5 CONCLUSION 5.1 Conclusion There are several ways to increase the efficiency of the RMFS warehouse."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0109",
+      "index": 109,
+      "page": 47,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "One of the decision problems is the SKU to Pod assignment policy. Although the d ifferent policy makes different warehouse performances, the policy with the lowest number of transported pods is the best to achieve the highest pile -on in the warehouse."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0110",
+      "index": 110,
+      "page": 47,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This research tests three policies as a scenario: Random—baseline, Mixed class, and Mixed Class Affinity policy. Each policy has a different rule for its product mixture. The simulation result shows that the last scenario yields the best pile -on with a n average number of pods transported of 6.63 pods pe r order."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0111",
+      "index": 111,
+      "page": 47,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Meanwhile, the first and second scenarios' results are 7.08 and 6.84, respectively. From that numbers, it can be concluded that the pile-on of the last scenario is 6.4% and 3.02% higher than the other two scenarios, even though only 8% of SKUs for m the association's rule. However, it must be highlighted that 8% of SKUs dominate 55% of the order data. The result is verified by using one -way ANOVA. The p -value for the three scenarios is less than 0.05 , which means those scenarios are significantly di fferent. Therefore, it can be concluded that the SKU-to-pod scenarios have affected the RMFS warehouse's efficiency. The mixed-class affinity policy is verified as the best compared to random and mixed-class policies."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0112",
+      "index": 112,
+      "page": 47,
+      "section": "Appendix 2 and Z table in Appendix 1, given that the confidence level is 95%.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "5.2 Recommendation and Future Research Before deciding what the best SKU to Pod assignment policy to be implemented in the actual warehouse is , things need to be considered the most : the number of SKUs that associate with each other and the contribution of these SKUs to the total orde r. Suppose the contribution of associated SKUs is high. In that case, implementing the Mixed Class Affinity assignment policy might fit be tter than other policies to maximize pile-on. 38 For future research, there are still many things for the RMFS warehouse that need to be researched deeper. For example, from the side of product mixture in SKU to Pod, considering the quantities and dimensions of each SKU can be the next research opportunity. Because in this research, both things are made uniform. At the same time, quantities and dimensions should affect the SKU to pod assignment. 39 REFERENCES Ang, M., & Lim, Y. F. (2019). How to optimize storage classes in a unit -load warehouse. European Journal of Operational Research , 278(1), 186 -201. https://doi.org/10.1016/j.ejor.2019.03.046 Azadeh, K., De Koster, R., & Roy, D. (2019). Robotized and Automated Warehouse Systems: Review and Recent Developments. Transportation Science , 53(4), 917-945. https://doi.org/10.1287/trsc.2018.0873 Beuters, K., Cock, K. D., Hollevoet, J., Dobbelaere, G., & Landeghem, H. V. (2016). A simulation model to compare autonomouse vehicle based warehouses with traditional AS/RS systems. European Simulation Conference. Bhatti, A., Akram, H., Basit, H. M., Khan, A. U., Naqvi, S."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0113",
+      "index": 113,
+      "page": 49,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "M. R., & Bilal, M. (2020). E-commerce trends during COVID -19 Pandemic. International Journal of Future Generation Communication and Networking, 1449-1452. Chan, F. T. S., & Chan, H. K. (2011). Improving the productivity of order picking of a manual-pick and multi -level rack distribution warehouse through the implementation of class -based storage. Expert Systems with Applications , 38(3), 2686-2700. https://doi.org/10.1016/j.eswa.2010.08.058 Chevalier, S. (2021)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0114",
+      "index": 114,
+      "page": 49,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "Global retail e-commerce sales 2014-2024. Retrieved November 5, 2022, from https://www.statista.com/statistics/379046/worldwide-retail-ecommerce-sales/ Enright, J. J., & Wurman, P. R. (2011). Optimization and coordinated autonomy in mobile fulfillmen system. Proc. 25th AAAI Conf. Artif. Intell. (AAAI), 33-38. Frazelle, E. (2016). World-Class Warehousing and Material Handling. 2nd McGraw- Hill. Frazelle, E. A., & Sharp, G. P. (1989). Correlated Assignment Strategy Can Improve Any Order -Picking Operation. Industrial Engineering , 21(4), 33 -37. https://doi.org/10.1016/j.ifacol.2016.03.006 40 Galliussi, D. (2022). Robotic Mobile Fulfillment Systems: A simulative study with three different managements Università di Padova]. Padova, Italy. https://thesis.unipd.it/bitstream/20.500.12608/36639/1/Galliuss_Daniele.pdf Gu, J. X., Goetschalckx, M., & McG innis, L. F. (2007). Research on warehouse operation: A comprehensive review. European Journal of Operational Research, 177(1), 1-21. https://doi.org/10.1016/j.ejor.2006.02.025 Harrel, C., Ghosh, B., & Bowden, R. (2012)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0115",
+      "index": 115,
+      "page": 50,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Simulation Using Promodel . McGraw Hill. Kim, H."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0116",
+      "index": 116,
+      "page": 50,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "J., Pais, C., & Shen, Z. J. M. (2020). Item Assignment Problem in a Robotic Mobile Fulfillment System. IEEE Transactions on Automation Science and Engineering, 17(4), 1854-1867. https://doi.org/10.1109/Tase.2020.2979897 Kim, K. H. (1993). A Joint Determination of Storage Locations and Space Requirements for Correlated Items in a Miniload Automated Storage-Retrieval System. International Journal of Production Research , 31(11), 2649 -2659. https://doi.org/10.1080/00207549308956888 Li, X."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0117",
+      "index": 117,
+      "page": 50,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "W., Hua, G. W., Huang, A. Q., Sheu, J. B., Cheng, T. C. E., & Huang, F. Q. (2020). Storage assignment policy with awareness of energy consumption in the Kiva mobile fulfilment system. Transportation Research Part E -Logistics and Transportation Review, 144. https://doi.org/10.1016/j.tre.2020.102158 Merschformann, M., Lamballais, T., de Koster, M. B. M., & Suhl, L. (2019). Decision rules for robotic mobile fulfillment systems. Operations Research Perspectives, 6. https://doi.org/10.1016/j.orp.2019.100128 Ming-Huang Chiang, D., Lin, C.-P., & Chen, M.-C. (2014). Data mining based storage assignment heuristics for travel distance reduction. Expert Systems, 31(1), 81- 90. https://doi.org/10.1111/exsy.12006 Mirzaei, M., Zaerpour, N., & de Koster, R. (2021). The impact of integrated cluster - based storage allocation on parts -to-picker warehouse performance. Transportation Research Part E -Logistics and Transportation Review , 146. https://doi.org/10.1016/j.tre.2020.102207 41 Mirzaei, M., Zaerpour, N., & de Koster, R."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0118",
+      "index": 118,
+      "page": 51,
+      "section": "90. https://doi.org/10.1111/exsy.12006",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "B. M. (2022). How to benef it from order data: correlated dispersed storage assignment in robotic warehouses. International Journal of Production Research , 60(2), 549 -568. https://doi.org/10.1080/00207543.2021.1971787 Muppani, V. R., & Adil, G. K. (2008). Class -based storage -location assignment to minimise pick travel distance. International Journal of Logistics-Research and Applications, 11(4), 247-265. https://doi.org/10.1080/13675560701690489 Murray, M. (2019)."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0119",
+      "index": 119,
+      "page": 51,
+      "section": "90. https://doi.org/10.1111/exsy.12006",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Order Picking in the Warehouse. Retrieved November 5, 2022, from https://www.liveabout.com/order-picking-in-the-warehouse- 2221190#:~:text=Part%20to%20Picker,- The%20part%2Dto&text=Products%20are%20moved%20from%20the,and% 20fulfills%20the%20customer%20orders."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0120",
+      "index": 120,
+      "page": 51,
+      "section": "90. https://doi.org/10.1111/exsy.12006",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Radasanu, A. C. (2016). Inventory Management, Service Level and Safety Stock. Journal of Public Administration, Finance, and Law(9), 145-153. Shafer, G. (1996). The Art of Causal Conjecture. The MIT Press."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0121",
+      "index": 121,
+      "page": 51,
+      "section": "90. https://doi.org/10.1111/exsy.12006",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Silva, A., Roodbergen, K. J., Coelho, L. C., & Darvish, M. (2022). Estimating optimal ABC zone sizes in manual warehouses. International Journal of Production Economics, 252. https://doi.org/10.1016/j.ijpe.2022.108579 Tessensohn, T. L., Roy, D., & De Koster, R."
+    },
+    {
+      "chunk_id": "Thesis_M11001853_Nafisha_c747d369::0122",
+      "index": 122,
+      "page": 51,
+      "section": "90. https://doi.org/10.1111/exsy.12006",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "B. M. (2020). Inventory allocation in robotic mobile fulfillment systems. Iise Transactions , 52(1), 1 -17. https://doi.org/10.1080/24725854.2018.1560517 Wurman, P. R., D'Andrea, R., & Mountz, M. (2008). Coordinating hundreds of cooperative, autonomous vehicles in warehouses. Ai Magazine , 29(1), 9 -19. https://doi.org/10.1609/aimag.v29i1.2082 Yang, N. (2022). Evaluation of the Joint Impact of the Storage Assignment and Order Batching in Mobile -Pod Warehouse Systems. Mathematical Problems in Engineering, 2022, 9148001. https://doi.org/10.1155/2022/9148001 Yuan, R., Cezik, T., & Graves, S. C. (2018). Velocity -Based Storage Assignment in Semi-Automated Storage Systems. 42 APPENDICES Appendix 1 Positive Z Table 43 Appendix 2 Students T Distribution Table"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 from src.utils.logger import get_logger
-from typing import List, Optional
+from typing import List
 
 from src.agents.graph_extractor import GraphExtractor
-from src.graph.graph_model import _Graph, Ontology, map_to_lc_graph, sanitize_graph
+from src.graph.graph_model import _Graph, map_to_lc_graph, sanitize_graph
 from src.config import LLMConf
 from src.schema import ProcessedDocument
 
@@ -12,8 +12,8 @@ logger = get_logger(__name__)
 class GraphMiner:
     """ Contains methods to mine graphs from a (list of) `ProcessedDocument`."""
 
-    def __init__(self, conf: LLMConf, ontology: Optional[Ontology]=None):
-        self.graph_extractor = GraphExtractor(conf=conf, ontology=ontology)
+    def __init__(self, conf: LLMConf):
+        self.graph_extractor = GraphExtractor(conf=conf)
 
         if self.graph_extractor:
             logger.info(f"GraphMiner initialized.")
@@ -30,6 +30,10 @@ class GraphMiner:
         # enforced per-document, not per-chunk (otherwise an N-chunk document
         # could accumulate up to 3*N has_source edges instead of 3 total).
         has_source_state: dict = {}
+        # Same per-document lifetime, so near-duplicate Topic strings merge across
+        # chunks (a Topic from chunk 1 recognized when it reappears misspelled in
+        # chunk 5) instead of only within a single chunk.
+        topic_registry: dict = {}
 
         for chunk in doc.chunks:
             try:
@@ -45,7 +49,12 @@ class GraphMiner:
 
                 # Deterministically enforce the ontology (directions, has_source cap,
                 # single Source, no self-loops) before mapping to the graph store.
-                graph = sanitize_graph(graph, source_name=source_name, has_source_state=has_source_state)
+                graph = sanitize_graph(
+                    graph,
+                    source_name=source_name,
+                    has_source_state=has_source_state,
+                    topic_registry=topic_registry,
+                )
 
                 if graph is None:
                     logger.warning(f"Skipping chunk — no valid graph after sanitization.")

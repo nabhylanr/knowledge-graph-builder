@@ -1,18 +1,3 @@
-"""
-Build a Knowledge Graph in Neo4j out of a pre-built chunks dataset.
-
-Pipeline (no UI, no document loading — chunks are read straight from disk):
-
-    load chunks (.jsonl)  ->  embed  ->  extract graph (LLM)  ->  store in Neo4j
-                                                                     -> centralities & communities
-
-Usage:
-    python main.py                       # ingest everything under ./chunks_data
-    python main.py --chunks path/to.jsonl
-    python main.py --limit 2             # only the first 2 documents (quick test)
-    python main.py --no-communities      # skip centralities/communities step
-"""
-
 import argparse
 import os
 
@@ -86,7 +71,6 @@ def run(chunks_path: str, limit: int = 0, communities: bool = True) -> None:
     embedder = ChunkEmbedder(conf=conf.embedder_conf)
     graph_miner = GraphMiner(
         conf=conf.re_model_conf,
-        ontology=conf.database.ontology,
     )
     knowledge_graph = KnowledgeGraph(
         conf=conf.database,

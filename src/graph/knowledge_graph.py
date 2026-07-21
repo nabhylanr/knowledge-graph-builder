@@ -30,8 +30,10 @@ class KnowledgeGraph(Neo4jGraph):
         Class used to represent a Knowledge Base under graph representation,
         using `neo4j` as the backend for querying operations.
 
-        If an `Ontology` is provided (see `KnowledgeGraphConfig.ontology`), will not allow for nodes and relationships
-        to be created outside of the given sets of allowed labels and relationships.
+        The ontology (allowed node/relationship types and their directions) is
+        NOT configurable per-instance — it's fixed inside the extraction prompt
+        (`src/prompts/graph_extractor.py`) and re-enforced deterministically by
+        `sanitize_graph` (`src/graph/graph_model.py`).
     """
 
     def __init__(
@@ -51,10 +53,6 @@ class KnowledgeGraph(Neo4jGraph):
         self.database = conf.database
         self.timeout = conf.timeout
         self.index_name = conf.index_name
-
-        if conf.ontology:
-            self.allowed_labels = conf.ontology.allowed_labels
-            self.allowed_relationships = conf.ontology.allowed_relations
 
         self.embeddings = embeddings_model
 
@@ -231,13 +229,14 @@ class KnowledgeGraph(Neo4jGraph):
                 filename: $filename,
                 document_version: $document_version
             })
+            SET d += $metadata
         """
         try:
             tx.run(
                 query,
                 filename=doc.filename,
                 document_version=doc.document_version,
-                metadata=doc.metadata,
+                metadata=doc.metadata or {},
             )
             logger.info(f"Document node created for file: {doc.filename}")
         except Exception as e:
@@ -274,6 +273,33 @@ class KnowledgeGraph(Neo4jGraph):
             tx.run(query, filename=filename, document_version=document_version)
         except Exception as e:
             logger.warning(f"Error creating NEXT relationships for chunks in Document {filename}: {e}")
+
+
+    @staticmethod
+    def _create_precedes_relationships(tx: ManagedTransaction, series: str):
+        """
+        Chains every Document node sharing the same `series` metadata property
+        (e.g. a recurring meeting name) into a PRECEDES sequence ordered by
+        their `date` property (an ISO 8601 string, e.g. "2026-07-20", sorts
+        correctly lexicographically). Mirrors `_create_next_relationships`
+        (Chunk-level) but at the Document level — without it there is no way
+        to ask "what came before this week's Decision" across meetings.
+        Documents missing `date` are excluded rather than guessed at.
+        """
+        query = """
+            MATCH (d:Document {series: $series})
+            WHERE d.date IS NOT NULL
+            WITH d ORDER BY d.date ASC
+            WITH collect(d) AS docs
+            UNWIND range(0, size(docs) - 2) AS i
+            WITH docs[i] AS d1, docs[i + 1] AS d2
+            MERGE (d1)-[:PRECEDES]->(d2)
+        """
+        try:
+            tx.run(query, series=series)
+            logger.info(f"PRECEDES relationships created for Document series '{series}'")
+        except Exception as e:
+            logger.warning(f"Error creating PRECEDES relationships for series '{series}': {e}")
 
 
     @staticmethod
@@ -347,6 +373,29 @@ class KnowledgeGraph(Neo4jGraph):
             logger.info(f"NEXT relationships created for Document {filename} version {doc_version}")
 
 
+    def create_precedes_relationships(self, series: str):
+        """
+        Creates PRECEDES relationships chaining every Document that shares the
+        given `series` metadata value (e.g. a recurring meeting name) in
+        chronological order by their `date` property.
+
+        Call this once after ALL Documents in the series have been stored —
+        e.g. at the end of a batch import — not per-document, since correct
+        ordering needs every Document in the series to already be present.
+        Requires the caller to have included `series` and `date` in
+        `ProcessedDocument.metadata` for each of those documents (see
+        `store_chunks_for_doc` / `_create_document_node`); Documents missing
+        either field are silently excluded from the chain rather than ordered
+        by a guess.
+        """
+        with self._driver.session(database=self._database) as session:
+            session.execute_write(
+                self._create_precedes_relationships,
+                series
+            )
+            logger.info(f"PRECEDES relationships created for series '{series}'")
+
+
     def create_mentions_relationships(
             self,
             node_id: str,
@@ -390,7 +439,7 @@ class KnowledgeGraph(Neo4jGraph):
             try:
                 self.vector_store.add_embeddings(
                     texts=[chunk.text],
-                    embeddings=chunk.embedding,
+                    embeddings=[chunk.embedding],  # add_embeddings wants one vector per text
                     metadatas=[metadata]
                 )
             except Exception as e:

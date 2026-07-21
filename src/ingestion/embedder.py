@@ -25,7 +25,10 @@ class ChunkEmbedder:
         """
         if self.embeddings is not None:
             for chunk in doc.chunks:
-                chunk.embedding = self.embeddings.embed_documents([chunk.text])
+                # embed_documents() takes/returns a list (one vector per input text);
+                # index [0] to get the single flat vector for this one chunk, matching
+                # the `embedding: Optional[List[float]]` type on Chunk.
+                chunk.embedding = self.embeddings.embed_documents([chunk.text])[0]
                 chunk.embeddings_model = self.conf.model
             logger.info(f"Embedded {len(doc.chunks)} chunks.")
             return doc

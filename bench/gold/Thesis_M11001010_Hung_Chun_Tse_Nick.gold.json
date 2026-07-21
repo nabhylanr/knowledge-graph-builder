@@ -1,0 +1,29 @@
+{
+  "doc": "Thesis_M11001010_Hung_Chun_Tse_Nick",
+  "title": "Optimizing Pod Utilization and Allocation in RMFS",
+  "source": "Derived from the English ABSTRACT + Keywords + title page (advisors).",
+  "status": "DRAFT — needs human review before use as ground truth.",
+  "eval_note": "Recall-oriented. These are entities/relations that MUST appear given the abstract; the list is NOT exhaustive, so precision against this set is meaningless and is not computed.",
+  "topics": [
+    {"canonical": "Robotic Mobile Fulfillment System", "aliases": ["RMFS", "Robotic Mobile Fulfillment System (RMFS)"]},
+    {"canonical": "Container Loading Problem", "aliases": ["CLP", "Container Loading Problem (CLP)"]},
+    {"canonical": "Metaheuristics", "aliases": ["Metaheuristic", "Multiple Heuristics"]},
+    {"canonical": "SKU", "aliases": ["Stock Keeping Unit", "Stock Keeping Unit (SKU)"]},
+    {"canonical": "Pod", "aliases": ["POD", "Pods"]},
+    {"canonical": "Space Utilization", "aliases": ["Space Utilisation", "Maximize Space Utilization"]},
+    {"canonical": "Pod Utilization", "aliases": ["Pod Utilisation"]},
+    {"canonical": "Pod Allocation", "aliases": ["Pod Allocation And Utilization"]},
+    {"canonical": "Cost Reduction", "aliases": ["Cost Reductions", "Reduce Cost"]},
+    {"canonical": "Pick Order Assignment", "aliases": ["Order Assignment"]}
+  ],
+  "agents": [
+    {"canonical": "Hung-Chun Tse", "aliases": ["Nick", "Hung Chun Tse", "洪郡澤"]},
+    {"canonical": "Shou-Yan Chou", "aliases": ["Shuo-Yan Chou", "Professor Shou-Yan Chou", "Shou Yan Chou", "周碩彥"]},
+    {"canonical": "Po-Hsun Kuo", "aliases": ["Po Hsun Kuo", "郭伯勳"]},
+    {"canonical": "Kung-Jeng Wang", "aliases": ["Kung Jeng Wang"]}
+  ],
+  "relations": [
+    {"source_any": ["Metaheuristics", "Space Utilization"], "target_any": ["Container Loading Problem"], "relation": "addresses",
+     "why": "metaheuristics / space-utilization method answers the Container Loading Problem"}
+  ]
+}

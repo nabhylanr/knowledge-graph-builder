@@ -1,0 +1,1854 @@
+{
+  "document": {
+    "id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad",
+    "source_file": "C:\\academic-pdf-chunker\\data\\raw\\Thesis_M11201814_Fransisca_Cindy_Mulyani.pdf",
+    "source_type": "pdf",
+    "chunk_count": 182
+  },
+  "chunks": [
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0000",
+      "index": 0,
+      "page": 1,
+      "section": null,
+      "content_role": "abstract",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "國立臺灣科技大學 工業管理系 碩士學位論文 學號：M11201814 優化機器人移動式倉儲揀貨系統中之庫存單位 分配：透過訂單頻率、產品週轉率、關聯性與 尺寸限制最大化貨架使用效率 Optimizing SKU Allocation in RMFS Warehouses: Maximizing Pod Utilization Through Order Frequency, Product Turnover, Correlation, and Dimensional Constraints 研 究 生： Fransisca Cindy Mulyani 指導教授： 周碩彥 博士 郭伯勳 博士 中華民國 114 年 07 月 i 摘要 機器人移動式倉儲系統已成為滿足現代電子商務倉儲效率需求的變革性解 決方案。然而，SKU 與儲位的最佳化分配在考慮 SKU 差異性與實際儲存限制等 現實營運條件時，仍是一項關鍵挑戰。 本研究提出一套結構化、數據驅動的 SKU 分配策略，旨在在 RMFS 環境 中優化儲位空間利用率，同時提升訂單吞吐量與 Pile-On 表現。該方法將需求頻 率、產品週轉率、商品關聯性及尺寸可行性整合為一套統一的分類與配置策略。 首先，透過 K-means 分群法依據需求頻率對 SKU 進行分類，再以變異係數依需求 穩定性進一步細分。這些分類策略分別應用於三種配置情境：隨機分配、單倉單 類、單倉混類。為進一步提升可存取性，本研究引入分散策略，將高需求 SKU 分 散至多個儲位。研究透過 NetLogo 建立模擬模型，並結合 Python 最佳化模組，在 尺寸限制條件下及加入分散策略後評估各情境的效能表現。 結果顯示，在尺寸限制條件下，「單倉混類」策略表現最佳，訂單吞吐率 達 91.90%，Pile-On 為 9.79，其次為「單倉單類」與「隨機分配」。引入分散策 略後，各情境的兩項效能指標均有進一步提 升，其中「單倉混類」策略的吞吐率 提升至 99.22%，Pile-On 提升至 9.96。ANOVA 檢定結果顯示，在尺寸限制及分散 策略下，三種情境在吞吐率與 Pile-On 上的差異均具有統計顯著性。成對 t 檢定進 一步驗證，分散策略對所有情境的兩項效能指標均帶來統計上顯著的改善。研究 結果證明，將基於需求的分類方法與分散策略及尺寸可行性結合，能夠在 RMFS 環境中實現更有效的 SKU 與儲位分配。 關鍵詞：機器人移動式倉儲系統、SKU 分配、儲位分配、變異係數、尺寸限制、 混合策略、分散策略、訂單吞吐量、Pile-On。 ii ABSTRACT Robotic Mobile Fulfillment Systems have emerged as a transformative solution to meet the efficiency demands of modern e-commerce warehouses. Yet, the optimization of SKU-to-pod assignment remains a critical challenge, especially when considering realworld operational constraints such as SKU variability and physical storage limitations. This research proposes a structured, data -driven SKU allocation policy aimed at optimizing pod space utilization while improving throughput and pile-on performance in RMFS environments."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0001",
+      "index": 1,
+      "page": 5,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The methodology integrates demand frequency, product turnover, item correlation, and dimensional feasibility into a unified classification and placement strategy. SKUs are first categorized by demand frequency using K-means clustering, and further classified based on demand stability using the Coefficient of Variation."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0002",
+      "index": 2,
+      "page": 5,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "These classifications are applied under three allocation configurations: Random placement, One Pod One Class, and One Pod Mixed Class. To further enhance accessibility, a dispersion policy is introduced to distribute SKUs across multiple pods . A simulation model developed in NetLogo, combined with optimization modules in Python, evaluates performance under dimensional constraints and with the dispersion policy applied."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0003",
+      "index": 3,
+      "page": 5,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Results in dicate that under dimensional constraints, the One Pod Mixed Class strategy achieved the highest performance, with throughput reaching 91.90% and pile-on 9.79, followed by One Pod One Class and the Random baseline. The introduction of the dispersion policy further improved both metrics across all scenarios, with throughput increasing to 99.22% and pile -on to 9.96 for Mixed Class . Statistical validation using ANOVA confirmed significant differences in throughput and pile -on among the three scenarios under both dimensional constraints and with the dispersion policy. Paired t-tests further verified that dispersion produced statistically significant improvements in both metrics for all s cenarios. These results demonstrate that combining demand -based classification with dispersion and dimensional feasibility leads to more effective SKU - to-pod assignments in RMFS environments. Keywords: Robotic Mobile Fulfillment System, SKU Allocation, Storage Assignment, Coefficient of Variation, Dimensional Constraints, Mixture, Dispersion, Order Throughput, Pile-On. iii ACKNOWLEDGEMENT First and foremost, I would like to express my deepest gratitude to my principal advisor, Professor Shou -Yan Chou, for his invaluable guidance, encouragement, and support through out the course of my research and thesis writing. His expertise and dedication have been instrumental in shaping the direction and quality of my work."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0004",
+      "index": 4,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "I am also profoundly thankful to my co -advisor, Professor Po -Hsun Kuo, and committee member, Professor Yu -Ling Hsu for their insightful advice and constructive feedback. Their thoughtful suggestions and critical insights have greatly enhanced my understanding and contributed to the success of this thesis. I would like to extend my heartfelt appreciation to the members of the Center for Internet of Things Innovation (CITI) Lab."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0005",
+      "index": 5,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The insightful discussions, constructive feedback, and shared encouragement have greatly enriched my research and personal growth. Working alongside my peers on similar research topics h as been both inspiring and motivating, and it has pushed me to reach greater heights."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0006",
+      "index": 6,
+      "page": 6,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "As many of us now embark on the next chapter of our lives, I am honored to have shared this journey with such talented and driven individuals. Lastly, my heartfelt thanks go to my family and friends for their unwavering love and support."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0007",
+      "index": 7,
+      "page": 6,
+      "section": null,
+      "content_role": "abstract",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Their encouragement and understanding have been a source of strength throughout this challenging but rewarding journey. Special thanks to my family for their constant support and to my friends for the moments of joy and reassurance that kept me going. Fransisca Cindy Mulyani Taipei, July 2025 iv TABLE OF CONTENTS ABSTRACT ..................................................................................................................... ii ACKNOWLEDGEMENT ............................................................................................... iii TABLE OF CONTENTS ................................................................................................ iv LIST OF FIGURES ......................................................................................................... vi LIST OF TABLES ......................................................................................................... vii CHAPTER 1 INTRODUCTION ......................................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0008",
+      "index": 8,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1 1.1 Background and Motivation ........................................................................................ 1 1.2 Objective ......................................................................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0009",
+      "index": 9,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4 1.3 Scope and Limitations ................................................................................................. 5 1.4 Organization of Thesis ................................................................................................. 6 CHAPTER 2 LITERATURE REVIEW .......................................................................... 7 2.1 Robotic Mobile Fulfillment System (RMFS) .............................................................. 7 2.2 Decision Problem in RMFS ......................................................................................... 9 2.3 Item Correlation ......................................................................................................... 14 2.4 SKU Classification .................................................................................................... 15 2.5 Coefficient of Variation (CV) .................................................................................... 15 CHAPTER 3 METHODOLOGY .................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0010",
+      "index": 10,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "17 3.1 Research Flowchart ................................................................................................... 17 3.2 Data Preprocessing .................................................................................................... 18 3.3 Data Analysis ............................................................................................................. 18 3.3.1 Item Correlation .......................................................................................... 18 3.3.2 K-Means Clustering & Elbow Method ......................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0011",
+      "index": 11,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "19 3.3.3 SKU Distribution Test ................................................................................ 20 3.3.4 SKU Classification ...................................................................................... 20 3.4 SKU Mixture ............................................................................................................. 23 3.5 Application of Dimensional Constraints .................................................................... 24 3.6 SKU Dispersion ........................................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0012",
+      "index": 12,
+      "page": 7,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "25 3.7 Simulation Configuration .......................................................................................... 26 3.7.1 Simulation Platform .................................................................................... 26 3.7.2 Simulation Layout ....................................................................................... 27 3.7.3 Simulation Parameter .................................................................................. 29 3.8 Hypothesis Test ......................................................................................................... 30 v CHAPTER 4 RESULT AND DISCUSSION................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0013",
+      "index": 13,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "32 4.1 Data Preprocessing .................................................................................................... 32 4.2 Data Analysis ............................................................................................................. 32 4.2.1 SKU Correlation Results ............................................................................. 32 4.2.2 K-Means Clustering & Elbow Method ....................................................... 33 4.2.3 SKU Distribution Results............................................................................ 35 4.2.4 Coefficient of Variation .............................................................................. 36 4.3 Minimum Inventory Level ......................................................................................... 37 4.4 Application of Dimensional Constraints ...................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0014",
+      "index": 14,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "38 4.5 Application of SKU Dispersion ................................................................................. 40 4.6 Simulation Result......................................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0015",
+      "index": 15,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "42 4.6.1 With Dimensional Constraints .................................................................... 43 4.6.2 Application of Dispersion ........................................................................... 44 4.7 Hypothesis Test ........................................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0016",
+      "index": 16,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "46 4.7.1 ANOVA Results for Scenarios under Dimensional Constraints ................ 46 4.7.2 ANOVA Results for Scenarios under Dimensional Constraints with Dispersion Policy ........................................................................................ 47 4.7.3 T-Test Results of Dispersion Policy Impact on Throughput and Pile -On Performance ................................................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0017",
+      "index": 17,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "48 CHAPTER 5 CONCLUSION ....................................................................................... 52 5.1 Conclusion ................................................................................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0018",
+      "index": 18,
+      "page": 8,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "52 5.2 Recommendation and Future Research ..................................................................... 53 REFERENCES ............................................................................................................... 55 vi LIST OF FIGURES Figure 1. 1 E-Commerce Logistics Market Size By Region [1] ...................................... 1 Figure 1. 2 Shelves In Amazon Warehouse [19] .............................................................. 3 Figure 1. 3 Workflow In Rmfs Warehouse [20] ............................................................... 3 Figure 2. 1 Amrs And Pods [31] ...................................................................................... 8 Figure 2. 2 Layout Of Rmfs Warehouse [10] ................................................................... 8 Figure 2. 3 Illustration Of Storage And Retrieval Process In Rmfs Warehouse [21] ...... 9 Figure 2. 4 The Relations Of Decision Problems In Rmfs [21] ..................................... 11 Figure 3. 1 Research Flowchart ...................................................................................... 17 Figure 3. 2 Data Preprocessing Pipeline ......................................................................... 18 Figure 3. 3 System Architecture ..................................................................................... 27 Figure 3. 4 Rmfs Layout In Netlogo Simulation Platform ............................................. 28 Figure 4. 1 Sku Distribution Across Clusters Using K-Means....................................... 34 Figure 4. 2 Sku Distribution Across Clusters Using K-Means....................................... 35 Figure 4. 3 Goodness-Of-Fit Test Result........................................................................"
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0019",
+      "index": 19,
+      "page": 9,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "36 Figure 4. 4 Proportion Of Skus By Demand Stability Class .......................................... 37 Figure 4. 5 Pod Configuration ........................................................................................ 39 Figure 4. 6 Anova Test Result For Throughput With Dimensional Constraints ............ 46 Figure 4. 7 Anova Test Result For Pile-On With Dimensional Constraints .................. 47 Figure 4. 8 Anova Test Result For Throughput With Dispersion Policy ....................... 48 Figure 4. 9 Anova Test Result For Pile-On With Dispersion Policy ............................. 48 Figure 4. 10 Paired T-Test Result For Throughput In Random Scenario ...................... 49 Figure 4. 11 Paired T-Test Result For Throughput In One Pod One Class Scenario ..... 49 Figure 4. 12 Paired T-Test Result For Throughput In One Pod Mix Class Scenario ..... 50 Figure 4. 13 Paired T-Test Result For Pile-On In Random Scenario ............................. 50 Figure 4. 14 Paired T-Test Result For Pile-On In One Pod One Class Scenario ........... 51 Figure 4. 15 Paired T-Test Result For Throughput In One Pod Mix Class Scenario ..... 51 vii LIST OF TABLES Table 2. 1 Related Studies On Storage Assignment Problem In RMFS ........................ 13 Table 3. 1 SKU Correlation Notations and Descriptions ............................................... 19 Table 3. 2 Elbow Method Notations and Descriptions ..................................................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0020",
+      "index": 20,
+      "page": 10,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "20 Table 3. 3 SKU Classification Notations and Descriptions ........................................... 21 Table 3. 4 SKU Classification Based on CV Value [49] ............................................... 22 Table 3. 5 Minimum Inventory Level Notations and Descriptions ................................ 22 Table 3. 6 Performance Metrics Sku Mixture Notations and Descriptions .................... 23 Table 3. 7 Dimensional Constraints Notations and Descriptions ................................... 25 Table 3. 8 Simulation Parameter Used in Rmfs Model .................................................. 29 Table 4. 1 Market Basket Analysis Test Results ........................................................... 33 Table 4. 2 WCSS for Varying K Values ....................................................................... 34 Table 4. 3 SKU Cluster Composition And Proportion .................................................. 35 Table 4. 4 SKU Classification Result ............................................................................ 37 Table 4. 5 Minimum Inventory Levels And Service Levels by SKU Class .................. 38 Table 4. 6 Compartment Allocation Results Based on Dimensional Constraints ......... 39 Table 4. 7 Pod Requirement for One Pod One Class Scenario ..................................... 40 Table 4. 8 Pod S Required and SKU Ratio for Mixed-Class Pod Scenario .................. 40 Table 4. 9 Sku Dispersion Policy Based on Cluster and CV Classification .................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0021",
+      "index": 21,
+      "page": 10,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "41 Table 4. 10 Pod Requirement for One Pod One Class Scenario with Dispersion ......... 42 Table 4. 11 Pod Requirement for One Pod Mix Class Scenario with Dispersion ......... 42 Table 4. 12 Throughput Results for Scenarios with Dimensional Constraints ............. 43 Table 4. 13 Pile-On Results for Scenarios with Dimensional Constraints .................... 44 Table 4. 14 Throughput Results for Scenarios with Dispersion Policy ........................ 44 Table 4. 15 Pile-On Results for Scenarios with Dispersion Policy ..............................."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0022",
+      "index": 22,
+      "page": 10,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "45 1 CHAPTER 1 INTRODUCTION 1.1 Background and Motivation The e -commerce sector has witnessed exponential growth in recent years, significantly reshaping global retail operations and consumer purchasing behaviors. As of 2024, the global logistics market for e-commerce is estimated at approximately USD 500.76 billion, with projections estimating a rapid increase to USD 609.59 billion in 2025, and exceeding USD 3.7 trillion by 2034, reflecting a compound annual growth rate (CAGR) of 22.3% [1]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0023",
+      "index": 23,
+      "page": 11,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This surge of expansion is primarily driven by the rising demand for fast, accurate, and technology-supported logistics services, especially in the B2C segment. The evolution of this market is illustrated in Figure 1.1, which shows the projected regional growth of e -commerce logistics from 202 0 to 2034, highlighting the dominant role of North America and the fast -growing influence of Asia Pacific. Figure 1. 1 E-Commerce Logistics Market Size by Region [1] In addition to major e -commerce players like Amazon, a growing number of department stores and supermarkets have also provided online shopping platforms. This widespread shift has significantly expanded the scale of distribution centers and delivery operations [2]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0024",
+      "index": 24,
+      "page": 11,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This rapid rise of e-commerce has been significantly accelerated by the COVID - 19 pandemic, which acted as a major catalyst for digital transformation in the retail sector. Widespread lockdowns and social distancing policies compelled many bric k 2 and mortar retailers to temporarily shut down physical stores, prompting an urgent shift toward digital commerce and technology-driven fulfillment solutions."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0025",
+      "index": 25,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This shift led to the rapid adoption of systems such as online ordering, click-and-collect services, and robotics -assisted operations to maintain continuity in order fulfillment under restrictive conditions [3], [4]. Prior to the pandemic, traditional e-commerce fulfillment relied heavily on manual labor for handling and processing orders [5]. However, as demand surged and efficiency requirements grew more stringent, many warehouses began transitioning toward automation [6]. Recent advancements in robotics have enabled the emergence of hybrid fulfillment models that combine human labor with autonomous agents, improving accuracy, scalability, and responsiveness [7], [8]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0026",
+      "index": 26,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This transition toward automation has fundamentally transformed the logistics and warehousing landscape, but it has also introduced new operational challenges. Modern e-commerce warehouses must now cope with a large assortment of SKUs, frequent small-batch orders, strict delivery windows, and highly variable workloads throughout the day [9]. One of the most labor-intensive and costly operations within a warehouse is order fulfillment, particularly the order picking process , the retrieval of items to complete customer orders which accounts for 55% of the total warehouse operating expenses [10], [11], [12] . Moreover, o nly about 40% of direct labor activities are devoted to productive tasks like loading, unloading, stocking, and picking, whereas the remaining 60% is primarily spent on unproductive travel within the warehouse [13]. Due to these rising complexities of e -commerce orders, traditional manual picking systems struggle to maintain efficiency. As a result, many warehouses have started integrating automation technologies, such as Robotic Mobile Fulfillment Systems, to optimize operations. Wurman et al."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0027",
+      "index": 27,
+      "page": 12,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[14] introduced a pioneering approach to warehouse automation, proposing the use of autonomous mobile robots to transport storage units, later termed “pods”, to designated locations known as “workstations,” where human operators complete the picking process. This innovative system, which became widely known as the Kiva system, laid the foundation for a new generation of robotic fulfillment solutions [15], [16]. Since its initial deployment by Kiva systems in 2012 [17], the Robotic Mobile Fulf illment System has gained widespread adoption in global e - commerce warehouses. Leading companies such as Amazon, Walgreens, Staples, 3 JD.com, and Alibaba’s Cainiao Network have integrated RMFS into their order fulfillment operations to enhance efficiency and scalability [18]. Figure 1. 2 Shelves in Amazon Warehouse [19] Figure 1. 3 Workflow in RMFS Warehouse [20] The components within RMFS are highly interdependent, creating a complex operational environment. While the system offers massive improvements over traditional warehousing methods, it also introduces a range of decision -making problems."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0028",
+      "index": 28,
+      "page": 13,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Research on RMFS ha s predominantly focused on addressing various optimization, assignment, and scheduling problems to enhance overall system performance [21]. While the optimization of RMFS has been extensively investigated by scholars in recent years, research on categorized storage remains limited."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0029",
+      "index": 29,
+      "page": 13,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Current studies primarily focus on improving robot routing, order sequencing, and pod retrieval 4 strategies, yet t he fundamental problem of efficient SKU allocation to storage locations has not received the same level of attention. In RMFS warehouses, the way SKUs are assigned to pods significantly impacts retrieval efficiency, system throughput, and overall warehouse performance [2]. A poorly optimized SKU allocation strategy may lead to excessive pod retrievals , higher energy consumption and longer order fulfillment time. Another critical issue in SKU-to-pod assignment is pile-on efficiency, which refers to the number of items that can be picked from a single pod visit. In an optimized RMFS, frequently co -ordered SKUs should be stored together in the same pod to reduce the number of pod retrievals per order [22]. Poor SKU placement disrupts this balance, forcing robots to retrieve multiple pods for a single order. Consequently, retrieval delays increase, fulfillment speeds decline, and warehouse throughput is negatively affected."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0030",
+      "index": 30,
+      "page": 14,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In light of these challenges, this research specifically investigates the issue of SKU allocation in RMFS warehouses, aiming to assign SKUs to pods in a way that maximizes order throughput and pile -on. By leveraging historical order data , specifically SKU order frequency , order quantity and dimensional constraints, this study seeks to develop a storage assignment optimization model that enhances picking efficiency and operational performance. 1.2 Objective The primary objective of this research is to develop an effective SKU allocation strategy for Robotic Mobile Fulfillment Systems (RMFS) t hat enhances storage efficiency and order fulfillment performance. Specifically, this study aims to: 1. Increase order throughput by designing a SKU-to-pod assignment approach that reduces pod retrieval delays and supports continuous picking operations. 2. Improve pile-on efficiency by grouping frequently co-ordered SKUs within the same pod to maximize the number of items that can be picked from a single pod visit. 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0031",
+      "index": 31,
+      "page": 14,
+      "section": "3. Enhance space utilization by applying a categorized storage method that groups",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Enhance space utilization by applying a categorized storage method that groups SKUs systematically based on order frequency, demand stability, and physical compatibility. 5 By achieving these goals, this study contributes to the advancement of storage allocation strategies in RMFS environments. It addresses the current research gap in categorized SKU placement and provides practical insights for warehouse managers aiming to improve space usage, fulfillment speed, and overall system efficiency in automated warehouses."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0032",
+      "index": 32,
+      "page": 15,
+      "section": "3. Enhance space utilization by applying a categorized storage method that groups",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1.3 Scope and Limitations This study is conducted within a defined scope and under specific assumptions, described as follows: • The primary focus in this study is on small order sizes with multi-item orders typical of e-commerce fulfillment. Large bulk orders are excluded from this study and are assumed to be handled at separate warehouse facilities. • This study focuses exclusively on the SKU-to-pod assignment policy within warehouse operations. Other key processes, such as order -to-station assignment (POA – Pick Order Assignment) and pod -to-station assignment (PPS – Pick Pod Selection), dynamic replenishment, and robot routing are handled using brute-force methods rather than optimized algorithms. • The data used for simulation is ad apted from actual cases, with the study modeling a total of 7,024 unique SKUs to reflect a realistically large SKU range. • All SKUs, including those with low demand, are assumed to be stored in the warehouse. Each pod is designed with multiple compartments, and each compartment can contain only a single type of SKU. • The Autonomous Mobile Robots (AMRs) modeled in this study are assumed to perform both picking and replenishment tasks . However, the assignment of of AMRs to specialized task are beyond the scope of this work. Additionally, this study does not address the battery charging or management aspects of AMR operations. • It is assumed that the replenishment station always maintains adequate inventory levels to meet replenishment demand, ensuring that SKUs are always available when required during pod replenishment process. • The warehouse environment is modeled using an Agent -Based Modeling (ABM) approach implemented in NetLogo. The simulation integrates Python 6 for optimization tasks and u ses Excel for data management and storage of simulation results."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0033",
+      "index": 33,
+      "page": 16,
+      "section": "3. Enhance space utilization by applying a categorized storage method that groups",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1.4 Organization of Thesis This study is organized into five chapters, each addressing a specific aspect of the research process. The organization of the study are as follows: Chapter 1: Introduction - introduces the research topic, background, motivation, objectives, scope, and limitations. Chapter 2: Literature Review - reviews existing studies on Robotic Mobile Fulfillment Systems, storage allocation methods, and identifying research gaps. Chapter 3: Methodology - describes the research flowchart, data collection and analyzing processes, optimization techniques, and model development approach used in the study. Chapter 4: Result and Discussion - presents the performance evaluation of the model using metrics like pod retrieval frequency, space utilization, and pile -on efficiency, along with an analysis of findings. Chapter 5: Conclusion - summarizes the key findings, contributions, and limitations, and suggests future research directions for further improvement."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0034",
+      "index": 34,
+      "page": 17,
+      "section": "3. Enhance space utilization by applying a categorized storage method that groups",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "7 CHAPTER 2 LITERATURE REVIEW 2.1 Robotic Mobile Fulfillment System (RMFS) Robotic Mobile Fulfillment Systems have emerged as a transformative innovation in warehouse logistics, particularly within the e-commerce sector. Unlike traditional picker-to-parts systems where workers walk through aisles to retrieve items [23], RMFS follows a parts-to-picker approach, where autonomous mobile robots transport storage units called pods, directly to human -operated or automated picking stations [20]. Several studies have shown that incorporating RMFS into warehouse systems can significantly cut down picker travel time, making higher picking rates more doable compared to traditional warehouse setups [24]. Today, RMFS is widely adopted by leading companies such as Alibaba, JD.com, and Cainiao, significantly improving warehouse productivity and cost efficiency [25], [26], [27]. In RMFS, the core components include: 1."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0035",
+      "index": 35,
+      "page": 17,
+      "section": "1. Pods: Movable shelves that store various Stock Keeping Units [28]. Each pod",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Pods: Movable shelves that store various Stock Keeping Units [28]. Each pod consists of multiple compartments designed to hold items of different sizes and categories. A single pod may carry several types of products, depending on the SKU -to-pod assignment strategy adopted. When a pick or replenishment order is generated, the system identifies the appropriate pod(s) containing the required SKUs and instructs a robot to fetch them. 2."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0036",
+      "index": 36,
+      "page": 17,
+      "section": "2. Autonomous Mobile Robots (AMRs): battery-powered robots that are capable",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Autonomous Mobile Robots (AMRs): battery-powered robots that are capable of navigating warehouse environments using a grid of waypoints and pre - defined paths [29]. Each robot is equipped with a lifting mechanism that allows it to move underneath a pod, lift it, and carry it to the designated workstation [30]. Once the task is completed, the robot returns the pod to an optimized storage location based on inventory rules. Advanced RMFS platforms use intelligent robot scheduling and path planning algorithms to avoid congestion, prevent deadlocks, and minimize travel distances. 8 Figure 2. 1AMRs and Pods [31] 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0037",
+      "index": 37,
+      "page": 18,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Workstations: Areas where workers perform pod -related tasks such as replenishment, picking, and packing [32]. There are two main types: picking stations and replenishment stations. At a picking station, workers retrieve items from the pod to fulfill customer orders. For replenishment, the robot delivers a pod to a replenishment station where new inventory is added to maintain stock levels. Figure 2. 2 Layout of RMFS Warehouse [10] 9 When a customer order enters the system, it is first assigned to an available picking station."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0038",
+      "index": 38,
+      "page": 19,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "To fulfill the order, AMRs are dispatched to retrieve pods that contain the required SKUs from the storage area. These pods are then delivered directly to the assigned picking station, allowing workers to efficiently pick the necessary items without navigating through warehouse aisles [28]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0039",
+      "index": 39,
+      "page": 19,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "If the inventory level of a particular SKU within a pod falls below a predefined threshold, the system automatically schedules the pod for replenishment. In such cases, an AMR transports the pod to a replenishment station, where stock levels are restored before the pod is returned to storage or reused for future pic king tasks. This seamless flow between picking and replenishment enhances operational efficiency and supports continuous order processing. The workflow in an RMFS warehouse is depicted in Figure 2.3. Figure 2."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0040",
+      "index": 40,
+      "page": 19,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3 Illustration of Storage and Retrieval Process in RMFS Warehouse [21] 2.2 Decision Problem in RMFS Merschformann et al. [21] structured the decisions problems in RMFS into several levels of warehouse operation, with each influencing different aspects of system performance."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0041",
+      "index": 41,
+      "page": 19,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "These decisions are categorized into three main levels: strategic, tactical, and operational, each with distinct objectives and time periods. Strategic level decisions are made during the construction phase of the warehouse and have long -term implications."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0042",
+      "index": 42,
+      "page": 19,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "At this stage, one of the key considerations is workstation placement, which involves deciding where to p osition picking and replenishment stations in relation to the storage area. Another important factor is storage area dimensioning, which includes determining the overall size of the storage space, how it’s divided into zones, and how aisles are arranged. 10 Tactical decisions in an RMFS are typically made at the beginning of an operational period, such as the start of a workweek, workday or shift. These decisions involve determining number of pods per SKU, ratio of pick and replenishment stations, replenishment level, and resource reallocation."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0043",
+      "index": 43,
+      "page": 20,
+      "section": "3. Workstations: Areas where workers perform pod -related tasks such as",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "These tactical decisions help the system stay agile and responsive to short -term changes, ensuring smooth operations throughout the day or week. Operational-level decisions are executed in real time and directly govern the flow of robots, pods, and orders. These are the most dynamic and data-driven decisions in an RMFS and are divided into four main components: 1. Order Assignment (OA) decides which station will handle each incoming order. - Pick Order Assignment (POA): Assign s customer orders to picking stations. - Replenishment Order Assignment (ROA): Assigns replenishment tasks to available replenishment stations. 2. Task Creation (TC) involves transforming those assigned orders into specific robot tasks. - Pick Pod Selection (PPS) : Choosing which pod to bring to fulfil picking orders. - Replenishment Pod Selection (RPS): Selecting a pod with available space to store incoming inventory - Pod Storage Assignment (PSA): Deciding where to place a pod after it completes a task, with goals of minimizing future travel and balancing access. 3. Task Allocation (TA) deciding where to place a pod after it completes a task, with goals of minimizing future travel and balancing access. 4. Path Planning (PP) deciding where to place a pod after it completes a task, with goals of minimizing future travel and balancing access. 11 Figure 2."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0044",
+      "index": 44,
+      "page": 21,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4 The Relations of Decision Problems in RMFS [21] Effectively addressing these decision problems through well -designed rules and coordinated strategies enables RMFS to operate with high efficiency and reliability. Integrated decision-making is essential to optimize throughput, reduce delays, and ensure timely and accurate order fulfilment, ultimately contributing to superior system performance and customer satisfaction. Storage Assignment Problem In Robotic Mobile Fulfillment Systems, the storage assignment problem is a critical decision problem in tactical level [21], significantly impacting the operational efficiency and throughput of fulfillment operations. It involves assigning SKUs to appropriate pods in a manner that enhances overall picking performance, reduces robot travel time, and improves system responsiveness."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0045",
+      "index": 45,
+      "page": 21,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Unlike traditional warehouses where items are placed in fixed racks and retrieved manually, RMFS involves dynamic inventory storage and retrieval facilitated by AMRs, making storage decisions more complex and interdependent with system-wide performance factors. A number of studies have investigated SAP in RMFS settings by focusing on SKU correlation and clustering -based placement strategies."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0046",
+      "index": 46,
+      "page": 21,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "For instance, Kim et al. [33] and Li et al. [34] explored storage assignment strategies that aim to maximize the correlation degree among SKUs, grouping frequently co-ordered items together in the same pods to reduce the number of pod visits per order. Mirzaei et al. [35] expanded on this approach by proposing an integrated cluster allocation policy that accounts for both item correlation and turnover rates. Similarl y, Yang [36] emphasized item similarity as a basis for storage location assignment. However, all the 12 abovementioned studies operate under the constraint that each SKU is assigned to only one pod or group, a design that may limit flexibility and reduce opportunities for optimization under dynamic order scenarios."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0047",
+      "index": 47,
+      "page": 22,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In contrast, recent studies have introduced scattered storage as a more flexible and efficient strategy. In this model, a single SKU can be stored across multiple pods, thereby significantly enhance picking efficiency and is suitable for RMFS warehouse. Xiang et al. [37] using historical order data addressed the small -scale item storage assignment problem under the scattered storage method and solved it using a CPLEX solver. Mirzaei et al."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0048",
+      "index": 48,
+      "page": 22,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[22] proposed a correlated dispersion storage policy that integrates SKU correlation, turnover frequency, and dispersion across pods. This approach improves picking performance by ensuring that items with high co - occurrence and turnover rates are accessible f rom multiple pods without excessive redundancy. Ma et al."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0049",
+      "index": 49,
+      "page": 22,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "[10] added a classification layer, distinguishing between bestselling and general -selling items. Their model incorporated item classification alongside correlation and scattered storage considera tions to devise a more comprehensive storage policy. Zhang et al. [38] further enriched the literature by accounting for human factors. Their research considered picking efficiency and pickers’ physical effort. A more detailed comparison of previous studies on the storage assignment problem is presented in Table 2.1."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0050",
+      "index": 50,
+      "page": 22,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, despite the valuable contributions, a critical limitation remains across all the aforementioned studies: they did not explicitly consider the physical dimensions of SKU s and the size constraints of compartments within pods when assigning SKUs to storage locations. In real-world RMFS environments, each pod is divided into compartments with fixed geometrical capacities, and SKUs vary in size and shape. Ignoring these crucial constraints can lead to theoretically optimal storage policies that are infeasible in practice."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0051",
+      "index": 51,
+      "page": 22,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "As such, solutions derived without considering volume fitting, dimension compatibility, and slot availability may not translate well into operational setting s. Bridging this gap requires integrating physical feasibility checks into the storage assignment logic to ensure that assigned SKUs can actually be placed in the intended compartments. 13 Table 2. 1 Related Studies on Storage Assignment Problem in RMFS Author (Year) Storage Assignment Problem SKU Classification SKU to Pod Assignment Item Turnover Order Frequency Item Correlation One SKU one storage location Scattered Storage Mixture Dimensional Constraints X. Li, G. Hua, A. Huang, J.- B. Sheu, T."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0052",
+      "index": 52,
+      "page": 23,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "layout_fragment"
+      ],
+      "text": "C. E."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0053",
+      "index": 53,
+      "page": 23,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Cheng, and F. Huang (2020) [34] ✓ ✓ H.-J. Kim, C. Pais, and Z. M. Shen (2020) [33] ✓ ✓ M. Mirzaei, N. Zaerpour, and R. de Koster (2021) [35] ✓ ✓ ✓ T. Lamballais, D. Roy and M. De Koster (2017) [39] ✓ ✓ F. Weidinger and N. Boysen (2018) [40] ✓ ✓ M. Mirzaei, N. Zaerpour and R. B. de Koster (2022) [22] ✓ ✓ ✓ Z. Ma, G. Wu, B."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0054",
+      "index": 54,
+      "page": 23,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Ji, L. Wang, Q. Luo and X. Chen (2022) [10] ✓ ✓ ✓ ✓ R. Li, X. Deng and Y."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0055",
+      "index": 55,
+      "page": 23,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "Ma (2024) [26] ✓ ✓ ✓ ✓ This Study ✓ ✓ ✓ ✓ ✓ ✓ 14 2.3 Item Correlation Item correlation is widely recognized as a crucial concept in modern warehouse optimization and plays an important role in solving the storage assignment problem within Robotic Mobile Fulfillment Systems. As highlighted in the previous subchapter, many recent studies (see Table 2.1) use item correlation to improve SKUto-pod assignment strategies."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0056",
+      "index": 56,
+      "page": 24,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "When products with high correlation are placed together within the same pod, they are more likely to be appeared together in a single order [41]. This increases the number of items that can be retrieved in a single pod trip, thereby reducing the overall number of pod visits required to complete order fulfillment. By understanding how products are frequently ordered together, researchers and practitioners can identify meaningful relationships that helps clustering, scattered storage policies, and mixed storage configurations. This data-driven perspective helps RMFS warehouses boost picking efficiency, reduce unnecessary robot travel, and adapt dynamically to changing demand patterns."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0057",
+      "index": 57,
+      "page": 24,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Market Basket Analysis is one of the most widely applied techniques for uncovering these item relationships that associated with customer buying behaviour [42]. MBA relies on Association Rule Mining to analyze transaction data, detecting which items appear together in customer orders. Studies such as Ünvan [43] demonstrate that robust algorithms like Apriori and FP-Growth can effectively reveal strong correlations between SKUs. These patterns can then be used to group ite ms with high co-occurrence, ultimately improving layout and storage allocation decisions in practice. The strategic impact of understanding item correlation extends beyond simple pairings. Kumar et al. [44] emphasize that recognizing hidden interdependencies among SKUs enables companies to design smarter replenishment rules and cross - selling opportunitie s, while Sajwan and Tripathi [45] show that a comprehensive MBA framework can illuminate the more complex interdependencies in shopping baskets, allowing companies to tailor promotions, manage stock levels, and even redesign store layouts to reflect actu al buying behavior. Their study underscores the potential of ARM for generating strategic business insights, rather than treating it solely as a technical data mining task."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0058",
+      "index": 58,
+      "page": 24,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In the context of RMFS, association rules hold particular value for SKU -to-pod assignment and storage design. By identifying frequently co -ordered items, 15 warehouse managers can cluster highly correlated SKUs within the same pods or strategically disperse them to balance picking efficiency and travel distance. The insights gained through ARM thus align closely with broader warehouse optimization goals, including increase order throughput and pile-on."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0059",
+      "index": 59,
+      "page": 25,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "2.4 SKU Classification Effective SKU classification is a fundamental component in optimizing storage strategies within RMFS. As modern warehouse s handle thousands of diverse SKUs with varying demand patterns, dimensions, and turnover rates, classifying SKUs appropriately enables more intelligent decisions in storage assignment, order picking, and replenishment planning. By grouping SKUs based on s hared attributes such as demand frequency, volatility, or co -occurrence in orders, RMFS can achieve higher picking efficiency and reduce unnecessary pod movements. Several studies have highlighted the importance of SKU classification in improving warehouse performance, such as reduce pick travel distance and enhance throughput. Yuan et al. [46] investigated pod assignment strategies in RMFS by comparing random, class -based, and turnover -based approaches."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0060",
+      "index": 60,
+      "page": 25,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Their findings indicate that class -based storage u sing two or three categories captures most of the potential advantages , with having more variation . Muppani and Adil [13] demonstrated that implementing a class -based storage policy, which groups SKUs with similar demand patterns, can reduce both order picking distance and required storage space. This approach improves space utilization and helps ensure that high - turnover products are stored in more accessible locations. Another study by Mirzaei et al."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0061",
+      "index": 61,
+      "page": 25,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[22] demonstrated that combining turnover -based, correlation -based, and dispersed storage strategies in robotic warehouses can lead to significant cost savings and reduce oper ational time. By aligning SKU placement with both demand frequency and product correlations, and distributing inventory across multiple pods, warehouses can reduce retrieval effort, limit pod congestion, and improve order fulfillment efficiency."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0062",
+      "index": 62,
+      "page": 25,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This integ rated approach minimizes unnecessary robot travel and redundant handling, resulting in lower operational costs. 2.5 Coefficient of Variation (CV) In order to effectively manage inventory and improve storage assignment in Robotic Mobile Fulfilment Systems, it is important to recognize that not all SKUs 16 behave the same in terms of demand."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0063",
+      "index": 63,
+      "page": 26,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "One way to capture this variability is through the Coefficient of Variation, a statistical measure that measures the ratio of the standard deviation to the mean of a data set [47]. The coefficient of variation is widely used across various fields such as agriculture, industry, healthcare, social sciences, and education, serving multiple research and analytical purposes [48]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0064",
+      "index": 64,
+      "page": 26,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In the context of inventory and warehouse manageme nt, CV serves as a normalized indicator to quantify the volatility of SKU demand, providing a solid foundation for setting differentiated inventory and storage allocation policy. In an RMFS environment, where storage space is mobile and dynamic, understanding the volatility of SKU demand is essential for optimizing SKU -to-pod assignments. This study applies CV as a decision variable to determine the inventory service level and the dispersion strategy for each SKU."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0065",
+      "index": 65,
+      "page": 26,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "SKUs with low CV values typically show stab le and predictable demand. In contrast, SKUs with higher CV values tend to display irregular or intermittent demand."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0066",
+      "index": 66,
+      "page": 26,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The relevance of using CV for classification has been well -established across various fields. For example, the ABC -XYZ classification fram ework, which combines demand quantity (ABC) with demand variability (XYZ), applies the CV as a core measure to distinguish between stable (X class), moderately variable (Y-class), and highly erratic (Z class) items [49]. This combined approach helps companies align their inventory control and replenishment strategies with the real patterns of order. Beyond warehousing, the value of CV as a simple yet robust analytical tools has also been demonstrated in fields such as agricultural monitoring, where it was used to classify cropland areas across diverse climates based on temporal backscatter data [50]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0067",
+      "index": 67,
+      "page": 26,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Taken together, these examples highlight that integrating CV into SKU analytical tools enables more responsive, data-driven storage and inventory decisions, ultimately supporting higher picking efficiency and system throughput in RMFS operations. 17 CHAPTER 3 METHODOLOGY 3.1 Research Flowchart This study aims to develop an effective SKU to pod assignment strategy that improves picking efficiency in a RMFS warehouse. The methodology consists of several systematic stages, beginning with problem identification and data preprocessing, followed by SK U classification and compartment matching with and without dimensional constraints, and concluding with performance evaluation through simulation with NetLogo. The flowchart below illustrates the overall research process, including both the analytical and simulation components used to design, implement, and evaluate the proposed SKU placement approach. Figure 3. 1 Research Flowchart 18 3.2 Data Preprocessing This study utilizes a real -world dataset consisting of 321,382 historical c ustomer orders with 10,321 unique SKUs. Initial data cleaning is conducted using Python to eliminate duplicate data and ensure data consistency. Following data preprocessing, SKUs with physical dimensions exceeding the available compartment sizes are identified and excluded from further analysis. These oversized items are assumed to be handled in a separate warehouse equipped with larger storage facilities."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0068",
+      "index": 68,
+      "page": 28,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In parallel, the order dataset is examined to identify purchase requests whose quantities surpass the maximum handling capacity of picking stations. These large - quantity orders are designated for split-order processing in an alternative warehouse."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0069",
+      "index": 69,
+      "page": 28,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The result of this preprocessing phase is a refined dataset containing only small to medium demand SKUs, all of which are compatible with the dimensional and capacity constraints of the warehouse environment. The overall data preprocessing procedure is illustrated in Figure 3.2. Figure 3. 2 Data Preprocessing Pipeline 3.3 Data Analysis A comprehensive data analysis was conducted to examine the characteristics and order patterns of the SKUs used in the RMFS. This step ensures that the input data accurately reflects real -world inventory profiles and supports the validity of the simulation results."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0070",
+      "index": 70,
+      "page": 28,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.3.1 Item Correlation In this study, a Market Basket Analysis approach is applied to assess the correlation among SKUs based on historical order data, the analysis was conducted using the Apriori algorithm. MBA is a data mining technique widely used in retail to uncover associations between items purchased together [51]."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0071",
+      "index": 71,
+      "page": 28,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "It helps identify item sets that frequently co -occur within a single order, providing valuable insights for 19 optimizing SKU-to-pod placement. The key measures used in this ana lysis include support, confidence, lift, and the Jaccard index: - Support (S) measures how frequently a particular itemset appears in the dataset [52], see Equation 3-1. - Confidence (C) indicates the likelihood that an item B is purchased when item A is purchased [53], see Equation 3-2. - Lift (L) quantifies the strength of the association between items by comparing the observed co-occurrence with the expected co-occurrence if the items were independent. A lift greater than 1 indicates a positive correlat ion [54], see Equation 3-3. Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0072",
+      "index": 72,
+      "page": 29,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1 SKU Correlation Notations and Descriptions Notations Descriptions 𝐴, 𝐵 Distinct SKUs being analyzed for correlation 𝑇 Total set of transactions (orders) |𝐴| Number of transactions containing SKU A |𝐵| Number of transactions containing SKU B |𝐴 ∩ 𝐵| Number of transactions containing both SKUs A and B 𝑆(𝐴) Support of SKU A 𝐶(𝐴 → 𝐵) Confidence that SKU B is ordered given that SKU A is ordered 𝐿(𝐴 → 𝐵) Lift of the association rule from A to B Formulation: 𝑆(𝐴) = |𝐴| |𝑇| (1) 𝐶(𝐴 → 𝐵) = 𝑆(𝐴 ∩ 𝐵) 𝑆(𝐴) = |𝐴 ∩ 𝐵| |𝐴| (2) 𝐿(𝐴 → 𝐵) = 𝐶(𝐴 → 𝐵) 𝑆(𝐵) = |𝐴 ∩ 𝐵| . |𝑇| |𝐴| . |𝐵| (3) 3.3.2 K-Means Clustering & Elbow Method This study combines K -Means clustering and Elbow method to determine the number of SKU classes. K-means is a clustering algorithm that partitions data into K distinct groups by minimizing the distance between each data point and the center (centroid) of it s assigned cluster [55]. Before applying the K -means algorithm, one 20 important consideration is selecting an appropriate value for the number of clusters (K)."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0073",
+      "index": 73,
+      "page": 30,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "One commonly used technique for determining this value is the Elbow method. The elbow method identifies the optimal K by analyzing a graph that plots the Within-Clusters Sum of Squared (WCSS) against different K values (see Equation (3- 4)) [56]. The ideal point is typically located at the \"elbow\" of the curve, where the SSE begins to level off. This point represents the best number of clusters to use. Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0074",
+      "index": 74,
+      "page": 30,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "2 Elbow Method Notations and Descriptions Notations Descriptions 𝐾 Number of clusters formed 𝐶𝑖 The i-th cluster x The data presents in each cluster 𝑊𝐶𝑆𝑆 = ∑ ∑ ||𝑥𝑖 − 𝐶𝐾||2 2 𝑥𝑖∈𝑆𝐾 𝐾 𝐾=1 (4) 3.3.3 SKU Distribution Test A distribution test was conducted to examine the demand characteristics of each SKU based on historical order frequency patterns. This analysis provides a statistical foundation for accurately representing SKU demand variability within the simulation model. This test used order data collected over 21 consecutive days."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0075",
+      "index": 75,
+      "page": 30,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "The results of this distribution test will be used for SKU classification, which will be fu rther explained in sub-chapter 3.3.3. To identify the most appropriate probability distribution for each SKU, goodnessof-fit tests were conducted on the order frequency data to determine whether the distribution followed a normal or Poisson pattern."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0076",
+      "index": 76,
+      "page": 30,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.3.4 SKU Classification SKU classification was performed to evaluate the demand stability of each SKU providing critical input for developing an effective replenishment strategy within the warehouse. This classification enables the system to differentiate between p roducts with stable, predictable demand and those with more variable or intermittent order patterns. The classification process began by calculating the mean and standard deviation of each SKU’s using the appropriate statistical formulas according to its distribution, 21 see Equation (3 -5) to (3 -8). This ensures that the variability measures accurately reflect the underlying demand characteristics identified in the distribution test (see sub-chapter 3.3.2). Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0077",
+      "index": 77,
+      "page": 31,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3 SKU Classification Notations and Descriptions Notations Descriptions 𝜇 Mean 𝜎 Standard deviation N Number of days 𝑓𝑖 Order frequency for the i time period 𝑓̅ Mean order frequency 𝜆 Rate parameter Normal Distribution: 𝜇 = 1 𝑁 ∑ 𝑓𝑖 𝑁 𝑖=1 (5) 𝜎 = √1 𝑁 ∑(𝑓𝑖 − 𝑓̅) 2 𝑁 𝑖=1 (6) Poisson Distribution: 𝜇 = 𝜆 (7) 𝜎 = √𝜆 (8) Subsequently, the Coefficient of Variation (CV) was computed for each SKU by dividing the standard deviation by the mean, see Equation (3 -9). The CV serves as a normalized indicator of demand variability, allowing direct comparison across SKUs with differing order frequencies and distribution types. 𝐶𝑉 = 𝜎 𝜇 (9) Based on the calculated CV values, SKUs were categorized into three distinct demand classes: 22 Table 3. 4 SKU Classification Based on CV Value [49] Class CV Value Description 0 CV ≤ 0.5 Stable Demand. SKUs with low CV values, indicating consistent and predictable order patterns. 1 0.5 < CV ≤ 1 Volatile Demand: SKUs with moderate CV values, reflecting variable but regular demand. 2 CV > 1 Intermittent Demand: SKUs with high CV values, signifying sporadic and unpredictable ordering behavior."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0078",
+      "index": 78,
+      "page": 32,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This classification provides a practical policy for prioritizing inventory management and replenishment policies according to the demand stability of each SKU, ultimately supporting more eff icient warehouse operations and inventory control. After classifying the SKUs into three classes, the minimum inventory level is determined using the formula presented in Equation (3 -10) [57] This calculation establishes the proportion of inventory for e ach class."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0079",
+      "index": 79,
+      "page": 32,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The purpose of identifying minimum stock levels is to maintain effective inventory control and minimize operational costs by preventing overstocking. Since each class exhibits varying degrees of demand stability, an appropriate service level is assigned to each, reflecting its unique characteristics. Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0080",
+      "index": 80,
+      "page": 32,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "5 Minimum Inventory Level Notations and Descriptions Notations Descriptions 𝑋̅𝐷 Daily demand average 𝜎𝐷 Demand standard deviation 𝐿 Lead time 𝑍𝑆𝐿 Service level 𝑀𝑖𝑛𝑖𝑚𝑢𝑚 𝐼𝑛𝑣𝑒𝑛𝑡𝑜𝑟𝑦 𝐿𝑒𝑣𝑒𝑙 = 𝑋̅𝐷 + (𝜎𝐷√𝐿. 𝑍𝑆𝐿) (10) 23 3.4 SKU Mixture The objective of SKU mixture policy is to determine the optimal combination of SKUs within pods to maximize system throughput and increase the pile-on rate in the warehouse, see Equation (3 -11) and (3 -12). In this study, the SKU mixture design follows a scattered storage policy, which enables the same SKU to be stored across multiple pods or compartments, increasing the likelihood of satisfying diverse orders. Several studies have demonstrated the operational advantages of distributing identical SKUs across multiple locations, including Jiang et al."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0081",
+      "index": 81,
+      "page": 33,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[1], Onal et al. [2], Zhang et al. [3], and Weidinger and Boysen [4]. Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0082",
+      "index": 82,
+      "page": 33,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "6 Performance Metrics SKU Mixture Notations and Descriptions Notations Descriptions 𝑍1 Order Throughput 𝑍2 Pile-on 𝑂𝑓 Number of order finished 𝑂𝑇 Total number of orders 𝐼𝑝 Number of items picked 𝑃𝑣 Number of pod visits Objectives: 𝑀𝑎𝑥 𝑍1 = 𝑂𝑓 𝑂𝑇 (11) 𝑀𝑎𝑥 𝑍2 = 𝐼𝑝 𝑃𝑣 (12) In this study, three product mixture scenarios are considered to evaluate the impact of different allocation strategies on system performance: a. Random placement (baseline) The random mixture strategy is implemented as the baseline for SKU to pod assignment. SKUs are distributed randomly across available pods without considering their demand classification. In many studies, Random Storage Assignment Policy (RSAP) is regarded as a reference point for assessing alternative allocation strategies [10]. This neutral setup provides a reference point for comparing the effectiveness of more structured SKU placement methods. 24 b. One pod one class Each pod is assigned SKUs belonging to a single classification group. This method aims to align picking operations with SKU stability, potentially simplifying replenishment and retrieval processes. c."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0083",
+      "index": 83,
+      "page": 34,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "One pod mix class Each pod contains a mix of SKUs from different classification grou ps. This diversified allocation increases the probability that a single pod can fulfill a wider range of order lines, thereby improving the pile -on rate and reducing the total number of pod movements required for order fulfillment."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0084",
+      "index": 84,
+      "page": 34,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "By analyzing these three SKU mixture scenarios, this study aims to identify the configuration that best balances inventory management complexity with operational efficiency, ultimately supporting higher throughput and pile-on. 3.5 Application of Dimensional Constraints In this study, dimensional constraints are explicitly applied to ensure that the SKU to compartment assignment is physically feasible and operationally realistic."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0085",
+      "index": 85,
+      "page": 34,
+      "section": "4. Path Planning (PP) deciding where to place a pod after it completes a task,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In real RMFS operations, pods are divided into compartments with fixed geometrical capacities, and SKUs vary significantly in their dimensions and packaging shapes. By applying dimensional constraints during the storage assignment process, the system aims to achieve more compact SKU allocation, thereby minimizing the total number of pods required to satisfy inventory requirements. A structured procedure is implemented to identify the optimal placement of SKUs and to determine the most suitable pod and compartment type, while ensuring that dimensional constraints are satisfied: 1. Dimension sorting: each SKU’s and compartment’s dimensions are sorted into longest, second longest, and shortest sides. This standardization ensures consistent orientation when evaluating fit within compartments. 2."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0086",
+      "index": 86,
+      "page": 34,
+      "section": "2. Fit assessment: for each SKU, the fit is checked across five predefined types of",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Fit assessment: for each SKU, the fit is checked across five predefined types of compartments. The maximum quantity that can be stored within each compartment type is then calculated based on the SKU’s physical dimensions and the capacity of the compartment. 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0087",
+      "index": 87,
+      "page": 34,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Maximum capacity and inventory level comparison: the calculated maximum capacity for each SKU to compartment pair is compared with the SKU’s minimum required inventory level. This comparison ensures that the selected storage 25 configuration can support operational replenishment needs without exceeding compartment constraints. Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0088",
+      "index": 88,
+      "page": 35,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "7 Dimensional Constraints Notations and Descriptions Notations Descriptions 𝐿𝑖1 Longest dimension of SKU i 𝐿𝑖2 Second longest dimension of SKU i 𝐿𝑖3 Shortest dimension of SKU i Lc1 Longest dimension of compartment c Lc2 Second longest dimension of compartment c Lc3 Shortest dimension of compartment c Constraints: Li1 ≥ Li2 ≥ Li3 (13) Lc1 ≥ Lc2 ≥ Lc3 (14) Lc1 ≥ Li1 , Lc2 ≥ Li2 , Lc3 ≥ Li3 (15) Compartment capacity = ⌊Lc1 Li1 ⌋ . ⌊Lc2 Li2 ⌋ . ⌊Lc3 Li3 ⌋ (16) The final output of this dimensional constraint process includes the recommended pod and compartment type, the optimal SKU mixture ratio, and the expected SKU distribution across storage locations. This information provides critical input for storage assignment and replenishment strategies, ensuring that SKUs are placed in a physically feasible manner while promoting compact allocation and minimizing overall pod usage to improve system efficiency."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0089",
+      "index": 89,
+      "page": 35,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.6 SKU Dispersion Scattered or dispersed storage has been widely recognized in the literature as an effective approach to enhance picking efficiency in warehouse systems. By distributing SKUs across multiple storage locations or pods, the likelihood of having required items closer to pick stations increases, thereby reducing travel distances and improving system responsiveness. As summarized in Chapter 2, Table 2.1, several studies have demonstrated that this strategy is especially beneficial in RMFS warehouse. 26 In this study, SKU dispersion is implemented based on the CV of each SKU’s order frequency."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0090",
+      "index": 90,
+      "page": 36,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The CV serves as a normalized measure of demand variability, offering a standardized basis for determining how widely each SKU should be distributed within the storage system. A higher CV indicates greater variability and unpredictability in order patterns, while a lower CV suggests more stable, consistent demand."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0091",
+      "index": 91,
+      "page": 36,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "SKUs with high CV values are dispersed across a larger number of pods. This strategy increases the chances that SKUs whose demand patterns are sporadic, are available when needed, improving the system’s responsiveness and reducing the risk of pod unavailability. In contrast, SKUs with low CV values exhibit stable and predictable demand and are therefore assigned to fewer pods to save storage space and avoids storing the same items unnecessarily."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0092",
+      "index": 92,
+      "page": 36,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.7 Simulation Configuration 3.7.1 Simulation Platform The simulation platform for this study integrates three software tools to model, execute, and analyze the Robotic Mobile Fulfillment System (RMFS), namely NetLogo, Python, and Micr osoft Excel. These three tools were employed collaboratively to address the diverse requirements of agent -based modeling, optimization, and data management. The overall structure and data flows among these components are illustrated in Figure 3.3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0093",
+      "index": 93,
+      "page": 36,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "NetLogo functions as the primary platform for agent -based simulation and provides the core front -end interface for modeling the dynamic interactions within the warehouse environment. Custom procedures were developed in NetLogo to represent key processes, including order picking, Autonomous Mobile Robot (AMR) routing, and inventory replenishment operations. These procedures were implemented in accordance with the system process flow defined in earlier sections. In addition, NetLogo’s built -in Graphical User Interfac e (GUI) facilitates real -time visualization of agent behaviors, AMR routing, pod movements, and queuing at the picking and replenishment stations. 27 Figure 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0094",
+      "index": 94,
+      "page": 37,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3 System Architecture As shown in Figure 3.3, while NetLogo effective ly simulates the system’s dynamic operations, it faces limitations in solving complex optimization problems. To address this, Python was integrated as an external optimization platform. The Python module handles computationally intensive tasks, including S KU to pod assignment, pod selection, robot routing and optimization problems, through a set of system functions and feedback mechanisms. This coupling enables dynamic information exchange and allows NetLogo to update simulation states based on optimized decisions. Microsoft Excel serves as the data storage and exchange within the NetLogo, Python, and the underlying database."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0095",
+      "index": 95,
+      "page": 37,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.7.2 Simulation Layout The simulation layout was designed to replicate the spatial and functional characteristics of a typical Robotic Mobile Fulfillment System (RMFS) warehouse. The layout is divided into three primary sections: the Picking Station, the Storage Area, and the Replenishment Station. Every section is responsible for a specific operational task that contributes to th e warehouse’s overall performance. The detailed arrangement of these sections is shown in Figure 3.4. 28 Picking Station Replenishment Station Figure 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0096",
+      "index": 96,
+      "page": 38,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4 RMFS Layout in NetLogo Simulation Platform The Storage Area constitutes the largest section of the layout and accommodates Pods when they are not actively involved in picking or replenishment tasks. This area is organized into structured aisles, Pod batches, and empty storage locations to facilitate efficient retrieval and storage operations. The aisles are designed as one - way paths to minimize traffic conflicts and opt imize the routing of Autonomous Mobile Robots (AMRs)."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0097",
+      "index": 97,
+      "page": 38,
+      "section": "3. Maximum capacity and inventory level comparison: the calculated maximum",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "There are several key elements in the storage area: 1. Empty Storage Location: A designated spot available for storing a pod temporarily when it is not in use. 2. Pod: A mobile shelve that has multiple compar tments to store Stock Keeping Units (SKUs) for order fulfillment. 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0098",
+      "index": 98,
+      "page": 38,
+      "section": "3. Pod Batch: A logical grouping of Pods stored in close proximity to enhance",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Pod Batch: A logical grouping of Pods stored in close proximity to enhance retrieval efficiency. Storage Area AMR Pod Intersection Empty Storage Location AMR Charging Area Pod Batch Aisle (one way) 29 4. AMR Charging Area: A dedicated section where AMRs can recharge when not engaged in active tasks. 5. Aisle: A structured, one -way path that guides AMR movement and reduces congestion. At the top and bottom of the layout, the Picking Station and Replenishment Station are positioned to ensure smooth workflow integration."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0099",
+      "index": 99,
+      "page": 39,
+      "section": "5. Aisle: A structured, one -way path that guides AMR movement and reduces",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "When an AMR delivers a pod to either station, it joins a designated queue and waits to be processed by the human operator. Queue lines are incorporated into both stations to model realistic waiting times and potential bottlenecks. To capture AMR operational dynamics, six distinct AMR sta tes are represented in the simulation using color codes: 1. Green : AMR is en route to pick up a Pod. 2. Red : AMR is delivering a Pod to the Picking Station. 3. Pink : AMR is delivering a Pod to the Replenishment Station. 4. Yellow : AMR is returning a Pod to the Storage Area. 5. Blue : AMR is being processed at either the Picking or Replenishment Station. 6. Black : AMR is idle or parked, awaiting its next task."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0100",
+      "index": 100,
+      "page": 39,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3.7.3 Simulation Parameter To ensure consistency of the simulation experiments, a set of key parameters was defined and applied across all scenarios. These parameters specify the baseline conditions under which the warehouse operates during each simulation run. A summary of these simulation parameters is presented in Table 3.7. Table 3."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0101",
+      "index": 101,
+      "page": 39,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "8 Simulation Parameter Used in RMFS Model Parameter Value Simulation Run Length 8 hours Replications 5 replications for each scenario Layout Inventory Area 500 Location Inventory Capacity Condition 1: 274 pods Condition 2: 472 pods Robot Charging Area 10 Locations Pod Batch 2 X 5 Blocks Aisles 6 Horizontal Aisles 11 Vertical Aisles Stations 3 Picking Stations 1 Replenishment Station 30 Table 3. 8 Simulation Parameter Used in RMFS Model (cont.) Parameter Value SKUs Number of SKUs 7,024 SKUs SKU Classification Class A: 1,157 SKUs Class B: 2,680 SKUs Class C: 3,187 SKUs SKU to Pod Approach Random One class to one pod Mixed class of 3 to one pod Without & With Dispersion Policy Orders Incoming Order Rate 300 order/hour Pods Pod Type Type 4 Number of Compartments 40 Compartments Picking Picking Station Queuing 9 AMRs Picking Station Capacity 8 Bins Time for Handling 10 seconds Replenishment Replenishment Station Queuing 9 AMRs Inventory Level 40% Time for Putting SKUs into Pods 20 seconds Robots (AMRs) Acceleration and Deceleration 1 m/s2 Maximize velocity 1.5 m/s2 The time required for rotation 2.5 seconds Duration for lifting and storing the pods 2.5 seconds Robots in the system 20 AMRs 3.8 Hypothesis Test To verify whether the proposed SKU mixture and dimensional constraint strategies yield significantly different results compared to the baseline, a hypothesis test was conducted using two types of statistical method."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0102",
+      "index": 102,
+      "page": 40,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "When comparing the means across three or more groups, the one-way analysis of variance (ANOVA) is commonly employed as the appropriate statistical method [58]. The ANOVA test evaluates whether there are significant differences between the mean performance measures of the three different scenarios considered in this study. The null hypothesis ( 𝐻₀) assumes that there is no significant difference in system 31 performance among the scenarios, while the alternative hypothesis (𝐻₁) states that at least one scenario differs significantly, see Equation 3-17."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0103",
+      "index": 103,
+      "page": 41,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "H0: μ1 = μ2 = μ3 H1: at least one μi differs (17) In addition, a paired t -test was used to compare the performance between the without dimensional constraints and with dimensional constraints scenarios. Since these two conditions are directly related and paired within each SKU mixture setting, the t-test provides an appropriate method to test for significant differences in means across paired groups [59]. The hypotheses are defined in Equation 3-18. H0 = μd = 0 H1 = μd ≠ 0 (18) By analyzing the p-values obtained from both the ANOVA and t-test results, the null hypothesis can be either rejected or accepted, providing statistical validation for the observed differences in throughput and pile-on rates. 32 CHAPTER 4 RESULT AND DISCUSSION 4.1 Data Preprocessing The initial stage of this study involved data cleaning and preprocessing to ensure reliability and validity of the simulation input. The original SKU size dataset consists of 10,321 unique SKUs collected from the company’s records. At first, all duplicate entries and null values were identified and removed. Furthermore, SKUs that exceeded the dimensional constraints of the pod compartments’ size were filtered out and reassigned to a separate warehouse facility specifically designated for handl ing big sized items."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0104",
+      "index": 104,
+      "page": 42,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In parallel, the original order history dataset consists of 321,382 customer orders collected over a 21 -day operational period also underwent the same cleaning procedure to remove duplicates and null values. Additionally, SKUs associat ed with exceptionally high order quantities were identified and allocated for split order processing in different warehouse specifically designated for handling split orders."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0105",
+      "index": 105,
+      "page": 42,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Following these preprocessing stages, the cleaned SKU size and order datasets were matched to ensure consistency between two datasets. As a result, the final dataset consisted of 7,024 SKUs and 316,553 customer orders, providing a robust and realistic basis for the subsequent SKU to pod assignment simulation. 4.2 Data Analysis Following the preprocessing stage, a comprehensive data analysis was conducted to gain deeper insights into the characteristics of the data."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0106",
+      "index": 106,
+      "page": 42,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.2.1 SKU Correlation Results To identify possible relationships between SKUs that could support more efficient SKU-to-pod assignment, a Market Basket Analysis was performed using the Apriori algorithm. This method tests the correlation of SKUs based on historical order data and is commonly used to find item pairs that are frequently purchased together. For this analysis, the thresholds were set at support > 0.02 and lift > 1, ensuring that only meaningful and positively correlated itemsets were considered."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0107",
+      "index": 107,
+      "page": 42,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 4.1 presents the test results over a 21 -day period. The results indicate that only 8 out of the 21 days contained any high -correlation item pairs that met the minimum thresholds. The number of strongly correlated SKUs varied between 2 and 33 8 items on these days, while the remaining days showed no significant associations. This outcome suggests that SKU correlations in this data set are not consistent and tend to appear only intermittently, likely due to fluctuations in daily customer demand patterns, promotions, or low repeat bundle patterns. Table 4. 1 Market Basket Analysis Test Results Day Number of High Correlated Items 1 2 2 None 3 2 4 4 5 8 6 2 7 8 8 2 9 2 10 - 21 None Given the limited and unstable occurrence of strong correlation items, this study concludes that the correlation results are not robust enough to be used as a primary basis for the SKU-to-pod assignment strategy."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0108",
+      "index": 108,
+      "page": 43,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.2.2 K-Means Clustering & Elbow Method Elbow Method To get the number of clusters, Elbow method was utilized by plotting the Within- Cluster Sum of Squares (WCSS) against various values of k. As illustrated in Figure 4.1, the WCSS values decrease sharply as k increases, then begin to flatten, fo rming an \"elbow\" shape. The corresponding WCSS values for k ranging from 1 to 10 are listed in Table 4. 2, where a sharp drop in error is observed up to k = 3, after which the reduction becomes marginal. As a result, three clusters were determined to be the optimal number for our dataset, providing a balance between model simplicity and clustering accuracy. 34 Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0109",
+      "index": 109,
+      "page": 44,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1 SKU Distribution Across Clusters Using K-Means Table 4. 2 WCSS for Varying K Values K WCSS 1 7024.00 2 2264.86 3 1062.77 4 623.22 5 403.53 6 274.11 7 207.44 8 159.18 9 121.32 10 97.51 K-Means Clustering Following the selection of k = 3, the K -Means clustering algorithm was applied to segment the SKUs based on their demand characteristics. The clustering results, illustrated in Figure 4.2, show the distribution of SKUs across the three clusters. As presented in Table 4.3, Cluster A contains 1,157 SKUs (16.48%), Cluster B contains 2,680 SKUs (38.15%), and Cluster C con tains 3,187 SKUs (45.37%), totaling 7,024 SKUs. 35 Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0110",
+      "index": 110,
+      "page": 45,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "2 SKU Distribution Across Clusters Using K-Means Table 4. 3 SKU Cluster Composition and Proportion Cluster SKU Count Percentage A 1,157 16.48% B 2,680 38.15% C 3,187 45.37% Total 7,024 100% 4.2.3 SKU Distribution Results To ensure that the simulation accurately reflects the stochastic nature of order arrivals and SKU demand, a distribution fitting test was conducted for the historical order dataset. Figure 4.3 illustrates the best-fitting distribution type identified for each SKU based on historical order frequencies over the 21-day period. The fitting process considered Poisson, Normal, and Exponential distributions, which a re commonly employed in warehouse operations to represent discrete and continuous demand patterns. 0 500 1000 1500 2000 2500 3000 3500 A B C SKU Cluster by K-Means 36 Figure 4. 3 Goodness-of-Fit Test Result As shown in the figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0111",
+      "index": 111,
+      "page": 46,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3, the majority of SKUs (5,955 out of 7,024) exhibited demand patterns that best fit a Poisson distribution. In contrast, a smaller portion of SKUs displayed demand patterns aligning more closely with a normal distribution. By validating the distribution of SKU order frequencies, the study ensures that an appropriate demand model is applied for each SKU type."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0112",
+      "index": 112,
+      "page": 46,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This understanding enables us to choose the right formulas for calculating each SKU’s mean and standard deviation, which are then used to classify the SKUs in the next stage. 4.2.4 Coefficient of Variation After validating the demand distribution of each SKU, the order dataset was further analyzed to classify SKUs based on demand stability and variability. For each SKU, the mean and standard deviation of order frequency were calculated based on the appropriate distribution identified earlier. The CV value was then computed and used to group SKUs into three demand classes using predefined thresholds: CV ≤ 0.5 for stable demand, 0.5 < CV ≤ 1.0 for volatile demand, and CV > 1.0 for intermittent demand. As shown in Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0113",
+      "index": 113,
+      "page": 46,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4, 159 SKUs were categorized as having stable demand, 1,723 SKUs exhibited volatile demand, and the majority, 5,142 SKUs, were classified as having intermittent demand. The distribution of SKUs across these demand 37 categories is visualized in Figure 4. 4, which shows that over 70% of SKUs fall into the intermittent class, highlighting the irregular and unpredictable nature of most SKU demand in this dataset. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0114",
+      "index": 114,
+      "page": 47,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4 SKU Classification Result Cluster CV Class Description SKU Count A 0 high demand - stable 159 1 high demand - volatile 967 2 high demand - intermittent 31 B 0 medium demand - stable - 1 medium demand - volatile 756 2 medium demand - intermittent 1924 C 0 low demand - stable - 1 low demand - volatile - 2 low demand - intermittent 3187 Figure 4. 4 Proportion of SKUs by Demand Stability Class 4.3 Minimum Inventory Level To ensure that each SKU maintains sufficient inventory to fulfil customer demand, the minimum inventory level was calculated for every SKU in the dataset. According to our warehouse replenishment policy, we have to store every SKU in the warehouse. This calculation assumes a lead time (L) of one day, meaning that the inventory on hand must be enough to cover one full day of operations without resulting in stockouts."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0115",
+      "index": 115,
+      "page": 47,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Different service levels (Z) were applied to each SKU class because each c lass exhibits a different level of demand stability. For Class A SKUs, which have stable and high demand, a higher service level of 99% was used to minimize the risk of 0% 10% 20% 30% 40% 50% 60% 70% 80% Stable Demand Volatile Demand Intermittent Demand 0 1 2 SKU Classiffication 38 stockouts. For Class B SKUs, which have moderate demand variability, a medium service level of 95% was selected to balance product availability with storage space efficiency. For Class C SKUs, which have low and irregular demand, a lower service level of 90% was considered acceptable because the impact of stockouts is smaller and less frequent."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0116",
+      "index": 116,
+      "page": 48,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Finally, the total minimum inventory level was determined by summing the minimum inventory for all SKUs within each cluster. This total provides an overview of the stock needed to support daily operations while meeting the desired service levels for each SKU category. The detailed minimum inventory level for each cluster is presented in Table 4.5. Table 4. 5 Minimum Inventory Levels and Service Levels by SKU Class Cluster CV Class Description Service Level SKU Count Inventory Percentage A 0 high demand - stable 99% 1,157 60,403 72,15% 1 high demand - volatile 95% 2 high demand - intermittent 90% B 1 medium demand - volatile 95% 2,680 17,163 20,50% 2 medium demand - intermittent 90% C 2 low demand - intermittent 90% 3,187 6,153 7,35% Total 7,024 83,719 100% 4.4 Application of Dimensional Constraints To ensure that the proposed SKU allocation policy can be realistically implemented in a physical warehouse setting, dimensional constraints were incorporated into the calculation of how many units of each SKU can be stored within a single compartment. In our warehouse, there are five types of pods available, each with different compartment sizes and total numbers of compartments."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0117",
+      "index": 117,
+      "page": 48,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "For every SKU, we evaluated its physical dimensions and calculated the maximum number of units that could fit into a single comp artment. We then compared this maximum capacity with the minimum inventory level of the SKU."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0118",
+      "index": 118,
+      "page": 48,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Based on this comparison, the most appropriate pod type was selected to store each SKU efficiently without violating dimensional 39 constraints. Figure 4.5 illustrates the chosen compartment and pod sizes used in the simulation. Figure 4. 5 Pod Configuration Table 4.6 presents the results of the compartment allocation, showing the number of compartments required for each SKU after considering the dimensional fit with the policy of one compartment is designated for only one SKU type. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0119",
+      "index": 119,
+      "page": 49,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "6 Compartment Allocation Results Based on Dimensional Constraints Cluster Description SKU Count Inventory Number of Compartment A High demand 1,157 60,403 2,338 B Medium demand 2,680 17,163 5,378 C Low demand 3,187 6,153 3,187 Total 7,024 83,719 10,903 Pod Count Calculation After applying the dimensional constraints and determining the exact number of compartments needed per SKU, we then calculated the total number of pods required for each SKU mixture scenario. a. Random placement (baseline) As shown in the previous compartmen t calculation, a total of 10,903 compartments are required under the random placement strategy. Dividing this number by the pod capacity of 40 compartments results in 272.58 pods. To ensure full coverage and account for any remaining compartments, the fina l result is rounded up to 273 pods. 40 Number of pods = 10,903 40 = 272.58 ~ 273 pods b. One pod one class In this scenario the pod count was determined by dividing each class’s compartment requirement by 40. The detailed calculation is presented in Table 4.7. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0120",
+      "index": 120,
+      "page": 50,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "7 Pod Requirement for One Pod One Class Scenario Cluster Description Number of Compartments Number of Pods A High demand 2,338 59 B Medium demand 5,378 135 C Low demand 3,187 80 Total 10,903 274 c. One pod mix class For this scenario, the total number of pods and the SKU class distribution per pod are shown in Table 4.8. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0121",
+      "index": 121,
+      "page": 50,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "8 Pod s Required and SKU Ratio for Mixed-Class Pod Scenario Cluster Description Number of Compartments Percentage Compartment’s Ratio A High demand 2,338 21.44% 9 B Medium demand 5,378 49.33% 20 C Low demand 3,187 29.23% 11 Total 10,903 100% 40 Number of pods needed = 273 pods With the application of dimensional constraints, the number of pods required in all three SKU placement scenarios remained relatively small. This outcome reflects efficient compartment utilization, as SKUs are packed more compactly, allowing better use of available pod space. However, this optimized space usage comes with a trade-off, which was fewer SKUs are scattered across the system, which may affect flexibility in order picking. 4.5 Application of SKU Dispersion To improve picking efficiency, a SKU dispersion policy was applied based on both the SKU’s cluster classification and its Coefficient of Variation (CV)."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0122",
+      "index": 122,
+      "page": 50,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This policy determines how widely each SKU should be distributed across pods, while still considering p hysical constraints such as the available compartment space and 41 the maximum capacity of the warehouse. The goal is to balance access speed for high-priority SKUs with the space limitations introduced by dimensional constraints. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0123",
+      "index": 123,
+      "page": 51,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "9 presents the dispersion policy assigned to each subgroup of SKUs, categorized by their cluster label (A, B, C) and CV class (0, 1, 2). A higher dispersion value means the SKU is stored in more pods, enhancing accessibility and reducing retrieval time. For example, SKUs in Cluster A (high demand) are assigned higher dispersion values (up to 6) for intermittent demand to support rapid fulfillment. Similarly, SKUs in Cluster B (medium demand) receive moderate dispersion values, with intermittent SKUs dispersed across 4 pods. On the other hand, Cluster C, which includes SKUs with low overall demand regardless of their CV value, is assigned the lowest dispersion level. Although SKUs in this cluster have high CV values indicating irregularity, the absolute demand volume remains low. As such, a dispersion value of 1 is applied to minimize pod usage without significantly impacting operational performance. Table 4. 9 SKU Dispersion Policy Based on Cluster and CV Classification Cluster CV Class Description SKU Count Dispersion policy Number of Compartments A 0 high demand - stable 159 4 5,666 1 high demand - volatile 967 5 2 high demand - intermittent 31 6 B 1 medium demand - volatile 756 3 9,975 2 medium demand - intermittent 1924 4 C 2 low demand - intermittent 3187 1 3,187 Pod Count Calculation After applying the dispersion policy, dimensional constraints, we determined the number of compartments needed per SKU and then calculated the total number of pods required for each SKU mixture scenario. a."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0124",
+      "index": 124,
+      "page": 51,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Random Placement (baseline) As shown in the previou s compartment calculation, a total of 18,828 compartments are required under the random placement strategy. Dividing this 42 number by the pod capacity of 40 compartments results in 470.7 pods. To ensure full coverage and account for any remaining compartment s, the final result is rounded up to 471 pods. Number of pods = 18,828 40 = 470.7 ~ 471 pods b. One Pod One Class The detailed calculation is presented in Table 4.10. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0125",
+      "index": 125,
+      "page": 52,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "10 Pod Requirement for One Pod One Class Scenario with Dispersion Cluster Description Number of Compartments Number of Pods A High demand 5,666 142 B Medium demand 9,975 250 C Low demand 3,187 80 Total 18,828 472 c. One Pod Mix Class The total number of pods and the SKU class distribution per pod are shown in Table 4.11. Table 4. 11 Pod Requirement for One Pod Mix Class Scenario with Dispersion Cluster Description Number of Compartments Percentage Compartment’s Ratio A High demand 5,666 30.01% 12 B Medium demand 9,975 52.98% 21 C Low demand 3,187 16.93% 7 Total 18,828 100% 40 4.6 Simulation Result To evaluate the effectiveness of the proposed SKU-to-pod assignment strategies, a simulation was conducted using the NetLogo platform."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0126",
+      "index": 126,
+      "page": 52,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "To ensure the reliability of the results, each scenario was replicated 5 times under the same configuration, and the average performance metrics were recorded. Each simulation was run for a total duration of 8 hours, with an order arrival rate of 300 orders per hour. 43 From the simulation outputs, two key performance indicators were computed for each scenario: throughput and p ile-on rate. Both metrics were calculated using the formulas presented earlier in Chapter 3. 4.6.1 With Dimensional Constraints Throughput Performance Table 4.1 2 presents the throughput results obtained from the simulation of scenarios without dimensional constraints, showing the throughput rate for each of the three SKU placement strategies across five replications along with their average values. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0127",
+      "index": 127,
+      "page": 53,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "12 Throughput Results for Scenarios with Dimensional Constraints Replications Random One Pod One Class One Pod Mixed Class 1 78.63% 85.95% 91.21% 2 77.88% 87.54% 93.67% 3 78.58% 85.38% 92.58% 4 79.04% 83.88% 90,79% 5 79.13% 83.42% 91.25% Mean 78.65% 85.23% 91.90% Among the three scenarios, the One Pod Mixed Class configuration achieved the highest performance, with an average throughput of 91.90% over 8 hours. This scenario consistently outperformed the others in all replications, indicating that allowing multiple demand classes to share the same pod maximizes compartment utilization and reduces the total number of pod visits required. The One Pod One Class scenario followed with a mean throughput of 85.23%. Although lower than the mixed class configuration, this scenario still performed better than the Random assignment, which recorded the lowest average throughput at only 78.90%, primarily due to uneven SKU distribution and increased pod switching, which negatively impacted order fulfillment efficiency. Pile-On Performance Table 4.1 3 presents the pile -on results for each of the three SKU placement strategies across five replications in the simulation with dimensional constraints. 44 Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0128",
+      "index": 128,
+      "page": 54,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "13 Pile-On Results for Scenarios with Dimensional Constraints Replications Random One Pod One Class One Pod Mixed Class 1 7.34 9.33 9.77 2 7.37 9.42 9.88 3 7.40 9.33 9.63 4 7.32 9.38 9.88 5 7.31 9.39 9.79 Mean 7.35 9.37 9.79 Among the three scenarios, the One Pod Mixed Class scenario again achieved the highest performance, with an average pile-on value of 9.79. This improvement can be attributed to the diverse SKU composition within each pod, which increases the likelihood of fulfilling multiple order lines from a single retrieval. The One Pod One Class scenario followed closely with an average pile -on of 9.37, benefiting from demand-class grouping that maintains picking efficiency while reducing unnecessary pod exchanges. The Random scenario yielded the lowest pile -on rate at 7.35, which reflects lower picking efficiency due to scattered SKU distribution and less optimized pod mixture, resulting in more frequent pod visits for order fulfilment . This result indicating that mixing SKUs across demand classes in the same pod s not only improves throughput but also enhances pod utilization. 4.6.2 Application of Dispersion Throughput Performance Table 4.14 shows the throughput results obtained from the simulation runs after applying dispersion in the SKU mixture . Each scenario was tested across five replications using the same parameter as previous simulation. Table 4. 14 Throughput Results for Scenarios with Dispersion Policy Replications Random One Pod One Class One Pod Mixed Class 1 79.42% 96.63% 99.38% 2 78.33% 95.33% 98.96% 3 81.17% 95.75% 99.17% 4 80.50% 96.25% 99.04% 5 80.21% 97.13% 99.54% Mean 79.93% 96.22% 99.22% 45 After applying dispersion policy, t he One Pod Mixed Class configuration achieved the highest mean throughput at 99. 22%, surpassing its previous performance of 91.90% under dimensional constraints."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0129",
+      "index": 129,
+      "page": 55,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "This improvement highlights how strategically dispersing SKUs enhances the likelihood of fulfilling more order lines from each pod visit, thereby reducing retrieval cycles and idle times. The One Pod One Class scenario also demonstrated a n increase, with average throughput rising from 85.23% to 96.22%. This gain indicates that combining classbased grouping with calculated dispersion enables a more balanced allocation of high-demand and volatile SKUs, supporting consistent picking efficiency."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0130",
+      "index": 130,
+      "page": 55,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The Random also scenario benefited from the dispersion policy, improving from 78.90% to 79.93%. However, the increase was marginal, suggesting that without structured SKU placement, dispersion alone cannot fully optimize system performance. Pile-On Performance Table 4.1 5 presents the pile -on results for each SKU placement strategy after applying dispersion policy. Table 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0131",
+      "index": 131,
+      "page": 55,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "15 Pile-On Results for Scenarios with Dispersion Policy Replications Random One Pod One Class One Pod Mixed Class 1 7.44 9.75 9.79 2 7.44 9.74 10.01 3 7.48 9.71 9.97 4 7.49 9.76 10.00 5 7.44 9.82 10.01 Mean 7.46 9.75 9.96 The One Pod Mixed Class scenario achieved the highest mean pile -on value of 9.96, improving from previous performance at 9.79 under dimensional constraints. This increase indicates that the dispersion policy further concentrated relevant SKUs within pods, enabling a higher number of picks per pod visit. Similarly, the One Pod One Class configuration improved from an average of 9.37 to 9.75, showing that even with class -based separation, strategic SKU dispersion supports better fulfillment during picking operations. 46 The Random scenario also experienced a slight improvement, rising from 7.35 to 7.46, but the gain was minimal, suggesting that dispersion without a structured pod configuration has limited impact on pile-on efficiency."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0132",
+      "index": 132,
+      "page": 56,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4.7 Hypothesis Test To statistically validate the simulation results, hypothesis testing was conducted to evaluate whether the differences observed between the SKU-to-pod strategies are statistically significant. ANOVA test was applied using Excel to both throughput and pile-on results to determine whether there are significant differences among the three scenarios: Random, One Pod One Class, and One Pod Mixed Class."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0133",
+      "index": 133,
+      "page": 56,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In addition, paired t-tests were performed to compare each scenario's performance with dimensional constraints and with di spersion policy . This analysis aims to identify whether the application of dimensional constraints and dispersion policy has a statistically significant impact on system performance in terms of throughput and pile-on. 4.7.1 ANOVA Results for Scenarios under Dimensional Constraints Throughput Performance As shown in the figure 4.6 ANOVA result shown the F-value is 148.89, which is significantly greater than the F-critical value of 3.88. Furthermore, the P-value is 3.38 x 10⁻9, which is far below the 0.05 significance threshold."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0134",
+      "index": 134,
+      "page": 56,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "These results indicate that there is a statistically significant difference in throughput among the three scenarios. The ANOVA test confirms that the variation in throughput is not due to random chance but is indeed driven by the underlying SKU allocation method. Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0135",
+      "index": 135,
+      "page": 56,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "6 ANOVA Test Result for Throughput with Dimensional Constraints 47 Pile-On Performance As shown in Figure 4. 7, the ANOVA test returned an F -value of 1,898, which exceeds the F-critical value of 3.88, and a P-value of 9.78 x 10-16, which is well below the 0.05 significance threshold. These results indicate that applying dimensional constraints and using structured allocation methods significantly improves pile -on performance, with One Pod Mixed Class delivering the highest efficiency, followed by One Pod One Class, and Random being the least effective. Figure 4. 7 ANOVA Test Result for Pile-On with Dimensional Constraints 4.7.2 ANOVA Results for Scenarios under Dimensional Constraints with Dispersion Policy Throughput Performance As shown in Figure 4.8, the ANOVA test produced an F-value of 923.53, which is substantially greater than the F-critical value of 3.88. Additionally, the P-value is 7.23 x 10⁻¹4, which is far below the 0.05 significance level. Therefore, the null hypothesis of equal means is rejected, indicating that the application of dimensional constraints in conjunction with the dispersion policy significantly enhances throughput across the three scenarios. 48 Figure 4. 8 ANOVA Test Result for Throughput with Dispersion Policy Pile-On Performance As shown in Figure 4.9, the ANOVA test produced an F-value of 2596.77, which is less than the F-critical value of 3.88. Additionally, the P-value is 1.5 x 10-16, which exceeds the standard 0.05 significance threshold. Therefore, the null hypothesis of equal means is rejected, confirming that the application dispersion policy significantly enhances pile-on performance across the three scenarios. Figure 4. 9 ANOVA Test Result for Pile-On with Dispersion Policy 4.7.3 T-Test Results of Dispersion Policy Impact on Throughput and Pile - On Performance Throughput Performance To determine whether the application of dispersion policy constraints had a statistically significant effect on throughput performance, t-tests were conducted for each of the three SKU-to-pod scenarios. The results are summarized in Figures 4.10 to 4.12."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0136",
+      "index": 136,
+      "page": 59,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "49 In the Random scenario, the corresponding p -value (two-tailed) is 4.47 x 10⁻2, which is below the 0.05 threshold, indicating a statistically significant improvement in throughput when the dispersion policy is applied in addition to dimensional constraints. In the One Pod One Class scenario, p-value is 8.07 x 10⁻7, confirming a highly significant improvement in throughput under the dispersion policy. Similarly, in the One Pod Mixed Class scenario, p -value of 9. 16 x 10⁻7 is extremely small , indicating a highly significant improvement. Across all scenarios, all p -values were far below 0.05, confirming that the application of the dispersion policy significantly enhances throughput compared to using dimensional constraints alone, with the One Pod Mixed Class scenario achieving the highest average throughput, followed by One Pod One Class, and then Random allocation. Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0137",
+      "index": 137,
+      "page": 59,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "10 Paired t-Test Result for Throughput in Random Scenario Figure 4. 11 Paired t-Test Result for Throughput in One Pod One Class Scenario 50 Figure 4. 12 Paired t-Test Result for Throughput in One Pod Mix Class Scenario Pile-On Performance For pile-on performance, the Random scenario yielded a two -tailed p-value of 5.64 x 10⁻⁴, well below the 0.05 significance threshold, indicating a statistically significant improvement in pile -on with the dispersion policy."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0138",
+      "index": 138,
+      "page": 60,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In the One Pod One Class scenari o, the two -tailed p -value was 3.29 x 10⁻⁷, demonstrating a highly significant enhancement. The One Pod Mixed Class scenario produced a two -tailed p-value of 2.87 x 10⁻², also below the 0.05 threshold, confirming statistical significance. Overall, the results confirm that, across all three SKU-to-pod placement strategies, the application of the dispersion policy in conjunction with dimensional constraints yields statistically significant improvements in pile -on performance. The detailed statistical outcomes for each scenario are illustrated in Figures 4.13 to 4.15. Figure 4."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0139",
+      "index": 139,
+      "page": 60,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "13 Paired t-Test Result for Pile-On in Random Scenario 51 Figure 4. 14 Paired t-Test Result for Pile-On in One Pod One Class Scenario Figure 4. 15 Paired t-Test Result for Throughput in One Pod Mix Class Scenario 52 CHAPTER 5 CONCLUSION 5.1 Conclusion The rapid rise of Robotic Mobile Fulfillment Systems has introduced numerous decision-making challenges aimed at improving order fulfillment efficiency."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0140",
+      "index": 140,
+      "page": 62,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Among these, the optimization of the Storage Assignment Problem (SAP) has emerged as a critical concern , as it directly affects warehouse performance . While a variety of performance metrics have been proposed to evaluate SKU allocation strategies, maximizing throughput remains the main goal across all warehouse operations."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0141",
+      "index": 141,
+      "page": 62,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Most research on SAP has primarily emphasized SKU correlation and item classification methods, which are indeed important for formulating allocation policies. However, such approaches often assume the presence of strong SKU relationships, which is not always the case in every warehouse ."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0142",
+      "index": 142,
+      "page": 62,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, despite the valuable contributions, a critical research gap remains across previous studies, they did not consider the physical dimensions of SKUs and the size constraints of compartments within pods when assigning SKUs to storage locations. In this study, we proposed a SKU-to-pod allocation strategy specifically designed for RMFS warehouses, incorporating several key operational factors such as order frequency, product turnover rates, product correlation, and dimensional constraints. Our approach be gan with a systematic analysis of historical order data to classify SKUs based on demand frequency and stability ."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0143",
+      "index": 143,
+      "page": 62,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "We proposed two SKU -to-pod policies based on this SKUs classification: one pod one class policy and one pod mixed class policy, we then compared these two allocation policies with the random policy baseline. To evaluate the real -world applicability of the proposed policies, dimensional constraints were applied to all three scenarios. Furthermore, a dispersion policy was introduced to inves tigate the effect of distributing SKUs across multiple pods, thereby increasing SKU accessibility. A simulation model was developed using NetLogo for agent -based modeling and Python for optimization, and performance was evaluated using a dataset of 7,024 SKUs. Simulation results showed that under dimensional constraints alone, the One Pod Mixed Class strategy achieved the best performance, with mean throughput of 91.90% and mean pile‑on of 9.79, followed by One Pod One Class with mean throughput of 85.23% and mean pile‑on of 9.37 and the Random baseline with mean 53 throughput of 78.65% and mean pile‑on of 7.35. After applying the dispersion policy, both metrics improved across all scenarios. Mix Class scenario throughput increased to 99.22%, One Class scenario to 96.22%, and Random scenario to 79.93%, while pile‑on rose to 9.96, 9.75, and 7.46, respectively. These gains coincide with greater storage usage from roughly 273 to 472 pods, reflecting the trade‑off between dispersion and pod capacity requirements."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0144",
+      "index": 144,
+      "page": 63,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "Hypothesis testing using ANOVA confirmed significant differences in both throughput and pile-on across all scenarios under dimensional constraints and under the dispersion policy (p < 0.05). Paired t-tests further verified that introducing the dispersion policy led to statistically significant improvements in throughput and pileon for all three allocation strategies (p < 0.05)."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0145",
+      "index": 145,
+      "page": 63,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "These results validate the effectiveness of SKU classification by demand frequency and stability, and demonstrate that dispersion can further enhance performance by increasing SKU accessibility, while also highlighting the importance of considering physical storage constraints in real - world RMFS optimization. 5.2 Recommendation and Future Research While this study has successfully proposed a structured SKU -to-pod allocation policy and demonstrated significant improvements in both throughput and pile -on performance, several directions remain open for future exploration to further enhance RMFS operations. The current classification framework is primarily based on demand stability . However, additional factors such as SKU physical size, weight, and handling complexity could be integrated into the classification criteria to create more comprehensive storage profiles."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0146",
+      "index": 146,
+      "page": 63,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "Future research could incorporate pod weight balancing when designing SKU-topod assignment policies. Uneven weight distribution within pods may increase the mechanical burden on AMRs and negatively affect battery efficiency and energy consumption. Introducing a weighted balancing constraint during SKU assignment could help ensure pod stability and improve the energy consumption of AMRs."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0147",
+      "index": 147,
+      "page": 63,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Continuing from previous recommendation, energy consumption is an increasingly important performance metric in modern warehouse systems. While this study focused on throughput and pile-on, future work could evaluate strategies based 54 on energy efficiency, such as minimizing total robot travel distance or power usage , thus aligning system design with sustainability goals."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0148",
+      "index": 148,
+      "page": 64,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Finally, a promising area lies in developing dynamic SKU -to-pod policies that adapt in real time to changing demand patterns. As product lifecycles shorten and customer preferences fluctuate , integrating predictive analytics or reinforcement learning, future systems can reconfigure SKU placements periodically, ensuring sustained efficiency under evolving operational conditions."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0149",
+      "index": 149,
+      "page": 64,
+      "section": "6. Black : AMR is idle or parked, awaiting its next task. > 4.7. Table 4. 7 Pod Requirement for One Pod One Class Scenario",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "In summary, while this research has laid a solid foundation for a feasible and effective SKU allocation policy in RMFS, future enhancements that incorporate product-specific attributes, energy efficiency metrics, and real-time adaptability hold great potential to advance the state-of-the-art in intelligent warehouse automation. By building upon the groundwork established in this study and exploring the proposed extensions, future research can further drive the e volution of RMFS and contribute meaningfully to broader innovations in automated warehouse management. 55 REFERENCES [1] Polaris Market Research, “E -Commerce Logistics Market Size, Share, Trends, Industry Analysis Report: By Service Type, Operational Mode (Domestic and International), Business Model, and Region (North America, Europe, Asia Pacific, Latin America, and Middle East & Africa) – Market Forecast, 2025 –2034.” Accessed: Jul. 11, 2025. [Online]. Available: https://www.polarismarketresearch.com/industry-analysis/e-commerce-logisticsmarket [2] W."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0150",
+      "index": 150,
+      "page": 65,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Jiang, J. Liu, Y. Dong, and L. Wang, “Assignment of duplicate storage locations in distribution centres to minimise walking distance in order picking,” Int J Prod Res , vol. 59, no. 15, pp. 44 57–4471, 2021, doi: 10.1080/00207543.2020.1766714. [3] V. Shankar et al., “How Technology is Changing Retail,” Journal of Retailing, vol. 97, no. 1, pp. 13–27, Mar. 2021, doi: 10.1016/j.jretai.2020.10.006. [4] R. Q."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0151",
+      "index": 151,
+      "page": 65,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Zhang, M. Wang, and X. Pan, “New model o f the storage location assignment problem considering demand correlation pattern,” Comput Ind Eng , vol."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0152",
+      "index": 152,
+      "page": 65,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "129, pp. 210–219, Mar. 2019, doi: 10.1016/j.cie.2019.01.027. [5] M. T. Benavides-Robles, G. H. Valencia-Rivera, J. M. Cruz-Duarte, I. Amaya, and J. C. Ortiz-Bayliss, “Robotic Mobile Fulfillment System: A Systematic Review,” IEEE Access , vol. 12, pp. 16767 –16782, 2024, doi: 10.1109/ACCESS.2024.3359434. [6] Í. R. da Costa Barros and T. P."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0153",
+      "index": 153,
+      "page": 65,
+      "section": "REFERENCES",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Nascimento, “Robotic Mobile Fulfillment Systems: A survey on recent d evelopments and research opportunities,” Mar. 01, 2021, Elsevier B.V. doi: 10.1016/j.robot.2021.103729. [7] A. Joseph, “Impact of Robotic Automation in E -Commerce After Pandemic,” RESEARCH TRENDS IN COMMERCE & MANAGEMENT , vol. 2, pp. 125 –128, 2022. [8] S."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0154",
+      "index": 154,
+      "page": 65,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce: Examples of best practices,” pp. 89–105, doi: 10.5604/013001.0016.0361. [9] N. Boysen, R. de Koster, and F. Weidinger, “Warehousing in the e-commerce era: A survey,” Eur J Oper R es, vol. 277, no. 2, pp. 396 –411, Sep. 2019, doi: 10.1016/j.ejor.2018.08.023. 56 [10] Z. Ma, G. Wu, B."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0155",
+      "index": 155,
+      "page": 66,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Ji, L. Wang, Q. Luo, and X. Chen, “A Novel Scattered Storage Policy Considering Commodity Classification and Correlation in Robotic Mobile Fulfillment Systems,” IEEE Transactions on Automation Science and Engineering, vol. 20, no. 2, pp. 1020–1033, Apr. 2023, doi: 10.1109/TASE.2022.3178934. [11] X. Wu, “Item Storage Assignment Method Optimization based on Clustering Algorithm,” in 2023 3rd International Confe rence on Digital Society and Intelligent Systems, DSInS 2023, Institute of Electrical and Electronics Engineers Inc., 2023, pp. 71–74. doi: 10.1109/DSInS60115.2023.10455294. [12] R. de Koster, T. Le-Duc, and K. J. Roodbergen, “Design and control of warehouse order picking: A literature review,” Eur J Oper Res, vol. 182, no. 2, pp. 481–501, Oct. 2007, doi: 10.1016/j.ejor.2006.07.009. [13] V. R. Muppani and G. K. Adil, “Class -based storage -location assignment to minimise pick travel distance,” International Journal of Logistics Research and Applications, vol. 11, no. 4, pp. 247–265, 2008, doi: 10.1080/13675560701690489. [14] P. R. Wurman, R."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0156",
+      "index": 156,
+      "page": 66,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "DAndrea, and M. Mountz, “Coordinating Hundreds of Cooperative, Autonomous Vehicles in Warehouses,” 2008. [15] F. Weiding er, N. Boysen, and D. Briskorn, “Storage Assignment with Rack - Moving Mobile Robots in KIVA Warehouses,” Transportation Science, vol. 52, no. 6, pp. 1479–1495, Dec. 2018, doi: 10.1287/trsc.2018.0826. [16] Y."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0157",
+      "index": 157,
+      "page": 66,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Liu, M. Chen, and H. Huang, “Multi -agent Pathfinding Based on Improved Cooperative A* in Kiva System,” in 2019 5th International Conference on Control, Automation and Robotics (ICCAR) , IEEE, Apr. 2019, pp. 633 –638. doi: 10.1109/ICCAR.2019.8813319. [17] R. D’Andrea, “Guest editorial: A revolution in the warehouse: A retrospective on Kiva Systems and the grand challenges ahead,” 2012. doi: 10.1109/TASE.2012.2214676. [18] S."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0158",
+      "index": 158,
+      "page": 66,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Wu, C. Chi, W. Wang, and Y. Wu, “Research of the layout optimization in robotic mobile fulfillment systems,” Int J Adv Robot Syst, vol. 17, no. 6, 2020, doi: 10.1177/1729881420978543. [19] F. Weidinger, “Picker routing in rectangular mixed shelves warehouses,” Comput Oper Res, vol. 95, pp. 139–150, Jul. 2018, doi: 10.1016/j.cor.2018.03.012. [20] M. Merschformann, L. Xie, and H. Li, “RAWSim-O: A Simulation Framework for Robotic Mobile Fulfillment Systems,” Nov. 2017, doi: 10.23773/2018_8. 57 [21] M. Merschformann, T. Lamballais, M. B. M. de Koster, and L. Suhl, “Decision rules for robotic mob ile fulfillment systems,” Operations Research Perspectives, vol. 6, Jan. 2019, doi: 10.1016/j.orp.2019.100128. [22] M. Mirzaei, N. Zaerpour, and R. B. M. de Koster, “How to benefit from order data: correlated dispersed storage assignment in robotic warehou ses,” Int J Prod Res , vol. 60, no."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0159",
+      "index": 159,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "2, pp. 549–568, 2022, doi: 10.1080/00207543.2021.1971787. [23] V. Lesch, P."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0160",
+      "index": 160,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "layout_fragment"
+      ],
+      "text": "B. M."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0161",
+      "index": 161,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Mü ller, M. Krä mer, M. Hadry, S. Kounev, and C. Krupitzer, “Optimizing storage assignment, order picking, and their interaction in mezzanine warehouses,” Applied Intelligence, vol. 53, no. 15, pp. 18605 –18629, Aug. 2023, doi: 10.1007/s10489-022-04443-x. [24] T. Lamballais Tessensohn, D. Roy, and R."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0162",
+      "index": 162,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "B. M. De Koster, “Inventory allocation in robotic mobile fulfillment systems,” IISE Trans, vol. 52, no. 1, pp. 1 –17, Jan. 2020, doi: 10.1080/24725854.2018.1560517. [25] W."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0163",
+      "index": 163,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Wang, Y. Wu, J. Zheng, and C. Chi, “A Compr ehensive Framework for the Design of Modular Robotic Mobile Fulfillment Systems,” IEEE Access, vol. 8, pp. 13259–13269, 2020, doi: 10.1109/ACCESS.2020.2966403. [26] R. Li, X. Deng, and Y. Ma, “Item Storage Assignment Problem in Robotic Mobile Fulfillment S ystems with Nonempty Pods,” IEEE Access , vol. 12, pp. 51463 – 51484, 2024, doi: 10.1109/ACCESS.2024.3385791. [27] A. Bolu and O. Korcak, “Adaptive Task Planning for Multi -Robot Smart Warehouse,” IEEE Access , vol. 9, pp. 27346 –27358, 2021, doi: 10.1109/ACCESS.2021.3058190. [28] G. Jiao, H. Li, and M. Huang, “Online joint optimization of pick order assignment and pick pod selection in robotic mobile fulfillment systems,” Comput Ind Eng , vol. 175, Jan. 2023, doi: 10.1016/j.cie.2022.108856. [29] H.-J. Kim, C. Pai s, and Z. -J. M. Shen, “Item Assignment Problem in a Robotic Mobile Fulfillment System,” IEEE Transactions on Automation Science and Engineering, vol. 17, no. 4, pp."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0164",
+      "index": 164,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1854 –1867, Oct. 2020, doi: 10.1109/TASE.2020.2979897."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0165",
+      "index": 165,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[30] J. J. Enright and P. R. Wurman, “Optimization and Coordinated Autonomy in Mobile Fulfillment Systems.” [Online]. Available: www.aaai.org [31] R. Bogue, “Growth in e -commerce boosts innovation in the warehouse robot market,” Industrial Robot, vol. 43, no. 6, pp."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0166",
+      "index": 166,
+      "page": 67,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "583–587, 2016, doi: 10.1108/IR-07- 2016-0194. 58 [32] L. Xie, N. Thieme, R. Krenzler, and H. Li, “Introducing split orders and optimizing operational policies in robotic mobile fulfillment systems,” Eur J Oper Res , vol. 288, no. 1, pp. 80–97, Jan. 2021, doi: 10.1016/j.ejor.2020.05.032. [33] H.-J. Kim, C. Pais , and Z. -J. M. Shen, “Item Assignment Problem in a Robotic Mobile Fulfillment System,” IEEE Transactions on Automation Science and Engineering, vol. 17, no. 4, pp. 1854 –1867, Oct. 2020, doi: 10.1109/TASE.2020.2979897. [34] X. Li, G. Hua, A. Huang, J. B. Sh eu, T."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0167",
+      "index": 167,
+      "page": 68,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "C. E. Cheng, and F. Huang, “Storage assignment policy with awareness of energy consumption in the Kiva mobile fulfilment system,” Transp Res E Logist Transp Rev , vol. 144, Dec. 2020, doi: 10.1016/j.tre.2020.102158. [35] M. Mirzaei, N. Zaerpour, and R. de Koster, “The impact of integrated cluster-based storage allocation on parts -to-picker warehouse performance,” Transp Res E Logist Transp Rev, vol. 146, p. 102207, Feb. 2021, doi: 10.1016/j.tre.2020.102207. [36] N. Yang, “Evaluation of the Joint Impac t of the Storage Assignment and Order Batching in Mobile-Pod Warehouse Systems,” Math Probl Eng, vol. 2022, pp. 1– 13, Apr. 2022, doi: 10.1155/2022/9148001. [37] X."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0168",
+      "index": 168,
+      "page": 68,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Xiang, C. Liu, and L. Miao, “Storage assignment and order batching problem in Kiva mobile fulfilment system,” Engineering Optimization, vol. 50, no. 11, pp. 1941–1962, Nov. 2018, doi: 10.1080/0305215X.2017.1419346. [38] J."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0169",
+      "index": 169,
+      "page": 68,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "layout_fragment"
+      ],
+      "text": "Zhang, N. Zhang, L."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0170",
+      "index": 170,
+      "page": 68,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Tian, Z. Zhou, and P. Wang, “Robots’ picking efficiency and pickers’ energy expenditure: the item storage assignment policy in robotic mobile fulfillment system,” Comput Ind Eng, vol. 176, p. 108918, Feb. 2023, doi: 10.1016/j.cie.2022.108918. [39] T. Lamballais, D. Roy, and M."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0171",
+      "index": 171,
+      "page": 68,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "B. M. De Koster, “Estimating performance in a Robotic Mobile Fulfillment System,” Eur J Oper Res, vol. 256, no. 3, pp. 976–990, Feb. 2017, doi: 10.1016/j.ejor.2016.06.063. [40] F. Weidinger and N. Boysen, “Scattered storage: How to distribute stock keeping units all around a mixed-shelves warehouse,” Transportation Science, vol. 52, no. 6, pp. 1412–1427, Nov. 2018, doi: 10.1287/trsc.2017.0779. [41] R. Yuan, J. Li, W. Wang, J. Dou , and L. Pan, “Storage Assignment Optimization in Robotic Mobile Fulfillment Systems,” Complexity, vol. 2021, no. 1, Jan. 2021, doi: 10.1155/2021/4679739. 59 [42] I. Sajwan and R. Tripathi, “Unveiling Consumer Behavior Patterns: A Comprehensive Market Basket Analysis for Strategic Insights,” in 2024 Sixth International Conference on Computational Intelligence and Communication Technologies (CCICT) , IEEE, Apr. 2024, pp. 372 –377. doi: 10.1109/CCICT62777.2024.00067. [43] Y. A. Ünvan, “Market basket analysis with association rules,” Commun Stat Theory Methods , vol."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0172",
+      "index": 172,
+      "page": 69,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "50, no. 7, pp. 1615 –1628, Apr. 2021, doi: 10.1080/03610926.2020.1716255. [44] P. Kumar, K. N. Manisha, and M. Nivetha, “Market Basket Analysis for Retail Sales Optimization,” in 2nd International Conference on Emerging Trends in Information Technology and Engineering, ic -ETITE 2024, Institute of Electrical and Electronics Engineers Inc., 2024. doi: 10.1109/ic - ETITE58242.2024.10493283. [45] I. Sajwan and R. Tripathi, “Unveiling Consumer Behavior Patterns: A Comprehensive Market Basket Analysis for Strategic Insights,” in Proceedings - 2024 6th International Conference on Computational Intelligence and Communication Technologies, CCICT 2024, Institute of Electrical and Electronics Engineers Inc., 2024, pp."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0173",
+      "index": 173,
+      "page": 69,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "372–377. doi: 10.1109/CCICT62777.2024.00067. [46] R. Yuan, S. C. Graves, and T. Cezik, “Velocity‐Based Storage Assignment in Semi‐Automated Storage Systems,” Prod Oper Manag , vol. 28, no. 2, pp. 354 – 373, Feb. 2019, doi: 10.1111/poms.12925. [47] H. Abdi, “Encyclopedia of Research Design,” 2010. [Online]. Available: http://www.utd.edu/∼herve [48] C. Santos and C. Dias, “Note on the coefficient of variation properties,” BRAZILIAN ELECTRONIC JOURNAL OF MATHEMATICS , vol."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0174",
+      "index": 174,
+      "page": 69,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "2, no. 4, pp. 101–111, Apr. 2021, doi: 10.14393/BEJOM-v2-n4-2021-58062. [49] B. Scholz‐Reiter, J. Heger, C. Meinecke, and J. Bergmann, “Integration of demand forecasts in ABC‐XYZ analysis: practical investigation at an industrial company,” International Journal of Productivity and Performance Management, vol. 61, no. 4, pp. 445–451, Apr. 2012, doi: 10.1108/17410401211212689. [50] T. Wh elen and P. Siqueira, “Coefficient of variation for use in crop area classification across multiple climates,” International Journal of Applied Earth Observation and Geoinformation , vol. 67, pp. 114 –122, May 2018, doi: 10.1016/j.jag.2017.12.014. 60 [51] M. Kaur and S. Kang, “Market Basket Analysis: Identify the Changing Trends of Market Data Using Association Rule Mining,” in Procedia Computer Science , Elsevier B.V., 2016, pp. 78–85. doi: 10.1016/j.procs.2016.05.180. [52] Y."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0175",
+      "index": 175,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "layout_fragment"
+      ],
+      "text": "Kurnia, Y. Isharianto, Y. C. Giap, A."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0176",
+      "index": 176,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Hermawan, and Riki, “Study of application of data mining market basket analysis for knowing sales pattern (association of items) at the O! Fish restaurant using apriori algorithm,” J Phys Conf Ser , vol. 1175, p. 012047, Mar. 2019, doi: 10.1088/1742 - 6596/1175/1/012047."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0177",
+      "index": 177,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[53] A. A. Aldino, E. D. Pratiwi, Setiawansyah, S. Sintaro, and A. Dwi Putra, “Comparison Of Market Basket Analysis To Determine Consumer Purchasing Patterns Using Fp -Growth And Apriori Algorithm,” in 2021 International Conference on Comput er Science, Information Technology, and Electrical Engineering (ICOMITEE) , IEEE, Oct. 2021, pp. 29 –34. doi: 10.1109/ICOMITEE53461.2021.9650317. [54] M. Qisman, R. Rosadi, and A. S. Abdullah, “Market basket analysis using apriori algorithm to find consumer patterns in buying goods through transaction data (case study of Mizan computer retail stores),” J Phys Conf Ser , vol. 1722, no. 1, p."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0178",
+      "index": 178,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "012020, Jan. 2021, doi: 10.1088/1742-6596/1722/1/012020. [55] D. M."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0179",
+      "index": 179,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "SAPUTRA, D. SAPUTRA, and L. D. OSWARI, “Effect of Distance Metrics in Determining K -Value in K -Means Clustering Using Elbow and Silhouette Method,” in Proceedings of the Sriwijaya International Conference on Information Technology and Its Applications (SICONIAN 2019) , Paris, France: Atlantis Press, 2020. doi: 10.2991/aisr.k.200424.051. [56] M. A. Syakur, B. K. Khotimah, E."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0180",
+      "index": 180,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "M. S. Rochman, and B. D. Satoto, “Integration K-Means Clustering Method and Elbow Method For Identification of The Best Customer Profile Cluster,” IOP Conf Ser Mater Sci Eng, vol. 336, p. 012017, Apr. 2018, doi: 10.1088/1757-899X/336/1/012017."
+    },
+    {
+      "chunk_id": "Thesis_M11201814_Fransisca_Cindy_Mulyani_f91093ad::0181",
+      "index": 181,
+      "page": 70,
+      "section": "2022. [8] S. Tyrała, A. Orwat, and Ł. Makowski, “Trends and sales models in e-commerce:",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "[57] A. C. Radasanu, “Inventory Management, Service Level and Safety Stock,” Journal of Public Administration, Finance and Law, pp. 145–153, 2016. [58] H.-Y. Kim, “Analysis of variance (ANOVA) comparing means of more than two groups,” Restor Dent Endod , vol. 39, no. 1, p. 74, 2014, doi: 10.5395/rde.2014.39.1.74. [59] A. Ross and V. L. Willson, “Basic and Advanced Statistical Tests,” 2017."
+    }
+  ]
+}

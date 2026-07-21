@@ -8,7 +8,7 @@ from typing import Optional
 
 from src.factory.llm import fetch_llm
 from src.config import LLMConf
-from src.graph.graph_model import Ontology, _Graph
+from src.graph.graph_model import _Graph
 from src.prompts.graph_extractor import get_graph_extractor_prompt
 
 
@@ -52,13 +52,20 @@ class GraphExtractor:
     """ Agent able to extract informations in a graph representation format from a given text.
     """
 
-    def __init__(self, conf: LLMConf, ontology: Optional[Ontology]=None):
+    def __init__(self, conf: LLMConf):
         self.conf = conf
         self.llm = fetch_llm(conf)
+        # NOTE: the ontology (allowed node/relationship types and their directions)
+        # is NOT configurable per-instance — it's fixed inside the prompt template
+        # (src/prompts/graph_extractor.py) and re-enforced deterministically by
+        # `sanitize_graph` (src/graph/graph_model.py). There used to be an
+        # `ontology: Optional[Ontology]` parameter here that was threaded in from
+        # `Configuration` but silently discarded; it was removed since it never
+        # did anything.
         self.prompt = get_graph_extractor_prompt()
 
 
-    def extract_graph(self, text: str, source_name: str = "unknown", source_format: str = "unknown") -> _Graph:
+    def extract_graph(self, text: str, source_name: str = "unknown", source_format: str = "unknown") -> Optional[_Graph]:
         """
         Extracts a graph from a text. Retries on rate limit errors.
         """
@@ -94,7 +101,7 @@ class GraphExtractor:
                 error_str = str(e)
                 is_rate_limit = "429" in error_str or "rate_limit" in error_str.lower()
 
-                is_permanent = "limit: 0" in error_str or "limit_exceeded" in error_str.lower() and "limit: 0" in error_str
+                is_permanent = "limit_exceeded" in error_str.lower() and "limit: 0" in error_str
 
                 if is_rate_limit and not is_permanent and attempt < MAX_RETRIES:
                     logger.warning(f"Rate limit hit (attempt {attempt}/{MAX_RETRIES}). Waiting {RETRY_WAIT_SECONDS}s...")

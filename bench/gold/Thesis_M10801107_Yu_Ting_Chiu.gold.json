@@ -1,0 +1,28 @@
+{
+  "doc": "Thesis_M10801107_Yu_Ting_Chiu",
+  "title": "Order Assignment Optimization of RMFS Based on Order Batching",
+  "source": "Derived from the English ABSTRACT + Keywords + title page (advisors).",
+  "status": "DRAFT — needs human review before use as ground truth.",
+  "eval_note": "Recall-oriented. These are entities/relations that MUST appear given the abstract; the list is NOT exhaustive (the full thesis body has many more valid entities), so precision against this set is meaningless and is not computed.",
+  "topics": [
+    {"canonical": "Robotic Mobile Fulfillment System", "aliases": ["RMFS", "Robotic Mobile Fulfillment System (RMFS)"]},
+    {"canonical": "Order To Pod Assignment", "aliases": ["Order to Pod Assignment", "Order Assignment"]},
+    {"canonical": "Order Batching", "aliases": ["Order Batching Concept"]},
+    {"canonical": "Two Phase Assignment", "aliases": ["Two-Phase Assignment", "Two Phase Assignment For Order To Pod Assignment"]},
+    {"canonical": "Pile On Value", "aliases": ["Pile-on Value", "Pile On"]},
+    {"canonical": "Picked Pods", "aliases": ["Number Of Picked Pods", "Picked Pod"]},
+    {"canonical": "Simulation", "aliases": []},
+    {"canonical": "Pod", "aliases": ["Pods", "Movable Shelves"]},
+    {"canonical": "Workstation", "aliases": ["Workstations", "Picking Station"]},
+    {"canonical": "Throughput", "aliases": ["Throughput Efficiency"]}
+  ],
+  "agents": [
+    {"canonical": "Yu-Ting Chiu", "aliases": ["Yu Ting Chiu", "邱榆婷"]},
+    {"canonical": "Shuo-Yan Chou", "aliases": ["Shou-Yan Chou", "Prof. Shuo-Yan Chou", "Shuo Yan Chou", "周碩彥"]},
+    {"canonical": "Po-Hsun Kuo", "aliases": ["Po Hsun Kuo", "郭伯勳"]}
+  ],
+  "relations": [
+    {"source_any": ["Order Batching", "Two Phase Assignment"], "target_any": ["Order To Pod Assignment", "Picked Pods"], "relation": "addresses",
+     "why": "the batching / two-phase methods answer the order-to-pod assignment problem"}
+  ]
+}

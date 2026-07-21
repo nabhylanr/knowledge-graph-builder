@@ -3,7 +3,6 @@ from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_groq.chat_models import ChatGroq
 from langchain_ollama.chat_models import ChatOllama
 from langchain_openai.chat_models import ChatOpenAI, AzureChatOpenAI
-from langchain_huggingface.chat_models.huggingface import ChatHuggingFace
 from src.utils.logger import get_logger
 
 from src.config import LLMConf
@@ -53,6 +52,10 @@ def fetch_llm(conf: LLMConf) -> Optional[BaseChatModel]:
             temperature=conf.temperature,
         )
     elif conf.type == "trf":
+        # Imported lazily (like the Google branch): langchain_huggingface pulls in
+        # transformers/torch (~GBs), so only load it when a HF model is actually
+        # requested — importing this module for a Groq/OpenAI run stays torch-free.
+        from langchain_huggingface.chat_models.huggingface import ChatHuggingFace
         llm = ChatHuggingFace(
             model=conf.model,
             endpoint=conf.endpoint,

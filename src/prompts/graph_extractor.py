@@ -3,12 +3,23 @@ from langchain.prompts import PromptTemplate
 
 def get_graph_extractor_prompt() -> PromptTemplate:
     """
-    Returns the KG extraction prompt — v6 (English).
+    Returns the KG extraction prompt — v7 (English).
 
     Tuned for meeting + paper datasets and for weaker/limited models. Works
     together with the deterministic post-processor `sanitize_graph`: the prompt
     lowers the *rate* of violations (preserving recall), the sanitizer *guarantees*
-    the structure. Key changes from v5:
+    the structure. Changes from v6:
+
+    8. Added `relates_to` (Topic -> Topic, typed via a `relation` property) so the
+       graph can express assertions the flat has_[type]/has_subtopic edges
+       cannot: "this Method addresses that Research Problem", "this Decision
+       resolves that Issue". Without it, a query like "which paper addresses
+       gap X" or "what did this decision resolve" has no edge to walk.
+    9. Added `assigned_to` (Topic -> Agent) so an Action Item's owner is a real
+       edge instead of buried in free text. `sanitize_graph` only keeps it when
+       the source Topic is actually typed Action Item.
+
+    Changes from v5 (still in effect):
 
     1. has_source is now PROCEDURAL — the model must first choose the 1-3 main
        Topics (STEP A) rather than only obeying a passive "max 3" rule, which
@@ -18,9 +29,9 @@ def get_graph_extractor_prompt() -> PromptTemplate:
     3. Source id is locked to a literal copy of {source_name} to prevent duplicate
        Source nodes from per-chunk spelling drift.
     4. Explicit self-loop ban (source id == target id).
-    5. Relationship-direction table + 3 concrete WRONG examples mirroring real
-       v5 failures (Source->Agent, Source->has_[type], Agent->Description).
-    6. Self-check trimmed from 14 points to the 6 highest-priority ones — long
+    5. Relationship-direction table + concrete WRONG examples mirroring real
+       past failures (Source->Agent, Source->has_[type], Agent->Description).
+    6. Self-check trimmed to the highest-priority points — long
        end-of-completion checklists are often ignored by small models.
     7. Descriptions must carry at least one specific detail from the text
        (number, name, technical term) — no generic tautological sentences.
@@ -53,6 +64,18 @@ STEP A — Read INPUT TEXT and identify the 1-3 MOST IMPORTANT (top-level) Topic
 STEP B — For each Topic, decide its Type from the vocabulary below. If two Type
    candidates look similar, PICK THE CLOSEST ONE — do not invent a new Type for a
    small nuance.
+
+STEP C — Only after STEP A and B: look for two Topics the text EXPLICITLY
+   connects to each other (not just co-occurring in the same paragraph) and add
+   a relates_to edge with a relation property from the RELATION VOCABULARY
+   below. Example trigger phrases: "to address this gap, we propose...",
+   "the team decided X, which resulted in...", "this contradicts the earlier
+   finding that...". Do NOT force a relates_to between Topics that merely
+   appear near each other — skip this step entirely if nothing in the text
+   states a connection. Separately, if a Topic's Type is Action Item and the
+   text names who is responsible, add an assigned_to edge from that Topic to
+   the Agent; if a deadline or date is mentioned, add it as a due_date property
+   on that edge.
 
 ==============================
 INPUT METADATA
@@ -112,7 +135,7 @@ ONTOLOGY — NODE TYPES (6 only)
    NEVER from a Topic directly, NEVER from an Agent directly.
 
 ==============================
-ONTOLOGY — RELATIONSHIPS (8 only, direction MUST match the table exactly)
+ONTOLOGY — RELATIONSHIPS (10 only, direction MUST match the table exactly)
 ==============================
 
 | Relationship            | Source Node | Target Node | Meaning                                 |
@@ -125,9 +148,27 @@ ONTOLOGY — RELATIONSHIPS (8 only, direction MUST match the table exactly)
 | has_[type]              | Topic       | Type        | replace [type] with lowercase_underscore|
 | has_[type]_description  | Type        | Description | direction: Type -> Description, NOT Topic -> Description |
 | has_subtopic            | Topic       | Topic       | broader -> narrower                     |
+| relates_to              | Topic       | Topic       | explicit semantic link (STEP C); requires a `relation` property from the vocabulary below |
+| assigned_to             | Topic       | Agent       | ONLY when the Topic's Type is Action Item; the Agent is the owner  |
 
 All relationship names: lowercase snake_case. NO "::" or other symbols in a
 relationship name (INVALID example: "has_description::industry_4_0::research_problem").
+
+==============================
+RELATION VOCABULARY (for relates_to only — pick exactly one, lowercase)
+==============================
+
+  addresses       — a Method/Proposal answers a Research Problem/Issue
+  resolves        — a Decision settles an Issue/Open Question
+  produces        — a Decision generates an Action Item
+  evaluates       — an Experimental Setup/Metric measures a Result
+  follows_up_on   — a later Status Update follows an earlier Status Update/Action Item
+  motivates       — a Background/Research Problem is the reason a Method exists
+  contradicts     — a Result conflicts with another Result, or Feedback with a Proposal
+  identifies      — a Background/Method names a Research Problem (gap-finding)
+
+If none of these describe the connection, do NOT add a relates_to edge — do not
+invent a ninth value.
 
 MISTAKES THAT HAVE HAPPENED BEFORE — DO NOT REPEAT:
 - WRONG: Source -> writes_about -> Agent   (Source is never the source of writes_about)
@@ -135,6 +176,11 @@ MISTAKES THAT HAVE HAPPENED BEFORE — DO NOT REPEAT:
 - WRONG: Agent -> has_[type]_description -> Description   (must come from Type, not Agent)
 - WRONG: Topic X -> has_subtopic -> Topic X (same node)   (self-loop, FORBIDDEN:
   a relationship's source id and target id must NEVER be identical)
+- WRONG: Agent -> assigned_to -> Topic   (must be Topic -> Agent, not reversed)
+- WRONG: a relates_to edge with no relation property, or a relation value
+  outside the RELATION VOCABULARY list above
+- WRONG: assigned_to on a Topic whose Type is Decision, Research Problem, or
+  anything other than Action Item
 
 ==============================
 GUIDED TYPE VOCABULARY (open, you need not use them all)
@@ -195,8 +241,14 @@ Return ONLY valid JSON. No markdown, no explanation, no text before or after the
   ]
 }}
 
+Example of a relates_to edge with its required property:
+{{"source": "Proposed Augmentation Method", "target": "Data Sparsity", "type": "relates_to", "properties": {{"relation": "addresses"}}}}
+
+Example of an assigned_to edge with an optional deadline:
+{{"source": "Fix The Pipeline Bug", "target": "Budi", "type": "assigned_to", "properties": {{"due_date": "2026-07-27"}}}}
+
 ==============================
-SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities)
+SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 2 conditional ones)
 ==============================
 
 1. Recount: how many has_source edges are in my output? If more than 3, REMOVE
@@ -208,6 +260,10 @@ SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities)
 5. Is there any Description that is tautological / lacks a specific detail from the
    text? If yes, rewrite or remove it.
 6. Are all relationship names lowercase_snake_case with no "::"?
+7. (only if you used relates_to) Does every relates_to edge have a `relation`
+   property from the RELATION VOCABULARY list, with nothing invented?
+8. (only if you used assigned_to) Is its source Topic actually typed Action
+   Item? If the Topic's Type is anything else, remove the assigned_to edge.
 
 ==============================
 BEGIN EXTRACTION

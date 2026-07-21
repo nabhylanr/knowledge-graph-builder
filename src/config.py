@@ -2,8 +2,6 @@ from enum import Enum
 from pydantic import BaseModel
 from typing import Optional
 
-from src.graph.graph_model import Ontology
-
 
 class ModelType(str, Enum):
     """
@@ -62,8 +60,11 @@ class EmbedderConf(BaseModel):
 class KnowledgeGraphConfig(BaseModel):
     """
     Configuration for the Neo4j backend of the Knowledge Graph.
-    It might come with an `Ontology`, a pre-established set of allowed relationships
-    and node labels.
+
+    Note: the ontology (allowed node/relationship types and their directions)
+    is NOT configurable here — it's fixed inside the extraction prompt
+    (`src/prompts/graph_extractor.py`) and re-enforced deterministically by
+    `sanitize_graph` (`src/graph/graph_model.py`).
 
     -----------
     attributes:
@@ -76,7 +77,6 @@ class KnowledgeGraphConfig(BaseModel):
     `database`: `str`
     `index_name`: `str`
     `timeout`: `int`
-    `ontology`: `Ontology`
     `uri`: `str`
     """
     password: str
@@ -87,7 +87,6 @@ class KnowledgeGraphConfig(BaseModel):
     database: Optional[str] = None
     index_name: str = "vector"
     timeout: int = 5000
-    ontology: Optional[Ontology] = None
     uri: Optional[str] = None
 
 
