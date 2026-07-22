@@ -1,6 +1,372 @@
 {
   "method": "wildan",
   "doc": "Thesis_M10801107_Yu_Ting_Chiu",
-  "nodes": [],
-  "relationships": []
+  "nodes": [
+    {
+      "id": "Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching",
+      "type": "Topic"
+    },
+    {
+      "id": "Contribution",
+      "type": "Type"
+    },
+    {
+      "id": "Description Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Qiu Yu Ting",
+      "type": "Agent"
+    },
+    {
+      "id": "Author",
+      "type": "Role"
+    },
+    {
+      "id": "Chou Shu Yan",
+      "type": "Agent"
+    },
+    {
+      "id": "Supervisor",
+      "type": "Role"
+    },
+    {
+      "id": "Guo Bo Xun",
+      "type": "Agent"
+    },
+    {
+      "id": "Thesis M10801107 Yu Ting Chiu",
+      "type": "Source"
+    },
+    {
+      "id": "Optimization Objective",
+      "type": "Type"
+    },
+    {
+      "id": "Description Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching Optimization Objective",
+      "type": "Description"
+    },
+    {
+      "id": "Chiu Yu Ting",
+      "type": "Agent"
+    },
+    {
+      "id": "Thesis Approval",
+      "type": "Topic"
+    },
+    {
+      "id": "Action Item",
+      "type": "Type"
+    },
+    {
+      "id": "周死方",
+      "type": "Agent"
+    },
+    {
+      "id": "Advisor S Signature",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Advisor S Signature Action Item",
+      "type": "Description"
+    },
+    {
+      "id": "Description Co Advisor S Signature Action Item",
+      "type": "Description"
+    },
+    {
+      "id": "郭佝動",
+      "type": "Agent"
+    },
+    {
+      "id": "Method",
+      "type": "Type"
+    },
+    {
+      "id": "Description Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching Method",
+      "type": "Description"
+    },
+    {
+      "id": "Thesis",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Thesis Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Degree Examination Committee",
+      "type": "Topic"
+    },
+    {
+      "id": "System Component",
+      "type": "Type"
+    },
+    {
+      "id": "Description Degree Examination Committee System Component",
+      "type": "Description"
+    },
+    {
+      "id": "Member S Signatures",
+      "type": "Topic"
+    },
+    {
+      "id": "Luo Shizhe",
+      "type": "Agent"
+    },
+    {
+      "id": "Guo Boding",
+      "type": "Agent"
+    },
+    {
+      "id": "Chou",
+      "type": "Agent"
+    },
+    {
+      "id": "Guo Ber Dong",
+      "type": "Agent"
+    },
+    {
+      "id": "Lin Xide",
+      "type": "Agent"
+    },
+    {
+      "id": "Study Program Chair",
+      "type": "Role"
+    },
+    {
+      "id": "Order To Pod Assignment With Order Batching",
+      "type": "Topic"
+    },
+    {
+      "id": "Research Problem",
+      "type": "Type"
+    },
+    {
+      "id": "Description Order To Pod Assignment With Order Batching Research Problem",
+      "type": "Description"
+    },
+    {
+      "id": "Two Phase Assignment For Order To Pod Assignment",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Two Phase Assignment For Order To Pod Assignment Method",
+      "type": "Description"
+    },
+    {
+      "id": "Order Batching",
+      "type": "Topic"
+    },
+    {
+      "id": "Two Phase Assignment",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Order Batching Method",
+      "type": "Description"
+    },
+    {
+      "id": "Description Two Phase Assignment Method",
+      "type": "Description"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching",
+      "target": "Thesis M10801107 Yu Ting Chiu",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Qiu Yu Ting",
+      "target": "Author",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Chou Shu Yan",
+      "target": "Supervisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Guo Bo Xun",
+      "target": "Supervisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching",
+      "target": "Optimization Objective",
+      "type": "has_optimization_objective",
+      "properties": {}
+    },
+    {
+      "source": "Optimization Objective",
+      "target": "Description Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching Optimization Objective",
+      "type": "has_optimization_object_description",
+      "properties": {}
+    },
+    {
+      "source": "Chiu Yu Ting",
+      "target": "Author",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Thesis Approval",
+      "target": "Advisor S Signature",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Advisor S Signature",
+      "target": "Action Item",
+      "type": "has_action_item",
+      "properties": {}
+    },
+    {
+      "source": "Action Item",
+      "target": "Description Advisor S Signature Action Item",
+      "type": "has_action_item_description",
+      "properties": {}
+    },
+    {
+      "source": "Action Item",
+      "target": "Description Co Advisor S Signature Action Item",
+      "type": "has_action_item_description",
+      "properties": {}
+    },
+    {
+      "source": "周死方",
+      "target": "Supervisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "郭佝動",
+      "target": "Supervisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Advisor S Signature",
+      "target": "周死方",
+      "type": "assigned_to",
+      "properties": {
+        "due_date": "110 08 25"
+      }
+    },
+    {
+      "source": "Advisor S Signature",
+      "target": "郭佝動",
+      "type": "assigned_to",
+      "properties": {}
+    },
+    {
+      "source": "Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Order Assignment Optimization Of Robotic Mobile Fulfillment System Based On Order Batching Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Thesis",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Thesis Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Degree Examination Committee",
+      "target": "Member S Signatures",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "System Component",
+      "target": "Description Degree Examination Committee System Component",
+      "type": "has_system_component_description",
+      "properties": {}
+    },
+    {
+      "source": "Lin Xide",
+      "target": "Study Program Chair",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Order To Pod Assignment With Order Batching",
+      "target": "Research Problem",
+      "type": "has_research_problem",
+      "properties": {}
+    },
+    {
+      "source": "Two Phase Assignment For Order To Pod Assignment",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Research Problem",
+      "target": "Description Order To Pod Assignment With Order Batching Research Problem",
+      "type": "has_research_problem_description",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Two Phase Assignment For Order To Pod Assignment Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Two Phase Assignment For Order To Pod Assignment",
+      "target": "Order To Pod Assignment With Order Batching",
+      "type": "relates_to",
+      "properties": {
+        "relation": "addresses"
+      }
+    },
+    {
+      "source": "Order Batching",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Two Phase Assignment",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Order Batching Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Two Phase Assignment Method",
+      "type": "has_method_description",
+      "properties": {}
+    }
+  ]
 }

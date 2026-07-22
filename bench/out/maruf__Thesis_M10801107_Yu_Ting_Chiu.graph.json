@@ -1,6 +1,538 @@
 {
   "method": "maruf",
   "doc": "Thesis_M10801107_Yu_Ting_Chiu",
-  "nodes": [],
-  "relationships": []
+  "nodes": [
+    {
+      "id": "Order Assignment Optimization",
+      "type": "Topic"
+    },
+    {
+      "id": "Robotic Mobile Fulfillment System",
+      "type": "Topic"
+    },
+    {
+      "id": "Order Batching",
+      "type": "Topic"
+    },
+    {
+      "id": "Contribution",
+      "type": "Type"
+    },
+    {
+      "id": "System Component",
+      "type": "Type"
+    },
+    {
+      "id": "Method",
+      "type": "Type"
+    },
+    {
+      "id": "Description Order Assignment Optimization Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Description Robotic Mobile Fulfillment System System Component",
+      "type": "Description"
+    },
+    {
+      "id": "Description Order Batching Method",
+      "type": "Description"
+    },
+    {
+      "id": "Thesis M10801107 Yu Ting Chiu",
+      "type": "Source"
+    },
+    {
+      "id": "Order Picking Process Optimization",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Order Picking Process Optimization Method",
+      "type": "Description"
+    },
+    {
+      "id": "Fulfilling More Orders With Fewer Robots",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Fulfilling More Orders With Fewer Robots Method",
+      "type": "Description"
+    },
+    {
+      "id": "Optimization Objective",
+      "type": "Type"
+    },
+    {
+      "id": "Description Reducing Robot Movement Optimization Objective",
+      "type": "Description"
+    },
+    {
+      "id": "Reducing Robot Movement",
+      "type": "Topic"
+    },
+    {
+      "id": "Order To Pod Assignment",
+      "type": "Topic"
+    },
+    {
+      "id": "Research Problem",
+      "type": "Type"
+    },
+    {
+      "id": "Description Order To Pod Assignment Research Problem",
+      "type": "Description"
+    },
+    {
+      "id": "Two Phase Assignment Method",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Two Phase Assignment Method Method",
+      "type": "Description"
+    },
+    {
+      "id": "Shuo Yan Chou",
+      "type": "Agent"
+    },
+    {
+      "id": "Research",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Research Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Po Hsun Kuo",
+      "type": "Agent"
+    },
+    {
+      "id": "Co Advisor",
+      "type": "Role"
+    },
+    {
+      "id": "Shih Che Lo",
+      "type": "Agent"
+    },
+    {
+      "id": "Thesis Defense Committee",
+      "type": "Role"
+    },
+    {
+      "id": "Thesis Research",
+      "type": "Topic"
+    },
+    {
+      "id": "Acknowledgment",
+      "type": "Topic"
+    },
+    {
+      "id": "Table Of Contents",
+      "type": "Topic"
+    },
+    {
+      "id": "Tina Chiu",
+      "type": "Agent"
+    },
+    {
+      "id": "Author",
+      "type": "Role"
+    },
+    {
+      "id": "Center Of Iot Innovation",
+      "type": "Agent"
+    },
+    {
+      "id": "Agnes",
+      "type": "Agent"
+    },
+    {
+      "id": "Chaterine",
+      "type": "Agent"
+    },
+    {
+      "id": "Edwin",
+      "type": "Agent"
+    },
+    {
+      "id": "Dennis",
+      "type": "Agent"
+    },
+    {
+      "id": "Andy",
+      "type": "Agent"
+    },
+    {
+      "id": "Rasyid",
+      "type": "Agent"
+    },
+    {
+      "id": "Ben",
+      "type": "Agent"
+    },
+    {
+      "id": "Ian",
+      "type": "Agent"
+    },
+    {
+      "id": "David",
+      "type": "Agent"
+    },
+    {
+      "id": "Kyra",
+      "type": "Agent"
+    },
+    {
+      "id": "Pan",
+      "type": "Agent"
+    },
+    {
+      "id": "Chloe",
+      "type": "Agent"
+    },
+    {
+      "id": "Jamie",
+      "type": "Agent"
+    },
+    {
+      "id": "Joe",
+      "type": "Agent"
+    },
+    {
+      "id": "Joju",
+      "type": "Agent"
+    },
+    {
+      "id": "Van",
+      "type": "Agent"
+    },
+    {
+      "id": "Phoebe",
+      "type": "Agent"
+    },
+    {
+      "id": "Molly",
+      "type": "Agent"
+    },
+    {
+      "id": "Kevin",
+      "type": "Agent"
+    },
+    {
+      "id": "Irene",
+      "type": "Agent"
+    },
+    {
+      "id": "Parents",
+      "type": "Agent"
+    },
+    {
+      "id": "Siblings",
+      "type": "Agent"
+    },
+    {
+      "id": "Introduction",
+      "type": "Topic"
+    },
+    {
+      "id": "Background",
+      "type": "Type"
+    },
+    {
+      "id": "Description Introduction Background",
+      "type": "Description"
+    },
+    {
+      "id": "Background And Motivation",
+      "type": "Topic"
+    },
+    {
+      "id": "Section",
+      "type": "Type"
+    },
+    {
+      "id": "Description Background And Motivation Section",
+      "type": "Description"
+    },
+    {
+      "id": "Methodology",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Methodology Method",
+      "type": "Description"
+    },
+    {
+      "id": "Order To Pod Assignment Problem",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Order To Pod Assignment Problem Research Problem",
+      "type": "Description"
+    },
+    {
+      "id": "Scenario",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Scenario Background",
+      "type": "Description"
+    },
+    {
+      "id": "Mathematical Model",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Mathematical Model Method",
+      "type": "Description"
+    },
+    {
+      "id": "System Configuration",
+      "type": "Topic"
+    },
+    {
+      "id": "System Architecture",
+      "type": "Topic"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "Order Assignment Optimization",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Robotic Mobile Fulfillment System",
+      "target": "System Component",
+      "type": "has_system_component",
+      "properties": {}
+    },
+    {
+      "source": "Order Batching",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Order Assignment Optimization Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "System Component",
+      "target": "Description Robotic Mobile Fulfillment System System Component",
+      "type": "has_system_component_description",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Order Batching Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Order Picking Process Optimization Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Order Picking Process Optimization",
+      "target": "Fulfilling More Orders With Fewer Robots",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Order Picking Process Optimization",
+      "target": "Reducing Robot Movement",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Fulfilling More Orders With Fewer Robots",
+      "target": "Reducing Robot Movement",
+      "type": "relates_to",
+      "properties": {
+        "relation": "addresses"
+      }
+    },
+    {
+      "source": "Optimization Objective",
+      "target": "Description Reducing Robot Movement Optimization Objective",
+      "type": "has_optimization_objective_description",
+      "properties": {}
+    },
+    {
+      "source": "Order To Pod Assignment",
+      "target": "Thesis M10801107 Yu Ting Chiu",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Two Phase Assignment Method",
+      "target": "Thesis M10801107 Yu Ting Chiu",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Order To Pod Assignment",
+      "target": "Research Problem",
+      "type": "has_research_problem",
+      "properties": {}
+    },
+    {
+      "source": "Two Phase Assignment Method",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Research Problem",
+      "target": "Description Order To Pod Assignment Research Problem",
+      "type": "has_research_problem_description",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Two Phase Assignment Method Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Order To Pod Assignment",
+      "target": "Two Phase Assignment Method",
+      "type": "relates_to",
+      "properties": {
+        "relation": "addresses"
+      }
+    },
+    {
+      "source": "Research",
+      "target": "Thesis M10801107 Yu Ting Chiu",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Research",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Research Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Po Hsun Kuo",
+      "target": "Co Advisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Shih Che Lo",
+      "target": "Thesis Defense Committee",
+      "type": "role_in_meeting",
+      "properties": {}
+    },
+    {
+      "source": "Acknowledgment",
+      "target": "Thesis Research",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Table Of Contents",
+      "target": "Thesis Research",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Tina Chiu",
+      "target": "Author",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Introduction",
+      "target": "Background",
+      "type": "has_background",
+      "properties": {}
+    },
+    {
+      "source": "Background",
+      "target": "Description Introduction Background",
+      "type": "has_background_description",
+      "properties": {}
+    },
+    {
+      "source": "Introduction",
+      "target": "Background And Motivation",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Background And Motivation",
+      "target": "Section",
+      "type": "has_section",
+      "properties": {}
+    },
+    {
+      "source": "Section",
+      "target": "Description Background And Motivation Section",
+      "type": "has_section_description",
+      "properties": {}
+    },
+    {
+      "source": "Methodology",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Methodology Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Methodology",
+      "target": "Order To Pod Assignment Problem",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Order To Pod Assignment Problem",
+      "target": "Research Problem",
+      "type": "has_research_problem",
+      "properties": {}
+    },
+    {
+      "source": "Research Problem",
+      "target": "Description Order To Pod Assignment Problem Research Problem",
+      "type": "has_research_problem_description",
+      "properties": {}
+    },
+    {
+      "source": "Background",
+      "target": "Description Scenario Background",
+      "type": "has_[type]_description",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Mathematical Model Method",
+      "type": "has_[type]_description",
+      "properties": {}
+    },
+    {
+      "source": "System Configuration",
+      "target": "System Architecture",
+      "type": "has_subtopic",
+      "properties": {}
+    }
+  ]
 }

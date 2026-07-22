@@ -1,0 +1,430 @@
+{
+  "method": "wildan",
+  "doc": "Thesis_M11001010_Hung_Chun_Tse_Nick",
+  "nodes": [
+    {
+      "id": "Optimizing Pod Utilization And Allocation In Robotic Mobile Fulfillment System",
+      "type": "Topic"
+    },
+    {
+      "id": "Contribution",
+      "type": "Type"
+    },
+    {
+      "id": "Description Optimizing Pod Utilization And Allocation In Robotic Mobile Fulfillment System Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Hong Jun Ze",
+      "type": "Agent"
+    },
+    {
+      "id": "Student",
+      "type": "Role"
+    },
+    {
+      "id": "Zhou Shou Yan",
+      "type": "Agent"
+    },
+    {
+      "id": "Supervisor",
+      "type": "Role"
+    },
+    {
+      "id": "Guo Bo Lung",
+      "type": "Agent"
+    },
+    {
+      "id": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "Source"
+    },
+    {
+      "id": "Hung Chun Tse",
+      "type": "Agent"
+    },
+    {
+      "id": "Author",
+      "type": "Role"
+    },
+    {
+      "id": "Thesis",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Thesis Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "周硕产",
+      "type": "Agent"
+    },
+    {
+      "id": "Advisor",
+      "type": "Role"
+    },
+    {
+      "id": "郭伯動",
+      "type": "Agent"
+    },
+    {
+      "id": "Co Advisor",
+      "type": "Role"
+    },
+    {
+      "id": "Degree Examination Committee",
+      "type": "Topic"
+    },
+    {
+      "id": "Member S Signatures",
+      "type": "Topic"
+    },
+    {
+      "id": "Advisor S Signature",
+      "type": "Topic"
+    },
+    {
+      "id": "Zhou Shuoyi",
+      "type": "Agent"
+    },
+    {
+      "id": "Guo Boding",
+      "type": "Agent"
+    },
+    {
+      "id": "Wang Kongzheng",
+      "type": "Agent"
+    },
+    {
+      "id": "Zhou Shuoqi",
+      "type": "Agent"
+    },
+    {
+      "id": "Optimization Of Robotic Mobile Fulfillment System For Cost Reduction",
+      "type": "Topic"
+    },
+    {
+      "id": "Algorithms To Improve Loading Process",
+      "type": "Topic"
+    },
+    {
+      "id": "Multi Heuristics For Stock Keeping Unit Location Determination",
+      "type": "Topic"
+    },
+    {
+      "id": "Method",
+      "type": "Type"
+    },
+    {
+      "id": "Description Optimization Of Robotic Mobile Fulfillment System For Cost Reduction Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Description Algorithms To Improve Loading Process Method",
+      "type": "Description"
+    },
+    {
+      "id": "Description Multi Heuristics For Stock Keeping Unit Location Determination Method",
+      "type": "Description"
+    },
+    {
+      "id": "Container Loading Problem",
+      "type": "Topic"
+    },
+    {
+      "id": "Maximizing Space Utilization To Reduce Slot Waste",
+      "type": "Topic"
+    },
+    {
+      "id": "Assigning Strategy Positions For Each Sku Based On Overall Order Quantity",
+      "type": "Topic"
+    },
+    {
+      "id": "Pod",
+      "type": "Topic"
+    },
+    {
+      "id": "Research Problem",
+      "type": "Type"
+    },
+    {
+      "id": "System Component",
+      "type": "Type"
+    },
+    {
+      "id": "Description Container Loading Problem Research Problem",
+      "type": "Description"
+    },
+    {
+      "id": "Description Maximizing Space Utilization To Reduce Slot Waste Method",
+      "type": "Description"
+    },
+    {
+      "id": "Description Pod System Component",
+      "type": "Description"
+    },
+    {
+      "id": "Realistic Warehouse Simulation",
+      "type": "Topic"
+    },
+    {
+      "id": "Rotation Direction Constraint",
+      "type": "Topic"
+    },
+    {
+      "id": "Sku Placement Constraint",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Realistic Warehouse Simulation Method",
+      "type": "Description"
+    },
+    {
+      "id": "Description Rotation Direction Constraint System Component",
+      "type": "Description"
+    },
+    {
+      "id": "Description Sku Placement Constraint System Component",
+      "type": "Description"
+    },
+    {
+      "id": "Pod Quantity Prediction Method",
+      "type": "Topic"
+    },
+    {
+      "id": "Research Contribution To Warehouse Efficiency And Cost Reduction",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Pod Quantity Prediction Method Method",
+      "type": "Description"
+    },
+    {
+      "id": "Description Research Contribution To Warehouse Efficiency And Cost Reduction Contribution",
+      "type": "Description"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "Optimizing Pod Utilization And Allocation In Robotic Mobile Fulfillment System",
+      "target": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Optimizing Pod Utilization And Allocation In Robotic Mobile Fulfillment System",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Optimizing Pod Utilization And Allocation In Robotic Mobile Fulfillment System Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Hong Jun Ze",
+      "target": "Student",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Zhou Shou Yan",
+      "target": "Supervisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Guo Bo Lung",
+      "target": "Supervisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Hung Chun Tse",
+      "target": "Author",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Thesis",
+      "target": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Thesis Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "周硕产",
+      "target": "Advisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "郭伯動",
+      "target": "Co Advisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Optimization Of Robotic Mobile Fulfillment System For Cost Reduction",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Optimization Of Robotic Mobile Fulfillment System For Cost Reduction Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Algorithms To Improve Loading Process",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Algorithms To Improve Loading Process Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Multi Heuristics For Stock Keeping Unit Location Determination",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Multi Heuristics For Stock Keeping Unit Location Determination Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Optimization Of Robotic Mobile Fulfillment System For Cost Reduction",
+      "target": "Algorithms To Improve Loading Process",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Optimization Of Robotic Mobile Fulfillment System For Cost Reduction",
+      "target": "Multi Heuristics For Stock Keeping Unit Location Determination",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Container Loading Problem",
+      "target": "Research Problem",
+      "type": "has_research_problem",
+      "properties": {}
+    },
+    {
+      "source": "Maximizing Space Utilization To Reduce Slot Waste",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Pod",
+      "target": "System Component",
+      "type": "has_system_component",
+      "properties": {}
+    },
+    {
+      "source": "Container Loading Problem",
+      "target": "Maximizing Space Utilization To Reduce Slot Waste",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Container Loading Problem",
+      "target": "Assigning Strategy Positions For Each Sku Based On Overall Order Quantity",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Container Loading Problem",
+      "target": "Pod",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Realistic Warehouse Simulation",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Realistic Warehouse Simulation Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Rotation Direction Constraint",
+      "target": "System Component",
+      "type": "has_system_component",
+      "properties": {}
+    },
+    {
+      "source": "System Component",
+      "target": "Description Rotation Direction Constraint System Component",
+      "type": "has_system_component_description",
+      "properties": {}
+    },
+    {
+      "source": "Sku Placement Constraint",
+      "target": "System Component",
+      "type": "has_system_component",
+      "properties": {}
+    },
+    {
+      "source": "System Component",
+      "target": "Description Sku Placement Constraint System Component",
+      "type": "has_system_component_description",
+      "properties": {}
+    },
+    {
+      "source": "Realistic Warehouse Simulation",
+      "target": "Rotation Direction Constraint",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Realistic Warehouse Simulation",
+      "target": "Sku Placement Constraint",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Pod Quantity Prediction Method",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Research Contribution To Warehouse Efficiency And Cost Reduction",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Pod Quantity Prediction Method Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Research Contribution To Warehouse Efficiency And Cost Reduction Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    }
+  ]
+}

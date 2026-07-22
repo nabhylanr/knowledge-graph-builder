@@ -1,0 +1,366 @@
+{
+  "method": "maruf",
+  "doc": "Thesis_M11001010_Hung_Chun_Tse_Nick",
+  "nodes": [
+    {
+      "id": "Pod Identification Method",
+      "type": "Topic"
+    },
+    {
+      "id": "Method",
+      "type": "Type"
+    },
+    {
+      "id": "Description Pod Identification Method Method",
+      "type": "Description"
+    },
+    {
+      "id": "Pods",
+      "type": "Topic"
+    },
+    {
+      "id": "Accurate Pod Count",
+      "type": "Topic"
+    },
+    {
+      "id": "Result",
+      "type": "Type"
+    },
+    {
+      "id": "Description Accurate Pod Count Result",
+      "type": "Description"
+    },
+    {
+      "id": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "Source"
+    },
+    {
+      "id": "Rmfs Optimization",
+      "type": "Topic"
+    },
+    {
+      "id": "Contribution",
+      "type": "Type"
+    },
+    {
+      "id": "Description Rmfs Optimization Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Rmfs",
+      "type": "Topic"
+    },
+    {
+      "id": "Pick Order Assignment",
+      "type": "Topic"
+    },
+    {
+      "id": "Container Loading Problem",
+      "type": "Topic"
+    },
+    {
+      "id": "Metaheuristics",
+      "type": "Topic"
+    },
+    {
+      "id": "Professor Shou Yan Chou",
+      "type": "Agent"
+    },
+    {
+      "id": "Principal Advisor",
+      "type": "Role"
+    },
+    {
+      "id": "Professor Po Hsun Kuo",
+      "type": "Agent"
+    },
+    {
+      "id": "Co Advisor",
+      "type": "Role"
+    },
+    {
+      "id": "Professor Kung Jeng Wang",
+      "type": "Agent"
+    },
+    {
+      "id": "Committee Member",
+      "type": "Role"
+    },
+    {
+      "id": "Dr Anindhita Dewabharata",
+      "type": "Agent"
+    },
+    {
+      "id": "Postdoctoral Researcher",
+      "type": "Role"
+    },
+    {
+      "id": "Dr Ferani E Zulvia",
+      "type": "Agent"
+    },
+    {
+      "id": "Research Work",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Research Work Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Abstract",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Abstract Contribution",
+      "type": "Description"
+    },
+    {
+      "id": "Container Logistics Planning Challenges",
+      "type": "Topic"
+    },
+    {
+      "id": "Research Problem",
+      "type": "Type"
+    },
+    {
+      "id": "Description Container Logistics Planning Challenges Research Problem",
+      "type": "Description"
+    },
+    {
+      "id": "Background",
+      "type": "Topic"
+    },
+    {
+      "id": "Objectives",
+      "type": "Topic"
+    },
+    {
+      "id": "Description Container Loading Problem Research Problem",
+      "type": "Description"
+    },
+    {
+      "id": "Robotic Mobile Fulfillment System",
+      "type": "Topic"
+    },
+    {
+      "id": "System Component",
+      "type": "Type"
+    },
+    {
+      "id": "Description Robotic Mobile Fulfillment System System Component",
+      "type": "Description"
+    },
+    {
+      "id": "Methodology",
+      "type": "Topic"
+    },
+    {
+      "id": "Experimental Setup",
+      "type": "Type"
+    },
+    {
+      "id": "Description Methodology Experimental Setup",
+      "type": "Description"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "Pod Identification Method",
+      "target": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Pod Identification Method",
+      "target": "Method",
+      "type": "has_method",
+      "properties": {}
+    },
+    {
+      "source": "Method",
+      "target": "Description Pod Identification Method Method",
+      "type": "has_method_description",
+      "properties": {}
+    },
+    {
+      "source": "Pod Identification Method",
+      "target": "Pods",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Pod Identification Method",
+      "target": "Accurate Pod Count",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Accurate Pod Count",
+      "target": "Result",
+      "type": "has_result",
+      "properties": {}
+    },
+    {
+      "source": "Result",
+      "target": "Description Accurate Pod Count Result",
+      "type": "has_result_description",
+      "properties": {}
+    },
+    {
+      "source": "Rmfs Optimization",
+      "target": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Rmfs Optimization",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Rmfs Optimization Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Rmfs Optimization",
+      "target": "Rmfs",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Rmfs Optimization",
+      "target": "Pick Order Assignment",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Rmfs Optimization",
+      "target": "Container Loading Problem",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Rmfs Optimization",
+      "target": "Metaheuristics",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Professor Shou Yan Chou",
+      "target": "Principal Advisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Professor Po Hsun Kuo",
+      "target": "Co Advisor",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Professor Kung Jeng Wang",
+      "target": "Committee Member",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Dr Anindhita Dewabharata",
+      "target": "Postdoctoral Researcher",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Dr Ferani E Zulvia",
+      "target": "Postdoctoral Researcher",
+      "type": "role_in_paper",
+      "properties": {}
+    },
+    {
+      "source": "Research Work",
+      "target": "Thesis M11001010 Hung Chun Tse Nick",
+      "type": "has_source",
+      "properties": {}
+    },
+    {
+      "source": "Research Work",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Research Work Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Abstract",
+      "target": "Contribution",
+      "type": "has_contribution",
+      "properties": {}
+    },
+    {
+      "source": "Contribution",
+      "target": "Description Abstract Contribution",
+      "type": "has_contribution_description",
+      "properties": {}
+    },
+    {
+      "source": "Container Logistics Planning Challenges",
+      "target": "Background",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Container Logistics Planning Challenges",
+      "target": "Objectives",
+      "type": "has_subtopic",
+      "properties": {}
+    },
+    {
+      "source": "Research Problem",
+      "target": "Description Container Logistics Planning Challenges Research Problem",
+      "type": "has_research_problem_description",
+      "properties": {}
+    },
+    {
+      "source": "Research Problem",
+      "target": "Description Container Loading Problem Research Problem",
+      "type": "has_research_problem_description",
+      "properties": {}
+    },
+    {
+      "source": "Container Loading Problem",
+      "target": "Research Problem",
+      "type": "has_research_problem",
+      "properties": {}
+    },
+    {
+      "source": "System Component",
+      "target": "Description Robotic Mobile Fulfillment System System Component",
+      "type": "has_system_component_description",
+      "properties": {}
+    },
+    {
+      "source": "Robotic Mobile Fulfillment System",
+      "target": "System Component",
+      "type": "has_system_component",
+      "properties": {}
+    },
+    {
+      "source": "Methodology",
+      "target": "Experimental Setup",
+      "type": "has_experimental_setup",
+      "properties": {}
+    },
+    {
+      "source": "Experimental Setup",
+      "target": "Description Methodology Experimental Setup",
+      "type": "has_experimental_setup_description",
+      "properties": {}
+    }
+  ]
+}

@@ -17,10 +17,13 @@ def fetch_llm(conf: LLMConf) -> Optional[BaseChatModel]:
     logger.info(f"Fetching LLM model '{conf.model}'..")
 
     if conf.type == "ollama":
-        llm = ChatOllama(
-            model=conf.model,
-            temperature=conf.temperature
-        )
+        ollama_kwargs = {"model": conf.model, "temperature": conf.temperature}
+        # Point at a REMOTE Ollama server via RE_MODEL_ENDPOINT (e.g. a Tailscale
+        # host running the model), so an underpowered local machine offloads
+        # inference. Left unset/"none" it defaults to local localhost:11434.
+        if conf.endpoint and conf.endpoint.strip().lower() not in ("", "none"):
+            ollama_kwargs["base_url"] = conf.endpoint.strip()
+        llm = ChatOllama(**ollama_kwargs)
     elif conf.type == "openai":
         llm = ChatOpenAI(
             model=conf.model,
