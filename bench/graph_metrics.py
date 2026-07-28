@@ -47,9 +47,6 @@ from src.agents.graph_extractor import GraphExtractor              # noqa: E402
 from src.config import LLMConf                                     # noqa: E402
 from src.graph.graph_model import sanitize_graph, _canonical_id    # noqa: E402
 
-# Modularity needs python-louvain + leidenalg + igraph (C extensions). Optional:
-# if they aren't installed, the core structural metrics (lcc, dup, isolated,
-# degree) still compute and modularity is reported as n/a.
 try:
     from src.graph.graph_ds import detect_louvain_communities, detect_leiden_communities
     _HAVE_COMMUNITY = True
@@ -94,10 +91,10 @@ def mine_method(extractor: GraphExtractor, chunks, doc: str):
     """
     has_source_state, topic_registry = {}, {}
     raw_nodes = 0
-    sanitized_nodes_emitted = 0          # summed across chunks, pre global-merge
-    nodes = {}                           # canonical id -> type  (global merge)
-    edges = {}                           # (src, tgt, type) -> properties
-
+    sanitized_nodes_emitted = 0          
+    nodes = {}                          
+    edges = {}                           
+    
     for i, ch in enumerate(chunks):
         try:
             g = extractor.extract_graph(text=ch["text"], source_name=doc, source_format="pdf")
@@ -204,9 +201,12 @@ def _f(x):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--doc", action="append", help="doc base name (repeatable).")
+    ap.add_argument("--method", action="append", choices=METHODS,
+                    help="restrict to method(s) (repeatable). default: both.")
     ap.add_argument("--limit", type=int, default=0, help="only first N chunks per method (quick smoke).")
     args = ap.parse_args()
     docs = args.doc or list(DEFAULT_DOCS)
+    methods = args.method or list(METHODS)
 
     conf = build_llm_conf()
     if not conf.model or not conf.api_key:
@@ -216,7 +216,7 @@ def main():
 
     for doc in docs:
         print(f"\n=== {doc} ===")
-        for method in METHODS:
+        for method in methods:
             chunks = load_chunks(method, doc)
             if chunks is None:
                 print(f"  {method:8} (no normalized file — run prep.py first)")

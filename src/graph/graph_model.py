@@ -149,7 +149,7 @@ def props_to_dict(props) -> dict:
     return properties
 
 
-ALLOWED_LABELS = {"Agent", "Role", "Topic", "Type", "Source", "Description"}
+ALLOWED_LABELS = {"Agent", "Role", "Topic", "Type", "Source", "Description", "Contradiction"}
 
 
 def _canonical_id(s: str) -> str:
@@ -170,50 +170,81 @@ _FIXED_RELATION_DIRS = {
     "has_subtopic": ("Topic", "Topic"),
     "relates_to": ("Topic", "Topic"),
     "assigned_to": ("Topic", "Agent"),
+    "has_contradiction": ("Description", "Contradiction"),
 }
 
 MAX_HAS_SOURCE = 3
 
 RELATES_TO_VOCAB = {
-    "addresses",       # Method / Proposal -> Research Problem / Issue
-    "resolves",        # Decision -> Issue / Open Question
-    "produces",        # Decision -> Action Item
-    "evaluates",       # Experimental Setup / Metric -> Result
-    "follows_up_on",   # later Status Update -> earlier Status Update / Action Item
-    "motivates",       # Background / Research Problem -> Method
-    "contradicts",     # Result -> Result, or Feedback -> Proposal
-    "identifies",      # Background / Method -> Research Problem
+    "addresses",      # Method -> Problem | Research Goal
+    "resolves",       # Decision -> Issue | Open Question
+    "produces",       # Decision -> Action Item
+    "evaluates",      # Experiment | Metrics Evaluation -> Result
+    "uses",           # Method | Experiment -> Dataset
+    "motivates",      # Background | Research Gap | Problem -> Method | Research Goal
+    "identifies",     # Background | Existing Research -> Research Gap
+    "extends",        # Method -> Existing Research | Theoretical Basis
+    "compares_to",    # Result -> Existing Research | Result
+    "contradicts",    # Result -> Result, or Feedback -> Idea | Decision
+    "responds_to",    # Feedback -> Idea | Decision | Progress Update | Method | Result | Limitation
+    "follows_up_on",  # Progress Update -> Progress Update | Action Item
+}
+
+# Source-Type-name(s) -> target-Type-name(s) allowed for each relates_to value
+# (v8 ontology). Names are lowercase; matched against canonicalized Type ids.
+# A relates_to edge whose endpoints don't fall in these sets is dropped by
+# sanitize_graph even if the `relation` string itself is in RELATES_TO_VOCAB.
+RELATES_TO_TYPE_PAIRS = {
+    "addresses":     ({"method"}, {"problem", "research goal"}),
+    "resolves":      ({"decision"}, {"issue", "open question"}),
+    "produces":      ({"decision"}, {"action item"}),
+    "evaluates":     ({"experiment", "metrics evaluation"}, {"result"}),
+    "uses":          ({"method", "experiment"}, {"dataset"}),
+    "motivates":     ({"background", "research gap", "problem"}, {"method", "research goal"}),
+    "identifies":    ({"background", "existing research"}, {"research gap"}),
+    "extends":       ({"method"}, {"existing research", "theoretical basis"}),
+    "compares_to":   ({"result"}, {"existing research", "result"}),
+    "contradicts":   ({"result", "feedback"}, {"result", "idea", "decision"}),
+    "responds_to":   ({"feedback"}, {"idea", "decision", "progress update", "method", "result", "limitation"}),
+    "follows_up_on": ({"progress update"}, {"progress update", "action item"}),
 }
 
 ACTION_ITEM_TYPE = "Action Item"
 
+ALLOWED_TOPIC_STATUS = {"open", "in_progress", "done", "blocked"}
+ALLOWED_STANCE = {"raised", "proposed", "decided", "reported", "gave_feedback"}
+ALLOWED_CONTRADICTION_LEVEL = {"direct", "partial", "apparent"}
+
+# A Contradiction needs >=2 distinct Description participants to be meaningful.
+# Not enforced here — sanitize_graph only sees one chunk at a time — but
+# downstream by KnowledgeGraph._cleanup_singleton_contradictions once the whole
+# document is stored (see that method's docstring).
+MIN_CONTRADICTION_PARTICIPANTS = 2
+
 _PAPER_TYPES = {
-    "research problem", "background", "dataset", "experimental setup",
-    "contribution", "limitation", "future work", "system component",
-    "optimization objective",
+    "background", "problem", "research goal", "theoretical basis", "dataset",
+    "conclusion", "future work", "existing research", "research gap",
+    "method", "experiment", "result", "metrics evaluation", "limitation",
 }
 _MEETING_TYPES = {
-    "decision", "action item", "discussion", "proposal", "open question",
-    "status update", "risk", "milestone", "project", "requirement",
+    "issue", "idea", "decision", "action item", "open question",
+    "progress update", "feedback",
 }
-_SHARED_TYPES = {"method", "dataset", "result", "tool", "concept", "metric"}
 
 
 def _type_domain(type_name: str) -> str:
     """
-    Deterministic domain tag for a Type node: "paper", "meeting", or "shared".
-    A Type name the model invented (not in any list below) defaults to
-    "shared" — the safest default, since we cannot tell which document kind
-    coined it.
+    Deterministic domain tag for a Type node: "paper", "meeting", or "unknown".
+    v8's Paper/Meeting vocabularies are disjoint by design (unlike v7, which had
+    a "shared" bucket) — a Type name the model invented that matches neither
+    list is tagged "unknown" rather than assumed shared.
     """
     key = type_name.strip().lower()
-    if key in _SHARED_TYPES:
-        return "shared"
     if key in _PAPER_TYPES:
         return "paper"
     if key in _MEETING_TYPES:
         return "meeting"
-    return "shared"
+    return "unknown"
 
 
 def _expected_direction(rel_type: str):
@@ -370,21 +401,38 @@ def sanitize_graph(
     aliases, near-duplicate Topic strings, and placeholder nodes whose id equals
     their label. All ids are canonicalized so variants merge.
 
-    Also enforces the two relationship types added on top of the original
-    ontology:
+    Also enforces the v8 ontology additions on top of the base structure:
+    - `has_[type]` / `has_[type]_description` edges are canonicalized to the
+      fixed names `has_type` / `has_description` regardless of what the model
+      actually emitted (e.g. a leaked "has_method" is renamed, not just
+      direction-validated) — this is what makes "10 fixed relationship names"
+      true even when the model doesn't comply with the prompt.
     - `relates_to` (Topic -> Topic): kept only when its `relation` property is
-      one of `RELATES_TO_VOCAB` — an untyped or invented relation value is
-      dropped rather than trusted, since a free-text relation defeats the
-      point of a controlled vocabulary.
+      one of `RELATES_TO_VOCAB` AND the source/target Topics' has_type Types
+      match the allowed pair for that relation in `RELATES_TO_TYPE_PAIRS`
+      (e.g. "addresses" requires a Method -> Problem/Research Goal pair) — an
+      untyped, invented, or mismatched-pair relation is dropped rather than
+      trusted.
     - `assigned_to` (Topic -> Agent): kept only when the source Topic has a
-      validated `has_[type]` edge to a Type node canonicalizing to
-      "Action Item" — this stops the model from attaching an assignee to a
-      Topic that isn't actually an action item.
+      validated has_type edge to the Type "Action Item" — this stops the
+      model from attaching an assignee to a Topic that isn't actually an
+      action item.
+    - `status` (on Topic nodes) and `stance` (on spoke_about/writes_about
+      edges) are kept only when the value is one of the allowed options;
+      otherwise the property is dropped, not the whole node/edge.
+    - `has_contradiction` (Description -> Contradiction, v8.1): direction and
+      an empty `summary` on the Contradiction node are enforced like
+      Description's own rules. `level` is kept only when it's one of
+      ALLOWED_CONTRADICTION_LEVEL, dropped (not the edge) otherwise — same
+      leniency as `stance`. The >=2-participants floor is NOT enforced here
+      (see MIN_CONTRADICTION_PARTICIPANTS); it runs downstream in
+      `KnowledgeGraph._cleanup_singleton_contradictions`.
 
     Every Type node also gets a deterministic `domain` property ("paper",
-    "meeting", or "shared") via `_type_domain`, so the same Type label is not
+    "meeting", or "unknown") via `_type_domain`, so the same Type label is not
     a flat namespace mixing paper and meeting vocabularies with no way to tell
-    which document kind it came from.
+    which document kind it came from. v8's Paper/Meeting Type lists are
+    disjoint by design, so "unknown" only fires for a Type the model invented.
 
     `has_source_state`: a mutable dict the caller creates ONCE per document and
     passes into every chunk's call, so the "max 3 has_source edges" cap spans the
@@ -401,10 +449,15 @@ def sanitize_graph(
 
     canon_source = _canonical_id(source_name)
 
-    # 0. Drop empty/placeholder Descriptions (and any edge touching them) up front.
+    # 0. Drop empty/placeholder Descriptions and Contradictions (and any edge
+    #    touching them) up front — a Contradiction with an empty `summary` is
+    #    as useless as an empty Description, regardless of its edge count.
     drop_ids = {
         n.id for n in graph.nodes
         if n.type.capitalize() == "Description" and not (n.properties or {}).get("text", "").strip()
+    } | {
+        n.id for n in graph.nodes
+        if n.type.capitalize() == "Contradiction" and not (n.properties or {}).get("summary", "").strip()
     }
     nodes = [n for n in graph.nodes if n.id not in drop_ids]
     relationships = [
@@ -441,6 +494,9 @@ def sanitize_graph(
             props = {**(n.properties or {}), "name": cid}
             if label == "Type":
                 props["domain"] = _type_domain(cid)
+            if label == "Topic" and "status" in props:
+                if str(props["status"]).strip().lower() not in ALLOWED_TOPIC_STATUS:
+                    del props["status"]  # invented value — drop rather than trust it
             out_nodes.append(_Node(id=cid, type=label, properties=props))
 
     node_label[canon_source] = "Source"
@@ -456,17 +512,23 @@ def sanitize_graph(
     counter = has_source_state if has_source_state is not None else {}
     has_source_count = counter.get(canon_source, 0)
 
-    # Pre-pass: which Topics are validly typed as "Action Item"? Needed to gate
-    # assigned_to below, computed before the main loop since a chunk may list
-    # assigned_to before its has_[type] edge.
-    topic_is_action_item = set()
+    # Pre-pass: which Type(s) is each Topic validly linked to via has_[type]?
+    # Needed both to gate assigned_to (Action Item only) and to enforce the
+    # relates_to type-pair table below. Computed before the main loop since a
+    # chunk may list relates_to/assigned_to before its has_[type] edge.
+    topic_type_names: Dict[str, set] = {}
     for r in relationships:
         rt_low = (r.type or "").lower()
         if not rt_low.startswith("has_") or rt_low.endswith("_description") or rt_low.endswith("_desc"):
             continue
         src, tgt = resolve(r.source), resolve(r.target)
-        if node_label.get(src) == "Topic" and node_label.get(tgt) == "Type" and tgt == ACTION_ITEM_TYPE:
-            topic_is_action_item.add(src)
+        if node_label.get(src) == "Topic" and node_label.get(tgt) == "Type":
+            topic_type_names.setdefault(src, set()).add(tgt.strip().lower())
+
+    topic_is_action_item = {
+        topic for topic, types in topic_type_names.items()
+        if ACTION_ITEM_TYPE.lower() in types
+    }
 
     out_rels: List[_Relationship] = []
     seen = set()
@@ -482,14 +544,42 @@ def sanitize_graph(
             continue
         rt = r.type.lower()
 
+        # Canonicalize has_[type] / has_[type]_description variants to the
+        # fixed v8 edge names regardless of what the model actually emitted —
+        # this is what makes "10 fixed relationship names" true even when the
+        # model reverts to dynamic naming like "has_method".
+        if expected == ("Topic", "Type"):
+            rt = "has_type"
+        elif expected == ("Type", "Description"):
+            rt = "has_description"
+
         props = dict(r.properties or {})
         if rt == "relates_to":
             relation = (props.get("relation") or "").strip().lower().replace(" ", "_")
             if relation not in RELATES_TO_VOCAB:
                 continue  # untyped/invented relation — drop rather than trust verbatim
+            pair = RELATES_TO_TYPE_PAIRS.get(relation)
+            if pair is not None:
+                src_types = topic_type_names.get(src, set())
+                tgt_types = topic_type_names.get(tgt, set())
+                if not (src_types & pair[0]) or not (tgt_types & pair[1]):
+                    continue  # endpoint Types don't match this relation's allowed pair
             props["relation"] = relation
         if rt == "assigned_to" and src not in topic_is_action_item:
             continue  # assignee attached to a Topic that isn't an Action Item
+        if rt in ("spoke_about", "writes_about") and "stance" in props:
+            if str(props["stance"]).strip().lower() not in ALLOWED_STANCE:
+                del props["stance"]  # invented value — drop rather than trust it
+        if rt == "has_contradiction":
+            level = str(props.get("level", "")).strip().lower()
+            if level in ALLOWED_CONTRADICTION_LEVEL:
+                props["level"] = level
+            else:
+                # Drop the bad value but KEEP the edge — unlike relates_to, which
+                # drops the whole edge for a bad `relation`. Dropping it here could
+                # push a genuine Contradiction below the 2-participant floor over a
+                # mere formatting slip; that floor is enforced downstream instead.
+                props.pop("level", None)
 
         key = (src, tgt, rt)
         if key in seen:                     # dedup before counting so duplicates don't eat the cap

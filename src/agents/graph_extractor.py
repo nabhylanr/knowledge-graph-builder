@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import time
 import traceback
@@ -79,8 +80,29 @@ class GraphExtractor:
             source_format=source_format
         )
 
+        # qwen3 "soft switch": appending /no_think suppresses its reasoning block to
+        # cut latency. Opt-in via env so default behaviour is unchanged. NOTE: the
+        # qwen3-vl variant honours this only partially.
+        if os.getenv("EXTRACTOR_NO_THINK") == "1":
+            prompt_str = f"{prompt_str}\n\n/no_think"
+
+        # Models like qwen3-vl:4b reliably fail tool/function calling —
+        # `with_structured_output` returns an empty graph — yet emit valid JSON as
+        # plain text. For those, every chunk wastes a full structured-output call
+        # before falling back to a raw completion anyway (~half the latency is pure
+        # waste). EXTRACTOR_RAW_ONLY skips straight to the raw path, so each chunk
+        # makes one LLM call instead of two. Leave it unset for models whose
+        # tool-calling actually works (OpenAI/Groq), which lose nothing from the
+        # structured path.
+        raw_only = os.getenv("EXTRACTOR_RAW_ONLY") == "1"
+
         for attempt in range(1, MAX_RETRIES + 1):
             try:
+                if raw_only:
+                    # Single completion; parse may return None/empty, which the
+                    # caller handles the same as any other failed extraction.
+                    return _parse_graph_from_text(self._raw_completion(prompt_str))
+
                 graph: _Graph = self.llm.with_structured_output(
                     schema=_Graph
                 ).invoke(input=prompt_str)
@@ -111,7 +133,9 @@ class GraphExtractor:
                 # Non-rate-limit failure (e.g. Groq `tool_use_failed`): the model
                 # often emits perfectly valid JSON that only the tool-calling wrapper
                 # rejected. Salvage it via a plain completion before giving up.
-                if not is_rate_limit:
+                # Skipped in raw_only mode — the raw completion is what just failed,
+                # so re-running it would only waste another call.
+                if not is_rate_limit and not raw_only:
                     try:
                         fallback = _parse_graph_from_text(self._raw_completion(prompt_str))
                         if fallback is not None and fallback.nodes:

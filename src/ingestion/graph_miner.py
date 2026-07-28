@@ -1,8 +1,12 @@
+import os
+
+from concurrent.futures import ThreadPoolExecutor
+
 from src.utils.logger import get_logger
 from typing import List
 
 from src.agents.graph_extractor import GraphExtractor
-from src.graph.graph_model import _Graph, map_to_lc_graph, sanitize_graph
+from src.graph.graph_model import map_to_lc_graph, sanitize_graph
 from src.config import LLMConf
 from src.schema import ProcessedDocument
 
@@ -35,18 +39,39 @@ class GraphMiner:
         # chunk 5) instead of only within a single chunk.
         topic_registry: dict = {}
 
-        for chunk in doc.chunks:
+        # Phase 1 — extraction (the slow, LLM-bound part). Each chunk's extract is
+        # independent (no cross-chunk state), so run them concurrently. Results are
+        # collected in chunk order. Tune concurrency with EXTRACTOR_MAX_WORKERS
+        # (lower it if the Ollama/GPU server can't keep up); 1 = fully sequential.
+        max_workers = max(1, int(os.getenv("EXTRACTOR_MAX_WORKERS", "4")))
+
+        def _extract(chunk):
             try:
-                graph: _Graph = self.graph_extractor.extract_graph(
+                return self.graph_extractor.extract_graph(
                     text=chunk.text,
                     source_name=source_name,
-                    source_format=source_format
+                    source_format=source_format,
                 )
+            except Exception as e:
+                logger.warning(f"Error while extracting graph: {e}")
+                return None
 
-                if graph is None:
-                    logger.warning(f"Skipping chunk — graph extraction returned None.")
-                    continue
+        if max_workers > 1:
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                raw_graphs = list(executor.map(_extract, doc.chunks))
+        else:
+            raw_graphs = [_extract(chunk) for chunk in doc.chunks]
 
+        # Phase 2 — sanitize + map, SERIALLY in chunk order. This is deliberate:
+        # sanitize mutates has_source_state and topic_registry, whose results are
+        # order-dependent (first-3 has_source cap, first-spelling Topic dedup).
+        # Parallelizing here would make the output non-deterministic, so it stays a
+        # plain in-order loop — matching the previous sequential behaviour exactly.
+        for chunk, graph in zip(doc.chunks, raw_graphs):
+            if graph is None:
+                logger.warning(f"Skipping chunk — graph extraction returned None.")
+                continue
+            try:
                 # Deterministically enforce the ontology (directions, has_source cap,
                 # single Source, no self-loops) before mapping to the graph store.
                 graph = sanitize_graph(

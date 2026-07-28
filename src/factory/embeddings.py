@@ -1,4 +1,5 @@
-from langchain_huggingface.embeddings import HuggingFaceEmbeddings
+from __future__ import annotations
+
 from langchain_ollama.embeddings import OllamaEmbeddings
 from langchain_openai.embeddings import OpenAIEmbeddings, AzureOpenAIEmbeddings
 from typing import Union
@@ -39,6 +40,9 @@ def get_embeddings(conf: EmbedderConf) -> Union[
                 
             )
         elif conf.type == "trf":
+            # Lazy import: langchain_huggingface pulls transformers/torch (~GBs);
+            # only load it when a HF embedder is actually requested.
+            from langchain_huggingface.embeddings import HuggingFaceEmbeddings
             embeddings = HuggingFaceEmbeddings(
                 model=conf.model,
                 endpoint=conf.endpoint,

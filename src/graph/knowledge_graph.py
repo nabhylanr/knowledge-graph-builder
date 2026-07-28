@@ -303,6 +303,34 @@ class KnowledgeGraph(Neo4jGraph):
 
 
     @staticmethod
+    def _cleanup_singleton_contradictions(tx: ManagedTransaction):
+        """
+        Deletes Contradiction nodes left with fewer than 2 distinct Description
+        participants (MIN_CONTRADICTION_PARTICIPANTS in src/graph/graph_model.py).
+
+        `sanitize_graph` can't enforce this: it sees one chunk at a time, so a
+        Contradiction with 1 edge in chunk N might gain its 2nd participant in a
+        later chunk — dropping it eagerly would lose the already-persisted first
+        edge. Running once, after ALL chunks are stored, checks the real graph
+        instead of a partial per-chunk view (and also catches the rarer case of
+        two chunks reusing the same Contradiction id).
+
+        Safe to run unconditionally and repeatedly: a genuine Contradiction keeps
+        >=2 edges once its document is fully ingested, so only leftovers go.
+        """
+        query = """
+            MATCH (c:Contradiction)
+            WHERE size((c)<-[:HAS_CONTRADICTION]-(:Description)) < 2
+            DETACH DELETE c
+        """
+        try:
+            tx.run(query)
+            logger.info("Removed Contradiction nodes with fewer than 2 Description participants")
+        except Exception as e:
+            logger.warning(f"Error cleaning up singleton Contradiction nodes: {e}")
+
+
+    @staticmethod
     def _create_mentions_relationships(
         tx: ManagedTransaction,
         node_id: str,
@@ -396,6 +424,21 @@ class KnowledgeGraph(Neo4jGraph):
             logger.info(f"PRECEDES relationships created for series '{series}'")
 
 
+    def cleanup_singleton_contradictions(self):
+        """
+        Removes Contradiction nodes with fewer than 2 Description participants.
+        See `_cleanup_singleton_contradictions` for why this has to run as a
+        post-ingestion pass over the real Neo4j graph rather than inside
+        `sanitize_graph`. Call once after all chunks of a document are stored —
+        `store_chunks_for_doc` already does this, same as `create_next_relationships`.
+        """
+        with self._driver.session(database=self._database) as session:
+            session.execute_write(
+                self._cleanup_singleton_contradictions
+            )
+            logger.info("Contradiction cleanup pass complete")
+
+
     def create_mentions_relationships(
             self,
             node_id: str,
@@ -485,6 +528,11 @@ class KnowledgeGraph(Neo4jGraph):
             self.create_document_node(doc=doc)
         except Exception as e:
             logger.warning(f"Error creating Document source node for file: {doc.filename}: {e}")
+
+        try:
+            self.cleanup_singleton_contradictions()
+        except Exception as e:
+            logger.warning(f"Error cleaning up singleton Contradiction nodes for document {doc.filename}: {e}")
 
         try:
             self.vector_store.create_new_index()

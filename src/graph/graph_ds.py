@@ -1,27 +1,20 @@
-import community
 import networkx as nx
 
-from igraph import Graph
-from leidenalg import find_partition, ModularityVertexPartition
 from src.utils.logger import get_logger
 from neo4j import Query, Session
 from typing import Any, Dict, Tuple, Union
-
 
 logger = get_logger(__name__)
 
 
 def detect_louvain_communities(G: nx.DiGraph, return_modularity:bool=True) -> Union[nx.DiGraph, Tuple[nx.DiGraph, float]]:
-    """ 
-    Detects Louvain communities for a `networkx` Directed Graph. 
-    If `return_modularity`, also return the modularity of the Graph according to 
-    the Louvain distance measure.
-    """
+    import community
+
     G_undirected = G.to_undirected()
 
-    partition = community.best_partition(G_undirected)  # Louvain method
+    partition = community.best_partition(G_undirected)
 
-    nx.set_node_attributes(G, partition, "community_louvain")  # Store communities in node attributes
+    nx.set_node_attributes(G, partition, "community_louvain")
 
     if not return_modularity:
 
@@ -36,24 +29,19 @@ def detect_louvain_communities(G: nx.DiGraph, return_modularity:bool=True) -> Un
     
 
 def detect_leiden_communities(G: nx.DiGraph, return_modularity:bool=True) -> Union[nx.DiGraph, Tuple[nx.DiGraph, float]]:
-    """
-    Detects Leiden communities for a `networkx` Directed Graph. 
-    If `return_modularity`, also return the modularity of the Graph according to 
-    the Louvain distance measure.
-    """
     
-    # Convert networkx to igraph
-    mapping = {node: i for i, node in enumerate(G.nodes())}  # Node mapping
+    from igraph import Graph
+    from leidenalg import find_partition, ModularityVertexPartition
+
+    mapping = {node: i for i, node in enumerate(G.nodes())}
     reverse_mapping = {i: node for node, i in mapping.items()}
     
-    # Create igraph graph
     ig_G = Graph(directed=True)
     ig_G.add_vertices(len(G.nodes()))
     ig_G.add_edges([(mapping[u], mapping[v]) for u, v in G.edges()])
     
     partition = find_partition(ig_G, ModularityVertexPartition)
 
-    # Assign community labels back to NetworkX
     for i, comm in enumerate(partition):
         for node in comm:
             G.nodes[reverse_mapping[node]]["community_leiden"] = i 
@@ -70,9 +58,6 @@ def detect_leiden_communities(G: nx.DiGraph, return_modularity:bool=True) -> Uni
     
 
 def compute_centralities(G: Union[nx.DiGraph, nx.Graph]) -> Union[nx.DiGraph, nx.Graph]:
-    """
-    Compute PageRank, Betweenness and Closeness Centralities and store them as metadata in the graph
-    """
     
     pr = nx.pagerank(G, alpha=0.85)
     bc = nx.betweenness_centrality(G)
@@ -86,18 +71,6 @@ def compute_centralities(G: Union[nx.DiGraph, nx.Graph]) -> Union[nx.DiGraph, nx
 
 
 def update_modularity(session: Session, mod: float, mod_type: str="leiden"):
-    """
-    Save Leiden or Louvain modularity score as a graph-wide property (inside a node).
-    
-    params: 
-    -------
-    `session`: `Session`  
-        Neo4j Session
-    `mod`: `float`  
-        Modularity score
-    `mod_type`: `str`
-        Either `leiden` or `louvain`
-    """
     if mod_type in ["leiden", "louvain"]:   
         try:
             session.run(
@@ -121,14 +94,8 @@ def build_update_query(
         betweenness: float=0.0,
         closeness: float=0.0 
     ) -> Tuple[Query, Dict[str, Any]]:
-    """ 
-    Returns `Query` and `dict`with parameters to update node properies
-    """
-    
-    # Base query
     query = "MATCH (n) WHERE elementId(n) = $node_id\n"
 
-    # List to hold SET clauses
     set_clauses = []
     parameters = {"node_id": node_id}
 
@@ -151,8 +118,7 @@ def build_update_query(
             }
         )
 
-    # Only add SET if there's something to update
     if set_clauses:
-        query += "SET " + ",\n    ".join(set_clauses)  # Join clauses with proper formatting
+        query += "SET " + ",\n    ".join(set_clauses)  
 
     return query, parameters
