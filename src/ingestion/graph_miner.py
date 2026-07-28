@@ -1,6 +1,7 @@
 import os
 
 from concurrent.futures import ThreadPoolExecutor
+from threading import Lock
 
 from src.utils.logger import get_logger
 from typing import List
@@ -45,6 +46,13 @@ class GraphMiner:
         # (lower it if the Ollama/GPU server can't keep up); 1 = fully sequential.
         max_workers = max(1, int(os.getenv("EXTRACTOR_MAX_WORKERS", "4")))
 
+        # Progress counter — raw_only extraction logs nothing on success, so without
+        # this a long run is silent until it finishes. Incremented under a lock since
+        # workers run concurrently; logged every 10 chunks (and on the last one).
+        total_chunks = len(doc.chunks)
+        progress = {"done": 0}
+        progress_lock = Lock()
+
         def _extract(chunk):
             try:
                 return self.graph_extractor.extract_graph(
@@ -55,6 +63,11 @@ class GraphMiner:
             except Exception as e:
                 logger.warning(f"Error while extracting graph: {e}")
                 return None
+            finally:
+                with progress_lock:
+                    progress["done"] += 1
+                    if progress["done"] % 10 == 0 or progress["done"] == total_chunks:
+                        logger.info(f"Extraction progress: {progress['done']}/{total_chunks} chunks")
 
         if max_workers > 1:
             with ThreadPoolExecutor(max_workers=max_workers) as executor:

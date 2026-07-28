@@ -17,6 +17,23 @@ logger = get_logger(__name__)
 
 MAX_RETRIES = 5
 RETRY_WAIT_SECONDS = 65  # wait 65s between retries on rate limit
+CONN_RETRY_WAIT_SECONDS = 30  # wait 30s between retries on a transient connection error
+
+# Substrings that mark a transient server-connectivity failure (remote Ollama
+# restarted / briefly down / network blip) — worth retrying rather than dropping
+# the chunk. Without retry, a mid-run server restart permanently loses every
+# in-flight/queued chunk even though the server recovers seconds later (observed:
+# one ~15-min blip silently dropped ~50 of 106 chunks).
+_CONN_ERROR_MARKERS = (
+    "connection refused",
+    "server disconnected",
+    "connection error",
+    "max retries exceeded",
+    "incomplete chunked read",
+    "peer closed connection",
+    "connection reset",
+    "read timed out",
+)
 
 
 def _parse_graph_from_text(content: str) -> Optional[_Graph]:
@@ -121,13 +138,21 @@ class GraphExtractor:
 
             except Exception as e:
                 error_str = str(e)
-                is_rate_limit = "429" in error_str or "rate_limit" in error_str.lower()
+                error_low = error_str.lower()
+                is_rate_limit = "429" in error_str or "rate_limit" in error_low
 
-                is_permanent = "limit_exceeded" in error_str.lower() and "limit: 0" in error_str
+                is_permanent = "limit_exceeded" in error_low and "limit: 0" in error_str
 
-                if is_rate_limit and not is_permanent and attempt < MAX_RETRIES:
-                    logger.warning(f"Rate limit hit (attempt {attempt}/{MAX_RETRIES}). Waiting {RETRY_WAIT_SECONDS}s...")
-                    time.sleep(RETRY_WAIT_SECONDS)
+                # Transient connectivity failure (remote server restarted / blip):
+                # retry with a wait so the chunk survives a short outage instead of
+                # being dropped the instant the server refuses a connection.
+                is_conn_error = any(m in error_low for m in _CONN_ERROR_MARKERS)
+
+                if ((is_rate_limit and not is_permanent) or is_conn_error) and attempt < MAX_RETRIES:
+                    wait = RETRY_WAIT_SECONDS if is_rate_limit else CONN_RETRY_WAIT_SECONDS
+                    reason = "Rate limit hit" if is_rate_limit else "Connection error"
+                    logger.warning(f"{reason} (attempt {attempt}/{MAX_RETRIES}). Waiting {wait}s...")
+                    time.sleep(wait)
                     continue
 
                 # Non-rate-limit failure (e.g. Groq `tool_use_failed`): the model

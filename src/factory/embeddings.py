@@ -20,9 +20,13 @@ def get_embeddings(conf: EmbedderConf) -> Union[
     ]:
 
         if conf.type == "ollama":
-            embeddings = OllamaEmbeddings(
-                model=conf.model
-            )
+            ollama_kwargs = {"model": conf.model}
+            # Point at a REMOTE Ollama server via EMBEDDINGS_ENDPOINT (e.g. a
+            # Tailscale host), mirroring the LLM factory. Left unset/"none" it
+            # defaults to local localhost:11434.
+            if conf.endpoint and conf.endpoint.strip().lower() not in ("", "none"):
+                ollama_kwargs["base_url"] = conf.endpoint.strip()
+            embeddings = OllamaEmbeddings(**ollama_kwargs)
         elif conf.type == "openai":
             embeddings = OpenAIEmbeddings(
                 model=conf.model,

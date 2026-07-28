@@ -37,7 +37,8 @@ It lives in the extraction prompt ([prompts/graph_extractor.py](src/prompts/grap
 and is re-enforced deterministically by [sanitize_graph](src/graph/graph_model.py),
 so the LLM only decides *which* instances to extract, never the schema.
 
-**Node types (6):** `Agent`, `Role`, `Topic`, `Type`, `Source`, `Description`.
+**Node types (7):** `Agent`, `Role`, `Topic`, `Type`, `Source`, `Description`,
+`Contradiction` (conflict — see [Conflict ontology](#conflict-ontology-contradiction--supersedes) below).
 
 **Relationships (extracted from text):**
 
@@ -51,6 +52,7 @@ so the LLM only decides *which* instances to extract, never the schema.
 | `has_subtopic`           | Topic → Topic    | broader → narrower |
 | `relates_to`             | Topic → Topic    | needs a `relation` from a controlled vocab (`addresses`, `resolves`, `produces`, `evaluates`, `follows_up_on`, `motivates`, `contradicts`, `identifies`) |
 | `assigned_to`            | Topic → Agent    | only when the Topic's Type is `Action Item` |
+| `has_contradiction`      | Description → Contradiction | reified conflict between ≥2 Descriptions; needs a `level` (`direct` / `partial` / `apparent`) — see [Conflict ontology](#conflict-ontology-contradiction--supersedes) |
 
 What `sanitize_graph` guarantees deterministically (regardless of what the model
 emits): one canonical `Source` node per document, correct relationship directions,
@@ -62,6 +64,39 @@ Separately, the graph store adds **structural** relationships (not LLM-extracted
 `PART_OF` and `NEXT` (Chunk-level), `MENTIONS` (Chunk → entity), and — opt-in via
 `create_precedes_relationships`, requiring `series` + `date` metadata — `PRECEDES`
 (Document → Document).
+
+### Conflict ontology (Contradiction & supersedes)
+
+Beyond construction, a **separate, on-demand pass** scans the whole graph for
+conflicting facts and classifies each one. It runs **only when called**, and
+because it sees the entire KB (not one chunk) it catches cross-chunk /
+cross-document conflicts that per-chunk extraction cannot. Each conflict resolves
+to **one of two** shapes:
+
+| Situation | Output | New node? |
+|-----------|--------|-----------|
+| Two facts genuinely conflict and both still stand | `Contradiction` node + `has_contradiction` edges | yes |
+| A newer `Result` corrects / replaces an older one | `supersedes` edge | no — edge only |
+
+- **`Contradiction`** — a reified conflict with a required `summary` (must name
+  the specific clashing detail from both sides). Anchors **≥2** `has_contradiction`
+  edges (`Description → Contradiction`, each with a `level`); a singleton is
+  meaningless and is removed downstream
+  ([`_cleanup_singleton_contradictions`](src/graph/knowledge_graph.py)).
+- **`supersedes`** — `Description → Description`, **both `typeName = "Result"`**,
+  direction newer → older, optional `reason`, **no node** (it just records that
+  the new fact updates the old). Its constraints (both endpoints `Result`, no
+  self-loop, no `A↔B` cycle) are enforced by the detection pass, not the per-chunk
+  sanitizer.
+
+**Decision rule:** if the newer Result *corrects* the older one → `supersedes`
+edge; if both genuinely stand in opposition → `Contradiction` node.
+
+The node/edge shapes are the single source of truth in
+[graph_model.py](src/graph/graph_model.py) (`SUPERSEDES_RELATION`,
+`ALLOWED_CONTRADICTION_LEVEL`, …) so construction and the detector stay
+consistent. Full spec — decision tree, constraints, example Cypher — in
+[docs/conflict_ontology.md](docs/conflict_ontology.md).
 
 ## Requirements
 

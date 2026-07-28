@@ -221,6 +221,24 @@ ALLOWED_CONTRADICTION_LEVEL = {"direct", "partial", "apparent"}
 # document is stored (see that method's docstring).
 MIN_CONTRADICTION_PARTICIPANTS = 2
 
+# --- supersedes (v8.2): edge-only conflict resolution -----------------------
+# A corrected / newer Result Description that REPLACES an earlier one — "update
+# information", not an unresolved standoff. Unlike Contradiction it creates NO
+# node: just a directed edge (newer -> older) between two Result Descriptions.
+#
+# Produced by the SEPARATE, on-demand conflict-detection pass over the whole KB
+# (see docs/conflict_ontology.md), NOT by per-chunk construction — the two
+# endpoints usually live in different chunks/documents, which the per-chunk
+# sanitizer cannot see. So it is intentionally NOT added to `_FIXED_RELATION_DIRS`
+# above (that map is the construction ontology). Its direction, Result-only
+# endpoints, and anti-cycle rule (A supersedes B AND B supersedes A must never
+# co-exist — that would be a Contradiction, not a supersession) are enforced by
+# that detection pass / a downstream whole-graph query, the same way the
+# >=2-participant Contradiction rule is enforced downstream rather than in
+# `sanitize_graph`.
+SUPERSEDES_RELATION = "supersedes"
+SUPERSEDES_ENDPOINT_TYPE = "Result"   # both Description endpoints must be typeName == "Result"
+
 _PAPER_TYPES = {
     "background", "problem", "research goal", "theoretical basis", "dataset",
     "conclusion", "future work", "existing research", "research gap",
