@@ -265,6 +265,93 @@ def _type_domain(type_name: str) -> str:
     return "unknown"
 
 
+_MIN_SANE_YEAR = 1900
+_MAX_SANE_YEAR = 2100
+
+# Taiwanese ROC/Minguo calendar: Gregorian year = ROC year + 1911. ROC years
+# are written digit-by-digit in Chinese numerals ("一一零" = "1","1","0" = 110),
+# not as a hundred-based reading — this corpus's theses use this convention
+# (e.g. "中華民國一一零年八月"), so digit-by-digit mapping is what's needed, not
+# a general Chinese-numeral parser.
+_ROC_MARKER_RE = re.compile(r"民國\s*([0-9〇零一二三四五六七八九]+)\s*年")
+_CHINESE_DIGITS = {"〇": 0, "零": 0, "一": 1, "二": 2, "三": 3, "四": 4,
+                   "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+_YEAR_RE = re.compile(r"\b(19|20)\d{2}\b")
+
+
+def _parse_source_year(raw: str) -> Optional[int]:
+    """
+    Best-effort year extraction from an LLM-emitted Source `date` string.
+    Returns None (never a guess) if nothing parses or the result fails the
+    1900-2100 sanity bound — `date_raw` is preserved by the caller regardless.
+
+    Handles: plain years ("2021"), ISO-ish ("2021-08", "2021-08-15"), English
+    month-year ("August 2021"), and ROC/Minguo dates in Arabic ("民國110年8月")
+    or Chinese-numeral ("中華民國一一零年八月") form.
+    """
+    if not raw:
+        return None
+
+    roc_match = _ROC_MARKER_RE.search(raw)
+    if roc_match:
+        digits = roc_match.group(1)
+        if digits.isascii() and digits.isdigit():
+            roc_year = int(digits)
+        else:
+            try:
+                roc_year = int("".join(str(_CHINESE_DIGITS[ch]) for ch in digits))
+            except KeyError:
+                roc_year = None
+        if roc_year is not None:
+            return _bounded_year(roc_year + 1911, raw)
+        return None
+
+    year_match = _YEAR_RE.search(raw)
+    if year_match:
+        return _bounded_year(int(year_match.group(0)), raw)
+
+    return None
+
+
+def _bounded_year(year: int, raw: str) -> Optional[int]:
+    if _MIN_SANE_YEAR <= year <= _MAX_SANE_YEAR:
+        return year
+    logger.warning(f"Parsed Source year {year} from {raw!r} is outside {_MIN_SANE_YEAR}-{_MAX_SANE_YEAR} — treating as a misparse, dropping.")
+    return None
+
+
+def _capture_source_metadata(raw_properties: Dict[str, Any], source_meta: Dict[str, Any]) -> None:
+    """
+    First-write-wins accumulation of a Source's `date`/`format` across chunks.
+    Mutates `source_meta` in place; never clears a key that's already set, so a
+    later chunk with no date (or a conflicting one) can't wipe an earlier
+    chunk's captured value. Called once per raw Source node instance seen.
+    """
+    raw_format = (raw_properties or {}).get("format")
+    if raw_format and "format" not in source_meta:
+        source_meta["format"] = str(raw_format).strip()
+
+    raw_date = (raw_properties or {}).get("date")
+    if not raw_date:
+        return
+    raw_date = str(raw_date).strip()
+    if not raw_date:
+        return
+
+    if "date_raw" not in source_meta:
+        source_meta["date_raw"] = raw_date
+        year = _parse_source_year(raw_date)
+        if year is not None:
+            # _Node.properties is Dict[str, str] (pydantic-enforced) — every
+            # property is a string, same convention as e.g. `due_date` elsewhere.
+            source_meta["year"] = str(year)
+    elif source_meta["date_raw"] != raw_date:
+        logger.warning(
+            f"Source date conflict: keeping first-seen {source_meta['date_raw']!r}, "
+            f"ignoring later chunk's {raw_date!r}."
+        )
+
+
 def _expected_direction(rel_type: str):
     """Return the (source_label, target_label) a relationship type must have, or None to drop it."""
     rt = (rel_type or "").lower()
@@ -409,6 +496,7 @@ def sanitize_graph(
     source_name: str,
     has_source_state: Optional[Dict[str, int]] = None,
     topic_registry: Optional[Dict[str, str]] = None,
+    source_meta_state: Optional[Dict[str, dict]] = None,
 ) -> Optional[_Graph]:
     """
     Deterministically enforce the ontology on a model-extracted `_Graph`.
@@ -445,6 +533,14 @@ def sanitize_graph(
       leniency as `stance`. The >=2-participants floor is NOT enforced here
       (see MIN_CONTRADICTION_PARTICIPANTS); it runs downstream in
       `KnowledgeGraph._cleanup_singleton_contradictions`.
+    - Description ids are scoped per source document (v8.3): a Description's id
+      is its content-only canonical id plus `|` + `canon_source`, and it gets a
+      `source_id` property set to `canon_source`. Without this, two different
+      documents describing the same Topic+Type would MERGE into a single
+      Description node on write (storage MERGEs by id), silently conflating two
+      documents' distinct claims and making cross-document conflict detection
+      (docs/conflict_ontology.md) impossible — same Topic+Type would always
+      resolve to exactly one node. See `description_remap` below.
 
     Every Type node also gets a deterministic `domain` property ("paper",
     "meeting", or "unknown") via `_type_domain`, so the same Type label is not
@@ -461,11 +557,22 @@ def sanitize_graph(
     passes into every chunk's call, so near-duplicate Topic strings merge across
     chunks instead of only within one. If None, dedup applies within this single
     call only. See `_dedupe_similar_topics`.
+
+    `source_meta_state`: a mutable dict the caller creates ONCE per document and
+    passes into every chunk's call (same pattern as the two above), so a `date`/
+    `format` the LLM emits on a Source node in one chunk is still present on
+    every later chunk's write of the same canonical Source — MERGE keeps
+    re-applying it, so it's never lost even though the raw Source node is
+    re-emitted (and its properties otherwise discarded for alias-collapsing
+    purposes) on every chunk. First-write-wins on a date conflict between
+    chunks; see `_capture_source_metadata`. If None, capture is scoped to this
+    single call only.
     """
     if graph is None:
         return None
 
     canon_source = _canonical_id(source_name)
+    source_meta = source_meta_state.setdefault(canon_source, {}) if source_meta_state is not None else {}
 
     # 0. Drop empty/placeholder Descriptions and Contradictions (and any edge
     #    touching them) up front — a Contradiction with an empty `summary` is
@@ -492,9 +599,25 @@ def sanitize_graph(
 
     # 2. Keep only ontology-labelled nodes; drop placeholders (id == label).
     #    Collapse every Source-labelled node into one canonical Source.
+    #
+    #    Description ids get an extra doc-scoping step here (v8.3): a Description's
+    #    content-only id (`cid`, e.g. "Description Multimodal Retrieval Result") is
+    #    identical for two different documents that happen to discuss the same
+    #    Topic+Type. Since storage MERGEs by (label, id), that collision silently
+    #    folds two documents' distinct claims into one node — which also means the
+    #    whole-KB conflict pass in docs/conflict_ontology.md could never find a
+    #    cross-document pair for a shared Topic+Type: there would only ever be one
+    #    node to find. `description_remap` (cid -> doc-scoped id) fixes this by
+    #    suffixing every Description id with `canon_source`, joined with "|" rather
+    #    than "::" — "::" contains ":", which `_canonical_id` strips, and this
+    #    function is applied to node ids a SECOND time downstream (`map_to_lc_node`,
+    #    and `bench/graph_metrics.py`'s own re-canonicalization), which would
+    #    silently collapse a "::" suffix back into a space and reopen the same
+    #    collision. "|" survives both passes unchanged.
     node_label: Dict[str, str] = {}
     out_nodes: List[_Node] = []
     source_aliases = set()
+    description_remap: Dict[str, str] = {}
     for n in nodes:
         label = n.type.capitalize()
         if label not in ALLOWED_LABELS:
@@ -506,23 +629,32 @@ def sanitize_graph(
             continue  # relationship name leaked in as a Type node
         if label == "Source":
             source_aliases.add(cid)
+            _capture_source_metadata(n.properties or {}, source_meta)
             continue
+        if label == "Description":
+            doc_scoped_id = f"{cid}|{canon_source}"
+            description_remap[cid] = doc_scoped_id
+            cid = doc_scoped_id
         if cid not in node_label:
             node_label[cid] = label
             props = {**(n.properties or {}), "name": cid}
             if label == "Type":
                 props["domain"] = _type_domain(cid)
+            if label == "Description":
+                props["source_id"] = canon_source
             if label == "Topic" and "status" in props:
                 if str(props["status"]).strip().lower() not in ALLOWED_TOPIC_STATUS:
                     del props["status"]  # invented value — drop rather than trust it
             out_nodes.append(_Node(id=cid, type=label, properties=props))
 
     node_label[canon_source] = "Source"
-    out_nodes.append(_Node(id=canon_source, type="Source", properties={"name": canon_source}))
+    out_nodes.append(_Node(id=canon_source, type="Source", properties={"name": canon_source, **source_meta}))
 
     def resolve(node_id: str) -> str:
         cid = _canonical_id(node_id)
-        return canon_source if cid in source_aliases else cid
+        if cid in source_aliases:
+            return canon_source
+        return description_remap.get(cid, cid)
 
     # 3. Validate relationships against the direction whitelist. The has_source
     #    cap is tracked in `has_source_state` (keyed by canonical Source id) so it

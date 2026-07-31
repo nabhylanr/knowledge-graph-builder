@@ -39,6 +39,10 @@ class GraphMiner:
         # chunks (a Topic from chunk 1 recognized when it reappears misspelled in
         # chunk 5) instead of only within a single chunk.
         topic_registry: dict = {}
+        # Same per-document lifetime, so a Source `date`/`format` captured in one
+        # chunk is still applied when a later chunk (with no date, or a different
+        # one) re-emits and re-merges the same canonical Source node.
+        source_meta_state: dict = {}
 
         # Phase 1 — extraction (the slow, LLM-bound part). Each chunk's extract is
         # independent (no cross-chunk state), so run them concurrently. Results are
@@ -92,6 +96,7 @@ class GraphMiner:
                     source_name=source_name,
                     has_source_state=has_source_state,
                     topic_registry=topic_registry,
+                    source_meta_state=source_meta_state,
                 )
 
                 if graph is None:

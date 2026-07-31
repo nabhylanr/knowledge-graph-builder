@@ -37,8 +37,11 @@ It lives in the extraction prompt ([prompts/graph_extractor.py](src/prompts/grap
 and is re-enforced deterministically by [sanitize_graph](src/graph/graph_model.py),
 so the LLM only decides *which* instances to extract, never the schema.
 
-**Node types (7):** `Agent`, `Role`, `Topic`, `Type`, `Source`, `Description`,
-`Contradiction` (conflict — see [Conflict ontology](#conflict-ontology-contradiction--supersedes) below).
+**Node types extracted per-chunk (6):** `Agent`, `Role`, `Topic`, `Type`, `Source`,
+`Description`. A 7th label, `Contradiction`, exists in the ontology but is no
+longer emitted here — construction-time contradiction detection (formerly
+STEP D) was disabled; `Contradiction` is now produced exclusively by the
+separate on-demand pass — see [Conflict ontology](#conflict-ontology-contradiction--supersedes) below.
 
 **Relationships (extracted from text):**
 
@@ -52,7 +55,9 @@ so the LLM only decides *which* instances to extract, never the schema.
 | `has_subtopic`           | Topic → Topic    | broader → narrower |
 | `relates_to`             | Topic → Topic    | needs a `relation` from a controlled vocab (`addresses`, `resolves`, `produces`, `evaluates`, `follows_up_on`, `motivates`, `contradicts`, `identifies`) |
 | `assigned_to`            | Topic → Agent    | only when the Topic's Type is `Action Item` |
-| `has_contradiction`      | Description → Contradiction | reified conflict between ≥2 Descriptions; needs a `level` (`direct` / `partial` / `apparent`) — see [Conflict ontology](#conflict-ontology-contradiction--supersedes) |
+
+`has_contradiction` (Description → Contradiction) is **not** in the table above
+— it's no longer extracted per-chunk. See [Conflict ontology](#conflict-ontology-contradiction--supersedes) below for where it now comes from.
 
 What `sanitize_graph` guarantees deterministically (regardless of what the model
 emits): one canonical `Source` node per document, correct relationship directions,
@@ -66,6 +71,15 @@ Separately, the graph store adds **structural** relationships (not LLM-extracted
 (Document → Document).
 
 ### Conflict ontology (Contradiction & supersedes)
+
+> **Superseded design below.** This section (and `docs/conflict_ontology.md`,
+> which it was based on) describes the pre-`conflict_pipeline.md` schema —
+> e.g. `Contradiction`'s `level` property no longer exists, replaced by
+> `resolution_type`/`confidence`/`participants_hash`/etc. Current authoritative
+> spec: [docs/conflict_pipeline.md](docs/conflict_pipeline.md). What stays true
+> either way: construction-time (per-chunk) contradiction detection is
+> disabled — `Contradiction`/`has_contradiction` are produced only by the
+> separate on-demand pass described below in outline.
 
 Beyond construction, a **separate, on-demand pass** scans the whole graph for
 conflicting facts and classifies each one. It runs **only when called**, and
@@ -92,11 +106,10 @@ to **one of two** shapes:
 **Decision rule:** if the newer Result *corrects* the older one → `supersedes`
 edge; if both genuinely stand in opposition → `Contradiction` node.
 
-The node/edge shapes are the single source of truth in
-[graph_model.py](src/graph/graph_model.py) (`SUPERSEDES_RELATION`,
-`ALLOWED_CONTRADICTION_LEVEL`, …) so construction and the detector stay
-consistent. Full spec — decision tree, constraints, example Cypher — in
-[docs/conflict_ontology.md](docs/conflict_ontology.md).
+The node/edge shapes referenced above are historical (`graph_model.py` still
+carries the old constants, e.g. `ALLOWED_CONTRADICTION_LEVEL`, unchanged and
+inert). Full current spec — decision rules, output ontology, constraints,
+example Cypher — in [docs/conflict_pipeline.md](docs/conflict_pipeline.md).
 
 ## Requirements
 

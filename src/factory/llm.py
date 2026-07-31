@@ -23,6 +23,13 @@ def fetch_llm(conf: LLMConf) -> Optional[BaseChatModel]:
         # inference. Left unset/"none" it defaults to local localhost:11434.
         if conf.endpoint and conf.endpoint.strip().lower() not in ("", "none"):
             ollama_kwargs["base_url"] = conf.endpoint.strip()
+        # client_kwargs flows into the underlying httpx client's `timeout`. Only
+        # set when a caller opts in (conf.timeout) — a hung/slow local model
+        # would otherwise block .invoke() indefinitely, which callers relying on
+        # a bounded "timeout -> treat as failure" contract (e.g. the conflict
+        # pass's NLI gate) cannot tolerate.
+        if conf.timeout is not None:
+            ollama_kwargs["client_kwargs"] = {"timeout": conf.timeout}
         llm = ChatOllama(**ollama_kwargs)
     elif conf.type == "openai":
         llm = ChatOpenAI(

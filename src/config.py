@@ -27,6 +27,10 @@ class LLMConf(BaseModel):
     `model`: represents the name of the model
     `api_key`: reference to the OpenAI (or Groq, or Azure OpenAI) API key, if any
     `endpoint`: reference to the endpoint of the model, if any
+    `timeout`: per-request timeout in seconds. Only wired up for `ollama` today
+    (via `client_kwargs={"timeout": ...}`) — needed by callers that must never
+    block indefinitely on a hung local model (e.g. src/conflict/nli_client.py's
+    fail-open gate). `None` preserves prior behaviour (no explicit timeout).
     """
     model: str
     temperature: float = 0.0
@@ -35,6 +39,7 @@ class LLMConf(BaseModel):
     api_key: Optional[str] = None
     endpoint: Optional[str] = None
     api_version: Optional[str] = None
+    timeout: Optional[int] = None
 
 
 class EmbedderConf(BaseModel):

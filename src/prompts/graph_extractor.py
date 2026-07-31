@@ -43,6 +43,8 @@ def get_graph_extractor_prompt() -> PromptTemplate:
        still the right choice for a Topic/finding-level conflict — has_contradiction
        is strictly for when the conflict is only visible at the Description detail
        level (specific numbers/claims), see ONTOLOGY section below for the boundary.
+       SUPERSEDED: construction-time Contradiction emission (STEP D) was disabled
+       later — see docs/conflict_pipeline.md, which is now the sole producer.
 
     HONEST NOTE (still true from v7): a better prompt reduces many issues, but
     hard numeric constraints and self-loops may still leak partially on a model
@@ -50,21 +52,6 @@ def get_graph_extractor_prompt() -> PromptTemplate:
     deterministically by `sanitize_graph` — do not keep rewriting the prompt to
     chase it. sanitize_graph should be updated alongside this prompt to enforce
     the relates_to type-pair table in section "RELATION VOCABULARY" below.
-
-    HONEST NOTE (Contradiction, v8.1): this prompt only ever sees {input_text}
-    for ONE chunk at a time — it has no memory of Descriptions written for
-    earlier chunks or other documents. So has_contradiction can only catch a
-    conflict where BOTH Descriptions are being written in the SAME chunk (the
-    same call). It will NOT catch the more interesting cross-chunk/cross-document
-    case (e.g. Chapter 2's related-work summary vs. this paper's own Chapter 4
-    result). Catching that needs a separate pass over already-stored Descriptions
-    (embedding similarity + an LLM judge), which is out of scope for this prompt.
-    Also: a Contradiction with only one participant is meaningless and is NOT
-    something sanitize_graph can always reject on its own (see graph_model.py) —
-    a maintenance query removes singleton Contradiction nodes after the whole
-    document is stored. Do not rely on sanitize_graph alone to catch that case;
-    just try not to emit a Contradiction node unless you can name a second
-    conflicting Description for it in the same output.
     """
 
     prompt = """
@@ -109,24 +96,11 @@ STEP C — Only after STEP A and B: look for two Topics the text EXPLICITLY
    done, in progress, blocked, or still open, set a status property on the Topic
    itself (not on the edge).
 
-STEP D — While writing this chunk's Descriptions, check whether two of THEM
-   (not just their Topics) state directly incompatible facts — specific numbers,
-   dates, or claims that cannot both be true, about the same or closely related
-   subject. Do this only among Descriptions you are writing IN THIS SAME OUTPUT —
-   you cannot see Descriptions from other chunks, so do not invent a contradiction
-   against something you cannot cite from THIS input text. If you find such a
-   pair, create ONE Contradiction node (id: "Contradiction <short label>",
-   Title Case) with a `summary` property stating the specific conflicting detail
-   from both sides, then add a has_contradiction edge from EACH conflicting
-   Description to that Contradiction node with a `level` property from the
-   CONTRADICTION LEVEL VOCABULARY below. A Contradiction needs at least TWO
-   conflicting Descriptions — if you can only name one side, do not create the
-   node at all. This is separate from relates_to's `contradicts` value: use
-   `contradicts` (Topic -> Topic) when the text itself frames two findings/ideas
-   as opposed; use has_contradiction (Description -> Contradiction) when the
-   conflict is only visible once you compare the specific detail inside two
-   Descriptions. Use both together only if the text supports both levels
-   explicitly — do not encode the same single conflict twice by default.
+(STEP D — per-chunk Description-level contradiction detection — was removed
+   here. Contradiction nodes and has_contradiction edges are now produced
+   exclusively by the on-demand whole-KB conflict pass; see
+   docs/conflict_pipeline.md. Do not emit a Contradiction node or a
+   has_contradiction edge during extraction.)
 
 ==============================
 INPUT METADATA
@@ -146,7 +120,7 @@ SOURCE ID RULES (MANDATORY, OFTEN VIOLATED):
   a date property on the Source. Do not guess a date that is not in the text.
 
 ==============================
-ONTOLOGY — NODE TYPES (7 only)
+ONTOLOGY — NODE TYPES (6 only)
 ==============================
 
 1. Agent — A named person or organization that contributes to the document.
@@ -190,23 +164,8 @@ ONTOLOGY — NODE TYPES (7 only)
    Linked FROM the Type node (Type -> has_description -> Description).
    NEVER from a Topic directly, NEVER from an Agent directly.
 
-7. Contradiction — A reified conflict between two (or more) Descriptions that
-   state incompatible facts. It is NOT a Topic and NOT a Description itself —
-   it exists only to hold a `summary` of why the conflict exists and to anchor
-   >=2 has_contradiction edges under one addressable id (so a 3-way conflict
-   does not need a fabricated pairwise structure). See STEP D above for when
-   to create one, and CONTRADICTION LEVEL VOCABULARY below for the `level`
-   values used on its incoming edges.
-   Required property: summary — minimum 2 sentences, MUST name the specific
-   conflicting detail from both sides (a number, date, or claim) — the same
-   non-tautological rule as Description applies; "these two Descriptions
-   disagree" alone is FORBIDDEN, it must say what they each claim.
-   A Contradiction with only one has_contradiction edge is meaningless — see
-   STEP D: only create it when you can cite a second conflicting Description
-   in this same output.
-
 ==============================
-ONTOLOGY — RELATIONSHIPS (11 only, direction MUST match the table exactly)
+ONTOLOGY — RELATIONSHIPS (10 only, direction MUST match the table exactly)
 ==============================
 
 | Relationship     | Source Node | Target Node | Meaning                                              |
@@ -221,21 +180,16 @@ ONTOLOGY — RELATIONSHIPS (11 only, direction MUST match the table exactly)
 | has_subtopic     | Topic       | Topic       | broader -> narrower                                     |
 | relates_to       | Topic       | Topic       | explicit semantic link (STEP C); requires a `relation` property, endpoints must match the RELATION VOCABULARY type-pair table |
 | assigned_to      | Topic       | Agent       | ONLY when the Topic's Type is Action Item; the Agent is the owner |
-| has_contradiction| Description | Contradiction | Description states a fact that conflicts with another Description's fact (STEP D); requires a `level` property from CONTRADICTION LEVEL VOCABULARY below |
 
 All relationship names above are FIXED strings, always lowercase snake_case,
-exactly as written — never "has_method", "has_decision", "contradict_level1",
-"contradict_level2", or any other variant. NO "::" or other symbols in a
-relationship name. A classification (like has_contradiction's `level`) is
-ALWAYS a property value, NEVER part of the relationship name — see MISTAKES.
+exactly as written — never "has_method", "has_decision", or any other variant.
+NO "::" or other symbols in a relationship name. A classification is ALWAYS a
+property value, NEVER part of the relationship name — see MISTAKES.
 
 On spoke_about and writes_about, you MAY add an optional `stance` property — one
 of "raised", "proposed", "decided", "reported", "gave_feedback" — ONLY when the
 text makes it unambiguous who originated the point. If it's ambiguous, omit the
 property rather than guess.
-
-On has_contradiction, you MUST add a `level` property from CONTRADICTION LEVEL
-VOCABULARY below, classifying how strong the conflict is.
 
 ==============================
 RELATION VOCABULARY (for relates_to only — pick exactly one, lowercase)
@@ -274,22 +228,6 @@ If none of these describe the connection, or the Types don't match, do NOT add a
 relates_to edge — do not invent a thirteenth value and do not force a mismatched
 pair.
 
-==============================
-CONTRADICTION LEVEL VOCABULARY (for has_contradiction only — pick exactly one)
-==============================
-
-  direct    — the two Descriptions state incompatible facts/numbers for what
-              reads as the same claim under the same conditions
-  partial   — the conflict only holds under some scope/condition; the two
-              Descriptions are not fully incompatible everywhere
-  apparent  — looks contradictory, but may just be wording ambiguity or a
-              possible wrong Topic merge rather than a confirmed real conflict
-              — pick this over "direct" whenever you are not certain
-
-Do not invent a fourth value. If none of these three feels right, you are
-probably looking at two Descriptions that are merely different, not
-contradictory — do not create the Contradiction node at all.
-
 MISTAKES THAT HAVE HAPPENED BEFORE — DO NOT REPEAT:
 - WRONG: Source -> writes_about -> Agent   (Source is never the source of writes_about)
 - WRONG: Source -> has_type -> Topic   (Source never has a has_type edge)
@@ -306,20 +244,6 @@ MISTAKES THAT HAVE HAPPENED BEFORE — DO NOT REPEAT:
   node itself; due_date belongs on the assigned_to edge)
 - WRONG: assigned_to on a Topic whose Type is Decision, Issue, or anything other
   than Action Item
-- WRONG: "contradict_level1", "contradict_level2", or any relationship name
-  that encodes the level in the name — level is a property ON has_contradiction,
-  the relationship name never changes
-- WRONG: Contradiction -> has_contradiction -> Description   (must be
-  Description -> Contradiction, not reversed)
-- WRONG: a has_contradiction edge with no `level` property, or a level value
-  outside direct/partial/apparent
-- WRONG: a Contradiction node with only one has_contradiction edge, or a
-  Contradiction whose `summary` just says "these conflict" without naming the
-  specific conflicting detail from each side
-- WRONG: using has_contradiction between two Topics, or relates_to's
-  `contradicts` between two Descriptions — has_contradiction's endpoints are
-  always Description -> Contradiction; contradicts' endpoints are always Topic
-  -> Topic (or Feedback -> Idea/Decision), never mixed
 
 ==============================
 GUIDED TYPE VOCABULARY (closed — Paper and Meeting Types are disjoint)
@@ -386,7 +310,7 @@ Return ONLY valid JSON. No markdown, no explanation, no text before or after the
   "nodes": [
     {{
       "id": "node id",
-      "type": "Agent | Role | Topic | Type | Source | Description | Contradiction",
+      "type": "Agent | Role | Topic | Type | Source | Description",
       "properties": {{"name": "value"}}
     }}
   ],
@@ -409,14 +333,8 @@ Example of an assigned_to edge with an optional deadline:
 Example of a spoke_about edge with an optional stance:
 {{"source": "Prof. Shuo-Yan Chou", "target": "Data Sparsity", "type": "spoke_about", "properties": {{"stance": "raised"}}}}
 
-Example of a Contradiction node and its two required has_contradiction edges:
-{{"id": "Contradiction Pile On Improvement", "type": "Contradiction",
-  "properties": {{"summary": "Description A states pile-on improved 24%, Description B states 18.97%, for what the text presents as the same evaluated scenario."}}}}
-{{"source": "Description Two Phase Assignment Method", "target": "Contradiction Pile On Improvement", "type": "has_contradiction", "properties": {{"level": "direct"}}}}
-{{"source": "Description First Come First Served Method", "target": "Contradiction Pile On Improvement", "type": "has_contradiction", "properties": {{"level": "direct"}}}}
-
 ==============================
-SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 5 conditional ones)
+SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 3 conditional ones)
 ==============================
 
 1. Recount: how many has_source edges are in my output? If more than 3, REMOVE
@@ -428,9 +346,8 @@ SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 5 conditional ones)
 5. Is there any Description that is tautological, lacks a specific detail from the
    text, or duplicates another Description for the same Topic? If yes, rewrite,
    remove, or drop the extra Type.
-6. Are all relationship names exactly one of the 11 fixed strings (no
-   "has_method"-style variants, no "contradict_level1"-style variants),
-   lowercase_snake_case, no "::"?
+6. Are all relationship names exactly one of the 10 fixed strings (no
+   "has_method"-style variants), lowercase_snake_case, no "::"?
 7. (only if you used relates_to) Does every relates_to edge have a `relation`
    property from the RELATION VOCABULARY list, with source/target Types matching
    the allowed pair for that relation?
@@ -438,15 +355,6 @@ SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 5 conditional ones)
    Item? If the Topic's Type is anything else, remove the assigned_to edge.
 9. (only if you used status or stance) Is the value one of the allowed options
    listed for that property? If not, remove the property rather than invent one.
-10. (only if you created a Contradiction) Does it have at least TWO
-    has_contradiction edges in THIS output, each from a Description (never a
-    Topic), each with a `level` in direct/partial/apparent, and does `summary`
-    name the specific conflicting detail from both sides rather than just
-    asserting they disagree? If any of that fails, remove the Contradiction
-    node and its edges rather than send an incomplete one.
-11. (only if you used has_contradiction or relates_to's contradicts on the
-    same pair of Topics) Did you check you are not encoding the identical
-    single conflict twice without the text actually supporting both levels?
 
 ==============================
 BEGIN EXTRACTION
