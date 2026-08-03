@@ -126,6 +126,7 @@ pip install -r requirements.txt
 
 cp .env_example .env
 # then edit .env with your Neo4j credentials and Groq API key
+# (SUPABASE_* only needed if you pull chunks from a producer — see below)
 ```
 
 If you use the default Ollama embedder, pull the model once:
@@ -152,28 +153,79 @@ python main.py --no-communities
 
 ## Chunks format
 
-Each line of a `.jsonl` file is one chunk. Fields used by the loader:
+Each line of a `.jsonl` file is one chunk. Full contract:
+[docs/chunk_schema.md](docs/chunk_schema.md) — enforced by
+`src/ingestion/chunk_record.py`.
 
 | Field | Required | Description |
 |---|---|---|
 | `text` | ✅ | Chunk text |
 | `doc_id` | ✅ | Document identifier (groups chunks) |
-| `chunk_id` | ✅ | Original chunk identifier |
-| `index` | recommended | Integer position within the doc (drives `NEXT` edges) |
-| `source_path` | optional | Original file path (stored as metadata) |
-| `source_kind` | optional | File type, e.g. `pdf` (stored as metadata) |
-| `n_chunks` | optional | Total chunks in the document (stored as metadata) |
+| `index` | strongly recommended | Integer position in the doc. Drives `NEXT` edges — **without it a document silently gets none** |
+| `source_path`, `source_kind`, `n_chunks` | optional | Stored as `Document` metadata |
+| `chunk_id` | optional | Producer's own id; only a fallback when `index` is missing |
+
+`source_file` / `source_type` are accepted as aliases for `source_path` /
+`source_kind`. Unrecognised fields are allowed and reported, never silently used.
+
+Validate a file before spending hours extracting from it:
+
+```bash
+python -m src.ingestion.validate chunks_data/maruf
+```
+
+Exit code 1 on errors (invalid JSON, missing `text`, duplicate chunk ids);
+warnings cover the quieter problems — gapped `index`, missing `source_kind`,
+`n_chunks` disagreeing with the real count.
+
+## Chunk hand-off (Supabase)
+
+Chunk producers upload files to Supabase Storage and register them in a
+`chunk_uploads` table; this machine polls and pulls. Setup, credentials and the
+design rationale: [docs/chunk_sync.md](docs/chunk_sync.md).
+
+```bash
+# producer side — validates first, and one bad file uploads nothing
+python scripts/upload_chunks.py out/*.jsonl
+
+# this side
+python run_sync.py                        # pull everything pending
+python run_sync.py --dry-run              # verify + validate, write nothing
+python run_sync.py --mark-built <doc_id>  # after main.py has built it
+```
+
+Each pull re-checks the SHA-256 and re-runs the validator before the file is
+written; a failure lands in the row's `error` column where the producer can read
+it.
+
+A launchd agent runs the pull every 10 minutes, logging to
+`~/Library/Logs/chunksync.log`:
+
+```bash
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/com.kg.chunksync.plist  # install
+launchctl bootout   gui/$UID/com.kg.chunksync                               # remove
+```
+
+It **only downloads**. Builds stay manual on purpose: two uploads arriving
+minutes apart would otherwise start two multi-hour extraction runs competing for
+the same Ollama and Neo4j.
 
 ## Layout
 
 ```
 main.py                     # entry point (CLI)
+run_sync.py                 # pull chunk uploads from Supabase
 chunks_data/                # pre-built .jsonl chunks
+db/supabase_schema.sql      # chunk_uploads table, bucket, RLS policies
+scripts/upload_chunks.py    # producer-side uploader (run on their machine)
 src/
   config.py                 # pydantic configuration models
   schema.py                 # Chunk / ProcessedDocument
   factory/                  # LLM + embeddings factories
   ingestion/                # chunks loader, embedder, graph miner
+    chunk_record.py         # the .jsonl field contract (aliases, defaults)
+    validate.py             # `python -m src.ingestion.validate <path>`
+  sync/supabase_sync.py     # download, checksum, validate, mark status
   agents/graph_extractor.py # LLM agent that extracts the graph
   prompts/graph_extractor.py# extraction prompt (fixed ontology, hardcoded — not configurable)
   graph/                    # graph model, Neo4j store, graph-DS metrics

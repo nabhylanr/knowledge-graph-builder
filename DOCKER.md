@@ -6,6 +6,10 @@ dijalankan dari venv lokal seperti biasa.
 Alamat PC ini di LAN: **192.168.0.185** (bisa berubah kalau IP DHCP berganti —
 cek ulang dengan `ipconfig getifaddr en1`).
 
+Nama-nama di Docker: project/stack = **`lab-brain-kg`**, container = **`lab-brain-neo4j`**.
+Jadi perintah `docker` langsung pakai `lab-brain-neo4j`, misal
+`docker logs -f lab-brain-neo4j`.
+
 ---
 
 ## 1. Sekali di awal: matikan Neo4j lokal yang lama
@@ -73,9 +77,13 @@ Pastikan juga semua di WiFi/subnet yang sama (192.168.0.x).
 | Restart | `docker compose restart neo4j` |
 | Lihat log | `docker compose logs -f neo4j` |
 | Matikan + hapus container (data TETAP di volume) | `docker compose down` |
-| ⚠️ Hapus SEMUA termasuk data graph | `docker compose down -v` |
+| ⚠️ Hapus data graph (harus eksplisit) | `docker volume rm knowledge-graph-builder_neo4j_data` |
 
-- Data graph tersimpan di named volume `neo4j_data` — aman saat restart/`down`.
-- Cuma `down -v` yang menghapus data. Hati-hati.
+- Data graph tersimpan di volume `knowledge-graph-builder_neo4j_data` (nama lama
+  sengaja dipertahankan waktu rename, biar data 500MB+ yang sudah ada nggak hilang).
+- Volume-nya di-set `external: true`, jadi **`docker compose down -v` TIDAK menghapus
+  data**. Menghapus data cuma bisa lewat `docker volume rm` di atas. Hati-hati.
+- Di mesin baru yang belum punya volume itu, bikin dulu sekali:
+  `docker volume create knowledge-graph-builder_neo4j_data`
 - Password: kalau container gagal start dan komplain soal password, ganti
   `NEO4J_PASSWORD` di `.env` jadi minimal 8 karakter, lalu `docker compose up -d` lagi.

@@ -1,7 +1,9 @@
+name: lab-brain-kg                     # nama project/stack compose
+
 services:
   neo4j:
     image: neo4j:5.26-community        # 5.26 = LTS; native vector index, no plugin needed
-    container_name: kg-neo4j
+    container_name: lab-brain-neo4j
     restart: unless-stopped
     ports:
       - "7474:7474"                    # Neo4j Browser (HTTP UI)
@@ -26,3 +28,7 @@ services:
 
 volumes:
   neo4j_data:
+    # dipin ke volume lama biar data graph yang sudah ada tetap kepakai
+    # (tanpa ini, ganti nama project bikin compose bikin volume baru yang kosong)
+    name: knowledge-graph-builder_neo4j_data
+    external: true

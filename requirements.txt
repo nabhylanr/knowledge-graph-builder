@@ -9,7 +9,8 @@ langchain-openai==0.2.14
 leidenalg>=0.10.2
 networkx
 neo4j>=5.0.0
-pydantic==2.10.6
+pydantic>=2.10.6,<3
 python-dotenv>=1.0.0
 python-igraph>=0.11.8
 python-louvain>=0.16
+supabase>=2.9.0
