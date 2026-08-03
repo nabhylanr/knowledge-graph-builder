@@ -245,8 +245,18 @@ _PAPER_TYPES = {
     "method", "experiment", "result", "metrics evaluation", "limitation",
 }
 _MEETING_TYPES = {
+    # v8: discussion-flow types — what a segment of the meeting *is*.
     "issue", "idea", "decision", "action item", "open question",
     "progress update", "feedback",
+    # v8.4: argumentation / reasoning types — what a segment *asserts* and the
+    # reasoning around it. Deliberately still Types (a Topic's function), not new
+    # node labels: they classify, they are not content. Note none of these appear
+    # in RELATES_TO_TYPE_PAIRS yet, so a Topic typed with one of them can only be
+    # linked structurally (has_subtopic) until that table is extended.
+    "claim", "observation", "rationale", "assumption", "heuristic",
+    "prediction", "option", "evidence", "constraint", "risk",
+    "trade off", "exception", "uncertainty", "condition", "rule",
+    "action", "outcome", "disagreement",
 }
 
 

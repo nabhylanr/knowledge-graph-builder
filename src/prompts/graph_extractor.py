@@ -11,6 +11,14 @@ def get_graph_extractor_prompt() -> PromptTemplate:
     1. Type vocabulary replaced with the paper/meeting taxonomy supplied by the
        user (14 Paper Types, 7 Meeting Types), fully disjoint — no more "SHARED"
        bucket, so a Topic's Type alone tells you which domain it came from.
+       (v8.4) The Meeting list grew 7 -> 25 with an argumentation/reasoning layer
+       (Claim, Observation, Evidence, Rationale, Assumption, Risk, Trade Off, ...).
+       Because the added Types are near-neighbours of each other in a way the
+       original 7 were not, the vocabulary block below now carries an explicit
+       tie-breaker section — without it a small model spreads one statement
+       across Claim + Observation + Evidence. Keep `_MEETING_TYPES` in
+       src/graph/graph_model.py in sync with that list; it is what actually
+       decides a Type node's `domain`.
     2. has_[type] and has_[type]_description are no longer dynamically named.
        Fixed to has_type and has_description. The Type node's id already encodes
        which type it is, so the dynamic name only made the relationship schema
@@ -267,7 +275,7 @@ Use the casing EXACTLY as below. Do not invent a new Type; pick the closest one.
     Metrics Evaluation     — metric / measure reported
     Limitation             — stated limitation
 
-  MEETING:
+  MEETING — discussion flow (what this part of the meeting IS):
     Issue           — problem or obstacle reported/observed that triggers discussion
     Idea            — proposed solution or approach under discussion, not yet agreed
     Decision        — final agreement reached on a direction or step to take
@@ -275,6 +283,48 @@ Use the casing EXACTLY as below. Do not invent a new Type; pick the closest one.
     Open Question   — question raised but not yet answered or resolved
     Progress Update — status report on work completed or in progress since the previous meeting
     Feedback        — input or critique from a supervisor/participant on work presented
+
+  MEETING — reasoning (what is ASSERTED, and the reasoning around it):
+    Claim           — a proposition that can be supported, contradicted, or qualified
+    Observation     — a claim describing an observed cue, event, or state
+    Rationale       — a reason that justifies a decision or action
+    Assumption      — a premise (stated or unstated) relied on in the reasoning
+    Heuristic       — a practical rule of thumb used to guide judgement or action
+    Prediction      — a claim about an expected future state or outcome
+    Option          — a candidate action, tool, or approach considered in a decision
+    Evidence        — material, observation, or experience offered in support of a claim
+    Constraint      — a limitation that restricts a decision or action
+    Risk            — a potential undesirable consequence relevant to a decision
+    Trade Off       — a balance between competing benefits, costs, or values
+    Exception       — a circumstance where a normally applicable decision or rule does not apply
+    Uncertainty     — an acknowledged limit to what is known or determined
+    Condition       — a contextual state under which knowledge, an action, or a decision applies
+    Rule            — a formal or informal norm governing an activity
+    Action          — a goal-directed act performed within an activity
+    Outcome         — a result produced by an activity or action
+    Disagreement    — a documented difference of position among relevant participants
+
+CHOOSING BETWEEN CLOSE MEETING TYPES (these are the ones most often confused):
+- Claim vs Observation vs Evidence: Observation = something someone SAW/measured;
+  Evidence = an observation or experience explicitly OFFERED TO SUPPORT a claim;
+  Claim = an asserted proposition with no observation behind it in the text.
+- Idea vs Option: Option only when the text presents it as one of SEVERAL
+  candidates being weighed; a single proposal on its own is an Idea.
+- Decision vs Action vs Action Item: Decision = the agreement; Action Item = a
+  task still to be done; Action = an act actually PERFORMED.
+- Outcome vs Progress Update: Outcome = the result itself; Progress Update = a
+  report on status given to the meeting.
+- Issue vs Risk: Issue already happened; Risk might happen.
+- Constraint vs Condition vs Rule: Constraint LIMITS what can be done; Condition
+  is the state under which something APPLIES; Rule is a NORM people follow.
+- Disagreement vs Feedback: Disagreement needs two named/implied positions in
+  opposition; one-directional critique is Feedback.
+- Rationale vs Assumption: Rationale is stated as the REASON FOR a decision;
+  Assumption is a premise taken for granted, not argued for.
+When the text does not clearly support one of the reasoning Types, prefer the
+plain discussion-flow Type (Issue / Idea / Decision / ...). Do not upgrade an
+ordinary statement into a Claim, and never give one Topic five Types — a Topic
+should have ONE Type unless a second Type has its own distinct Description.
 
 A meeting that reviews paper progress may legitimately contain Topics typed from
 BOTH lists in the same document (e.g. Feedback on a Method) — that is expected.
