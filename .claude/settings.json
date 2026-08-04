@@ -6,7 +6,10 @@
       "Bash(.venv/bin/pip --version)",
       "Bash(.venv/bin/pip index *)",
       "Bash(curl -s https://pypi.org/pypi/cryptography/json)",
-      "Bash(.venv/bin/python3 -c ' *)"
+      "Bash(.venv/bin/python3 -c ' *)",
+      "Bash(curl -s --max-time 5 http://127.0.0.1:11434/api/tags)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(m['name']\\) for m in d.get\\('models',[]\\)]\")",
+      "Bash(.venv/bin/python -c ' *)"
     ]
   }
 }

@@ -20,7 +20,7 @@ class ChunksIngestor:
     spending hours of extraction on it.
     """
 
-    def _parse_lines(self, lines: Iterable[str]) -> List[ProcessedDocument]:
+    def _parse_lines(self, lines: Iterable[str], source: str = "") -> List[ProcessedDocument]:
         docs_map: Dict[str, ProcessedDocument] = {}
 
         for line in lines:
@@ -34,7 +34,9 @@ class ChunksIngestor:
             if doc_id not in docs_map:
                 docs_map[doc_id] = ProcessedDocument(
                     filename=doc_id,
-                    source="",
+                    # Which file on disk this came from. The build ledger records
+                    # it, and its parent folder is the document's doc_type.
+                    source=source,
                     metadata=record.doc_metadata(),
                     chunks=[],
                 )
@@ -48,17 +50,24 @@ class ChunksIngestor:
     def load_from_file(self, filepath: str) -> List[ProcessedDocument]:
         """Load chunks from a single .jsonl file on disk."""
         with open(filepath, "r", encoding="utf-8") as f:
-            return self._parse_lines(f)
+            return self._parse_lines(f, source=str(filepath))
 
     def load_from_folder(self, folder: str) -> List[ProcessedDocument]:
-        """Load chunks from all .jsonl files inside a folder."""
+        """
+        Load chunks from every .jsonl file under a folder, recursively.
+
+        Recursive because the dataset is organised in subfolders by document
+        kind (`chunks_data/paper/`, `chunks_data/meeting/`) — a flat glob on
+        `chunks_data` would quietly find nothing at all.
+        """
         all_docs: List[ProcessedDocument] = []
-        paths = sorted(Path(folder).glob("*.jsonl"))
+        root = Path(folder)
+        paths = sorted(root.rglob("*.jsonl"))
         if not paths:
-            logger.warning(f"No .jsonl files found in {folder}")
+            logger.warning(f"No .jsonl files found under {folder}")
             return all_docs
         for path in paths:
-            logger.info(f"Loading {path.name}...")
+            logger.info(f"Loading {path.relative_to(root) if path.is_relative_to(root) else path}...")
             all_docs.extend(self.load_from_file(str(path)))
         logger.info(f"Total: {sum(len(d.chunks) for d in all_docs)} chunks across {len(all_docs)} documents from folder.")
         return all_docs

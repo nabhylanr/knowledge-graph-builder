@@ -16,9 +16,11 @@ an early phase looks identical to "no conflicts found" at the end.
 wipe it. Start a local instance from the repo's `docker-compose.yml` instead and
 point `.env` at it.
 
-**Credentials.** `run_classification.py` calls Groq (`llama-3.3-70b-versatile`).
-Confirm the API key is present in `.env` before starting — discovering this at
-phase 4, after the earlier phases have already run, wastes a cycle.
+**Model.** `run_classification.py` calls Ollama (`CLASSIFICATION_MODEL_NAME`,
+default `qwen3:4b`). Confirm that model is actually pulled on the host
+`CLASSIFICATION_MODEL_ENDPOINT` points at (`ollama list`) before starting —
+discovering this at phase 4, after the earlier phases have already run, wastes
+a cycle. Same for `GATE_NLI_MODEL` at phase 3.
 
 **Wipe.**
 

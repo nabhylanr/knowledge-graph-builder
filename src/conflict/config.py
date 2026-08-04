@@ -62,11 +62,16 @@ class GateConfig(BaseModel):
     # G3 — intra-document near-duplicate (difflib.SequenceMatcher ratio)
     intra_doc_similarity_threshold: float = 0.9
 
-    # G5 — NLI verification (local Ollama; see src/conflict/nli_client.py)
-    nli_model: str = "qwen2.5:3b"
+    # G5 — NLI verification (Ollama; see src/conflict/nli_client.py)
+    nli_model: str = "qwen3:4b"
+    # Unset -> Ollama's default localhost:11434. Point at a remote Ollama host
+    # (e.g. the Tailscale box in RE_MODEL_ENDPOINT) when the model lives there
+    # rather than on this machine — otherwise every G5 call errors out and,
+    # fail-open, silently passes every pair through ungated.
+    nli_endpoint: Optional[str] = None
     nli_prompt_version: str = NLI_PROMPT_VERSION
     nli_reject_confidence: float = 0.8
-    nli_concurrency: int = 2  # keep modest — local Ollama, not a hosted API
+    nli_concurrency: int = 2  # keep modest — one small Ollama box, not a hosted API
     nli_timeout_seconds: int = 30  # a hung/slow local model must not block a worker forever — see nli_client.py
 
     # Bookkeeping — bump whenever G1-G5 logic or thresholds change, to force
@@ -80,16 +85,19 @@ class ClassificationConfig(BaseModel):
     conflict-detection pass. See docs/conflict_pipeline.md §4 for the decision
     rules and §3 for the output ontology this stage writes.
 
-    Unlike gates (local dev model, fail-open, no retry), this stage uses the
-    PRODUCTION model behind a real hosted API with real rate limits — retry
-    conventions mirror src/agents/graph_extractor.py's GraphExtractor exactly
-    (duplicated, not shared — see src/conflict/classification_client.py's
-    module docstring for why).
+    Unlike gates (fail-open, no retry), this is the expensive-reasoning step and
+    a dropped verdict is a real loss — so it retries. Retry conventions mirror
+    src/agents/graph_extractor.py's GraphExtractor exactly (duplicated, not
+    shared — see src/conflict/classification_client.py's module docstring for
+    why), including the 429 branch: it's dead weight against Ollama, but kept so
+    the two loops stay diffable.
     """
-    model_type: str = "groq"
-    model: str = "llama-3.3-70b-versatile"
+    model_type: str = "ollama"
+    model: str = "qwen3:4b"
     temperature: float = 0.0
     api_key: Optional[str] = None
+    # Same role as GateConfig.nli_endpoint — unset means localhost:11434.
+    endpoint: Optional[str] = None
 
     # Retry conventions, mirroring GraphExtractor's module constants
     max_retries: int = 5

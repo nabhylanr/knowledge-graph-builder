@@ -1,6 +1,5 @@
 from typing import Optional
 from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_groq.chat_models import ChatGroq
 from langchain_ollama.chat_models import ChatOllama
 from langchain_openai.chat_models import ChatOpenAI, AzureChatOpenAI
 from src.utils.logger import get_logger
@@ -47,13 +46,6 @@ def fetch_llm(conf: LLMConf) -> Optional[BaseChatModel]:
             temperature=conf.temperature,
             api_version=conf.api_version
         )
-    elif conf.type == "groq":
-        llm = ChatGroq(
-            model=conf.model,
-            api_key=conf.api_key,
-            temperature=conf.temperature,
-            max_retries=3
-        )
     elif conf.type == "google":
         from langchain_google_genai.chat_models import ChatGoogleGenerativeAI
         llm = ChatGoogleGenerativeAI(
@@ -64,7 +56,7 @@ def fetch_llm(conf: LLMConf) -> Optional[BaseChatModel]:
     elif conf.type == "trf":
         # Imported lazily (like the Google branch): langchain_huggingface pulls in
         # transformers/torch (~GBs), so only load it when a HF model is actually
-        # requested — importing this module for a Groq/OpenAI run stays torch-free.
+        # requested — importing this module for an Ollama run stays torch-free.
         from langchain_huggingface.chat_models.huggingface import ChatHuggingFace
         llm = ChatHuggingFace(
             model=conf.model,

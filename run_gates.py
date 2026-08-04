@@ -21,7 +21,10 @@ def build_gate_config() -> GateConfig:
         min_text_length=int(os.getenv("GATE_MIN_TEXT_LENGTH", "40")),
         generic_topic_blocklist=[t.strip() for t in blocklist_env.split(",")] if blocklist_env else DEFAULT_GENERIC_TOPIC_BLOCKLIST,
         intra_doc_similarity_threshold=float(os.getenv("GATE_INTRA_DOC_SIMILARITY_THRESHOLD", "0.9")),
-        nli_model=os.getenv("GATE_NLI_MODEL", "qwen2.5:3b"),
+        nli_model=os.getenv("GATE_NLI_MODEL", "qwen3:4b"),
+        # Falls back to the extraction host: one Ollama box serves both stages
+        # unless GATE_NLI_ENDPOINT says otherwise.
+        nli_endpoint=os.getenv("GATE_NLI_ENDPOINT") or os.getenv("RE_MODEL_ENDPOINT"),
         nli_reject_confidence=float(os.getenv("GATE_NLI_REJECT_CONFIDENCE", "0.8")),
         nli_concurrency=int(os.getenv("GATE_NLI_CONCURRENCY", "2")),
         nli_timeout_seconds=int(os.getenv("GATE_NLI_TIMEOUT_SECONDS", "30")),

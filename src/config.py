@@ -9,7 +9,6 @@ class ModelType(str, Enum):
     """
     AZURE_OPENAI = "azure-openai"
     GOOGLE = "google"
-    GROQ = "groq"
     OPENAI = "openai"
     OLLAMA = "ollama"
     TRANSFORMERS = "trf"
@@ -25,7 +24,7 @@ class LLMConf(BaseModel):
     `temperature`: LLM temperature param
     `deployment`: represents the name of the deployment.
     `model`: represents the name of the model
-    `api_key`: reference to the OpenAI (or Groq, or Azure OpenAI) API key, if any
+    `api_key`: reference to the OpenAI (or Azure OpenAI) API key, if any
     `endpoint`: reference to the endpoint of the model, if any
     `timeout`: per-request timeout in seconds. Only wired up for `ollama` today
     (via `client_kwargs={"timeout": ...}`) — needed by callers that must never
@@ -34,7 +33,7 @@ class LLMConf(BaseModel):
     """
     model: str
     temperature: float = 0.0
-    type: ModelType = "groq"
+    type: ModelType = "ollama"
     deployment: Optional[str] = None
     api_key: Optional[str] = None
     endpoint: Optional[str] = None

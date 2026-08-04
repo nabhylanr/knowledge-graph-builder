@@ -4,7 +4,7 @@ through the actual extraction path (GraphExtractor + sanitize_graph, the SAME co
 the pipeline uses) and measures the graph that comes out. No Neo4j and no
 embeddings needed: benchmarking chunking only needs the LLM extraction, so this
 builds the graph in-memory with networkx. Only requirement is the RE_MODEL_* /
-Groq credentials in .env (same as `python main.py`).
+RE_MODEL_* settings in .env (same as `python main.py`).
 
 For each method+doc it reports:
 
@@ -66,7 +66,7 @@ METHODS = ("maruf", "wildan")
 def build_llm_conf() -> LLMConf:
     load_dotenv(ROOT / ".env")
     return LLMConf(
-        type=os.getenv("RE_MODEL_TYPE", "groq"),
+        type=os.getenv("RE_MODEL_TYPE", "ollama"),
         model=os.getenv("RE_MODEL_NAME"),
         temperature=os.getenv("RE_MODEL_TEMPERATURE") or 0.0,
         deployment=os.getenv("RE_MODEL_DEPLOYMENT"),

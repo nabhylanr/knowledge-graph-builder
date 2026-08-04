@@ -114,9 +114,10 @@ example Cypher — in [docs/conflict_pipeline.md](docs/conflict_pipeline.md).
 ## Requirements
 
 - **Neo4j** — a running instance (local desktop or a free Neo4j Aura cloud instance).
-- **An LLM for extraction** — configured for [Groq](https://console.groq.com/)
-  cloud by default (`llama-3.3-70b-versatile`). No local GPU needed.
-- **An embeddings model** — [Ollama](https://ollama.com/) `mxbai-embed-large` by
+- **An LLM for extraction** — [Ollama](https://ollama.com/) `qwen3:4b` by
+  default. Runs locally, or on another machine via `RE_MODEL_ENDPOINT`; can be
+  swapped for OpenAI/Azure/Google/HF.
+- **An embeddings model** — Ollama `mxbai-embed-large` by
   default (small, runs on a laptop); can be swapped for OpenAI/Azure/HF.
 
 ## Setup
@@ -125,7 +126,7 @@ example Cypher — in [docs/conflict_pipeline.md](docs/conflict_pipeline.md).
 pip install -r requirements.txt
 
 cp .env_example .env
-# then edit .env with your Neo4j credentials and Groq API key
+# then edit .env with your Neo4j credentials and Ollama model/endpoint
 # (SUPABASE_* only needed if you pull chunks from a producer — see below)
 ```
 
@@ -138,18 +139,48 @@ ollama pull mxbai-embed-large
 ## Run
 
 ```bash
-# ingest everything under ./chunks_data
+# ingest everything under ./chunks_data (recursively), minus what is already built
 python main.py
 
-# quick test on the first 2 documents only
+# quick test on the first 2 not-yet-built documents
 python main.py --limit 2
 
 # point at a specific file or folder
-python main.py --chunks path/to/chunks.jsonl
+python main.py --chunks chunks_data/meeting
 
 # skip the centralities/community-detection step
 python main.py --no-communities
 ```
+
+### Dataset layout
+
+`chunks_data/` holds one folder per kind of document — that is also where the
+Supabase sync files each download:
+
+```
+chunks_data/
+├── paper/      # theses, articles
+└── meeting/    # transcripts, minutes
+```
+
+### Build ledger
+
+Extraction costs hours per document, and `Document` nodes are `CREATE`d rather
+than `MERGE`d — so re-running a build over the same folder would duplicate what
+is already in the graph. `main.py` therefore records every document it stores in
+`build_ledger.json` (gitignored) and skips it next time.
+
+```bash
+python -m src.ingestion.build_ledger              # what is already in the graph
+python -m src.ingestion.build_ledger --forget ID  # force one document to rebuild
+python main.py --rebuild                          # ignore the ledger entirely
+```
+
+Documents are keyed by a digest of their chunks, not by file name: the same
+content under a new name is not rebuilt, revised text is. The ledger is
+reconciled against Neo4j on every run, so wiping the graph does not leave it
+claiming documents are still there. Details:
+[docs/chunk_sync.md](docs/chunk_sync.md#not-building-the-same-thing-twice).
 
 ## Chunks format
 
@@ -171,7 +202,7 @@ Each line of a `.jsonl` file is one chunk. Full contract:
 Validate a file before spending hours extracting from it:
 
 ```bash
-python -m src.ingestion.validate chunks_data/maruf
+python -m src.ingestion.validate chunks_data/paper
 ```
 
 Exit code 1 on errors (invalid JSON, missing `text`, duplicate chunk ids);
@@ -181,43 +212,56 @@ warnings cover the quieter problems — gapped `index`, missing `source_kind`,
 ## Chunk hand-off (Supabase)
 
 Chunk producers upload files to Supabase Storage and register them in a
-`chunk_uploads` table; this machine polls and pulls. Setup, credentials and the
-design rationale: [docs/chunk_sync.md](docs/chunk_sync.md).
+`chunk_uploads` table; this machine polls and pulls, filing each download into
+`chunks_data/paper/` or `chunks_data/meeting/` according to the row's `doc_type`
+(with fallbacks — see [Where a file lands
+locally](docs/chunk_sync.md#where-a-file-lands-locally)). Setup, credentials and
+the design rationale: [docs/chunk_sync.md](docs/chunk_sync.md).
 
 ```bash
 # producer side — validates first, and one bad file uploads nothing
 python scripts/upload_chunks.py out/*.jsonl
 
 # this side
-python run_sync.py                        # pull everything pending
+python run_sync.py                        # pull everything pending, then exit
 python run_sync.py --dry-run              # verify + validate, write nothing
 python run_sync.py --mark-built <doc_id>  # after main.py has built it
+python run_listen.py                      # stay connected, pull as uploads land
 ```
 
 Each pull re-checks the SHA-256 and re-runs the validator before the file is
 written; a failure lands in the row's `error` column where the producer can read
 it.
 
-A launchd agent runs the pull every 10 minutes, logging to
-`~/Library/Logs/chunksync.log`:
+Two mechanisms run unattended, with **different jobs**: a Realtime listener for
+speed (~1s pickup) and a scheduled poll as the actual guarantee. Realtime never
+replays an event fired while the listener was down, so the poll is what makes
+delivery certain — keep both, and keep them as separate processes.
 
-```bash
-launchctl bootstrap gui/$UID ~/Library/LaunchAgents/com.kg.chunksync.plist  # install
-launchctl bootout   gui/$UID/com.kg.chunksync                               # remove
+```powershell
+powershell -ExecutionPolicy Bypass -File deploy\install_chunksync_task.ps1      # poll
+powershell -ExecutionPolicy Bypass -File deploy\install_chunksync_listener.ps1  # listener
 ```
 
-It **only downloads**. Builds stay manual on purpose: two uploads arriving
-minutes apart would otherwise start two multi-hour extraction runs competing for
-the same Ollama and Neo4j.
+```bash
+launchctl bootstrap gui/$UID ~/Library/LaunchAgents/com.kg.chunksync.plist      # macOS poll
+```
+
+Only one machine should drain a given Supabase instance — the first to see a row
+claims it. Both mechanisms **only download**; builds stay manual on purpose,
+since two uploads arriving minutes apart would otherwise start two multi-hour
+extraction runs competing for the same Ollama and Neo4j.
 
 ## Layout
 
 ```
 main.py                     # entry point (CLI)
-run_sync.py                 # pull chunk uploads from Supabase
+run_sync.py                 # pull chunk uploads from Supabase (poll, then exit)
+run_listen.py               # same, but pushed over Realtime as uploads land
 chunks_data/                # pre-built .jsonl chunks
 db/supabase_schema.sql      # chunk_uploads table, bucket, RLS policies
 scripts/upload_chunks.py    # producer-side uploader (run on their machine)
+deploy/                     # scheduled-sync install (Windows Task Scheduler)
 src/
   config.py                 # pydantic configuration models
   schema.py                 # Chunk / ProcessedDocument
@@ -225,7 +269,9 @@ src/
   ingestion/                # chunks loader, embedder, graph miner
     chunk_record.py         # the .jsonl field contract (aliases, defaults)
     validate.py             # `python -m src.ingestion.validate <path>`
-  sync/supabase_sync.py     # download, checksum, validate, mark status
+  sync/
+    supabase_sync.py        # download, checksum, validate, mark status
+    realtime_listener.py    # Realtime INSERT listener + supervisor
   agents/graph_extractor.py # LLM agent that extracts the graph
   prompts/graph_extractor.py# extraction prompt (fixed ontology, hardcoded — not configurable)
   graph/                    # graph model, Neo4j store, graph-DS metrics

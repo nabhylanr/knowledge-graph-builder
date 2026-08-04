@@ -429,11 +429,10 @@ persis):
 | `langchain` / `langchain-core` | `PromptTemplate` untuk prompt ekstraksi; tipe dasar `Document` |
 | `langchain-neo4j` | `Neo4jGraph` (base class `KnowledgeGraph`), `Neo4jVector` (vector store untuk `Chunk`), tipe `Node`/`Relationship`/`GraphDocument` |
 | `neo4j` (driver resmi) | Dipakai langsung via `self._driver.session()` untuk query custom (update property, export ke `networkx`, dll) di luar yang disediakan `Neo4jGraph` |
-| `langchain-groq` | Provider LLM default untuk produksi (`llama-3.3-70b-versatile`) |
-| `langchain-ollama` | Provider LLM/embedding default untuk dev lokal (`qwen2.5:3b` / `mxbai-embed-large`), dengan dukungan endpoint remote |
+| `langchain-ollama` | Provider LLM/embedding default untuk SEMUA stage — ekstraksi, gate NLI, classification (`qwen3:4b` / `mxbai-embed-large`), dengan dukungan endpoint remote |
 | `langchain-openai` | Provider OpenAI + Azure OpenAI (LLM & embedding) |
 | `langchain-google-genai` | Provider Google Gemini (opsional) |
-| `langchain-huggingface` | Provider HuggingFace transformers — **lazy-imported**, hanya kalau `type="trf"`, supaya run Groq/Ollama tidak ikut menarik dependency `torch`/`transformers` (~GB) |
+| `langchain-huggingface` | Provider HuggingFace transformers — **lazy-imported**, hanya kalau `type="trf"`, supaya run Ollama tidak ikut menarik dependency `torch`/`transformers` (~GB) |
 | `networkx` | Representasi graph in-memory (`KnowledgeGraph.get_digraph()`, dipakai juga oleh `bench/graph_metrics.py`); PageRank/betweenness/closeness |
 | `python-louvain` (import sebagai `community`) | Deteksi komunitas Louvain |
 | `python-igraph` + `leidenalg` | Deteksi komunitas Leiden |
@@ -456,7 +455,7 @@ src/
 ├── factory/                   # Resolusi provider LLM & embedding dari config
 │   ├── __init__.py
 │   ├── llm.py                 # fetch_llm(conf) -> BaseChatModel
-│   │                          # (Groq/Ollama/OpenAI/Azure/Google/HF, lazy-import utk Google & HF)
+│   │                          # (Ollama/OpenAI/Azure/Google/HF, lazy-import utk Google & HF)
 │   └── embeddings.py          # get_embeddings(conf) -> Embeddings
 │                              # (Ollama/OpenAI/Azure/HF, lazy-import utk HF)
 │

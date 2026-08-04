@@ -3,6 +3,7 @@ Producer-side uploader — this is the script Maruf runs on his machine.
 
     python scripts/upload_chunks.py out/*.jsonl
     python scripts/upload_chunks.py out/ --dry-run     # validate only, upload nothing
+    python scripts/upload_chunks.py out/ --doc-type meeting   # transcripts, not papers
 
 Validates every file against docs/chunk_schema.md BEFORE uploading, and refuses
 to upload one with errors. That is the whole point of the exercise: a bad file
@@ -32,7 +33,8 @@ from typing import List, Optional
 # script's folder, not the repo root, so `src` has to be put on the path by hand.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.ingestion.validate import collect_paths, print_report, validate_lines
+from src.ingestion.validate import FileReport, collect_paths, print_report, validate_lines
+from src.sync.supabase_sync import DOC_TYPES, resolve_doc_type
 
 BUCKET = os.getenv("SUPABASE_BUCKET", "chunks")
 TABLE = "chunk_uploads"
@@ -68,13 +70,23 @@ def _sign_in():
     return client, email
 
 
-def upload_one(client, prefix: str, path: Path, content: bytes, n_records: int) -> str:
+def upload_one(client, prefix: str, path: Path, content: bytes, report: FileReport,
+               doc_type: Optional[str] = None) -> str:
     doc_id = _doc_id_of(content)
     if not doc_id:
         return f"SKIP {path.name}: file is empty"
 
     digest = hashlib.sha256(content).hexdigest()
     storage_path = f"{prefix}/{doc_id}__{digest[:8]}.jsonl"
+
+    # Which folder this lands in on the receiving side. `--doc-type` wins;
+    # otherwise it is read off the file's own source_kind. Sending it means the
+    # receiver never has to guess — see resolve_doc_type.
+    resolved, _ = resolve_doc_type(
+        {"doc_type": doc_type},
+        storage_path,
+        [doc.source_kind for doc in report.docs.values()],
+    )
 
     try:
         client.storage.from_(BUCKET).upload(
@@ -86,22 +98,36 @@ def upload_one(client, prefix: str, path: Path, content: bytes, n_records: int) 
         if "Duplicate" not in str(e) and "already exists" not in str(e):
             return f"FAIL {path.name}: upload failed: {e}"
 
+    row = {
+        "doc_id": doc_id,
+        "storage_path": storage_path,
+        "sha256": digest,
+        "n_chunks": report.n_records,
+        "doc_type": resolved,
+    }
+    note = ""
     try:
-        client.table(TABLE).insert({
-            "doc_id": doc_id,
-            "storage_path": storage_path,
-            "sha256": digest,
-            "n_chunks": n_records,
-        }).execute()
+        try:
+            client.table(TABLE).insert(row).execute()
+        except Exception as e:
+            if "doc_type" not in str(e):
+                raise
+            # Server predates the doc_type column. The row is still worth having
+            # — the receiver falls back to inferring the folder — so send it
+            # without, and say so rather than failing the upload.
+            del row["doc_type"]
+            client.table(TABLE).insert(row).execute()
+            note = "  [doc_type not stored: server needs db/supabase_schema.sql]"
     except Exception as e:
         if "duplicate key" in str(e).lower() or "23505" in str(e):
             return f"SKIP {path.name}: already uploaded (identical content)"
         return f"FAIL {path.name}: could not register upload: {e}"
 
-    return f"OK   {path.name} -> {storage_path} ({n_records} chunks)"
+    return f"OK   {path.name} -> {storage_path} ({report.n_records} chunks, {resolved}){note}"
 
 
-def run(targets: List[str], prefix: Optional[str], dry_run: bool, verbose: bool) -> int:
+def run(targets: List[str], prefix: Optional[str], dry_run: bool, verbose: bool,
+        doc_type: Optional[str] = None) -> int:
     paths: List[Path] = []
     for target in targets:
         p = Path(target)
@@ -122,7 +148,7 @@ def run(targets: List[str], prefix: Optional[str], dry_run: bool, verbose: bool)
         print_report(report, verbose=verbose)
         if not report.ok:
             n_failed += 1
-        checked.append((path, content, report.n_records))
+        checked.append((path, content, report))
 
     if n_failed:
         print(f"\n{n_failed} file(s) failed validation — nothing uploaded. Fix them and re-run.")
@@ -136,7 +162,8 @@ def run(targets: List[str], prefix: Optional[str], dry_run: bool, verbose: bool)
     resolved_prefix = prefix or email.split("@")[0]
     print(f"\nUploading as {email} into {BUCKET}/{resolved_prefix}/ ...")
 
-    results = [upload_one(client, resolved_prefix, path, content, n) for path, content, n in checked]
+    results = [upload_one(client, resolved_prefix, path, content, report, doc_type)
+               for path, content, report in checked]
     for line in results:
         print(f"  {line}")
 
@@ -151,6 +178,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Validate and upload chunk .jsonl files to Supabase.")
     parser.add_argument("paths", nargs="+", help="A .jsonl file, or a folder searched recursively.")
     parser.add_argument("--as", dest="prefix", default=None, help="Folder prefix in the bucket (default: your email's local part).")
+    parser.add_argument("--doc-type", choices=list(DOC_TYPES), default=None,
+                        help="What these files are. Decides which folder the receiver files them into. "
+                             "Default: read from each file's source_kind (pdf -> paper, transcript -> meeting).")
     parser.add_argument("--dry-run", action="store_true", help="Validate only — do not upload.")
     parser.add_argument("--verbose", action="store_true", help="List every validation issue.")
     args = parser.parse_args()
@@ -161,7 +191,8 @@ def main() -> None:
     except ImportError:
         pass  # python-dotenv is optional on the producer side
 
-    sys.exit(run(args.paths, prefix=args.prefix, dry_run=args.dry_run, verbose=args.verbose))
+    sys.exit(run(args.paths, prefix=args.prefix, dry_run=args.dry_run, verbose=args.verbose,
+                 doc_type=args.doc_type))
 
 
 if __name__ == "__main__":

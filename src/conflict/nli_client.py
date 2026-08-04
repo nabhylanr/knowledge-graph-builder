@@ -52,7 +52,7 @@ def _parse_verdict_from_text(content: str) -> Optional[NLIVerdict]:
 
 class NLIClient:
     """
-    G5 (NLI verification) LLM client — local Ollama, same client/config pattern
+    G5 (NLI verification) LLM client — Ollama, same client/config pattern
     as GraphExtractor (src/agents/graph_extractor.py), no new model or
     dependency. Deliberately NO retry loop: per docs/conflict_ontology.md's
     fail-open principle, every error path (timeout, parse failure, connection
@@ -74,11 +74,13 @@ class NLIClient:
     do at high volume without also capping total background threads.
     """
 
-    def __init__(self, model: str, prompt_version: str, timeout_seconds: int = 30):
+    def __init__(self, model: str, prompt_version: str, timeout_seconds: int = 30,
+                 endpoint: Optional[str] = None):
         self.model = model
         self.prompt_version = prompt_version
         self.timeout_seconds = timeout_seconds
-        self.llm = fetch_llm(LLMConf(type=ModelType.OLLAMA, model=model, temperature=0.0, timeout=timeout_seconds))
+        self.llm = fetch_llm(LLMConf(type=ModelType.OLLAMA, model=model, temperature=0.0,
+                                     timeout=timeout_seconds, endpoint=endpoint))
         self.prompt = get_nli_gate_prompt()
 
     def _invoke_with_timeout(self, fn: Callable[[], T]) -> T:

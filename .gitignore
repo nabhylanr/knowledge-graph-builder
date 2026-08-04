@@ -12,7 +12,14 @@ env/
 # Logs
 *.log
 
+# Local build state — which documents are already in this machine's graph
+build_ledger.json
+conflict_candidates.db
+
 # OS / editor
 .DS_Store
 .idea/
 .vscode/
+
+# host-specific compose config (Tailscale bind) — jangan di-commit
+docker-compose.override.yml

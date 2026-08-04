@@ -109,7 +109,7 @@ class GraphExtractor:
         # before falling back to a raw completion anyway (~half the latency is pure
         # waste). EXTRACTOR_RAW_ONLY skips straight to the raw path, so each chunk
         # makes one LLM call instead of two. Leave it unset for models whose
-        # tool-calling actually works (OpenAI/Groq), which lose nothing from the
+        # tool-calling actually works (e.g. OpenAI), which lose nothing from the
         # structured path.
         raw_only = os.getenv("EXTRACTOR_RAW_ONLY") == "1"
 
@@ -155,7 +155,7 @@ class GraphExtractor:
                     time.sleep(wait)
                     continue
 
-                # Non-rate-limit failure (e.g. Groq `tool_use_failed`): the model
+                # Non-rate-limit failure (e.g. a `tool_use_failed`): the model
                 # often emits perfectly valid JSON that only the tool-calling wrapper
                 # rejected. Salvage it via a plain completion before giving up.
                 # Skipped in raw_only mode — the raw completion is what just failed,

@@ -129,7 +129,7 @@ def run_gates(kg: KnowledgeGraph, store: CandidateStore, conf: GateConfig) -> di
     texts = _fetch_texts(kg, ids)
 
     nli_client = NLIClient(model=conf.nli_model, prompt_version=conf.nli_prompt_version,
-                           timeout_seconds=conf.nli_timeout_seconds)
+                           timeout_seconds=conf.nli_timeout_seconds, endpoint=conf.nli_endpoint)
 
     def _work(row: GateInputRow):
         text_a = texts.get(row.description_id_a, "")

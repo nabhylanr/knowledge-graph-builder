@@ -1,13 +1,16 @@
 import argparse
 import os
+from typing import Callable, List, Optional, Tuple
 
 from dotenv import load_dotenv
 
 from src.config import Configuration, EmbedderConf, KnowledgeGraphConfig, LLMConf
 from src.graph.knowledge_graph import KnowledgeGraph
+from src.ingestion.build_ledger import BuildLedger, content_digest
 from src.ingestion.chunks_ingestor import ChunksIngestor
 from src.ingestion.embedder import ChunkEmbedder
 from src.ingestion.graph_miner import GraphMiner
+from src.schema import ProcessedDocument
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
@@ -35,7 +38,7 @@ def build_configuration() -> Configuration:
             api_version=os.getenv("EMBEDDINGS_API_VERSION"),
         ),
         re_model_conf=LLMConf(
-            type=os.getenv("RE_MODEL_TYPE", "groq"),
+            type=os.getenv("RE_MODEL_TYPE", "ollama"),
             model=os.getenv("RE_MODEL_NAME"),
             temperature=os.getenv("RE_MODEL_TEMPERATURE") or 0.0,
             deployment=os.getenv("RE_MODEL_DEPLOYMENT"),
@@ -46,7 +49,81 @@ def build_configuration() -> Configuration:
     )
 
 
-def run(chunks_path: str, limit: int = 0, communities: bool = True) -> None:
+def select_unbuilt(
+    docs: List[ProcessedDocument],
+    knowledge_graph: KnowledgeGraph,
+    ledger: BuildLedger,
+    rebuild: bool,
+) -> List[Tuple[ProcessedDocument, str]]:
+    """
+    Narrow a freshly loaded batch down to the documents that still need building,
+    pairing each with the digest to record once it is in.
+
+    The ledger is reconciled against the graph first: an entry for a document
+    Neo4j no longer holds is dropped, so a wiped database rebuilds instead of
+    being skipped forever.
+    """
+    digests = {doc.filename: content_digest(doc) for doc in docs}
+
+    stale = ledger.reconcile(knowledge_graph.document_filenames())
+    if stale:
+        ledger.save()
+        logger.info(f"{len(stale)} ledger entr{'y' if len(stale) == 1 else 'ies'} no longer in the graph — will rebuild: {', '.join(sorted(stale)[:5])}")
+
+    if rebuild:
+        logger.warning("--rebuild: ignoring the ledger; documents already in the graph will be added a second time.")
+        return [(doc, digests[doc.filename]) for doc in docs]
+
+    pending, skipped = [], []
+    for doc in docs:
+        if ledger.is_built(doc, digests[doc.filename]):
+            skipped.append(doc.filename)
+        else:
+            pending.append((doc, digests[doc.filename]))
+
+    if skipped:
+        logger.info(f"Already built, skipping {len(skipped)} document(s): {', '.join(sorted(skipped)[:5])}"
+                    + (f" (+{len(skipped) - 5} more)" if len(skipped) > 5 else ""))
+    return pending
+
+
+def build_remote_marker(enabled: bool) -> Optional[Callable[[str], None]]:
+    """
+    A `mark(doc_id)` that moves the producer's manifest row to `built`, or None
+    when there is no Supabase configured to tell.
+
+    Best-effort on purpose: the graph is the real outcome and the row is only
+    bookkeeping, so a Supabase hiccup must never fail a build that succeeded.
+    """
+    if not enabled or not (os.getenv("SUPABASE_URL") and os.getenv("SUPABASE_SERVICE_KEY")):
+        return None
+
+    try:
+        from src.sync.supabase_sync import ChunkSync, build_sync_config
+
+        sync = ChunkSync(conf=build_sync_config())
+    except Exception as e:
+        logger.warning(f"Supabase status updates disabled ({e}).")
+        return None
+
+    def mark(doc_id: str) -> None:
+        try:
+            if sync.mark_built(doc_id):
+                logger.info(f"Marked {doc_id} as built in Supabase.")
+        except Exception as e:
+            logger.warning(f"Could not mark {doc_id} as built in Supabase: {e}")
+
+    return mark
+
+
+def run(
+    chunks_path: str,
+    limit: int = 0,
+    communities: bool = True,
+    rebuild: bool = False,
+    ledger_path: Optional[str] = None,
+    remote_status: bool = True,
+) -> None:
     conf = build_configuration()
 
     logger.info(f"Loading chunks from {chunks_path} ...")
@@ -55,10 +132,6 @@ def run(chunks_path: str, limit: int = 0, communities: bool = True) -> None:
         docs = ingestor.load_from_folder(chunks_path)
     else:
         docs = ingestor.load_from_file(chunks_path)
-
-    if limit and limit > 0:
-        docs = docs[:limit]
-        logger.info(f"--limit {limit}: keeping the first {len(docs)} document(s).")
 
     if not docs:
         logger.warning("No chunks found. Nothing to do.")
@@ -81,6 +154,22 @@ def run(chunks_path: str, limit: int = 0, communities: bool = True) -> None:
         logger.error("Could not authenticate against Neo4j — check your NEO4J_* settings.")
         return
 
+    ledger = BuildLedger(path=ledger_path)
+    pending = select_unbuilt(docs, knowledge_graph, ledger, rebuild=rebuild)
+
+    # Applied AFTER the ledger filter, so `--limit 2` means "two documents I have
+    # not built yet" — repeatable until the folder is exhausted.
+    if limit and limit > 0:
+        pending = pending[:limit]
+        logger.info(f"--limit {limit}: keeping the first {len(pending)} document(s).")
+
+    if not pending:
+        logger.info("Every document is already in the graph. Nothing to do.")
+        return
+
+    docs = [doc for doc, _ in pending]
+    logger.info(f"Building {len(docs)} document(s), {sum(len(d.chunks) for d in docs)} chunks.")
+
     logger.info("Embedding chunks...")
     docs = embedder.embed_documents_chunks(docs)
 
@@ -88,7 +177,16 @@ def run(chunks_path: str, limit: int = 0, communities: bool = True) -> None:
     docs = graph_miner.mine_graph_from_docs(docs=docs)
 
     logger.info("Uploading nodes, relationships and chunks to Neo4j...")
-    knowledge_graph.add_documents(docs)
+    mark_remote = build_remote_marker(remote_status)
+    digests = {doc.filename: digest for doc, digest in pending}
+    for doc in docs:
+        knowledge_graph.add_documents([doc])
+        # Recorded per document, not once at the end: an interrupted run should
+        # cost the document it died on, not every document it had finished.
+        ledger.record(doc, digests.get(doc.filename))
+        ledger.save()
+        if mark_remote:
+            mark_remote(doc.filename)
 
     if communities:
         logger.info("Computing centralities and detecting communities...")
@@ -107,22 +205,45 @@ def main() -> None:
     parser.add_argument(
         "--chunks",
         default=DEFAULT_CHUNKS_PATH,
-        help="Path to a .jsonl file or a folder of .jsonl files (default: ./chunks_data).",
+        help="Path to a .jsonl file, or a folder searched recursively (default: ./chunks_data).",
     )
     parser.add_argument(
         "--limit",
         type=int,
         default=0,
-        help="Only process the first N documents (0 = all). Handy for a quick test.",
+        help="Only process the first N not-yet-built documents (0 = all). Handy for a quick test.",
     )
     parser.add_argument(
         "--no-communities",
         action="store_true",
         help="Skip the centralities + community detection step.",
     )
+    parser.add_argument(
+        "--rebuild",
+        action="store_true",
+        help="Extract every document again, even ones the ledger says are built. "
+             "Document nodes are CREATEd, not MERGEd — wipe the graph first, or expect duplicates.",
+    )
+    parser.add_argument(
+        "--ledger",
+        default=None,
+        help="Build ledger file (default: BUILD_LEDGER_PATH or ./build_ledger.json).",
+    )
+    parser.add_argument(
+        "--no-remote-status",
+        action="store_true",
+        help="Do not move the Supabase manifest rows to 'built' after a successful build.",
+    )
     args = parser.parse_args()
 
-    run(chunks_path=args.chunks, limit=args.limit, communities=not args.no_communities)
+    run(
+        chunks_path=args.chunks,
+        limit=args.limit,
+        communities=not args.no_communities,
+        rebuild=args.rebuild,
+        ledger_path=args.ledger,
+        remote_status=not args.no_remote_status,
+    )
 
 
 if __name__ == "__main__":

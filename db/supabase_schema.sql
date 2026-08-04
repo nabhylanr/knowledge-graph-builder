@@ -29,6 +29,13 @@ create table if not exists public.chunk_uploads (
     sha256        text not null,               -- of the raw file bytes
     n_chunks      integer,
 
+    -- What kind of document this is. Decides which folder it lands in on the
+    -- receiving machine: chunks_data/paper/ or chunks_data/meeting/.
+    -- Nullable because the receiver can infer it (bucket path prefix, then the
+    -- file's own source_kind, then a default) — but a producer that sets it
+    -- explicitly is the only way to be certain, so please set it.
+    doc_type      text check (doc_type is null or doc_type in ('paper', 'meeting')),
+
     -- pending    : uploaded, waiting to be pulled
     -- downloaded : pulled, checksum verified, schema validated, on disk
     -- built      : the KG build has been run for it (set by hand / by the build job)
@@ -48,6 +55,23 @@ create table if not exists public.chunk_uploads (
 
 create index if not exists chunk_uploads_status_idx
     on public.chunk_uploads (status, uploaded_at);
+
+-- Migration for a database created before `doc_type` existed. `create table if
+-- not exists` above is a no-op on such a database, so the column has to be
+-- added explicitly; both statements are safe to re-run.
+alter table public.chunk_uploads
+    add column if not exists doc_type text;
+
+do $$
+begin
+    if not exists (
+        select 1 from pg_constraint where conname = 'chunk_uploads_doc_type_check'
+    ) then
+        alter table public.chunk_uploads
+            add constraint chunk_uploads_doc_type_check
+            check (doc_type is null or doc_type in ('paper', 'meeting'));
+    end if;
+end $$;
 
 -- ---------------------------------------------------------------------------
 -- 3. Row-level security
@@ -86,7 +110,28 @@ create policy "producers read their own chunk files"
     using (bucket_id = 'chunks' and owner = auth.uid());
 
 -- ---------------------------------------------------------------------------
--- 5. After running this
+-- 5. Realtime
+--
+-- Lets run_listen.py have INSERTs pushed to it instead of waiting for the next
+-- poll. This is an optimisation, not the delivery guarantee: Realtime never
+-- replays an event missed while the listener was down, which is exactly why the
+-- scheduled run_sync.py poll stays in place as the safety net.
+-- ---------------------------------------------------------------------------
+
+do $$
+begin
+    if not exists (
+        select 1 from pg_publication_tables
+        where pubname = 'supabase_realtime'
+          and schemaname = 'public'
+          and tablename = 'chunk_uploads'
+    ) then
+        alter publication supabase_realtime add table public.chunk_uploads;
+    end if;
+end $$;
+
+-- ---------------------------------------------------------------------------
+-- 6. After running this
 --
 --   a. Authentication → Users → "Add user" for each producer (email + password).
 --      That account is the trust boundary: only people you create can upload.

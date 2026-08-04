@@ -74,17 +74,17 @@ def _parse_json_block(content: str) -> Optional[dict]:
 
 class ClassificationClient:
     """
-    Stage-3 classification LLM client — production model (Groq
-    llama-3.3-70b-versatile by default), not the small dev model gates.py
-    uses. Gates already absorbed the cheap-filtering work; this is the
-    expensive-reasoning step, so it gets real retry behaviour instead of
-    fail-open-on-first-error.
+    Stage-3 classification LLM client — Ollama (`qwen3:4b` by default), same
+    provider gates.py uses. Gates already absorbed the cheap-filtering work;
+    this is the expensive-reasoning step, so it gets real retry behaviour
+    instead of fail-open-on-first-error.
     """
 
     def __init__(self, conf: ClassificationConfig):
         self.conf = conf
         self.llm = fetch_llm(LLMConf(
             type=conf.model_type, model=conf.model, temperature=conf.temperature, api_key=conf.api_key,
+            endpoint=conf.endpoint,
         ))
         self.supersession_prompt = get_supersession_prompt()
         self.cluster_prompt = get_cluster_classification_prompt()

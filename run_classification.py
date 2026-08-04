@@ -18,10 +18,12 @@ def build_classification_config() -> ClassificationConfig:
     load_dotenv()
     allowed_types_env = os.getenv("CLASSIFICATION_ALLOWED_TYPES")
     return ClassificationConfig(
-        model_type=os.getenv("CLASSIFICATION_MODEL_TYPE", "groq"),
-        model=os.getenv("CLASSIFICATION_MODEL_NAME", "llama-3.3-70b-versatile"),
+        model_type=os.getenv("CLASSIFICATION_MODEL_TYPE", "ollama"),
+        model=os.getenv("CLASSIFICATION_MODEL_NAME", "qwen3:4b"),
         temperature=float(os.getenv("CLASSIFICATION_TEMPERATURE", "0.0")),
         api_key=os.getenv("CLASSIFICATION_API_KEY") or os.getenv("RE_API_KEY"),
+        # Falls back to the extraction host, same as run_gates.py's NLI endpoint.
+        endpoint=os.getenv("CLASSIFICATION_MODEL_ENDPOINT") or os.getenv("RE_MODEL_ENDPOINT"),
         max_retries=int(os.getenv("CLASSIFICATION_MAX_RETRIES", "5")),
         retry_wait_seconds=int(os.getenv("CLASSIFICATION_RETRY_WAIT_SECONDS", "65")),
         conn_retry_wait_seconds=int(os.getenv("CLASSIFICATION_CONN_RETRY_WAIT_SECONDS", "30")),

@@ -11,11 +11,11 @@ inside one chunk. Split them across a boundary and the edge is lost.
 | Layer | Script | Needs | Answers |
 |---|---|---|---|
 | 1. Intrinsic | `chunk_metrics.py` | nothing (stdlib) | Do the chunks *look* right — sized well, cut at sentence boundaries, not fragmented? |
-| 2. Graph structure | `graph_metrics.py` | Groq LLM (`.env`) | Does the extracted graph come out connected, low-duplication, well-linked? |
+| 2. Graph structure | `graph_metrics.py` | Ollama LLM (`.env`) | Does the extracted graph come out connected, low-duplication, well-linked? |
 | 3. Task recall | `eval_gold.py` | layer 2 output + gold set | Did it actually recover the entities/relations we KNOW are in the doc? |
 
 Neither Neo4j nor embeddings are needed — the graph is built in-memory with
-networkx. Only layer 2/3 need the Groq credentials already in `.env`.
+networkx. Only layer 2/3 need the `RE_MODEL_*` settings already in `.env`.
 
 ## Run order
 

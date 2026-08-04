@@ -6,7 +6,7 @@ from langchain_neo4j.graphs.graph_document import GraphDocument
 from langchain_neo4j.graphs.neo4j_graph import Neo4jGraph
 from langchain_neo4j.vectorstores.neo4j_vector import Neo4jVector
 from neo4j import ManagedTransaction
-from typing import List, Optional
+from typing import List, Optional, Set
 
 from src.config import KnowledgeGraphConfig
 from src.graph.graph_ds import (
@@ -166,6 +166,17 @@ class KnowledgeGraph(Neo4jGraph):
         return self._number_of_docs
 
 
+    def document_filenames(self) -> Set[str]:
+        """
+        Every `filename` a Document node currently carries — the graph's own
+        answer to "what is already built", which the build ledger is reconciled
+        against so a wiped database does not leave the ledger lying.
+        """
+        query = "MATCH (d: Document) WHERE d.filename IS NOT NULL RETURN DISTINCT d.filename AS filename"
+        with self._driver.session(database=self._database) as session:
+            return {record["filename"] for record in session.run(query)}
+
+
     @property
     def leiden_modularity(self) -> float:
         query = """MATCH (m:GraphMetric WHERE m.name = 'leiden_modularity') RETURN m.value AS mod"""
@@ -320,7 +331,7 @@ class KnowledgeGraph(Neo4jGraph):
         """
         query = """
             MATCH (c:Contradiction)
-            WHERE size((c)<-[:HAS_CONTRADICTION]-(:Description)) < 2
+            WHERE COUNT { (c)<-[:HAS_CONTRADICTION]-(:Description) } < 2
             DETACH DELETE c
         """
         try:
