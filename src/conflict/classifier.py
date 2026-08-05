@@ -13,7 +13,7 @@ from src.conflict.candidate_store import (
     participants_hash,
 )
 from src.conflict.classification_client import ClassificationClient
-from src.conflict.config import ClassificationConfig
+from src.conflict.config import ClassificationConfig, HAS_CONTRADICTION_TYPE, SUPERSEDES_TYPE
 from src.conflict.context import fetch_description_fields, fetch_scope_context, fetch_source_years
 from src.graph.knowledge_graph import KnowledgeGraph
 from src.prompts.cluster_classification import format_participants_block
@@ -52,9 +52,9 @@ def _check_supersedes_edges_exist(kg: KnowledgeGraph, pairs: List[Tuple[str, str
     if not pairs:
         return set()
     rows = kg.query(
-        """
+        f"""
         UNWIND $pairs AS p
-        MATCH (newer:Description {id: p.newer_id})-[:supersedes]->(older:Description {id: p.older_id})
+        MATCH (newer:Description {{id: p.newer_id}})-[:{SUPERSEDES_TYPE}]->(older:Description {{id: p.older_id}})
         RETURN p.newer_id AS newer_id, p.older_id AS older_id
         """,
         params={"pairs": [{"newer_id": a, "older_id": b} for a, b in pairs]},
@@ -84,7 +84,7 @@ def _fetch_overlapping_contradictions(kg: KnowledgeGraph, description_ids: List[
     if not description_ids:
         return {}
     rows = kg.query(
-        "MATCH (d:Description)-[:has_contradiction]->(c:Contradiction) WHERE d.id IN $ids "
+        f"MATCH (d:Description)-[:{HAS_CONTRADICTION_TYPE}]->(c:Contradiction) WHERE d.id IN $ids "
         "RETURN d.id AS description_id, c.id AS id, c.generated_at AS generated_at",
         params={"ids": description_ids},
     )
@@ -105,12 +105,12 @@ def _write_supersedes(kg: KnowledgeGraph, newer_id: str, older_id: str, basis: O
     invalid (§3.4 constraint 1, defensive — blocking should already guarantee
     this)."""
     result = kg.query(
-        """
-        MATCH (newer:Description {id: $newer_id}), (older:Description {id: $older_id})
+        f"""
+        MATCH (newer:Description {{id: $newer_id}}), (older:Description {{id: $older_id}})
         WHERE newer.typeName IN $allowed_types AND older.typeName IN $allowed_types
           AND newer.id <> older.id
-          AND NOT EXISTS { (older)-[:supersedes]->(newer) }
-        MERGE (newer)-[r:supersedes]->(older)
+          AND NOT EXISTS {{ (older)-[:{SUPERSEDES_TYPE}]->(newer) }}
+        MERGE (newer)-[r:{SUPERSEDES_TYPE}]->(older)
         SET r.basis = $basis, r.reason = $reason, r.confidence = $confidence,
             r.pipeline_version = $pipeline_version, r.generated_at = $generated_at
         RETURN count(r) AS written
@@ -149,8 +149,8 @@ def _write_cluster_tx(tx, cluster_ids: List[str], keep_id: str, drop_ids: List[s
     )
 
     tx.run(
-        """
-        MATCH (c:Contradiction {id: $id})<-[r:has_contradiction]-(d:Description)
+        f"""
+        MATCH (c:Contradiction {{id: $id}})<-[r:{HAS_CONTRADICTION_TYPE}]-(d:Description)
         WHERE NOT d.id IN $cluster_ids
         DELETE r
         """,
@@ -158,11 +158,11 @@ def _write_cluster_tx(tx, cluster_ids: List[str], keep_id: str, drop_ids: List[s
     )
 
     tx.run(
-        """
+        f"""
         UNWIND $participants AS p
-        MATCH (d:Description {id: p.id})
-        MATCH (c:Contradiction {id: $keep_id})
-        MERGE (d)-[r:has_contradiction]->(c)
+        MATCH (d:Description {{id: p.id}})
+        MATCH (c:Contradiction {{id: $keep_id}})
+        MERGE (d)-[r:{HAS_CONTRADICTION_TYPE}]->(c)
         SET r.position = p.position
         """,
         participants=[{"id": pid, "position": participant_positions.get(pid)} for pid in cluster_ids],
@@ -170,7 +170,7 @@ def _write_cluster_tx(tx, cluster_ids: List[str], keep_id: str, drop_ids: List[s
     )
 
     result = tx.run(
-        "MATCH (c:Contradiction {id: $id}) OPTIONAL MATCH (c)<-[r:has_contradiction]-() RETURN count(r) AS n",
+        f"MATCH (c:Contradiction {{id: $id}}) OPTIONAL MATCH (c)<-[r:{HAS_CONTRADICTION_TYPE}]-() RETURN count(r) AS n",
         id=keep_id,
     )
     n = result.single()["n"]

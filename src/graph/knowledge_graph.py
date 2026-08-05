@@ -339,6 +339,7 @@ class KnowledgeGraph(Neo4jGraph):
             logger.info("Removed Contradiction nodes with fewer than 2 Description participants")
         except Exception as e:
             logger.warning(f"Error cleaning up singleton Contradiction nodes: {e}")
+            
 
 
     @staticmethod

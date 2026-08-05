@@ -22,6 +22,30 @@ DEFAULT_GENERIC_TOPIC_BLOCKLIST = [
     "background", "overview", "summary", "conclusion", "future work",
 ]
 
+# Post-write relationship types — UPPERCASE, deliberately.
+#
+# langchain_neo4j's Neo4jGraph.add_graph_documents uppercases every
+# relationship type on write (_get_rel_import_query -> apoc.merge.relationship
+# with row.type = el.type.replace(" ", "_").upper(), see
+# langchain_neo4j/graphs/neo4j_graph.py:667) but leaves node LABELS untouched.
+# So any Cypher that reads from or writes directly to Neo4j — bypassing
+# add_graph_documents, as this pass's raw MERGE/MATCH statements do — must use
+# these uppercase forms to match what's actually stored, or every identity
+# lookup silently matches nothing (see the classifier.py incident this
+# constant exists to prevent from recurring: 7 lowercase occurrences across
+# _write_supersedes/_write_cluster_tx and their read-side helpers, all wrong,
+# all silent).
+#
+# Do NOT derive these by `.upper()`-ing a pre-write constant (e.g.
+# graph_model.SUPERSEDES_RELATION) at the call site — the two layers must stay
+# visibly, intentionally separate: pre-write (extraction prompt, sanitize_graph,
+# _FIXED_RELATION_DIRS) is lowercase by the ontology's own design, post-write
+# (this file's constants) is uppercase because that's what Neo4j actually holds
+# once add_graph_documents has run. One being silently derived from the other
+# is how this bug happens again.
+SUPERSEDES_TYPE = "SUPERSEDES"
+HAS_CONTRADICTION_TYPE = "HAS_CONTRADICTION"
+
 
 class BlockingConfig(BaseModel):
     """
