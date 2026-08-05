@@ -320,7 +320,7 @@ class KnowledgeGraph(Neo4jGraph):
         """
         query = """
             MATCH (c:Contradiction)
-            WHERE size((c)<-[:HAS_CONTRADICTION]-(:Description)) < 2
+            WHERE COUNT { (c)<-[:HAS_CONTRADICTION]-(:Description) } < 2
             DETACH DELETE c
         """
         try:
@@ -328,6 +328,7 @@ class KnowledgeGraph(Neo4jGraph):
             logger.info("Removed Contradiction nodes with fewer than 2 Description participants")
         except Exception as e:
             logger.warning(f"Error cleaning up singleton Contradiction nodes: {e}")
+            
 
 
     @staticmethod

@@ -214,21 +214,26 @@ Report:
 
 ### Checkpoint 4b — Invariants (all must return empty)
 
+Relationship types are UPPERCASE (`SUPERSEDES`, `HAS_CONTRADICTION`) — see
+`docs/conflict_pipeline.md` §3.5. Getting this wrong doesn't error, it just
+silently matches zero rows, so every query below would report "clean" whether
+or not it actually ran.
+
 ```cypher
-// wrong endpoint type on supersedes
-MATCH (a)-[r:supersedes]->(b)
+// wrong endpoint type on SUPERSEDES
+MATCH (a)-[r:SUPERSEDES]->(b)
 WHERE NOT a.typeName IN $allowed OR NOT b.typeName IN $allowed
 RETURN a.id, b.id;
 
 // anti-cycle
-MATCH (a)-[:supersedes]->(b)-[:supersedes]->(a) RETURN a.id, b.id;
+MATCH (a)-[:SUPERSEDES]->(b)-[:SUPERSEDES]->(a) RETURN a.id, b.id;
 
 // self-loop
-MATCH (a)-[:supersedes]->(a) RETURN a.id;
+MATCH (a)-[:SUPERSEDES]->(a) RETURN a.id;
 
 // singleton Contradiction
 MATCH (c:Contradiction)
-WHERE COUNT { (c)<-[:has_contradiction]-() } < 2
+WHERE COUNT { (c)<-[:HAS_CONTRADICTION]-() } < 2
 RETURN c.id;
 
 // scope_conditions present iff scope_difference
@@ -238,7 +243,7 @@ WHERE (c.resolution_type = 'scope_difference' AND c.scope_conditions IS NULL)
 RETURN c.id, c.resolution_type;
 
 // duplicate participant sets (random node ids mean no id check catches this)
-MATCH (c:Contradiction)<-[:has_contradiction]-(d:Description)
+MATCH (c:Contradiction)<-[:HAS_CONTRADICTION]-(d:Description)
 WITH c, collect(DISTINCT d.id) AS parts
 WITH apoc.coll.sort(parts) AS sorted_parts, collect(c.id) AS cs
 WHERE size(cs) > 1

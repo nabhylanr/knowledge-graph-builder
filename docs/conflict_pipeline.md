@@ -151,7 +151,7 @@ matters — why they collide and what to do about it.
 There is deliberately **no `status` property in v1**. See §5 for why, and for
 what replaces it.
 
-### 3.3 Edge `has_contradiction`
+### 3.3 Edge `HAS_CONTRADICTION`
 
 `Description → Contradiction`.
 
@@ -166,7 +166,7 @@ meaningless. A three-way conflict is **one node with three edges**, never three
 pairwise structures — otherwise six claims produce fifteen structures and every
 new paper forces regeneration of all of them.
 
-### 3.4 Edge `supersedes`
+### 3.4 Edge `SUPERSEDES`
 
 `Description → Description`. Edge-only, no node: a superseded claim is an
 update, not a standing conflict, and there is nothing to synthesise.
@@ -191,6 +191,35 @@ Read as "(A) supersedes (B)".
    exactly one relationship per pair, never both.
 4. Both sides must have a parsed `year` on their `Source`, and the years must
    differ. Without that, direction cannot be justified — see §4.1.
+
+### 3.5 Casing: two layers, one rule
+
+Two conventions coexist by design. Mixing them up is the single most likely
+way to reintroduce a silent bug in this pass — it happened once already, in
+`src/conflict/classifier.py`, and every check that should have caught it
+(§8's invariants) passed anyway, because a query naming the wrong-case
+relationship type doesn't error, it just matches nothing.
+
+- **Pre-write** — the extraction prompt, `sanitize_graph`,
+  `_FIXED_RELATION_DIRS` in `graph_model.py`, and anything else feeding
+  `Neo4jGraph.add_graph_documents`: relationship types are **lowercase**
+  snake_case (`has_description`, `has_contradiction`, `relates_to`, ...). This
+  is the ontology's own naming convention and is correct as written.
+- **Post-write** — this pass's raw Cypher, and any other code that reads from
+  or writes directly to Neo4j, bypassing `add_graph_documents`: relationship
+  types are **UPPERCASE** (`SUPERSEDES`, `HAS_CONTRADICTION`).
+
+The split isn't a style choice, it's forced by `langchain_neo4j`:
+`Neo4jGraph.add_graph_documents` uppercases every relationship type on write
+(`el.type.replace(" ", "_").upper()`, `langchain_neo4j/graphs/neo4j_graph.py:667`)
+but leaves node LABELS untouched. So `MATCH (d:Description)` is correct
+everywhere, unchanged — only relationship types split by layer.
+
+Post-write constants live in `src/conflict/config.py`
+(`SUPERSEDES_TYPE`, `HAS_CONTRADICTION_TYPE`) — deliberately **not** derived
+from `graph_model.py`'s pre-write constants by `.upper()`-ing them at the call
+site. The two layers must stay visibly, intentionally separate; one silently
+derived from the other is how this bug happens again.
 
 ---
 
@@ -393,22 +422,27 @@ not an oversight.
 
 ## 8. Invariants — check after every run
 
+All relationship types below are UPPERCASE — see §3.5 "Casing: two layers, one
+rule". A query written with `supersedes`/`has_contradiction` (lowercase) does
+not error; it silently matches zero rows regardless of the graph's actual
+state, which makes every invariant below look like it passed when it never ran.
+
 ```cypher
-// Wrong endpoint type on supersedes — must be empty
-MATCH (a)-[r:supersedes]->(b)
+// Wrong endpoint type on SUPERSEDES — must be empty
+MATCH (a)-[r:SUPERSEDES]->(b)
 WHERE NOT a.typeName IN $allowed OR NOT b.typeName IN $allowed
 RETURN a.id, b.id;
 
 // Anti-cycle violation — must be empty
-MATCH (a)-[:supersedes]->(b)-[:supersedes]->(a)
+MATCH (a)-[:SUPERSEDES]->(b)-[:SUPERSEDES]->(a)
 RETURN a.id, b.id;
 
 // Self-loop — must be empty
-MATCH (a)-[:supersedes]->(a) RETURN a.id;
+MATCH (a)-[:SUPERSEDES]->(a) RETURN a.id;
 
 // Singleton Contradiction — must be empty
 MATCH (c:Contradiction)
-WHERE COUNT { (c)<-[:has_contradiction]-() } < 2
+WHERE COUNT { (c)<-[:HAS_CONTRADICTION]-() } < 2
 RETURN c.id;
 
 // scope_conditions present iff scope_difference — must be empty
@@ -421,7 +455,7 @@ RETURN c.id, c.resolution_type;
 // Node ids are random (contradiction-{uuid4}), so a failed identity lookup
 // during re-classification would produce a second node that no id-based check
 // can catch — this is the only invariant that catches it.
-MATCH (c:Contradiction)<-[:has_contradiction]-(d:Description)
+MATCH (c:Contradiction)<-[:HAS_CONTRADICTION]-(d:Description)
 WITH c, collect(DISTINCT d.id) AS parts
 WITH apoc.coll.sort(parts) AS sorted_parts, collect(c.id) AS cs
 WHERE size(cs) > 1

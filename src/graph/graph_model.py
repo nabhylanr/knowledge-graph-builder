@@ -236,6 +236,13 @@ MIN_CONTRADICTION_PARTICIPANTS = 2
 # that detection pass / a downstream whole-graph query, the same way the
 # >=2-participant Contradiction rule is enforced downstream rather than in
 # `sanitize_graph`.
+# DEAD (currently unused — grep confirms no importer). This is the pre-write
+# (lowercase) casing only, consistent with `_FIXED_RELATION_DIRS` above — it is
+# NOT the casing actually stored in Neo4j for a `supersedes` edge, which is
+# written by raw Cypher in src/conflict/classifier.py and must be UPPERCASE
+# (see src/conflict/config.py's SUPERSEDES_TYPE for why). Left in place rather
+# than removed (unrelated churn), but do not import this into post-write Cypher
+# — that would silently reintroduce the casing bug it once caused.
 SUPERSEDES_RELATION = "supersedes"
 SUPERSEDES_ENDPOINT_TYPE = "Result"   # both Description endpoints must be typeName == "Result"
 
