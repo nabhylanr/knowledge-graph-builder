@@ -117,8 +117,12 @@ example Cypher — in [docs/conflict_pipeline.md](docs/conflict_pipeline.md).
 - **An LLM for extraction** — [Ollama](https://ollama.com/) `qwen3:4b` by
   default. Runs locally, or on another machine via `RE_MODEL_ENDPOINT`; can be
   swapped for OpenAI/Azure/Google/HF.
-- **An embeddings model** — Ollama `mxbai-embed-large` by
-  default (small, runs on a laptop); can be swapped for OpenAI/Azure/HF.
+- **An embeddings model** — Ollama `qwen3-embedding:0.6b` by default. Like the
+  extraction model it can run locally or on another machine via
+  `EMBEDDINGS_ENDPOINT`; can be swapped for OpenAI/Azure/HF. Changing it means
+  rebuilding: a graph embedded with one model cannot be topped up with another,
+  and because most of these are 1024-dim the vector index will not complain — it
+  will just return meaningless neighbours.
 
 ## Setup
 
@@ -130,10 +134,12 @@ cp .env_example .env
 # (SUPABASE_* only needed if you pull chunks from a producer — see below)
 ```
 
-If you use the default Ollama embedder, pull the model once:
+Pull the models once, on whichever machine serves them (the host named by
+`EMBEDDINGS_ENDPOINT` / `RE_MODEL_ENDPOINT`, not necessarily this one):
 
 ```bash
-ollama pull mxbai-embed-large
+ollama pull qwen3-embedding:0.6b
+ollama pull qwen3:4b
 ```
 
 ## Run
@@ -151,6 +157,22 @@ python main.py --chunks chunks_data/meeting
 # skip the centralities/community-detection step
 python main.py --no-communities
 ```
+
+Before a long build, check that Neo4j is actually reachable with the credentials
+in `.env` — a build only touches the database at the very end, so a bad
+connection otherwise surfaces hours in:
+
+```bash
+python smoke_neo4j.py     # prints the URI and `[{'ok': 1}]` if it can connect
+```
+
+### Extraction knobs
+
+`EXTRACTOR_RAW_ONLY=1` skips tool/function calling and parses raw JSON straight
+from the model. It is faster, but the schema is then **not** enforced at the API
+level, so a malformed response silently drops that chunk — a thin graph with no
+errors in the log is the symptom. Leave it at `0` for models whose tool-calling
+works (`qwen3:4b` does); it was only ever needed for `qwen3-vl`.
 
 ### Dataset layout
 
