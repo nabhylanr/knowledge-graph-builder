@@ -19,12 +19,21 @@ services:
       NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
       NEO4J_dbms_security_procedures_allowlist: "apoc.*"
 
-      # host cuma 8GB RAM & VM Docker pakai default — heap 2G + pagecache 1G
-      # bikin VM-nya OOM dan daemon-nya mati (kejadian 3 Agu 2026).
-      # ukuran di bawah ini muat buat graph seukuran kita.
+      # Ukuran konservatif — cukup buat graph skala kita (satu dokumen ≈ 500
+      # node / 4 MB data). Naikkan kalau host-nya lapang.
       NEO4J_server_memory_heap_initial__size: "512m"
       NEO4J_server_memory_heap_max__size: "1G"
       NEO4J_server_memory_pagecache_size: "512m"
+
+      # Default Neo4j bikin file transaction log 256 MB dan MEMESANNYA di muka
+      # (preallocate). Di host yang disknya mepet, permintaan 256 MB itu gagal,
+      # muncul "unable to write transaction to log", dan DB masuk status
+      # critical — semua transaksi berikutnya ditolak sampai di-restart.
+      # Kejadian 4 Agu 2026: build 3 jam hilang di menit terakhir.
+      # Graph kita cuma ~4 MB, jadi log sebesar itu mubazir.
+      NEO4J_db_tx__log_rotation_size: "16M"
+      NEO4J_db_tx__log_rotation_retention__policy: "100M size"
+      NEO4J_db_tx__log_preallocate: "false"
     volumes:
       - neo4j_data:/data               # graph data lives here — survives restarts
     healthcheck:
@@ -35,7 +44,8 @@ services:
 
 volumes:
   neo4j_data:
-    # dipin ke volume lama biar data graph yang sudah ada tetap kepakai
-    # (tanpa ini, ganti nama project bikin compose bikin volume baru yang kosong)
+    # nama dipin biar ganti nama project compose nggak bikin volume baru yang
+    # kosong — mesin yang sudah punya volume ini tetap kepakai datanya.
+    # JANGAN tambahin `external: true`: itu bikin compose nolak bikin volume,
+    # jadi gagal total di mesin yang belum punya (mis. laptop anggota tim baru).
     name: knowledge-graph-builder_neo4j_data
-    external: true
