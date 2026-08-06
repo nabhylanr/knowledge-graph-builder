@@ -1,0 +1,1662 @@
+{
+  "document": {
+    "id": "Zhao_2015_Supply_Chain_Integration_60c1df1f",
+    "source_file": "D:\\2. Taiwan Intern\\academic-pdf-chunker\\data\\raw\\Zhao_2015_Supply_Chain_Integration.pdf",
+    "source_type": "pdf",
+    "chunk_count": 138
+  },
+  "chunks": [
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0000",
+      "index": 0,
+      "page": 1,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Gang Zhao a,1,T a i w e nF e n gb,⁎, Dan Wang c,2 a School of Management, Xi’an Jiaotong University, No. 28 Xianning West Road, Xi’an, Shaanxi, China 710049 b School of Management, Northwestern Polytechnical University, No. 127 Youyi West Road, Xi’an, Shaanxi, China 710072 c Department of Management, Monash University, Room 6.03, Building N, 26 Sir John Monash Drive, PO Box 197, Caulfield East, Melbourne, VIC 3145, Australia abstractarticle info Article history: Received 14 July 2013 Received in revised form 3 March 2014 Accepted 4 April 2014 Available online 6 March 2015 Keywords: Supply chain integration Top management support Performance China While most studies argue that supply chain integration (SCI) has positive effect onfinancial performance, some literature cautions that SCI may impairfinancial performance under certain conditions. Our research extends this research stream by considering the adverse effect of SCI. In this study, we examine how supplier integration, internal integration and customer integration contribute to or impedefirms’ financial performance and investigate the complementary roles of top management support in this process combining the resource-based view and transaction cost economics."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0001",
+      "index": 1,
+      "page": 1,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Is more supply chain integration always bene ficial to financial performance? Gang Zhao a,1,T a i w e nF e n gb,⁎, Dan Wang c,2 a School of Management, Xi’an Jiaotong University, No. 28 Xianning West Road, Xi’an, Shaanxi, China 710049 b School of Management, Northwestern Polytechnical University, No. 127 Youyi West Road, Xi’an, Shaanxi, China 710072 c Department of Management, Monash University, Room 6.03, Building N, 26 Sir John Monash Drive, PO Box 197, Caulfield East, Melbourne, VIC 3145, Australia abstractarticle info Article history: Received 14 July 2013 Received in revised form 3 March 2014 Accepted 4 April 2014 Available online 6 March 2015 Keywords: Supply chain integration Top management support Performance China While most studies argue that supply chain integration (SCI) has positive effect onfinancial performance, some literature cautions that SCI may impairfinancial performance under certain conditions. Our research extends this research stream by considering the adverse effect of SCI. In this study, we examine how supplier integration, internal integration and customer integration contribute to or impedefirms’ financial performance and investigate the complementary roles of top management support in this process combining the resource-based view and transaction cost economics. Our findings from a survey of 195 firms in China indicate both favorable and adverse effects of SCI by showing an inverted U-shaped relationship between SCI and financial performance. Thus, either too little or too much SCI can impair financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0002",
+      "index": 2,
+      "page": 1,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "In addition, top management support can be considered as a complementary asset to SCI. Thisfinding suggests thatfirms should focus on the important roles of top management support so as to improvefinancial performance through SCI more effectively. This study opens up new research avenues for SCI and suggests directions for future research and practice by exploring under what conditions SCI can help to improve financial performance. © 2015 Elsevier Inc. All rights reserved. 1."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0003",
+      "index": 3,
+      "page": 1,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Introduction In recent years, supply chain integration (SCI) has received signi ficant attention from both practitioners and researchers and is considered critical to business success (for a review, seeFabbe-Costes & Jahre, 2008; Van der Vaart & van Donk, 2008 ). SCI refers to the degree to which a firm can strategically collaborate with its supply chain partners and collaboratively manage the internal and external processes to realize the effective and ef ficient flows of products and services, information, capital and decisions to provide the maximum value to the customer at low cost and high speed ( Huo, 2012; Van der Vaart & van Donk, 2008)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0004",
+      "index": 4,
+      "page": 1,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Supply chain management (SCM) researchers have studied how SCI enhance financial performance (Bagchi, Ha, Skjoett-Larsen, & Soerensen, 2005; Childerhouse & Towill, 2011; Huo, 2012; Kim, 2006). These scholars suggested that building SCI allows a focal firm to gain access to and leverage resources and capabilities residing in the supply chain. They stressed that SCI can be regarded as internal and external integrative capabilities that improve financial performance directly or indirectly. However, whether more SCI is always beneficial to financial performance is still unknown. To better understand the relationship between SCI and financial performance, the risks and potential negative consequences associated with SCI need to be further considered. Some scholars have cautioned us that SCI may impairfinancial performance under certain conditions (Das, Narasimhan, & Talluri, 2006; Enkel, Kausch, & Gassmann, 2005; Ertimur & Venkatesh, 2010; Hertz, 2001). The adverse effect of SCI has important managerial implications, given that focalfirms invest significant resources in developing SCI. Hard-earned SCI may in fact lead to redundant information (Gunasekaran & Ngai, 2004 ) and opportunistic behaviors (Ertimur & Venkatesh, 2010; Lui, Ngo, & Hon, 2006). Therefore, blindly calling for developing higher levels of SCI may result in a waste of resources, and may actually hurt rather than improvefinancial performance offirms. In this research, we take the SCM literature beyond the positive effect of SCI on financial performance by considering both the favorable and adverse effects of SCI in a single model. Consistent with previous studies (e.g., Huo, 2012; Kim, 2006 ), we accept that SCI has a positive effect on financial performance, at least when the degree of SCI is not too high."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0005",
+      "index": 5,
+      "page": 1,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "However, we provide additional theoretical precision to this argument by supposing that the synergies emerging from accumulated SCI are subject to diminishing returns. That is, the value of SCI might begin to decay and the rate of bene fits slow down as inherent risks and costs of SCI increase. As a result, we postulate that the accumulation of SCI improves financial performance up to a point where increasing risks and costs offset the bene fits and that beyond this point focal firm’s financial performance declines. We thus argue that the relationships between the three dimensions of SCI and financial Industrial Marketing Management 45 (2015) 162–172 ⁎ Corresponding author."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0006",
+      "index": 6,
+      "page": 1,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Tel.: +86 13572190964. E-mail addresses: pato@vip.163.com(G."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0007",
+      "index": 7,
+      "page": 1,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Zhao), typhoonfeng@gmail.com(T. Feng), dan.wang@monash.edu(D. Wang). 1 Tel.: +86 13891868386. 2 Tel.: +61 399032757. http://dx.doi.org/10.1016/j.indmarman.2015.02.015 0019-8501/© 2015 Elsevier Inc. All rights reserved."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0008",
+      "index": 8,
+      "page": 1,
+      "section": "1. Introduction",
+      "content_role": "publisher_boilerplate",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Contents lists available at ScienceDirect Industrial Marketing Management performance are inverted U-shaped rather than linear. These inverted curvilinear relationships might also explain why some studies have been unable to demonstrate the expected performance gains from SCI (Flynn, Huo, & Zhao, 2010; Stock, Greis, & Kasarda, 2000; Swink, Narasimhan, & Wang, 2007)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0009",
+      "index": 9,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Another possible explanation for the inconsistent findings in previous literature is that some contingencies should be considered when explaining the SCI –financial performance relationship. An application of the concept of complementary assets to the study of SCI could explain why only some firms might be able to improve financial performance through building SCI."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0010",
+      "index": 10,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Firms may not be able to improve their financial performance to the same extent due to differences in their information processing capabilities (Gunasekaran & Ngai, 2004). That is, suf ficient information processing capabilities are required when firms attempt to improve the level of SCI and its positive effects."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0011",
+      "index": 11,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Top management support (TMS) is conductive to integrating information sharing strategy into an organization ’s overall business strategy and devoting resources to increase information processing capabilities (Li & Lin, 2006 ). In addition, TMS may help to solve the con flicts on goals and resources resulting from SCI. Thus, we propose that TMS can be considered as a complementary asset to strengthen the relationships between three types of SCI and financial performance. To fill the above mentioned research gaps in previous literature, we develop and test a conceptual model regarding the relationships among three types of SCI, TMS and financial performance. Speci fically, we address two important research questions."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0012",
+      "index": 12,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "First, are there inverted Ushaped relationships between three types of SCI and financial performance? Second, are the relationships between three types of SCI and financial performance strengthened by TMS?"
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0013",
+      "index": 13,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "This study contributes to the SCI literature and practices in several ways. First, it provides empirical evidence for the nonlinear relationship between SCI and financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0014",
+      "index": 14,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Our findings demonstrate that the profits that a firm can gain from SCI will decline as the level of SCI pass a threshold. Second, this study reveals the moderating role of TMS on the relationship between SCI and financial performance, which highlights the conditions under which the nature of the relationships can be altered."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0015",
+      "index": 15,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Third, this study provides managerial guidelines for practitioners in China on how to financially benefit from SCI, and the complementary assets that assist this process. We conduct this research using data from manufacturing firms in China."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0016",
+      "index": 16,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "While China has become a global manufacturing base and plays an increasingly important role in global supply chains, few studies on SCI have been performed in China ( Zhao, Huo, Selen, & Yeung, 2011 ). Furthermore, most previous studies on the relationship between SCI and financial performance are conducted in the context of Western cultures (e.g., Bagchi et al., 2005; Childerhouse & Towill, 2011; Kim, 2006 ), while our study focuses on China, in which culture varies substantially from the western culture on issues such as collectivism, high power distance and guanxi (Feng, Sun, & Zhang, 2010 ). Thus, this study provides signi ficant managerial insights on how to develop SCI to improve financial performance of firms in China. The study is organized as follows. First, we review the SCI literature and develop research hypotheses. Second, we discuss how survey data from 195 Chinese firms were collected and analyzed."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0017",
+      "index": 17,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Third, we provide a discussion of the findings and managerial implications. Finally, we present the conclusions, limitations and suggestions for future research. 2. Literature review Previous studies have proposed various types of integration, such as supplier integration, internal integration, customer integration, strategic integration and design-process integration ( Flynn et al., 2010). The multifaceted nature of SCI is important to understand the relationships between SCI and financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0018",
+      "index": 18,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Consistent with the definition of SCM, from suppliers to manufacturers to customers, we differentiate three types of SCI: supplier integration, internal integration and customer integration. Supplier (customer) integration refers to the degree to which a firm can collaborate with its major suppliers (customers) to structure its inter-organizational strategies, practices, procedures and behaviors into collaborative, synchronized and manageable processes to ful fill customer demands ( Huo, 2012; Zhao et al., 2011 ). In contrast, internal integration is considered as the extent to which a firm can structure its organizational strategies, practices, procedures and behaviors into collaborative, synchronized and manageable processes to ful fill customer demands ( Huo, 2012; Zhao et al., 2011)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0019",
+      "index": 19,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "However, previous studies find that the effect of SCI on financial performance vary considerably not only in the degree, but even in the nature of the effects ( Flynn et al., 2010; Huo, 2012; Stock et al., 2000; Swink et al., 2007; Vickery, Jayaram, Droge, & Calantone, 2003; Zhao et al., 2011 ). Thus, some scholars acknowledge the adverse effect of SCI (Cuijpers, Guenter, & Hussinger, 2011; Das et al., 2006; Tsai & Hsu, in press ). The major bene fits associated with SCI are promoting information exchanges ( Cousins & Menguc, 2006; Flynn et al., 2010; Yu, Jacobs, Salisbury, & Enns, 2013 ), facilitating mutual understanding (Flynn et al., 2010; Swink et al., 2007), enhancing new product development performance (Droge, Jayaram, & Vickery, 2004; Parker, Zsidisin, & Ragatz, 2008 ), improving different types of operational performance (Huo, 2012; Kim, 2009; Li, Yang, Sun, & Sohal, 2009; Narasimhan & Jayaram, 1998; Wong, Boon-Itt, & Wong, 2011), and increasingfinancial performance (Flynn et al., 2010; Huo, 2012; Kim, 2009). In addition to the bene fits, the process of integration may present several problems."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0020",
+      "index": 20,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "First, SCI may require considerable time, because numerous meetings are typically required to facilitate information flow and allow for a consensus decision making ( Song & Xie, 2000; Tsai & Hsu, in press ). Second, SCI can lead to con flicts over goals and resources. Different organizations or functions often have different orientations, goals and values ( Cuijpers et al., 2011 ). For example, suppliers typically want their manufacturers to commit themselves to purchasing large quantities in stable volumes, whereas manufacturers require just-in-time (JIT) supply in small batches from their suppliers (Kanda & Deshmukh, 2008 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0021",
+      "index": 21,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Conflicts between diverse organizations or functions may lead to poor decision-making. Third, opportunistic behaviors and knowledge spillover may exist in the process of SCI (Ertimur & Venkatesh, 2010; Lui et al., 2006 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0022",
+      "index": 22,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Fourth, SCI may make organizations lack flexibility to respond to market pressures ( Das et al., 2006). These four problems may offset the benefits of SCI."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0023",
+      "index": 23,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "As a consequence, the assumption of “SCI is always bene ficial to financial performance” might be questionable. Although the negative effects of SCI have been recognized, few studies have empirically examined them. In this study, two possible explanations for the inconsistencies in previous findings are investigated."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0024",
+      "index": 24,
+      "page": 2,
+      "section": "2. Literature review",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "First, a nonlinear relationship originating from the bene fits and costs of SCI may exist while considering its in fluence on financial performance. Second, the inconsistent previous findings on the relationship between SCI and financial performance could lie in differences in a complementary asset which is TMS. 3. Hypotheses development In order to understand and explain the relationship between SCI and financial performance, we combine the resource-based view (RBV) and transaction cost economics (TCE). According to RBV ( Barney, 1991 ), business success depends on leveraging organizational capabilities and resources, which are usually owned byinternal functional departments and other organizations, such as suppliers and customers (Lau, Tang, & Yam, 2010 ). Lau et al."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0025",
+      "index": 25,
+      "page": 2,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "(2010) and Verona (1999) argued that these capabilities include internal and external integrative capabilities. According to this view, SCI can enable firms to acquire capabilities and resources for sustained competitive advantage. Recent literature has considered SCI as important sources of capabilities and resources for a firm to improve its financial performance (Huo, 2012). 163G."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0026",
+      "index": 26,
+      "page": 2,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 However, from the perspective of TCE, increasing levels of SCI will lead to risks and coordination costs (Das et al., 2006; Williamson, 1985). When SCI increases to a certain level, returns on SCI may not be sufficient to justify theses risks and costs.Swink et al. (2007)noted thatfirms integrating too closely with suppliers may open themselves up to risks including adverse selection, moral hazard and opportunity costs."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0027",
+      "index": 27,
+      "page": 3,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "For instance, suppliers may be less motivated to improve their financial performance if they feel that their business interests are secure. Furthermore, as afirm integrates it may be less open to opportunities offered by new suppliers/ customers, or may incur switching costs that make it difficult to take advantage of these opportunities. This may restrict the focalfirm from effectively responding or adapting to environmental changes and thus jeopardize itsfinancial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0028",
+      "index": 28,
+      "page": 3,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "The rigidity inherent in accumulated SCI might explain why some studies analyzing the positive impact of SCI on financial performance did notfind the expected outcomes (e.g.,Flynn et al., 2010; Stock et al., 2000; Swink et al., 2007). Thus, TCE suggests that higher SCI may lead to decliningfinancial performance. Combining RBV and TCE, we propose that SCI may have both positive and negative effects onfinancial performance. The positive effect comes from helping the focalfirm acquire and utilize resources and capabilities residing in the supply chain, which can improve financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0029",
+      "index": 29,
+      "page": 3,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "However, synergies created due to accumulated SCI are subject to diminishing returns. As SCI increases, the rate of bene fits slows down."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0030",
+      "index": 30,
+      "page": 3,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "There should be a threshold at which the coordination costs offset the benefits of SCI, and beyond which the focal firm’s financial performance declines. We thus suggest that the SCI –financial performance relationship is unlikely to be as simple as the previously proposed linear model. Rather, we posit that there are inverted U-shaped relationships between three types of SCI andfinancial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0031",
+      "index": 31,
+      "page": 3,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Another research question is under what conditions, to what extent and in what ways SCI matters. A theory describing how TMS serves as a complementary asset to SCI is informed by RBV of the firm ( Grant, 1991)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0032",
+      "index": 32,
+      "page": 3,
+      "section": "3. Hypotheses development",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Though researchers and practitioners agree that SCI matters, complementary assets helping firms capture the pro fits associated with SCI are less examined. Teece’s( 1 9 8 6 )concept of complementary assets suggests that SCI is not able to improve financial performance in the absence of some complementary assets, yet studies addressing this question are lacking. This research gap motivates our assessment of the complementary assets (i.e. TMS) for SCI to function effectively. 3.1. The relationship between SCI and financial performance Suggested by RBV, developing a strong strategic partnership with suppliers has a positive impact onfinancial performance. Supplier integration facilitates the mutual understanding between the supplier and the focal firm, which can help the supplier better meet the focalfirm’s changing requirements (Flynn et al., 2010 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0033",
+      "index": 33,
+      "page": 3,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "This mutual exchange of information about products, processes, schedules and capabilities helpsfirms adjust their production plans timely and produce goods on time, enhancing delivery performance. By building a good understanding of the focalfirm’s operations, suppliers can improve the level of customer services, which, in turn, helps the focal firm improve its performance. Moreover, supplier integration reduces the purchasing costs by building intimate relationships with suppliers, which is conductive to the improvement offinancial performance (Das et al., 2006; Huo, 2012). Supplier integration is also helpful in reducing production costs through economies of scale and scope. It leads to fewer suppliers that enjoy greater scales through volume consolidation and offers scope economies in several ways including product and process development and lower administrative costs (Handfield & Ragatz, 1999). According to TCE logic, when the level of supplier integration increases, disadvantages and costs like rising coordination costs, organizational rigidities and lacking of market pressure are likely to accrue ( Das et al., 2006 ). Increased coordination costs may offset savings from supplier integration, as supplier integration increases the management complexity. Organizational rigidities developed in routines and mental models may discourage independent thinking and hinder learning and assimilation of external knowledge, which, in turn, impedes the focal firm from effectively responding to environmental changes (Sorenson, 2003)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0034",
+      "index": 34,
+      "page": 3,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Additionally, supplier integration weakens market pressure, since the focal firm may become slack and develop unhealthy “norms of reciprocity” with its suppliers (Das et al., 2006), leading to inefficient procurement of inputs and thus eventually jeopardize the focal firm’s financial performance. These disadvantages may increase when supplier integration becomes too higher. In sum, RBV and TCE suggest that a moderate level of supplier integration may be most profitable taking balance potential benefits and negative side effects derived from collaborating with suppliers. Supplier integration assists in facilitating mutual understanding, reducing transaction costs and decreasing production costs. However, as supplier integration reaches high levels, the marginal benefits of higher level of supplier integration might become negligible and, in the extreme, is detrimental to the improvement of financial performance. In other words, there is a positive relationship between supplier integration andfinancial performance when the level of supplier integration is low to moderate and increasing supplier integration leads to declining financial performance. Thus, we propose: H1."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0035",
+      "index": 35,
+      "page": 3,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "There is an inverted U-shaped relationship between supplier integration and financial performance. RBV also suggests that internal integration is important for improving financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0036",
+      "index": 36,
+      "page": 3,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Information sharing, joint planning, cross-functional teams and working together are essential elements of internal integration (Flynn et al., 2010), as they contribute to breaking down functional barriers and encouraging cooperation in order to meet the requirements of customers. A primary advantage of internal integration is its improvement on cross-functional communication linkages ( Song, Thieme, & Xie, 1998 ). Few previous studies have investigated the positive relationship between internal integration and financial performance. For example, Droge et al. (2004) found that internal integration was positively related tofinancial performance and market share. Flynn et al."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0037",
+      "index": 37,
+      "page": 3,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "(2010) concluded that internal integration had a positive impact on financial performance. Huo (2012) also found that internal integration is positively related to financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0038",
+      "index": 38,
+      "page": 3,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "However, internal integration was not found to improvefinancial performance in some previous studies (Gimenez & Ventura, 2005). From the perspective of TCE, this may be attributed to disadvantages resulting from the increase of internal integration. Thefist possible reason is that internal integration leads to individual conflicts. This is because personnel from different departments often have different orientations, goals and values. Dealing with these conflicts may consume an inordinate amount of time, which, in turn, will decrease productivity. Second, developing internal integration can be costly ( Patrashkova-Volzdoska, McComb, Green, & Compton, 2003 ). Employees from different functions may view the same question from different perspectives (Uhl-Bien & Graen, 1998). Although this creates new knowledge, it may overload afirm’s processing capabilities and, thereby, inhibit firm performance ( Foushee, 1984; Zirger & Hartley, 1996). In addition, many meetings are also required by SCI to facilitate informationflows and to reach a consensus on decisions made across functions. Thus, internal integration can cause delays in decision-making (Smith et al., 1994). Third, managing the interface between different functions effectively may be difficult. It requires managers with special training to coordinate the complex process with a diverse set of individuals (Song et al., 1998). In sum, while RBV states internal integration is important for improving financial performance, a threshold may exist, beyond which the costs argued in TCE are too high to sustain desiredfinancial performance. Consequently, it is reasonable to state the following hypothesis: H2. There is an inverted U-shaped relationship between internal integration and financial performance. 164 G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 Drawing on RBV, developing customer integration is important for achieving bene fits through leveraging resources and information possessed by customers ( Danese & Romano, 2013; Huo, 2012; Lau et al., 2010 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0039",
+      "index": 39,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "A close interaction between the focal firm and its customers provides opportunities for improving the accuracy of demand information, which speeds up product design, shorten production planning time and reduce inventory obsolescence, allowing the focal firm to become more ef ficient and responsive to customer needs ( Flynn et al., 2010 ). Because customer integration generates opportunities for utilizing the information embedded in collaborative processes, it enables focal firms to reduce costs, create greater value and detect demand changes more quickly. Customer integration has been found to be positively related to customer financial performance ( Droge et al., 2004; Koufteros, Vonderembse, & Jayaram, 2005; Narasimhan & Kim, 2002 ). As customer integration proceeds, a point may be reached at which the incremental value of additional information starts to decrease. Information exchanged may become redundant for the focal firm, and, if there is too much information, it may make searching for the useful information time consuming (Villena, Revilla, & Choi, 2011). Excessive customer integration may even reduce the focalfirm’s ability to engage in other activities that are also critical to improving its financial performance (McFadyen & Cannella, 2004). Furthermore, information sharing beyond the processing capacity of the focalfirm might cause stress and confusion between what is (not) critical for its operations, thus lowering the ef ficiency of resource allocations ( Grover, Lim, & Ayyagari, 2006 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0040",
+      "index": 40,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "In addition, customer integration may lead to overcustomization which will make a firm fail to target its entire customer base (Ernst, Hoyer, & Rübsaamen, 2010). TCE scholars also argued that the increase in customer integration may result in increased uncertainty and opportunism ( Carayannopoulos & Auster, 2010 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0041",
+      "index": 41,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.1. The relationship between SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Thus, the focal firm should acknowledge the fact that improving the level of customer integration does not necessarily result in more quality information that is relevant for enhancing financial performance. There should be a threshold at which the benefits of developing high degrees of customer integration are offset by the redundancy, complexity and investments from dealing with such high levels of information. Therefore, one would expect that the focal firm’s financial performance improves as customer integration increases from low to moderate. Customer integration assists in providing diverse and valuable information to achieve quick responses to customer demands. However, as customer integration reaches high levels, the marginal bene fits of more information might become negligible and, in the extreme, leads to negative outcomes for the focal firm, given the greater dif ficulty in searching for useful information and the expenditure of resources to maintain customer integration. Integrating RBV and TCE, we predict an inverted U-shaped relationship between customer integration and financial performance. Hence, we hypothesize: H3. There is an inverted U-shaped relationship between customer integration and financial performance. 3.2. TMS as a complementary asset In this research, we view TMS as a complementary asset to implement SCI."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0042",
+      "index": 42,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Teece (1986) defined complementary assets as the resources or capabilities that allow organizations to capture the profits associated with a strategy, technology or innovation. Complementary assets are required when firms attempt to implement SCI (Narasimhan, Swink, & Viswanathan, 2010 ). Resources and capabilities involved in forming complementary assets may be physical, human or organizational (Barney, 1991 ). Examples of complementary assets discussed in the literature include workforce organization and training ( Bresnahan, Brynjolfsson, & Hitt, 2002), R&D, production and marketing capabilities (Rothaermel & Hill, 2005 ). Complementary assets can be generic or specialized (Teece, 1986). Generic complementary assets are typically obtained from factor markets, while the development of specialized complementary assets usually takes a longer time ( Teece, Pisano, & Shuen, 1997 ). Thus, specialized complementary assets have the characteristics normally ascribed to “resources” in the RBV ( Barney, 1991). That is, they are built upon resources or capabilities that are rare, valuable, non-substitutable and dif ficult to imitate."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0043",
+      "index": 43,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "SCI can be of little value in the absence of certain complementary assets. In other words, complementary assets will moderate the relationship between three dimensions of SCI and financial performance. Although TMS has been extensively studied, little is know about its roles in the process of SCI. Swink et al."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0044",
+      "index": 44,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "(2007) argued that resources and capabilities gained from SCI can be imitated by competitors who also have access to the same suppliers and customers. Therefore, firms should develop unique capabilities to produce superior performance. TMS is needed to foster favorable climates and develop suitable management styles which are conductive to achieve the bene fits from SCI implementation."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0045",
+      "index": 45,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "However, managerial attention is the most precious resources inside the organization ( Laursen & Salter, 2006 ). It is not easy to allocate the limited managerial attention resources ef ficiently. Organizational culture, experience and managem ent policies can serve either as enablers or barriers to effectively attention allocation."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0046",
+      "index": 46,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "An effective TMS can therefore be regarded as a specialized, firm-specific asset. In this study, TMS is characterized as time and resources devoted by the top management to SCI development. Firms could be able to gain access to and leverage information residing in the supply chain through SCI and the information gathered should be shared efficiently, so that it would be useful for improving financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0047",
+      "index": 47,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "TMS is conductive to overcoming the reluctance of information sharing and providing the resources required for the implementation of information sharing ( Wu, Chiag, Wu, & Tu, 2004). In addition, TMS can also contribute to the understanding of the importance of sharing information and making sure information is shared without any delay and distortion ( Li & Lin, 2006 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0048",
+      "index": 48,
+      "page": 4,
+      "section": "3. Hypotheses development > 3.2. TMS as a complementary asset",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Hence, a firm with high level of TMS can improve financial performance by developing SCI. Conversely, a firm with low level of TMS will be unable to integrate the information from supply chain partners into its operating activities. In this case, SCI may waste time and money, and thus, be detrimental to the enhancement of financial performance. Therefore, we propose the following hypotheses: H4. TMS strengthens the relationship between (a) supplier integration, (b) internal integration, and (c) customer integration and financial performance. Collectively, these hypothesized relationships are summarized in our conceptual model research framework in Fig. 1. Fig. 1. Conceptual model. 165G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 4. Method 4.1. Sampling and data collection To test the hypotheses, we collected data from manufacturing companies in China."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0049",
+      "index": 49,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Since China is a large country, we strategically selected four provinces (Guangdong, Shandong, Shaanxi and Henan) to offer geographic and economic diversity. Guangdong represents the Pearl River Delta, which has enjoyed a higher degree of economic development and market formation. Shandong represents the Bohai Sea Economic area and re flects the average stage of economic reform and marketization."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0050",
+      "index": 50,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Shaanxi, located in the northwest, represents a relatively lower stage of economic reform and marketization. Henan as a traditional large agricultural province resides in a relatively early stage of economic reform and market formation. All these four provinces are important industrial bases with a broad variety of supply chain activities. Thus, they can provide an appropriate setting for testing the effectiveness of SCI."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0051",
+      "index": 51,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "The questionnaire was developed following a three-stage process outlined by Christmann (2000) . First, an English version of the questionnaire was prepared, and then translated into Chinese by three researchers who are competent in both languages. To ensure conceptual equivalence, the Chinese version was back-translated into English by another three researchers. Any con flicts were discussed by the researchers until they reached agreement."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0052",
+      "index": 52,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Second, eight manufacturing managers and three academicians reviewed the questionnaire to check the relevance and completeness of the questionnaire items and took notes on their responses. On this basis, we revised a few questionnaire items to improve their clarity. Third, we conducted a pilot study in Chinese with 10 senior managers."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0053",
+      "index": 53,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "We asked respondents to not only answer the questionnaire but also to provide feedback about their design and wording. To alleviate possible social desirability bias, we informed all respondents in advance of the purpose of our study, the confidentiality of their responses, and that their responses would be used only in aggregated analysis. Based on the feedback, we further refined the questionnaire and finalized the survey. The sample of this study was identified on the basis of recommendations from local universities and government (Feng et al., 2010). Such a method can improve the accuracy and completeness of the sampling data. In each firm, we selected a senior manager (e.g., CEO, president, vice president and supply chain manager) as the key informant. Our field interviews also reveal that these managers are highly familiar with the levels of SCI practices, TMS and business environment in their firms."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0054",
+      "index": 54,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "To improve the response rate, we phoned the respondents to introduce the purpose of our research and obtain their preliminary agreement to participate (Frohlich, 2002). We sent out the questionnaire along with a cover letter highlighting the research purpose to the informants."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0055",
+      "index": 55,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Follow-up calls and mailings were made to targeted respondents who did not respond ( Frohlich, 2002). Out of 600 companies, 223 responses were received. After eliminating 28 surveys with excessive missing data, we retain 195 usable responses, for a response rate of 32.5 percent. According to a multivariate analysis of variance (MANOVA), we find no signi ficant differences between responding and non-respondingfirms in terms of key firm characteristics (number of employees, annual sales and total assets), which suggests non-response bias is not a concern. Table 1 reveals the profile of the sample, which reflects the diversity that exists among the participatingfirms based on the industry sectors, ownership type, number of employees and annual sales."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0056",
+      "index": 56,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "When two or more variables are collected from the same informants and an attempt is made to interpret their correlation, a problem of common method variance (CMV) could happen (Podsakoff, MacKenzie, Lee, & Podsakoff, 2003 ). Analysis of Harman ’s one-factor test of CMV (Podsakoff et al., 2003) revealed six factors with eigenvalues above or near 1.0, explaining 75.4% total variance. The first factor captured 24.2% of the variance, which is not the majority of the total variance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0057",
+      "index": 57,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "To further assess CMV, a measurement model including only the traits and one including a method factor in addition to the traits were tested (Cao & Zhang, 2011). The results of the method factor model marginally improved the model fit indices (NNFI by 0.01 and CFI 0.02), with the common method factor accounting for 10.5% of the total variance. Also, the factor loadings are still signi ficant in spite of the inclusion of a method factor, suggesting that the model was robust ( Flynn et al., 2010)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0058",
+      "index": 58,
+      "page": 5,
+      "section": "4. Method > 4.1. Sampling and data collection",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "This provides further indication that the CMV is not serious. Moreover, we tried to further reduce the influence of CMV by separating the measurement items within the questionnaire, which was adopted in this research ( Podsakoff et al., 2003 ). Thus, it is reasonable to conclude that CMV is rather negligible in our study. 4.2. Measures We surveyed the literature to identify valid measures, and then adapted extant scales to measure SCI, TMS and financial performance (Appendix A ). Respondents were asked to rate the degree to which the following are a current concern to their company, as compared to industry average (1 = strongly disagree, 4 = about the same, 7 = strongly agree). This approach tends to mitigate the industry effects and is commonly used in previous studies ( Avittathur & Swamidass, 2007; Corsten & Felde, 2005; Swink & Nair, 2007). Internal integration was measured by six items. Of the six items, three items were adopted from Flynn et al. (2010) . The remaining three items about to real-time information integration and crossfunctional integration in strategic planning were newly developed to enhance internal integration."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0059",
+      "index": 59,
+      "page": 5,
+      "section": "4. Method > 4.2. Measures",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Supplier and customer integration were both measured by five items. Of the five items of supplier integration, three items were developed on the basis of work by Flynn et al. Table 1 Profile of the sample."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0060",
+      "index": 60,
+      "page": 5,
+      "section": "4. Method > 4.2. Measures",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Frequency % Industry sector Food and beverage 9 4.62 Textile 4 2.05 Chemical and related products 7 3.59 Pharmaceutical and medical 6 3.08 Rubber and plastics 13 6.67 Non-metallic mineral products 4 2.05 Smelting and pressing 4 2.05 Metal products 4 2.05 Machinery 32 16.41 Transport equipment 13 6.67 Electrical machinery and equipment 20 10.26 Communication and computers related equipment 48 24.62 Instruments and related products 6 3.08 Others 25 12.82 Ownership type State-owned and collective enterprises 58 29.74 Private enterprises 66 33.85 Foreign-invested enterprises 71 36.41 Number of employees Less than 50 13 6.67 50–99 12 6.15 100–299 40 20.51 300–999 32 16.41 1000–1999 34 17.44 2000–4999 33 16.92 5000 or more 31 15.90 Annual sales (million RMB) Less than 5 6 3.08 5–9 10 5.13 10–19 10 5.13 20–49 16 8.21 50–99 18 9.23 100 or more 130 66.67 Unmarked 5 2.56 166 G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 (2010)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0061",
+      "index": 61,
+      "page": 6,
+      "section": "4. Method > 4.2. Measures",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "The remaining two items about real-time monitoring and delivery adjustment were newly developed to improve the measurement of supplier integration. For thefive items of customer integration, they were developed according to the scales of supplier integration and the study ofFlynn et al. (2010)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0062",
+      "index": 62,
+      "page": 6,
+      "section": "4. Method > 4.2. Measures",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "A 6-item scale adapted from the work of Chen and Paulraj (2004) was used to assess TMS. TMS was assessed by asking the respondents to indicate the time and resources contributed by the top management. The five items used to measure financial performance were adopted from Flynn et al. (2010) . Another two items in Flynn et al. (2010) (i.e., growth in return on sales, and growth in ROI) were deleted after pilot study. We include firm size, ownership type and technology uncertainty as control variables. We measurefirm size as the logarithm of the number of employees and annual sales. The ownership type was defined as two dummy variables, with state-owned and collective as the base."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0063",
+      "index": 63,
+      "page": 6,
+      "section": "4. Method > 4.2. Measures",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Furthermore, because of the fast-changing technology, technology uncertainty represents an important characteristic offirms in China. We control for technology uncertainty and measure it with four items adapted from Chen and Paulraj (2004) .I n Table 2, we present the basic descriptive statistics and correlations of the constructs. 4.3. Reliability and validity We assessed the construct reliability and validity of our measures following the guidelines suggested by Anderson and Gerbing (1988) . First, our exploratory factor analysis for all the items resulted in theoretically expected factor solutions."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0064",
+      "index": 64,
+      "page": 6,
+      "section": "4. Method > 4.3. Reliability and validity",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "We then computed the reliability coefficients (Cronbach ’s alpha), which ranged between 0.815 and 0.934, well exceeding the minimum limit of 0.6 ( Nunnally, 1978 ). We also computed the values of composite reliability (CR), which were in the range of 0.825–0.935, and of average variance explained (AVE), which were in the range of 0.592 –0.743."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0065",
+      "index": 65,
+      "page": 6,
+      "section": "4. Method > 4.3. Reliability and validity",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Third, we conducted con firmatory factor analyses (CFA) to assess the convergent and discriminant validity. The CFA results suggested that the model fit indices were acceptable: χ 2(362) = 884.15, RMSEA = 0.074, NNFI = 0.96, CFI = 0.94 and SRMR = 0.062 ( Hu & Bentler, 1999 ). Each item ’s standardized coef ficient from measurement model was highly significant (p b 0.001), indicating that the constructs exhibited convergent validity."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0066",
+      "index": 66,
+      "page": 6,
+      "section": "4. Method > 4.3. Reliability and validity",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "None of the confidence intervals of the correlations for the constructs (i.e., phi values) contained a value of one (Anderson & Gerbing, 1988), showing support for discriminant validity. Additionally, we assessed discriminant validity by comparing the unconstrained model with the constrained model in which the correlation between each possible pair of constructs was set to one ( Fornell & Larcker, 1981)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0067",
+      "index": 67,
+      "page": 6,
+      "section": "4. Method > 4.3. Reliability and validity",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "All the chisquare differences between the fixed and unconstrained model were significant at the 0.01 level, which indicates good discriminant validity. Table 2 also shows that the square root of AVE for each construct was greater than the correlation between that construct and the other constructs, providing further evidence of discriminant validity ( Fornell & Larcker, 1981). Collectively, these results provided strong evidence of reliability and validity. 5. Analyses and results We use hierarchical moderated regression analysis to test the hypotheses."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0068",
+      "index": 68,
+      "page": 6,
+      "section": "5. Analyses and results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "To mitigate the potential threat of multi-collinearity, all independent variables constituting interaction terms were meancentered (Aiken & West, 1991 ). The largest variance in flation factor, a multi-collinearity indicator, is 3.887, well below the 10.0 cutoff, so multi-collinearity is not an issue. To evaluate the explanatory power of each set of variables, we include the variables in the model block by block. The regression results are reported in Table 3. For H1, we predict an inverted U-shaped relationship between õsupplier integration and financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0069",
+      "index": 69,
+      "page": 6,
+      "section": "5. Analyses and results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "As shown in Table 3 (model 2), supplier integration is positively related to financial performance ( β = 0.185, p b 0.10), while the square of supplier integration negatively affects financial performance ( β = − 0.211, p b 0.05). That is, an inverted U-shaped relationship exists between supplier integration and financial performance, indicating the diminishing return of high level of supplier integration. Thus, H1 is supported."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0070",
+      "index": 70,
+      "page": 6,
+      "section": "5. Analyses and results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "In H2, we posit that there is an inverted U-shaped relationship between internal integration and financial performance. As presented in Table 3 (model 4), internal integration have a positive and significant effect on financial performance ( β =0 . 2 6 1 ,p b 0.01), but the effect of the square of internal integration is not signi ficant ( β = 0.049, p N 0.10). Theses results do not support H2."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0071",
+      "index": 71,
+      "page": 6,
+      "section": "5. Analyses and results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "H3 argued for an inverted U-shaped relationship between customer integration and financial performance. Table 3 (model 6) reveals that customer integration is positively related to financial performance (β = 0.205, p b 0.05), while the square of customer integration is negatively associated with financial performance ( β = − 0.251, p b 0.01). Our findings indicate that there is an inverted U-shaped relationship between customer integration and financial performance, providing support for H3."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0072",
+      "index": 72,
+      "page": 6,
+      "section": "5. Analyses and results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "For H4a, we hypothesize that supplier integration becomes more effective under a higher level of TMS. As indicated in Table 3 (model 3), the interaction between supplier integration and TMS has a signi ficant effect on financial performance ( β = 0.214, p b 0.01). However, the impact of the second-order interaction on financial performance is not signi ficant ( β = − 0.102, p N 0.10). Hence, H4a is empirically supported. To gain more insight into these interaction effects, we follow Aiken and West (1991) and decompose the interaction terms. Specifically, we conduct simple slope tests and plot the relationships in Fig. 2 . In these tests, we split the TMS variable into two groups – low (one standard deviation below the mean) and high (one standard deviation above the mean)– and estimate the effect of supplier integration onfinancial performance for both levels. As shown inFig. 2, part (a), Table 2 Means, standard deviations and correlations. Mean S.D. 12345 67 89 1 0 1."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0073",
+      "index": 73,
+      "page": 6,
+      "section": "1. Supplier integration 5.002 0.962 0.820",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Supplier integration 5.002 0.962 0.820 2. Internal integration 5.159 0.978 0.544 ⁎⁎⁎ 0.769 3. Customer integration 5.127 0.954 0.556 ⁎⁎⁎ 0.445⁎⁎⁎ 0.850 4. Top management support 5.276 1.041 0.486 ⁎⁎⁎ 0.484⁎⁎⁎ 0.604⁎⁎⁎ 0.862 5."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0074",
+      "index": 74,
+      "page": 6,
+      "section": "5. Financial performance 4.496 1.067 0.290 ⁎⁎⁎ 0.325⁎⁎⁎ 0.211⁎⁎ 0.162⁎ 0.796",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Financial performance 4.496 1.067 0.290 ⁎⁎⁎ 0.325⁎⁎⁎ 0.211⁎⁎ 0.162⁎ 0.796 6. No. of employees 6.582 1.644 −0.050 0.025 −0.020 0.094 −0.072 - 7. Annual sales 8.788 0.822 −0.145⁎ −0.039 −0.117 −0.069 −0.033 0.569 ⁎⁎⁎ - 8."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0075",
+      "index": 75,
+      "page": 6,
+      "section": "8. Private dummy 0.364 0.482 −0.022 0.050 −0.031 −0.020 0.065 −0.280⁎⁎⁎ −0.191⁎⁎ -",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Private dummy 0.364 0.482 −0.022 0.050 −0.031 −0.020 0.065 −0.280⁎⁎⁎ −0.191⁎⁎ - 9. Foreign dummy 0.364 0.482 0.120 † 0.002 0.132 † 0.014 −0.022 0.107 0.117 −0.573⁎⁎⁎ - 10. Technology uncertainty 4.515 1.147 0.210 ⁎⁎ 0.252⁎⁎⁎ 0.350⁎⁎⁎ 0.282⁎⁎⁎ 0.087 0.118 −0.068 −0.006 0.058 0.784 Note: † p b 0.10; ⁎ p b 0.05; ⁎⁎ p b 0.01; ⁎⁎⁎ p b 0.001. Square root of AVE is on the diagonal. 167G."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0076",
+      "index": 76,
+      "page": 6,
+      "section": "9. Foreign dummy 0.364 0.482 0.120 † 0.002 0.132 † 0.014 −0.022 0.107 0.117 −0.573⁎⁎⁎ -",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 the performance gains from supplier integration decrease more slowly at high level of TMS. These results further suggest that supplier integration has a stronger effect on financial performance when TMS is high than when it is low. In H4b, we expect that firms with a higher level of TMS can gain more value from internal integration. Results in model 5 reveal that the first-order interaction is positive and signi ficant ( β = 0.315, p b 0.01), whereas the second-order interaction is not signi ficant (β = 0.149, p N 0.10), supporting H4b. Part (b) of Fig."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0077",
+      "index": 77,
+      "page": 7,
+      "section": "9. Foreign dummy 0.364 0.482 0.120 † 0.002 0.132 † 0.014 −0.022 0.107 0.117 −0.573⁎⁎⁎ -",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "2 indicates that the effect of internal integration on financial performance shifts from significantly positive when TMS is high (simple slope b = 0.567, p b 0.01) to insignificant when TMS is low ( b = −0.063, p N 0.10). In H4c, we posit that customer integration has a greater effect on improving financial performance for higher than for lower levels of TMS. As shown in model 7, the first-order interaction is positive and significant (β = 0.225, p b 0.05), whereas the second-order interaction is not significant (β = −0.112, p N 0.10), indicating that the inverted Ushaped relationship is much stronger when the level of TMS is high. These results support H4c. Similarly, we depict the effects of customer integration on financial performance for low and high levels of TMS. As Fig."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0078",
+      "index": 78,
+      "page": 7,
+      "section": "9. Foreign dummy 0.364 0.482 0.120 † 0.002 0.132 † 0.014 −0.022 0.107 0.117 −0.573⁎⁎⁎ -",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "2, part (c) shows, customer integration has a stronger inverted U-shaped effect on financial performance under a higher level of TMS. In other words, the positive effect of customer integration endures much longer when the level of TMS is high. 6. Discussions The importance of SCI has received increasing attention in both the literature and practice. The reported bene fits include improvements in operational performance as well as financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0079",
+      "index": 79,
+      "page": 7,
+      "section": "6. Discussions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Considering the importance of SCI, there has been a surge in academic studies in recent years. A basic research question is whether more SCI is always bene ficial to financial performance or not."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0080",
+      "index": 80,
+      "page": 7,
+      "section": "6. Discussions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Combing insights from the RBV and TCE, our study advances SCI literature by considering its positive and negative performance effects simultaneously. We investigate a more complex set of propositions that expect inverted U-shaped relationships between three dimensions of SCI and financial performance, and suggest that Table 3 Standardized coefficient estimates: multiple moderated regressions."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0081",
+      "index": 81,
+      "page": 7,
+      "section": "6. Discussions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Variables M 1 M 2 M 3 M 4 M 5 M 6 M 7 Control variables No. of employees −0.031 −0.045 −0.062 −0.061 −0.057 −0.062 −0.054 Annual sales −0.007 0.022 0.026 0.033 −0.032 0.054 0.049 Private dummy 0.081 0.032 0.033 0.040 0.034 0.047 0.073 Foreign dummy 0.023 −0.042 −0.060 −0.009 −0.012 −0.031 −0.029 Technology uncertainty 0.090 0.043 −0.039 −0.041 −0.040 −0.032 −0.053 Direct effect Supplier integration (SI) 0.185 † 0.190† Internal integration (II) 0.261⁎ 0.252⁎ Customer integration (CI) 0.205⁎ 0.227⁎ Top management support (TMS) 0.217 ⁎ 0.206⁎ 0.228⁎ 0.236⁎ 0.237⁎⁎ 0.312⁎⁎ H1: SI2 −0.211⁎ −0.185† H2: II2 0.049 −0.027 H3: CI2 −0.251⁎⁎ −0.211⁎ Interactions H4a: SI × TMS 0.214 ⁎⁎ SI2 × TMS −0.102 H4b: II × TMS 0.315⁎⁎ II2 × TMS 0.149 H4c: CI × TMS 0.225⁎ CI2 × TMS −0.112 R2 0.016 0.152 0.181 0.124 0.232 0.160 0.223 ΔR2 0.136 0.056 0.108 0.080 0.144 0.063 p(ΔR2) b0.01 b0.05 b0.01 b0.05 b0.01 b0.05 † p b 0.10, ⁎ p b0.05, ⁎⁎ p b 0.01. 0.0 1.0 2.0 3.0 4.0 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 2.5 Supplier integration Financial performance Low TMS High TMS 0.0 1.0 2.0 3.0 4.0 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 2.5 Internal integration Financial performance Low TMS High TMS 0.0 1.0 2.0 3.0 4.0 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 2.5 Customer integration Financial performance Low TMS High TMS (a) (c) (b) Fig. 2. The interaction of SCI and TMS on financial performance. 168 G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 whether a firm can bene fit from SCI also depends on its level of TMS(not understand “what ” are equally valuable you are talking about). This study using data collected from Chinese manufacturers provides signi ficant contributions to both SCI literature and practices. Overall, our results endorse the position that though SCI still matters, its bene fits are dependent on several factors. Firms experience diminishing returns (e.g., an inverted U-shaped relationship) from supplier integration and customer integration, whereas they enjoy a positive monotonic bene fit from internal integration."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0082",
+      "index": 82,
+      "page": 8,
+      "section": "6. Discussions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "We further find that TMS plays complementary roles to all three dimensions of SCI. In other words, SCI confers more value under a higher level of TMS. These findings offer a more re fined understanding of the reasons and situations under which SCI enable firms to gain superior financial performance in China. 6.1."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0083",
+      "index": 83,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "SCI and financial performance Our findings regarding the relationship between SCI and financial performance are in some ways consistent and in some ways in contrast with previous studies. Like prior studies, our findings suggest that all three dimensions of SCI can contribute to performance increase through building strategic supply chain partnerships and facilitating intra- and inter-organizational information exchange. However, the bene fits related to different dimensions of SCI do not appear to be analogous."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0084",
+      "index": 84,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "The results of this study challenge earlier assumptions of a linear relationship between supplier integration and financial performance. A firm can integrate its suppliers to facilitate mutual understanding, and reduce purch asing and production costs, and achieve bene fit s .B u t ,i fo v e r l ye x c e s s i v e ,t h ec o s t sr e s u l t i n gf r o m supplier integration may outweigh these bene fits. This finding is consistent with a recent empirical work indicating that deviations from “optimal ” level of supplier integration are negatively associated with financial performance ( Das et al., 2006 ). However, Das et al."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0085",
+      "index": 85,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "(2006) only focused on supplier integration. By considering the positive and negative performan ce effects of supplier integration simultaneously, we re fine the existing SCI literature by suggesting a duality involving supplier integration —it can be viewed as integrative capabilities to gain access to and leverage resources, but, only within a certain degree. If deviating from the optimal range, supplier integration can be counterproductive which harms financial performance. Thus, these results reinforce the argument for the need to monitor and adjust the level of supplier integration in order to adapt to environmental changes and to balance the associated bene fits and costs."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0086",
+      "index": 86,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Although the value of customer integration has been recognized, existing literature lacks a theory which can explain why in some instances, customer integration has no signi ficant effect on financial performance (Flynn et al., 2010; Swink et al., 2007 ). Our findings offer some new insights on how customer integration helps firms improve financial performance. We find that integration practice can help firms exchange information with their customers and increase their chances of matching supply and demand better. However, customer integration does not completely remove customers ’ opportunistic behaviors and coordination costs. Our results show that customer integration increases financial performance only up to a certain level: an inverted U-shape relationship exists between customer integration andfinancial performance. This inverted U-shaped relationship suggests the presence of the adverse effect wherein customer integration can become a liability for the focal firm. Thus, we lend support to previous research by examining the positive effect of customer integration on financial performance, but it also extends this research stream by offering evidence for the adverse effect. Our findings offer useful explanations for why some empirical studies did not find a positive linear relationship between customer integration and financial performance ( Flynn et al., 2010; Swink et al., 2007 ). This study also provides empirical support for some studies that suspected the potential risks and costs resulting from a high level of customer integration (Enkel et al., 2005; Hertz, 2001 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0087",
+      "index": 87,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Recently, Chan, Yim, and Lam (2010) found that increased customer involvement would shift more power from a firm to its customers and thereby increase the workload of the firm. They also argued that customer participation in value creation might be a double-edged sword, which is consistent with our findings. Interestingly, ourfindings reveal that thoughfirms implement three types of integration to the same extent, internal integration suffer a comparative advantage in extracting pro fits from its implementation: internal integration has a linear and positive effect on financial performance while supplier and customer integration have inverted U-shaped effects on financial performance. Thus, the results instead support a linear relationship as previous research suggests ( Flynn et al., 2010; Huo, 2012 ). One possible explanation for this result is that, compared to supplier and customer integration, internal integration associated with learning and absorptive capabilities might be much more enduring and sustainable for generating firm competitive advantage and superior financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0088",
+      "index": 88,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Putting it into the Chinese context, this finding may also be influenced by the indigenous individual and corporate culture of valuing harmony and teamwork. Such values and norms in the workplace could facilitate the internal integration process by promoting more organizational citizenship behavior and effective collaboration towards a certain goal, which ultimately improves the overall ef ficiency and the financial performance of the firm. Nevertheless, how Chinese culture plays a role in firms’ internal integration warrants further investigation in future studies."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0089",
+      "index": 89,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "We also conduct additional analyses to determine the optimum level of each integration practice. The results in Table 4 demonstrate a huge enhancement potential for firms in case of a nonlinear relationship between an integration practice and financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0090",
+      "index": 90,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "In specific, more than twenty percent of the firms in the sample expended too much effort, implying that they exceeded the optimum level of the respective integration practice. Conversely, another more than onethird of the firms in the sample spent insuf ficient effort in adequately implementing supplier and customer integration. As a result, firms may financially benefit from adapting the level of supplier and customer integration practice where necessary."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0091",
+      "index": 91,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Firms in different industries may exhibit different SCI- financial performance relationships. We therefore examined the relationships for the three largest industries including communication and computers related equipment; machinery; and electrical machinery and equipment."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0092",
+      "index": 92,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "The results show that internal integration has a positive effect on financial performance for the firms in all three industries. However, only supplier integration in the communication and computers related equipment; and electrical machinery and equipment industries showed an inverted U-shaped in fluence on financial performance. Likewise, customer integration showed an inverted U-shaped relationship with financial performance only in the communication and computers related equipment industry."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0093",
+      "index": 93,
+      "page": 8,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Table 4 Percentage of firms meeting optimum range of integration practice. %o f firms with respect to … Below optimum range Meeting optimum range Above optimum range Supplier integration 32.8% 45.1% 22.1% Internal integrationa -- - Customer integration 33.8% 37.9% 28.2% Notes: The first derivation of the each regression equation with respect to each relevant independent variable provides information on the optimum level. Accounting for the optimum level corrected by standard deviation of each independent variable indicates the percentage of firms that are within, below or above the optimum range. a Percentage of firms meeting optimum range of integration practice cannot be computed in a linear relationship. 169G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 China is not a homogenous country and different regions may have different sub-cultures, degree of development, political and economic climate ( Zhao et al., 2011 ). As such, the importance of supplier integration, internal integration and customer integration in improving financial performance may be different across regions."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0094",
+      "index": 94,
+      "page": 9,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "We therefore also tested the SCI- financial performance relationship in different regions of China. The results show that internal integration has a positive impact on financial performance for firms across all four provinces."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0095",
+      "index": 95,
+      "page": 9,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Supplier integration and customer integration have significant impacts on financial performance in Guangdong. In Shandong and Henan, however, only supplier integration shows an inverted U-shaped in fluence on financial performance, while only customer integration has an inverted U-shaped impact on financial performance in Shaanxi."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0096",
+      "index": 96,
+      "page": 9,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Furthermore, supply chain uncertainty may also in fluence the SCI- financial performance relationship. The sample was divided into two groups according to the level of supply chain uncertainty (high = 79 vs. low = 116). The results indicate that the relationships between three dimensions of SCI and financial performance are different in firms with different levels of supply chain uncertainty."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0097",
+      "index": 97,
+      "page": 9,
+      "section": "6. Discussions > 6.1. SCI and ﬁnancial performance",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "While internal integration has a signi ficant positive impact on financial performance in both two groups, customer integration only has an inverted U-shaped in fluence on financial performance in firms with higher supply chain uncertainty. Although supplier integration has an inverted U-shaped in fluence on financial performance in both two groups, the threshold point for firms with higher supply chain uncertainty is larger. 6.2. The complementary roles of TMS In this study, we posit that SCI may become less effective in the absence of TMS."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0098",
+      "index": 98,
+      "page": 9,
+      "section": "6. Discussions > 6.2. The complementary roles of TMS",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Our findings endorse this position by examining t h ec o m p l e m e n t a r yr o l e so fT M S .A st h el e v e lo fT M Si n c r e a s e s ,t h e performance gains derived from supplier integration and customer integration endure much longer, and the performance gains derived from internal integration shift from neutral to bene ficial. However, higher TMS will not be needed when supplier integration and customer integration start to impair financial performance. This is further con firmed in Fig. 2 .T h u s ,firms can pro fitm o r ef r o mS C Ib y aligning the level of TMS with the degree of SCI. Market competition is increasingly challenging managerial decisions and firm outcomes in China ( Li, Poppo, & Zhou, 2008 )."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0099",
+      "index": 99,
+      "page": 9,
+      "section": "6. Discussions > 6.2. The complementary roles of TMS",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "As competition intensi fies, firms that pay excessive fees to develop SCI probably cannot pass on this extra cost in the form of higher prices, so their pro fits from SCI may be eroded. When firms cannot pass costs on to customers in the form of higher prices, competitive forces will punish those with inef ficient business practices."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0100",
+      "index": 100,
+      "page": 9,
+      "section": "6. Discussions > 6.2. The complementary roles of TMS",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Moreover, the bene fits of SCI may decline because the information they coordinate becomes redundant under low level of TMS. To mitigate these outcomes, a firm should make efforts to improve the level of TMS to reduce the cost associated with SCI development and enhance its information processing capability. 6.3."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0101",
+      "index": 101,
+      "page": 9,
+      "section": "6. Discussions > 6.3. Managerial implications",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Managerial implications This study derives three major managerial implications on how to profitf r o mS C I .F i r s t ,m a n a g e r ss h o u ld be aware of associated risks and costs in the building of SCI. Today ’s supply chain managers should have a good understanding of how SCI helps their firms improve financial performance and overcome resource constraints (Huo, 2012; Wong et al., 2011 ). As such recognition for the importance of SCI increases, we argue that the recognition for its adverse effect should also increase. As the levels of supplier integration and customer integration improve and pass a threshold, a focal firm’s manager needs to be aware of the declining return. Thus, our inverted U-shaped effects provide obvious warnings to firms about the values of SCI: rely on supplier integration and customer integration too heavily will damage their ability to be pro fitable in the marketplace. Managers should monitor the level of integration to identify whether there might be any signs of counterproductive outcomes. These results imply that firms should consider alternative strategic choices for competing in emerging economies."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0102",
+      "index": 102,
+      "page": 9,
+      "section": "6. Discussions > 6.3. Managerial implications",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "However, firms across different industries or regions should be cautious how to deploy SCI efforts to enhance their financial performance. Moreover, firms with different levels of supply chain uncertainty may put different emphasis on three types of SCI in improving financial performance."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0103",
+      "index": 103,
+      "page": 9,
+      "section": "6. Discussions > 6.3. Managerial implications",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Second, supply chain managers should carefully adapt the level of integration practice if it deviates from th eo p t i m a lr a n g e .I nd e t a i l ,am o d e r - a t ed e g r e eo fs u p p l i e ri n t e g r a t i o nk eeps in balance the costs and benefits. Yet, more than half of the firms in the sample spent either too much or too little effort, time and money implementing supplier integration. With respect to customer integration, practitioners should moderately integrate customers. Thus, more than 60% of the firms could still improve their financial performance. For managers, they also need to seek ways for adjusting the level of each integration practice."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0104",
+      "index": 104,
+      "page": 9,
+      "section": "6. Discussions > 6.3. Managerial implications",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Finally, it is important to note that SCI does not appear to improve financial performance in the condition of low level of TMS. Therefore, managers should be wary of developing SCI to achieve better financial performance if the level of TMS is low."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0105",
+      "index": 105,
+      "page": 9,
+      "section": "6. Discussions > 6.3. Managerial implications",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "To pro fitm o r ef r o mS C I ,t o p managers need to integrate SCI strategy into their firms’ overall business strategy and provide resources required for developing SCI. Thus, even if competitors can imitate the practices of SCI, they will not be able to gain competitive advantages from this imitation easily if they do not have high levels of TMS. 7. Conclusions Our research contributes to the literature in two major ways. First, it is one of the pioneering studies that examine both the favorable and adverse performance effects of SCI through combining RBV and TCE."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0106",
+      "index": 106,
+      "page": 9,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "We bring to the fore the theoretical importance of considering the existence of diminishing returns when investing in SCI. In this sense, our analysis of the inverted U-shaped effect of SCI extends previous literature, which focuses overly on positive outcomes of SCI but neglects its negative consequences."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0107",
+      "index": 107,
+      "page": 9,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Second, our study enriches the development of a contingent view of SCM theory by exploring the complementary roles of TMS. Our investigation of the moderating role of TMS shows that the relationships between three dimensions of SCI and financial performance become stronger when the level of TMS increases. Our findings must be interpreted in light of the limitations of this study."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0108",
+      "index": 108,
+      "page": 9,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "First, we investigate the direct effects of three dimensions of SCI on financial performance without paying great attention to the intervening mechanisms of how SCI can impact financial performance. Future research should consider the mediating variables in the SCI –financial performance relationship. Second, SCI is likely to develop and change over time, and though our study captures the causal link between SCI and financial performance, it does not address changes in SCI or how such changes might affect financial performance. A longitudinal design is necessary to tackle this intriguing issue."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0109",
+      "index": 109,
+      "page": 9,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Third, we suspect that firms experience diminishing returns for high levels of SCI because of cultural and organizational differences. Further work should determine how these mechanisms might limit the returns of SCI."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0110",
+      "index": 110,
+      "page": 9,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Fourth, the data for this study consisted of responses from a single respondent in each firm. The use of a single respondent to represent what are supposed to be supply chain wide variables may cause potential response bias and generate common method bias. This limitation should be taken into account when explaining the results. Future research should also seek to apply multiple respondents from each participating firm to enhance the reliability of empirical findings. Moreover, this study only takes a manufacturer ’s perspective and 170 G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 examines the relationship between SCI andfirm performance. More insights can be gained by investigating the constructs and the relationships among them concurrently from a supply chain perspective."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0111",
+      "index": 111,
+      "page": 10,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Finally, China’s specific organizational and social culture may limit the generalizability of ourfindings. Although China shares many characteristics with other emerging economies in terms of economic development, consumer behavior and market conditions, it also displays certain idiosyncrasies in business culture, such as reciprocal, interpersonal-oriented, tactical and network embedded (Zhou, 2006). Further research should attempt to examine cross-cultural differences in the nonlinear relationship between SCI and financial performance. Acknowledgements Our thanks go to the editor and the four anonymous referees. This work was supported by the Humanity and Social Science Youth foundation of Ministry of Education of China (No. 12YTC630305), the Ph.D. Programs Foundation of Ministry of Education of China (No. 20136102120066), the Soft Science Research Project in Shaanxi Province (No. 2014KRM39), and the Humanities and Social Sciences and Management Promotion Fund of Northwestern Polytechnical University (No. RW201307). Appendix A. Survey items Supplier integration (α = 0.903, AVE = 0.672) SI1: The level of information exchange with our major supplier through information networks SI2: The establishment of quick ordering systems with our major supplier SI3: The level of strategic partnership with our major supplier SI4: We monitor the collaborative activities with major supplier in real time SI5: Our major supplier adjust the delivery of parts or components according to our production plan Internal integration (α = 0.893, AVE = 0.592) II1: Data integration among all internal functions II2: Real-time integration and connection among all internal functions II3: Real-time searching of supply, production and demand information II4: The use of cross functional teams in process improvement II5: The use of cross functional teams in new product development II6: Cross-functional collaboration in strategic planning Customer integration (α = 0.926, AVE = 0.722) CI1: The level of information exchange with our major customer through information networks CI2: The establishment of quick ordering systems with our major customer CI3: The level of strategic partnership with our major customer CI4: We monitor the collaborative activities with major customer in real time CI5: We adjust production plan and product delivery according to customer demand Top management support (α = 0.934, AVE = 0.743) TMS1: Top management is supportive of our efforts to improve the supply chain management* TMS2: Top management considers supply chain management to be a vital part of our corporate strategy TMS3: Supply chain management department’s views are important to most top managers TMS4: The chief supply chain management officer has high visibility within top management TMS5: Top management emphasizes the supply chain management function’s strategic role TMS6: Requests for increased resources are mostly satis fied by top management Technology uncertainty (α =0 . 8 1 5 ,A V E=0 . 6 1 5 ) TU1: Our industry is characterized by rapidly changing technology TU2: If we don’t keep up with changes in technology, it will be difficult for us to remain competitive* TU3: The rate of process obsolescence is high in our industry TU4: The production technology changes frequently and sufficiently Financial performance (α = 0.893, AVE = 0.634) BP1: Our return on investment (ROI) is high BP2: Our return on sales is high BP3: Our growth in sales is high BP4: Our growth in profiti sh i g h BP5: Our growth in market share is high ⁎ Items are deleted after reliability or validity analysis. References Aiken, L. S., & West, S. G. (1991). Multiple regression: Testing and interpreting interactions. Newbury Park, CA: Sage Publications. Anderson, J. C., & Gerbing, D. W. (1988). Structural equation modeling in practice: A review and recommended two-step approach. Psychological Bulletin , 103(3), 441–443. Avittathur, B., & Swamidass, P. (2007). Matching plant flexibility and supplier flexibility: Lessons from small suppliers of US manufacturing plants in India. Journal of Operations Management, 25(3), 717–735."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0112",
+      "index": 112,
+      "page": 10,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "B a g c h i ,P .K . ,H a ,B .C . ,S k j o e t t - L a r s e n ,T . ,&S o e r e n s e n ,L .B .( 2 0 0 5 ) .Supply chain integration: A European survey. The International Journal of Logistics Management , 16(2), 275–294. B a r n e y ,J .( 1 9 9 1 ) .Firm resources and sustained competitive advantage. Journal of Management, 17(1), 99–120. Bresnahan, T., Brynjolfsson, E., & Hitt, L. (2002). Information technology, workplace organization and the demand for skilled labor. Quarterly Journal of Economics , 117(1), 339–376. Cao, M., & Zhang, Q. (2011). Supply chain collaboration: Impact on collaborative advantage and firm performance. Journal of Operations Management, 29(3), 163–180. Carayannopoulos, S., & Auster, E. R. (2010). External knowledge sourcing in biotechnology through acquisition versus alliance: A KBV approach. Research Policy, 39(2), 254–267."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0113",
+      "index": 113,
+      "page": 10,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "layout_fragment"
+      ],
+      "text": "Chan, K. W., Yim, C. K., & Lam, S."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0114",
+      "index": 114,
+      "page": 10,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "S. K. (2010). Is customer participation in value creation a double-edged sword? Evidence from professional financial services across cultures. Journal of Marketing, 74(3), 48–64. Chen, I. J., & Paulraj, A. (2004). Towards a theory of supply chain management: The constructs and measurements. Journal of Operations Management, 22(2), 119–150. Childerhouse, P., & Towill, D. R. (2011). Arcs of supply chain integration. International Journal of Production Research, 49(24), 7441–7468. Christmann, P. (2000). Effects of “best practices” of environmental management on cost advantage: The role of complementary assets. Academy of Management Journal , 43(4), 663–680. Corsten, D., & Felde, J. (2005). Exploring the performance effects of key-supplier collaboration: An empirical investigation into Swiss buyer-supplier relationships. International Journal of Physical Distribution & Logistics Management, 35(6), 445–461. Cousins, P. D., & Menguc, B. (2006). The implications of socialization and integration in supply chain management. Journal of Operations Management, 24(5), 604–620. Cuijpers, M., Guenter, H., & Hussinger, K."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0115",
+      "index": 115,
+      "page": 10,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "(2011).Costs and benefits of inter-departmental innovation collaboration.Research Policy, 40(4), 565–575. Danese, P., & Romano, P. (2013). The moderating role of supply network structure on the customer integration-ef ficiency relationship. International Journal of Operations & Production Management, 33(4), 372–393. Das, A. J., Narasimhan, R., & Talluri, S. (2006). Supplier integration – finding an optimal configuration. Journal of Operations Management, 24(5), 563–582. Droge, C., Jayaram, J., & Vickery, S. K. (2004). The effects of internal versus external integration practices on time-based performance and overall firm performance. Journal of Operations Management, 22(6), 557–573. Enkel, E., Kausch, C., & Gassmann, O. (2005). Managing the risk of customer integration. European Management Journal, 23(2), 203–213. 171G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172 Ernst, H., Hoyer, W. D., & Rübsaamen, C. (2010). Sales, marketing, and research-anddevelopment cooperation across new product development stages: Implications for success. Journal of Marketing, 74(5), 80–92. Ertimur, B., & Venkatesh, A. (2010).Opportunism in co-production: Implications for value co-creation. Australasian Marketing Journal, 18(4), 256–263. Fabbe-Costes, N., & Jahre, M. (2008).Supply chain integration and performance: A review of the evidence."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0116",
+      "index": 116,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "International Journal of Logistics Management, 19(2), 130–154. Feng, T., Sun, L., & Zhang, Y. (2010). The effects of customer and supplier involvement on competitive advantage: An empirical study in China. Industrial Marketing Management, 39(8), 1384–1394. Flynn, B. B., Huo, B., & Zhao, X. (2010). The impact of supply chain integration on performance: A contingency and con figuration approach. Journal of Operations Management, 28(1), 58–71. Fornell, C., & Larcker, D. F. (1981). Evaluating structural equation models with unobservable variables and measurement error. Journal of Marketing Research , 18(1), 29–50. Foushee, H. C. (1984).Dyads and triads at 35,000 feet: Factors affecting group process and aircrew performance. American Psychologist, 39(8), 885–893. Frohlich, M. T. (2002). Techniques for improving response rates in OM survey research. Journal of Operations Management, 20(1), 53–62. Gimenez, C., & Ventura, E. (2005)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0117",
+      "index": 117,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Logistics-production, logistics-marketing and external integration: their impact on performance. International Journal of Operations & Production Management, 25(1), 20–38. Grant, R. M. (1991).The resource based theory of competitive advantage: Implications for strategy formulation. California Management Review, 33(3), 114–135. Grover, V., Lim, J., & Ayyagari, R. (2006). The dark side of information and market efficiency in E-markets. Decision Sciences Journal, 37(3), 297–324. Gunasekaran, A., & Ngai, E. W. (2004). Information systems in supply chain integration and management. European Journal of Operational Research, 159(2), 269–295. Handfield, R. B., & Ragatz, G. L. (1999). Involving suppliers in new product development. California Management Review, 42(1), 59–82. Hertz, S. (2001). Dynamics of alliances in highly integrated supply chain networks. International Journal of Logistics, 4(2), 237–256. Hu, L., & Bentler, P. M. (1999)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0118",
+      "index": 118,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Cutoff criteria for fit indices in covariance structure analysis: Conventional criteria versus new alternatives. Structural Equation Modeling, 6(1), 1–55. Huo, B. (2012)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0119",
+      "index": 119,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The impact of supply chain integration on company performance: An organizational capability perspective. Supply Chain Management: An International Journal, 17(6), 596–610. Kanda, A., & Deshmukh, S. G. (2008). Supply chain coordination: Perspectives, empirical studies and research directions. International Journal of Production Economics , 115(2), 316–335. Kim, S. W. (2006)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0120",
+      "index": 120,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "Effects of supply chain management practices, integration and competition capability on performance. Supply Chain Management: An International Journal, 11(3), 241–248. Kim, S. W. (2009). An investigation on the direct and indirect effect of supply chain integration on firm performance. International Journal of Production Economics , 119(2), 328–346. Koufteros, X., Vonderembse, M., & Jayaram, J. (2005).Internal and external integration for product development: The contingency effects of uncertainty, equivocality, and platform strategy. Decision Sciences, 36(1), 97–133. Lau, A. K., Tang, E., & Yam, R. (2010). Effects of supplier and customer integration on product innovation and performance: Empirical evidence in Hong Kong manufacturers.Journal of Product Innovation Management, 27(5), 761–777. Laursen, K., & Salter, A. (2006). Open for innovation: The role of openness in explaining innovation performance among UK manufacturing firms. Strategic Management Journal, 27(2), 131–150. Li, S., & Lin, B. (2006). Accessing information sharing and information quality in supply chain management. Decision Support Systems, 42(3), 1641–1656. Li, J. J., Poppo, L., & Zhou, K. Z. (2008). Do managerial ties in China always produce value? Competition, uncertainty, and domestic vs. foreign firms. Strategic Management Journal, 29(4), 383–400. Li, G., Yang, H., Sun, L., & Sohal, A."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0121",
+      "index": 121,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "S. (2009). The impact of IT implementation on supply chain integration and performance. International Journal of Production Economics , 120(1), 125–138. Lui, S. S., Ngo, H., & Hon, A."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0122",
+      "index": 122,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "H. Y. (2006). Coercive strategy in inter firm cooperation: Mediating roles of interpersonal and interorganizational trust. Journal of Business Research, 59(4), 466–474. McFadyen, M. A., & Cannella, A. A., Jr. (2004). Social capital and knowledge creation: Diminishing returns of the number and strength of exchange relationships. Academy of Management Journal, 47(5), 735–746. Narasimhan, R., & Jayaram, J. (1998). Causal linkages in supply chain management: An exploratory study of North American manufacturing firms. Decision Sciences, 29(3), 579–605. Narasimhan, R., & Kim, S. W. (2002).Effect of supply chain integration on the relationship between diversification and performance: Evidence from Japanese and Koreanfirms. Journal of Operations Management, 20(3), 303–323. Narasimhan, R., Swink, M., & Viswanathan, S. (2010). On decisions for integration implementation: An examination of complementarities between product-process technology integration and supply chain integration. Decision Sciences , 41(2), 355–372. Nunnally, J. (1978). Psychometric theory. New York: McGraw Hill. Parker, D."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0123",
+      "index": 123,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "B., Zsidisin, G. A., & Ragatz, G. L. (2008). Timing and extent of supplier integration in new product development: A contingency approach. Journal of Supply Chain Management, 44(1), 71–83. Patrashkova-Volzdoska, R. R., McComb, S. A., Green, S. G., & Compton, W. D. (2003). Examining a curvilinear relationship between communication frequency and team performance in cross-functional project teams. IEEE Transactions on Engineering Management, 50(3), 262–269. Podsakoff, P. M., MacKenzie, S. B., Lee, J. Y., & Podsakoff, N. P. (2003)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0124",
+      "index": 124,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "Common method variance in behavioral research: A critical review of the literature and recommended remedies. Journal of Applied Psychology, 88(5), 879–903. Rothaermel, F. T., & Hill, C. W. (2005). Technological discontinuities and complementary assets: A longitudinal study of industry and firm performance. Organization Science, 16(1), 52–70."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0125",
+      "index": 125,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Smith, K. G., Smith, K. A., Olian, J. D., Sims, H."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0126",
+      "index": 126,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature",
+        "line_break_hyphenation"
+      ],
+      "text": "P., Jr., O ’Bannon, D. P., & Scully, J. A. (1994). Top management team demography and process: The role of social integration and communication.Administrative Science Quarterly, 39(3), 412–438. Song, M., Thieme, R. J., & Xie, J. (1998). The impact of cross-functional joint involvement across product development stages: An exploratory study. Journal of Product Innovation Management, 15(4), 289–303. Song, M., & Xie, J. (2000). Does innovativeness moderate the relationship between crossfunctional integration and product performance? Journal of International Marketing, 8(4), 61–89. Sorenson, O. (2003). Interdependence and adaptability: Organizational learning and the long-term effect of integration. Management Science, 49(4), 446–463. Stock, G. N., Greis, N. P., & Kasarda, J. D. (2000). Enterprise logistics and supply chain structure: The role of fit. Journal of Operations Management, 18(5), 531–547. Swink, M., & Nair, A. (2007). Capturing the competitive advantages of AMT: Designmanufacturing integration as a complementary asset. Journal of Operations Management, 25(3), 736–754. Swink, M., Narasimhan, R., & Wang, C."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0127",
+      "index": 127,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "(2007).Managing beyond the factory walls: Effects of four types of strategic integration on manufacturing plant performance. Journal of Operations Management, 25(1), 148–164. Teece, D. (1986). Profiting from technological innovation: Implications for integration, collaboration, licensing, and public policy. Research Policy, 15(6), 295–305. Teece, D., Pisano, G., & Shuen, A. (1997)."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0128",
+      "index": 128,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Dynamic capabilities and strategic management. Strategic Management Journal, 18(7), 509–533. Tsai, K. H., & Hsu, T."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0129",
+      "index": 129,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "T. (2014s). Cross-functional collaboration, competitive intensity, knowledge integration mechanisms, and new product performance: A mediated moderation model. Industrial Marketing Management, 43(2), 293–303. Uhl-Bien, M., & Graen, G. B. (1998). Individual self-management: Analysis of professionals ’ self-managing activities in functional and cross-functional work teams. Academy of Management Journal, 41(3), 340–350. Van der Vaart, T., & van Donk, D. P. (2008). A critical review of survey-based research in supply chain integration.International Journal of Production Economics, 111(1), 42–55. Verona, G. (1999). A resource-based view of product development. Academy of Management Review, 24(1), 132–142. Vickery, S. K., Jayaram, J., Droge, C., & Calantone, R. (2003). The effects of an integrative supply chain strategy on customer service and financial performance: An analysis of direct versus indirect relationships. Journal of Operations Management , 21(5), 523–539. Villena, V. H., Revilla, E., & Choi, T. Y. (2011). T h ed a r ks i d eo fb u y e r–supplier relationships: A social capital perspective. Journal of Operations Management, 29(6), 561–576. Williamson, O. E."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0130",
+      "index": 130,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "(1985). The economic institutions of capitalism. New York: Free Press."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0131",
+      "index": 131,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Wong, C. Y., Boon-Itt, S., & Wong, C. W. (2011). The contingency effects of environmental uncertainty on the relationship between supply chain integration and operational performance. Journal of Operations Management, 29(6), 604–615. Wu, W."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0132",
+      "index": 132,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "layout_fragment"
+      ],
+      "text": "Y., Chiag, C. Y., Wu, Y."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0133",
+      "index": 133,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "pdf_ligature"
+      ],
+      "text": "F., & Tu, H. F. (2004).The influencing factors of commitment and business integration on supply chain management. Industrial Management & Data Systems, 104(4), 322–333. Yu, W., Jacobs, M. A., Salisbury, W. D., & Enns, H. (2013). The effects of supply chain integration on customer satisfaction and financial performance: An organizational learning perspective. International Journal of Production Economics, 146(1), 346–358. Zhao, X., Huo, B., Selen, W., & Yeung, J."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0134",
+      "index": 134,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "H. Y. (2011).The impact of internal integration and relationship commitment on external integration.Journal of Operations Management, 29(1), 17–32. Zhou, K. Z. (2006). Innovation, imitation, and new product performance: The case of China. Industrial Marketing Management, 35(3), 394–402. Zirger, B. J., & Hartley, J. L. (1996). The effect of acceleration techniques on product development time. IEEE Transactions on Engineering Management, 43(2), 143–152. Gang Zhao is a PhD candidate at School of Management Xi’an Jiaotong University, China."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0135",
+      "index": 135,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "His research interests are Supply Chain Integration and Operations Management. His research has been published in International Journal of Production Research , Industrial Management & Data Systems and other journals. Taiwen Feng (corresponding author) is an associate professor at School of Management Northwestern Polytechnical University, China."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0136",
+      "index": 136,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "His research interests are Collaborative Innovation Management, Operations Management and Supply Chain Management. His research has been published in Industrial Marketing Management, International Journal of Production Research, International Business Reviewand other journals. Dan Wang is a lecturer at Department of Management, Monash University, Australia."
+    },
+    {
+      "chunk_id": "Zhao_2015_Supply_Chain_Integration_60c1df1f::0137",
+      "index": 137,
+      "page": 11,
+      "section": "References",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Her research areas are International Management and International Business Strategies of Chinese Multinationals, and Operations Management in Emerging Markets. Her work has been published in the International Business Review, Industrial Marketing Management, International Journal of Human Resource Managementand other journals. 172 G. Zhao et al. / Industrial Marketing Management 45 (2015) 162– 172"
+    }
+  ]
+}

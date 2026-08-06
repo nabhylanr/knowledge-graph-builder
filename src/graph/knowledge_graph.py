@@ -356,6 +356,28 @@ class KnowledgeGraph(Neo4jGraph):
             logger.warning(f"Error creating MENTIONS relationships for {node_id}: {e}")
 
 
+    @staticmethod
+    def _write_source_metadata(tx: ManagedTransaction, source_id: str, props: dict):
+        """
+        `SET s += $props` only touches the keys present in `props` — never clears
+        a property that isn't included, so a re-ingest that captures fewer keys
+        than a previous run can't erase a previously-written good value.
+
+        No existence check needed: if no Source node with this id exists, the
+        MATCH matches zero rows and SET is a no-op — that's the "skip silently"
+        behaviour, for free, from Cypher semantics.
+        """
+        query = """
+            MATCH (s:Source {id: $source_id})
+            SET s += $props
+        """
+        try:
+            tx.run(query, source_id=source_id, props=props)
+            logger.info(f"Wrote Source metadata {list(props.keys())} for '{source_id}'")
+        except Exception as e:
+            logger.warning(f"Error writing Source metadata for '{source_id}': {e}")
+
+
     def index_exists(self) -> bool:
         dimensions, index_ent_type = self.vector_store.retrieve_existing_index()
         if not dimensions:
@@ -440,6 +462,35 @@ class KnowledgeGraph(Neo4jGraph):
             logger.info("Contradiction cleanup pass complete")
 
 
+    def write_source_metadata(self, source_id: str, props: dict):
+        """
+        Writes accumulated Source metadata (`date_raw` / `year` / `format`) in one
+        explicit post-ingestion SET, bypassing `add_graph_documents` entirely.
+
+        WHY this has to exist as a separate pass: `add_graph_documents` (called
+        per-chunk, `baseEntityLabel=False`) compiles to
+        `apoc.merge.node([type], {id}, row.properties, {})` — the 4th argument
+        (onMatchProperties) is hardcoded to an empty map. So a node's properties
+        are only ever set by whichever chunk's write FIRST creates it; every later
+        chunk's write for that same id is a MATCH that sets nothing. Source's
+        date/year/format are captured progressively across chunks (see
+        `sanitize_graph._capture_source_metadata`), so they're lost unless they
+        happen to land on the very first chunk that creates the node. This method,
+        called once after all per-chunk writes for a document are done, is the
+        workaround — see `store_chunks_for_doc` for the call site and where
+        `props` is derived.
+
+        Call once per document, after all chunks are stored — same lifetime as
+        `cleanup_singleton_contradictions`.
+        """
+        with self._driver.session(database=self._database) as session:
+            session.execute_write(
+                self._write_source_metadata,
+                source_id,
+                props
+            )
+
+
     def create_mentions_relationships(
             self,
             node_id: str,
@@ -464,6 +515,17 @@ class KnowledgeGraph(Neo4jGraph):
         Stores Chunk nodes for a `ProcessedDocument` into the Knowledge Graph and updates the
         Knowledge Graph itself with the graphs extracted from each chunk, if any.
         """
+
+        # Populated from chunk.nodes below, used for the post-loop Source metadata
+        # write. Depends on an implementation detail of `sanitize_graph`: it bakes
+        # the accumulated `source_meta_state` (date_raw/year/format) into every
+        # chunk's own Source-node properties, and that accumulation only ever
+        # gains keys across chunks (never loses them) — so the LAST chunk in doc
+        # order that has a Source node carries the fullest snapshot. If
+        # `sanitize_graph` ever stops doing that, this silently stops finding
+        # anything to write and the date quietly stops reaching Neo4j again.
+        accumulated_source_props: Optional[dict] = None
+        source_node_id: Optional[str] = None
 
         for chunk in doc.chunks:
 
@@ -491,6 +553,13 @@ class KnowledgeGraph(Neo4jGraph):
 
             # store chunk's graph
             if chunk.nodes is not None:
+
+                for node in chunk.nodes:
+                    if node.type == "Source":
+                        # Later chunks' snapshots are a superset of earlier ones
+                        # (see the comment above the loop) — overwrite every time.
+                        accumulated_source_props = node.properties
+                        source_node_id = node.id
 
                 graph_doc: GraphDocument = GraphDocument(
                     nodes=chunk.nodes,
@@ -534,6 +603,26 @@ class KnowledgeGraph(Neo4jGraph):
             self.cleanup_singleton_contradictions()
         except Exception as e:
             logger.warning(f"Error cleaning up singleton Contradiction nodes for document {doc.filename}: {e}")
+
+        # See `write_source_metadata` docstring for why this explicit pass exists
+        # (apoc.merge.node's onMatchProperties is hardcoded empty in add_graph_documents,
+        # so only the chunk that first creates the Source node can set its properties).
+        if accumulated_source_props and source_node_id:
+            source_meta_props = {
+                k: v for k, v in accumulated_source_props.items()
+                if k in ("date_raw", "year", "format")
+            }
+            if source_meta_props:
+                if "date_raw" in source_meta_props and "year" not in source_meta_props:
+                    logger.warning(
+                        f"Source '{source_node_id}' has date_raw={source_meta_props['date_raw']!r} "
+                        f"but no parseable year — a date was found but couldn't be parsed, "
+                        f"as opposed to no date being present at all."
+                    )
+                try:
+                    self.write_source_metadata(source_id=source_node_id, props=source_meta_props)
+                except Exception as e:
+                    logger.warning(f"Error writing Source metadata for document {doc.filename}: {e}")
 
         try:
             self.vector_store.create_new_index()

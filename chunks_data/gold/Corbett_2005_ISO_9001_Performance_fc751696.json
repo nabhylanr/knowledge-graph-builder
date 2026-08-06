@@ -1,0 +1,888 @@
+{
+  "document": {
+    "id": "Corbett_2005_ISO_9001_Performance_fc751696",
+    "source_file": "D:\\2. Taiwan Intern\\academic-pdf-chunker\\data\\raw\\Corbett_2005_ISO_9001_Performance.pdf",
+    "source_type": "pdf",
+    "chunk_count": 86
+  },
+  "chunks": [
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0000",
+      "index": 0,
+      "page": 1,
+      "section": null,
+      "content_role": "abstract",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Corbett UCLA Anderson School of Management, charles.corbett@anderson.ucla.edu María J. Montes-Sancho Carlos III University, mmontes@emp.uc3m.es David A. Kirsch R.H. Smith School of Business, University of Maryland, dkirsch@rhsmith.umd.edu September 15, 2004 Abstract The ISO 9000 series of quality management systems standards, introduced in 1986, has been adopted at over 560,000 locations worldwide. Anecdotal evidence s uggests that firm s can achieve internal benefits such as quality or productivity im provements, or that certification can help firm s m aintain or increase their m arket share, or both. Others argue that the standard is too generic to cause perform ance improvement, but can be seen as a signal of good m anagement."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0001",
+      "index": 1,
+      "page": 1,
+      "section": null,
+      "content_role": "abstract",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "The Financial Impact of ISO 9000 Certification in the US: An Empirical Analysis Charles J. Corbett UCLA Anderson School of Management, charles.corbett@anderson.ucla.edu María J. Montes-Sancho Carlos III University, mmontes@emp.uc3m.es David A. Kirsch R.H. Smith School of Business, University of Maryland, dkirsch@rhsmith.umd.edu September 15, 2004 Abstract The ISO 9000 series of quality management systems standards, introduced in 1986, has been adopted at over 560,000 locations worldwide. Anecdotal evidence s uggests that firm s can achieve internal benefits such as quality or productivity im provements, or that certification can help firm s m aintain or increase their m arket share, or both. Others argue that the standard is too generic to cause perform ance improvement, but can be seen as a signal of good m anagement. In this paper, we track financial performance from 1987 to 1997 of all publicly traded ISO 9000 certified m anufacturing firms in the US with SIC codes 2000-3999, and test whether ISO 9000 certification leads to productivity improvements, market benefits, and im proved financial performance. We em ploy event study methods, matching each certified firm to a control group of one or m ore non-certified firms in the same industry with similar precertification size and/or return on assets. We find that firm s’ decision to seek their first ISO 9000 certification was indeed followed by significant abnormal improvements in financial performance, though the exact timing and magnitude of this effect depend on the specification of the control group."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0002",
+      "index": 2,
+      "page": 1,
+      "section": null,
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Three years after certification, the certified firm s do display strongly significant abnorm al perform ance under all control group specifications. The degree to whic h the precise results vary across control group specifications indicates that event studies should al ways include extensive sensitivity analy sis, for instance matching by size and perform ance separately and jointly , using both single firm s and portfolios as controls. Keywords: ISO 9000, quality management, standards, financial, empirical, event study, Compustat. 1 1. Introduction The ISO 9000 series of quality m anagement syst ems standards is an exceptionally widely diffused m anagement practice. By D ecember 2001, it had been adopted by over 560,000 facilities in 159 countries; over 38,000 of those facilities are located in the US (ISO 2003). Despite this, considerable uncertainty exists am ong practitioners and scholars about the true effects of the standard, given its generic and minimally prescriptive nature. Reim ann and Hertz (1994) explain ISO 9000’s focus on conform ance and how it differs from the Baldrige award’s much broader focus on com petitiveness. Moreover, implementing ISO 9000 is not without cost. Besides the fees for auditors and consultants, the process generally consum es considerable employee time and effort."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0003",
+      "index": 3,
+      "page": 2,
+      "section": "1. Introduction",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Especially as ISO 9000 wa s the first standard of its type, m any firms had to develop, implement and document their quality management system from scratch. Remarkably, though, there is no hard evidence to date on the financial effects of ISO 9000 certification. Landmark studies by Hendricks a nd Singhal (1997) and Easton and Jarrell (1998) show that total quality m anagement (TQM) lead s to im proved f inancial perf ormance, but the philosophy underlying TQM is quite different from (though not inconsistent with) that of ISO 9000. TQM is a loosely defined, holistic set of pr inciples and tools, aim ed at, am ong others, encouraging continuous improvement and prevention of defects; the premise of ISO 9000 is that well-defined and docum ented procedures im prove consistency of output. Degree of TQM implementation is difficult to assess objectiv ely: Hendricks and Singhal (1997) use quality awards to signal the presence of an effectiv e TQM program, and Hendricks and Singhal (2001b) find that the exact nature of the quality award in fluences the extent to which recipient f irms benefit from it. Easton and Jarrell (1998) use in -depth questionnaires to assess degree of TQM implementation. ISO 9000 certification, on the other hand, is unambiguous, due to the third-party 2 audits involved. Anecdotal evidence suggests that some firms truly take the underlying principles of the ISO 9000 standards to heart, while othe rs only do the m inimum necessary to pass the audits. Indeed, Andrews et al."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0004",
+      "index": 4,
+      "page": 3,
+      "section": "9000. TQM is a loosely defined, holistic set of pr inciples and tools, aim ed at, am ong others,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "(2001) find noticeable differences beween auditors’ interpretations of the ISO 14001 standards, the environm ental management systems counterpart to ISO 9000. Some of the areas of variation were specifi c to ISO 14001, while others are likely to apply equally to ISO 9000, such as variations in auditor training and experience. In this study, we focus only on the effects of certification, ignoring the depth of implementation."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0005",
+      "index": 5,
+      "page": 3,
+      "section": "9000. TQM is a loosely defined, holistic set of pr inciples and tools, aim ed at, am ong others,",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "Most scholarly work so far on benefits of ISO 9000 has relied on surveys; certified firm s often claim to have obtained benefits from adopting ISO 9000 but these benefits are selfreported. In this paper, we com bine Com pustat data with a database of all ISO 9000 certifications in the US in the m anufacturing sector, with SIC codes 2000-3999. The result is a database of 7238 firm s for the period 1987-1997. W e perform a range of sensitivity analyses to explore the im pact of different m atching methods."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0006",
+      "index": 6,
+      "page": 3,
+      "section": "9000. TQM is a loosely defined, holistic set of pr inciples and tools, aim ed at, am ong others,",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "We match certified firm s to individual noncertified firm s and to control groups of non-certifie d firm s. W e use several criteria to select control firms: pre-certification size, return on assets, and both. W e use various param etric and non-parametric test statistics. W e find that, in a ll cases, three years after their first certification, firms experienced strongly significant abnorm al perform ance, though the exact tim ing and magnitude of the effects vary with different control group specifications."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0007",
+      "index": 7,
+      "page": 3,
+      "section": "9000. TQM is a loosely defined, holistic set of pr inciples and tools, aim ed at, am ong others,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In Section 2, we review relevant literature re lated to ISO 9000 and TQM. Section 3 develops the theoretical relationships between ISO 9000 certification and financial performance. Section 4 describes our data. Section 5 describes the ev ent-study m ethods used and presents our m ain results."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0008",
+      "index": 8,
+      "page": 3,
+      "section": "9000. TQM is a loosely defined, holistic set of pr inciples and tools, aim ed at, am ong others,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "W e discuss these and our sensitivity analysis in Section 6. Section 7 of fers our conclusions and suggestions for future research. 3 2."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0009",
+      "index": 9,
+      "page": 4,
+      "section": "2. Literature",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Literature In this section we review literature on ISO 9000 certification and on TQM. Most literature on ISO 9000 either focuses on adoption or uses self -reported survey-based perform ance measures. Surveys by Terziovski et al. (1997) and Singels et al."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0010",
+      "index": 10,
+      "page": 4,
+      "section": "2. Literature",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "(2001) find no link between ISO 9000 and organizational performance among Australian a nd Dutch firm s respectively, though Terziovski et al. (2003) do find that higher reported business perform ance is positively associated with a broader set of m otivations for seeking ISO 9000 certification. Casadesús et al. (2001) find that Basque companies report substantial operational and financial benefits from certification. Using Com pustat data, Anderson et al."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0011",
+      "index": 11,
+      "page": 4,
+      "section": "2. Literature",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "(1999) find that US firm s with higher exports to Europe are m ore likely to seek ISO 9000 certifi cation, and Corbett (2003) finds that exports drive early certifications, using data from a multinational survey; Guler et al. (2000), Mendel (2001) and Corbett and Kirsch (2001) exam ine drivers of global diffu sion of ISO 9000 and ISO 14000."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0012",
+      "index": 12,
+      "page": 4,
+      "section": "14000. Adams (1999) finds that ISO 9000 certification in New Zealand increases with firm size,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Adams (1999) finds that ISO 9000 certification in New Zealand increases with firm size, Tobin’s Q and market segmentation. Naveh and Marcus (2000), using a detailed survey of ISO 9000 in the US, find that “going beyond” the requirem ents of the standard increases its value to the firm ."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0013",
+      "index": 13,
+      "page": 4,
+      "section": "14000. Adams (1999) finds that ISO 9000 certification in New Zealand increases with firm size,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Terlaak and King (2002) find evidence that both signalling m odels and institutional theory contribute to explaining adoption of IS O 9000; Terlaak (2002) argues that ISO 9000 is a signalling mechanism and finds sales growth that is partly consistent with that view. King and Lenox (2001) and Russo (2001) find som e evidence that ISO 9000 and ISO 14000 certification respectively improve firms’ environmental performance, suggesting that both standards do also have an impact on production practices."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0014",
+      "index": 14,
+      "page": 4,
+      "section": "14000. Adams (1999) finds that ISO 9000 certification in New Zealand increases with firm size,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "4 Several authors have exam ined the financial effects of im plementing TQM program s. Hendricks and Singhal (1996, 1997, 2001a) use event studies to show that winning a quality award increases short-term and long-term stock price and operating performance."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0015",
+      "index": 15,
+      "page": 5,
+      "section": "14000. Adams (1999) finds that ISO 9000 certification in New Zealand increases with firm size,",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Hendricks and Singhal (2001b) find that the extent of financia l benefits arising from TQM depends on firm characteristics and on the type of quality award involved. The event studies in Easton and Jarrell (1998) also show a significant im provement in performance after im plementing TQM. Powell (1995) concludes that the tacit resources often associated with successful TQM im plementation improve perform ance, rather than the TQM tool s them selves. Ittner et al. (2001) report that proactive investments in prevention do lead to lower nonconformance quality costs. By contrast, very few authors have explicitly m easured the financial effects of ISO 9000 certification. Event studies by Lim a et al. (2000) and Martínez-Costa and Martínez-Lorente (2002) find no effects in Brazil and Spain respectively, while the Spanish event study by Nicolau and Sellers (2002) only finds a positive stock pri ce effect on the day of certification itself. Docking and Dowen (1999) find th at small firms in the US experienced positive stock m arket reaction to the announcem ent of their first ISO 9000 certification, but that larger firm s’ stock price did not respond. Sim mons and White (1999) find that ISO 9000 certification is associated with superior financial performance in the US within SIC code 36 (electronic and other electrical equipment and components, except computer equipment), but have insufficient longitudinal data to indicate the direction of causality. Heras et al . (2002) find that m ore profitable firm s in the Basque region are m ore likely to seek ISO 9000 cer tification, but that they do not becom e more profitable as a result. By using the m uch larger US database, by focusing on long-term operating performance, and by m atching firm s based on pre- certification perform ance, we are able to detect significant and persistent effects of certification. 5 3. Theory Development and Hypotheses Our theoretical basis is analogous to that com monly found in the TQM literature, for instance in Hendricks and Singhal (1997) and Easton and Jarre ll (1998)."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0016",
+      "index": 16,
+      "page": 6,
+      "section": "3. Theory Development and Hypotheses",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The starting-point is the hypothesis that ISO 9000 certification has a positive effect on profitability, regardless of the underlying mechanism, where prof itability is com monly m easured by return on assets (ROA: operating income / assets) or return on sales (ROS: operating income / sales), both before depreciation. Hypothesis 1: ISO 9000 certification leads to an increase in return on assets (ROA) and in return on sales (ROS)."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0017",
+      "index": 17,
+      "page": 6,
+      "section": "3. Theory Development and Hypotheses",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "A corollary of this hypothesis is that certification contributes to the stock market’s valuation of a firm’s intangible assets, measured by Tobin’s Q; a firm with the same physical assets but “better management” should have a higher m arket valuation. Tobin’s Q is defined as “the ratio of the market value of the outstanding financial claim s on the firm to the current replacem ent cost of the firm’s assets” (Lewellen and Badrinath 1997, p. 78), and m easures the alternative-use value of the firm ’s assets."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0018",
+      "index": 18,
+      "page": 6,
+      "section": "3. Theory Development and Hypotheses",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "For the horizon we consider here, Tobin’s Q can also be thought of as a proxy for stock price movement. Hypothesis 2: ISO 9000 certification leads to an increase in Tobin’s Q. Exactly how is ISO 9000 certification linked to a firm’s financial performance? The academ ic and practitioner literatures propose several possible links."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0019",
+      "index": 19,
+      "page": 6,
+      "section": "3. Theory Development and Hypotheses",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "ISO 9000 m ay im prove a firm ’s internal procedures, and hence enhance perf ormance by reducing cost. Alternatively, ISO 9000 certification may help a firm retain or increase market share, and hence improve performance by increasing sales or revenues. 6 3.1. Productivity model: ISO 9000 leads to internal improvements Implementing ISO 9000 forces significant discipline on the firm : it has to design procedures to ensure quality is constantly measured, procedures to ensure appropriate corrective action is taken whenever defects occur, etc. As a result, de fect rates should decrease and defects should be caught earlier allowing them to be corrected at lower cost. This discipline can also identify current practices that are obsolete or counterpr oductive. The procedures m ust be sufficiently well-defined that they can be docum ented. Once doc umented, they becom e easier to transfer to new employees, so the firm becomes less depe ndent on tacit knowledge residing in individual employees (Mukherjee et al., 1998)."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0020",
+      "index": 20,
+      "page": 7,
+      "section": "3. Theory Development and Hypotheses > 3.1. Productivity model: ISO 9000 leads to internal improvements",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Elmuti and Kathawala (1997) report that ISO 9000 increases productivity by im proving employee morale. Through all of these m echanisms, manufacturing costs should decrease when a firm starts im plementing ISO 9000."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0021",
+      "index": 21,
+      "page": 7,
+      "section": "3. Theory Development and Hypotheses > 3.1. Productivity model: ISO 9000 leads to internal improvements",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "W e use cost of goods sold divided by sales (COGS/SALES) to measure such improvements in manufacturing productivity. Hypothesis 3: ISO 9000 certification leads to lower COGS/SALES ratios."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0022",
+      "index": 22,
+      "page": 7,
+      "section": "3. Theory Development and Hypotheses > 3.1. Productivity model: ISO 9000 leads to internal improvements",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "A broader view of a firm ’s overall productivity includes customer service processes, the cost of the certification, etc., which fall under selling, gene ral and administrative (SG&A) expenses. We do not report the broader cost m easure (COGS + SG&A) / SALES separately because it is equivalent to ROS, as ROS = 1 - (COGS + SG&A) / SALES. 3.2."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0023",
+      "index": 23,
+      "page": 7,
+      "section": "3. Theory Development and Hypotheses > 3.2. Market model: ISO 9000 leads to market benefits",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Market model: ISO 9000 leads to market benefits How does ISO 9000 certification help in the market? Certification may increase the likelihood of winning a contract, or it m ay even be a requirem ent. Alternatively, certification m ay help firms to reduce price pressure. In both cases, the value of sales would increase. This could occur after certification, though the im proved procedures im plemented prior to certification could also 7 already positively im pact sales."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0024",
+      "index": 24,
+      "page": 8,
+      "section": "3. Theory Development and Hypotheses > 3.2. Market model: ISO 9000 leads to market benefits",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Hence, we use relative growth in SALES, def ined by , as one of our external perf ormance m easures. To determ ine whether sales growth reflects firm growth or faster asset turnover, we also consider SALES/ASSETS, following Hendricks and Singhal (1997) and Easton and Jarrell (1998). 11 /)( −−− ttt SALESSALESSALES Hypothesis 4: ISO 9000 certification leads to higher relative SALES growth and to increased asset turnover (SALES/ASSETS). 4. Data This study is based on two large datasets."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0025",
+      "index": 25,
+      "page": 8,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "W orld Preferred kindly shared with us their database (then known as the Globus Registry) of ISO 9000 certifications in the US through 1997, a total of 21,482 certifications in all SIC codes at that time. This database listed the name and address of the certified site, the parent company, primary and secondary SIC code, and date of certification. World Preferred is the most widely used source of information on ISO 9000 certification activity in the US (perhaps jointly with McGraw-Hill). A lthough we are not aware of inaccuracies in the World Preferred Registry, we address the consequences of possible errors below. Firms can have m ultiple certifications, even within one site, while f inancial performance is measured at the corporate level; there exists no way of measuring financial performance of that part of a com pany that falls within the sc ope of a given ISO 9000 cer tification."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0026",
+      "index": 26,
+      "page": 8,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Therefore, following Docking and Dowen (1999) and Simmons and White (1999), we focus on a firm’s first certification, as the effects of certification (if a ny) will begin to show around that time. For small firms with a single site, the disconnect between site-level certifications and firm -level performance is not a major concern, while for large firms with many sites, this disconnect makes our tests m ore conservative: if the sam ple would contain m any multi-site firms with only one 8 certified site, any effects of certification m ust be strong in order to be detected. W e return to this point in our discussion of the limitations of this study. Our first certification occurred in 1990, so we used Compustat Annual Industrial File data for 1987-1997."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0027",
+      "index": 27,
+      "page": 9,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Merging the two databases was a m ajor challenge, as no unique com pany identifier was listed in both. W e used several m ethods to merge them: in som e easy instances, the parent company name and SIC code in the certification database matched the nam e and SIC code of a company listed in Com pustat."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0028",
+      "index": 28,
+      "page": 9,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "In m any cases, com panies with sim ilar but non-identical nam es appeared in both databases; we used several automated procedures to identify such possible matches and verified them manually, using various resources such as Hoover’s Online, Google, company websites, SEC disclosures, etc. In all ot her cases, we verified whether a site or parent company listed in the certif ication database was in f act a subsidiary of a dif ferently-named company in Com pustat."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0029",
+      "index": 29,
+      "page": 9,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Sites with ISO 9000 certif ication for which none of these procedures yielded a m atch in Com pustat were discarded; th ese are likely to be foreign-owned or privately held, and hence not listed in Compustat. We started with 21,482 certified sites; for 7598 of these, we identified m atching firm s in Com pustat, which suggests that approxim ately 35.4% of certified sites belong to publicly traded firm s. This percentage corresponds closely to that in a recent survey of ISO 9000 and ISO 14000 certified sites in the US (see Corbett 2003), where 67% of 933 respondents reported being foreign-owned or privately held. Altogether, merging the data took over two years."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0030",
+      "index": 30,
+      "page": 9,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Given the scope and the m anual nature of the work involved, two types of errors are th eoretically possible: firm s that did receive certification in 1990-1997 m ay be listed as non-certified in our final dataset, and firm s that did not receive certification may erroneously be listed as certified. In a random sample of 100 firms, we found only one firm listed as non-certified for wh ich we were eventually able to identify a 9 certification, and no instances of firm s incorrectly labeled as certified."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0031",
+      "index": 31,
+      "page": 10,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The latter type of error is indeed highly unlikely, as we only m ark Com pustat f irms as certif ied if we have a positive match. Incorrectly labeling a Com pustat firm as non-certified could occur m ore easily, but this would only m ake our tests m ore conservative, as long as the reliability of the m atching is not correlated with the interaction between ISO 9000 cer tification and financial perform ance. If we treat some certified firms as non-certified, but still find a significant effect (as we do), we would most likely underestim ate its significance. Moreover, given the very low error rate we detected, any such effects are likely to be minimal. Another potential source of errors lies in the World Preferred Registry itself, though there are reasons to believe the database is accurate."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0032",
+      "index": 32,
+      "page": 10,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "W orld Preferred receives certification inform ation directly from the registrars responsible. Regist rars and W orld Preferred would clearly want to avoid listing certifications that have not been awarded. Conversely, the World Preferred Registry is used, among others, to determine the market share of registrars operating in the US; therefore, registrars will want the W orld Preferred Registry to contain all certif ications for which they are responsible, as otherwise their market share would be underestimated."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0033",
+      "index": 33,
+      "page": 10,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Similarly, individual firms will want their certif ication to be appropriately listed. Even if som e certif ications are not included in the database, this would again make our tests more conservative."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0034",
+      "index": 34,
+      "page": 10,
+      "section": "4. Data",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "We focused on m anufacturing firm s, i.e. all firm s with SIC codes 2000-3999. In m ost instances, we selected control firm s using two- digit SIC codes because of the higher proportion of discrepancies in three- or four-digit SIC codes (Guenther and Rosm an 1994) and because the sample size otherwise shrinks rapidly. We did separate SIC code 357 (computer equipment) from the other sectors within SIC code 35 (industr ial and com mercial m achinery, which includes 10 engines and turbines, farm and garden machinery and equipment, etc.) as it is far m ore high-tech in nature and sufficiently large to treat separately. Of the 7238 firm s listed in Com pustat w ith SIC codes 2000-3999, 1103 firm s received at least one ISO 9000 certification during 1990-1997. We elim inated 310 observations with insufficient financial inform ation. W e then m atched each firm to a control firm or portfolio, based on pre-certification ROA, assets, or both (a s well as industry); if no suitable control firm existed for any one of the m atching criteria, the observation was discarded. This was done to be able to keep the sam ple constant under diffe rent m atching m ethods, in order to avoid our comparisons being contam inated by sam ple effects. After that, we trim med the data (f ollowing Barber and Lyon 1996), elim inating a further one to two outliers at each tail of the population. After trim ming, we have 554 firm s for which c ontrol firm s exist under all m atching criteria. Tables 1a and 1b give descriptive statistics for our sample. TABLES 1a and 1b ABOUT HERE Measuring Tobin’s Q is not unam biguous; Chung and Pruitt (1994) propose approxim ating Tobin’s Q by (MVE + PS + DEBT) / TA, where MVE is m arket value of equity, PS the liquidating value of the firm ’s outstanding preferred stock, DEBT the value of the firm ’s shortterm liabilities net of its short-term assets pl us the book value of long-term debt, and TA the book value of total assets of the firm . Adams (1999) uses this same formula in his New Zealand study of adoption of ISO 9000, and King and Le nox (2002) use the sam e in their study of financial effects of various types of pollution reduction. 5."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0035",
+      "index": 35,
+      "page": 11,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Methodology and Results 11 The ideal approach to test our hypotheses would be to form ulate a panel data m odel (see for instance Hsiao 1993), explaining ROA in term s of certification and several control variables. A major challenge is that the certification variable is discrete and endogenous. A common approach to drawing causal inferences from non-experi mental data is Heckm an’s (1978) two-stage method, which first predicts the probability that a firm will seek ISO 9000 certification, based on its characteristics, and then uses the predicted probability as independent variable in the second stage. In our case, this m ethod has several draw backs. First, there exists no single generally accepted extension of this approach to a panel da ta context, and the results we obtained were highly sensitive to the exact m odel specificati on employed. Second, with all specifications we tried, the predicted certification probabilities in the first stage were very poor predictors of actual certification, which further reduced our confidence in this approach with this particular dataset. A full analysis of this panel data set would require m aximum likelihood estimation with several different distributional assum ptions to exam ine sensitivity of the results; this is lef t f or f uture research. For these reasons, we revert to event-study methods. W e largely follow the approach for detecting abnormal operating perform ance outlined in Barber and Lyon (1996)."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0036",
+      "index": 36,
+      "page": 12,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "An event study requires specifying the event period, which in our case is the period during which ISO 9000 is implemented. A typical im plementation takes anywhere between 6 and 18 m onths, so we define our event period as the year in which the certification was received (year t) and the year immediately preceding certification (year 1−t )."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0037",
+      "index": 37,
+      "page": 12,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The period preceding the event period (year ) is used for determ ining the control gr oup. The three years following the event period (years t through ) are used to test for abnormal performance. 2−t 1+ 3+t 12 Barber and Lyon (1996) discuss three key c hoices in designing an event study."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0038",
+      "index": 38,
+      "page": 13,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "First, the selection of a m easure of operating perform ance: they find that operating incom e divided by assets, or ROA (return on assets) is the preferred measure (compared to other similar measures of profitability). We report results on ROA and ROS. The second decision is to specify a firm ’s predicted perform ance in the absence of the ev ent. This is generally done by com paring the certified firm s’ post-event perfor mance with a control group of one or m ore firm s, norm ally drawn from the same industry (two-digit SIC code), that did not experience the event. Barber and Lyon (1996) show that selecting a control group with sim ilar pre-event perform ance to the certified firm drastically increases the power of the study, especially when the certified firm s already have higher pre-event perform ance, as is the case with ISO 9000. Lie (2001) confirm s that matching by ROA is appropriate in this case. Although Barber and Lyon (1996) find that m atching by size in addition to industry and preevent performance provides little or no extra benefit, we report this matching as our main results, given that our Com pustat sample does include sm all firms listed on NASDAQ as well as larger firms listed on the NYSE and other exchanges."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0039",
+      "index": 39,
+      "page": 13,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The c ontrol firm is the firm in the same industry that is “closest” to the certif ied f irm in term s of assets and ROA. W e transform ed assets and ROA in each year into z-scores by subtracting the industry m ean and dividing by the industry standard deviation for that year; “closest” was then defined by the smallest Euclidean distance in the two-dimensional space of z-scores, subject to the constraint that the control firm ’s ROA had to lie between 90% and 110% of the certified firm ’s ROA, and its assets had to lie between 50% and 200% of the certified firm ’s assets."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0040",
+      "index": 40,
+      "page": 13,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Barber and Lyon (1996) used the sam e range for ROA, but only a 70-130% range for assets; we expande d the range in response to a reviewer’s suggestion, as this reduces the num ber of certified firm s for which no m atch can be found. 13 Expanding the m atching range further, for instance to a f actor three f rom the certif ied f irm’s assets, as Hendricks and Singhal (1997) do, yielded very few additional observations in our case."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0041",
+      "index": 41,
+      "page": 14,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Many other studies, including Hendricks and Si nghal (1997), select control firm s based on industry and size alone; we report those results too, as well as results based on m atching by industry and performance alone. The control group can consist of a single closely matching firm, as in Hendricks and Singhal (1997), or of a portfolio of closely m atching firms, as in Barber and Lyon (1996); we report results using both m ethods. Control portfolios consist of all firm s that meet the above matching criteria, rather than just the closest match. There is no unique best way to choose a c ontrol sam ple. Another m atching m ethod uses propensity scores, but Sm ith and Todd (2000) find th at the evidence to date about its superior performance is questionable. The control firm s should be as sim ilar as possible to the firm s receiving ISO 9000 certification, so m atching on m ultiple dimensions is preferred; this is why the matching by industry, ROA and ASSETS provides our main results. Expected performance of firm i in any period ][ ,, liPE τ l+τ , using period τ as base period, is given by , where is the perform ance of firm i’s control group in period )][ ,,,, τττ iili PIPPE −= ( ,τ liPI+ + τ,iPI τ . Abnorm al perform ance is then given by ][ ,,,,, lilili PPAP τττ − E= + , and the event study consists of testing whether this abnorm al performance is significantly different from zero in the hypothesized direction. Barber and Lyon’s (1996) third finding is that, in their study, non-param etric tests are m ore powerful than param etric (t-) tests."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0042",
+      "index": 42,
+      "page": 14,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "The choice of a test statistic depends on the distribution of abnormal perform ance; in our case, the Shapiro- Wilk test always rejected the hypothesis that abnormal perform ance was norm ally distributed with p-values below .01, indicating that nonparametric tests are called for. W hen the distribution is sym metric we can use the W ilcoxon 14 signed-rank test; in other cases, the distribution is highly skewed so we use the less powerful sign test (Conover 1999). For completeness, we report all three statistics."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0043",
+      "index": 43,
+      "page": 15,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "TABLES 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 ABOUT HERE We can now test the hypotheses by exam ining whether certified firm s experience abnorm al performance in term s of ROA, ROS, Tobi n’s Q, COGS/SALES, SALES, and SALES/ASSETS respectively. Tables 2-7 show the results for ROA using all six m atching criteria. Tables 8-12 show the results f or the rem aining perf ormance m easures, using one-to-one m atching by industry, ROA and size. Table 13 sum marizes the results for ROA across all six m atching methods. The full results are available in a separate docum ent. For each test, we report the sample size under “N”."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0044",
+      "index": 44,
+      "page": 15,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The next two colu mns report the m ean and m edian abnorm al performance. The first row reports abnorm al performance (AP) in the year prior to the m atching (up to two years bef ore certification), i.e., with liAP ,,τ 3−= tτ and l = 1. (We discuss later why this was included."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0045",
+      "index": 45,
+      "page": 15,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The second row reports a bnormal perform ance in the year im mediately following the decision to embark on the certification process, i.e., with liAP ,,τ 2−= tτ and l = 1, the year before the certification is awarded. The third row measures abnormal performance in the year of certification, i.e., with liAP ,,τ 1−= tτ and l = 1, etc."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0046",
+      "index": 46,
+      "page": 15,
+      "section": "5. Methodology and Results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The second and third block of results report longer-term abnorm al perform ance; for instance, the row “-2 to 0” m easures with liAP ,,τ 2−= tτ and l = 2. The colum n marked “sk” shows an “s” if the absolute skewness of the distribution of abnorm al perform ance, de fined as the third m oment of the distribution divided by the cube of the standard deviation, is greater than one; Hair et al. (1998) suggest that indicates severe skewness. The next three colum ns report the p-values corresponding to parametric and non-param etric tests of the hypot hesis that certified firm s exhibit superior 15 performance (i.e., positive abnorm al perform ance for ROA, ROS, Tobin’s Q, SALES, and SALES/ASSETS and negative abnormal performance for COGS/SALES). 6. Discussion and limitations 6.1. Discussion of results In this section, we first discuss our m ain results, after which we add som e notes about interpretation."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0047",
+      "index": 47,
+      "page": 16,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 2 shows that when selec ting single control firm s based on industry, ROA and size, firms experienced significant abnorm al improvements in ROA in the year of their first ISO 9000 certification. Using the sign test, the most conservative of the three, abnorm al performance for t to , the year leading up to certifi cation, is weakly significant ( p=0.0167)."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0048",
+      "index": 48,
+      "page": 16,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "After certification, no further abnorm al im provements in ROA occur. The cum ulative improvements however appear to be strong and las ting, as all the longer-term tests, using either or t as base period, show significant abnorm al improvements in ROA, usually with pvalues below 0.01."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0049",
+      "index": 49,
+      "page": 16,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The m agnitude of the longer-ter m effects is considerable, in the order of 1-4 percentage points. Starting with an ROA of 15.7% (the m ean of certified firm s in year 1− t 2−t 1− 2−t , from Table 1a), the m ean abnorm al increase in ROA by year 3+t is 3.94 percentage points (Table 2), com pared to non-certified firm s starting with the sam e ROA, which corresponds to a relative increase of 25%. Tables 3-5 show that matching by industry and ROA alone, and/or using portfolios of control firms, has little effect on the long-term results, although the pure perform ance-matched sample exhibits a level of abnorm al performance that is almost twice as high. The short-term effects do become much stronger in all three cas es, in the year of certification ( 1−t to t ) and now also in 16 the preceding year ( t to ). Matching by size alone using portfolios of control firm s also leads to similar results, as shown in Table 7. However, one-to-one matching based on size alone (Table 6) m akes the short-term effects disapp ear; even there, though, the long-term effects remain strong. W e discuss the difference betw een the m ethods later."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0050",
+      "index": 50,
+      "page": 17,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 13 sum marizes the results for ROA across all 6 matching methods. 2− 1−t These results are very closely m irrored using ROS as perform ance m easure, as shown in Table 8 for the one-to-one perform ance- and si ze-matched sam ple. Moving to Tobin’s Q, in Table 9, we find a largely sim ilar pattern, with the notable difference that the long-term effects are not as persistent across matching methods as is the case for ROA (see Tables A14-A19 in the online appendix). What drives the im provement in ROA?"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0051",
+      "index": 51,
+      "page": 17,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Im mediately after deciding to seek certification, firms experience a significant abnorm al productivity improvement, as witnessed by the drop in COGS/SALES in Table 10, which is maintained over all the longer-horizon tests. Certified firms on average see COGS/SALES decrease by 3.28 per centage points more than non-certified firm s by year t (Table 10), a relative im provement of 5% from the m ean COGS/SALES ratio in of 63.0% (Table 1a). Table 11 shows a te mporary weakly significant abnorm al boost in SALES growth, m ainly in the years im mediately before and after certification. The m ean (and median) m agnitude of abnorm al sales growth continues to increase for longer horizons but becomes less significant."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0052",
+      "index": 52,
+      "page": 17,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 12 shows a signi ficant abnormal increase in SALES/ASSETS in the year of certification, but no l ong-term effects due to the fact that certified firm s’ assets also grew faster than those of non-certified firms. The magnitude of long-term abnormal performance in SALES/ASSETS can be both positive or negative depending on the matching method, but it is significant (and positive) only for the pure performance-matched sample using control portfolios 3+ 2−t 17 (see Tables A32-A37 in the online appendix). Certif ication is associated with faster growth, but does not increase firm s’ sales relative to thei r asset base. Sum marizing, firms’ first ISO 9000 certification did lead to improvements in ROA, primarily through increased productivity. These findings are largely consistent with t hose in Hendricks and Singhal (1997) for TQM. How should one interpret our results?"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0053",
+      "index": 53,
+      "page": 18,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Strictly speaking, they show that “firm s experience significantly better relative performance, after deciding to seek their first ISO 9000 certification, than control firm s with sim ilar assets and perf ormance prior to that decision”. This strongly suggests that, after deciding to seek their firs t ISO 9000 certification, firm s made changes that led to im provements in ROA through increased productivity. Closer exam ination of certified firms’ performance over tim e suggests that, in m any cases, certified firm s see only a m inor increase in ROA com pared to year 2−t levels, while non-certified firm s see substantial declines. This would m ean that ISO 9000 is a qua lifying criterion, in Hill’s (1993) terms, rather than an order-winning criterion."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0054",
+      "index": 54,
+      "page": 18,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "It helps f irms to m aintain, rather than increase, prof itability. This is no surprise: it is hard to see how f irms could derive sustainable com petitive advantage from a public standard as ISO 9000. However, as incomplete availability of financial data causes the sam ple to shrink for longer horizons, we n eed to exercise caution in interpreting this observation."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0055",
+      "index": 55,
+      "page": 18,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Are these improvements a direct causal effect of deciding to seek ISO 9000? Certainly, it is possible that the decision to seek ISO 9000 is associated with other “good m anagement” practices, and that it is these latter practices that im prove ROA rather than the ISO 9000 certification process itself."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0056",
+      "index": 56,
+      "page": 18,
+      "section": "6. Discussion and limitations > 6.1. Discussion of results",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, the c ontrol groups do consist of firm s with the same prior performance, so som ething changed at the certif ied f irms in the two years bef ore the actual certification. In light of the m agnitude of the ef fects, it seem s likely that factors other than ISO 18 9000 certification contributed, but, given the design of the study, these fi ndings do indicate that the preparations for the first ISO 9000 certification also contributed to superior performance. We explore various alternative explanations below. 6.2."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0057",
+      "index": 57,
+      "page": 19,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Effect of matching method, and discussion of alternative explanations The results for abnorm al perform ance in ROA using all 6 different m atching criteria are summarized in Table 13; Tables A38-A43 in the online appendix do the sam e for all performance m easures. W hen we m atch by R OA only, the m agnitudes and significance of abnormal performance are the largest. Matching by size in addition to ROA leads to a decrease in magnitude and significance, but no notewort hy change."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0058",
+      "index": 58,
+      "page": 19,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "However, m atching only by size, the short-term effects disappear under one-to-one m atching (but not under portfolio-m atching) and the long-term effects becom e weaker. This is consistent with Barber and Lyon’s (1996) finding that perform ance-matching increases the power of the study and that m atching by size is unimportant com pared to perform ance-matching (p. 385), and with Hendricks and Singhal’s (1997, p.1265) report that matching by size has little impact on industry-matched results. Although these results are quite strong in them selves, two alternative explanations still need to be addressed. The f irst is the possibility that the sam ple firms were already increasing their ROA relative to the control firm s, even before deciding to seek ISO 9000 certification."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0059",
+      "index": 59,
+      "page": 19,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "If this were true, one would find positive abnorm al performance in the period 3−t to . One of the 6 m atching m ethods (size-m atched control por tfolios) shows significant positive abnorm al performance for to t . Two others (size- and ROA-m atched control firm s, and sizematched control firm s) show weakly significant abnorm al performance (p < .1); in the f irst of these, the post-certification abnorm al performance is much larger and m ore significant. The two 2−t 3−t 2− 19 ROA-matched sam ples (one-to-one and portfo lios) both show strongly negative abnorm al performance prior to m atching. From this we conclude that the non-perform ance-matched samples display only a m inimal tendency toward s positive abnorm al perform ance prior to the certification decision, and that this effect is too small and inconsistent to fully explain the longerterm abnormal performance observed after ISO 9000 certification. Another potential alternative explanation for our results could be that the perform ancematching induces an artificially positive abnorm al perform ance by reversion to the m ean in operating performance measures. Firms that decide to seek ISO 9000 certification already have a higher ROA prior to the certification decision (a s shown in Tables 1a and 1b), so requiring control firms to have equally high prior perfor mance may lead to selecting non-certifying firm s with uncharacteristically high perform ance in th e year of the m atching, but lower perform ance before and after. If this were true, th e control firm s should display positive abnorm al performance over the period t to 3− 2−t , prior to the m atching, meaning that the sample firms should display an equivalent negative abnorm al performance over that sam e period. The two ROA-matched sam ples do display this effect; however, the sam ple firm s’ negative abnorm al performance over t to t is considerably sm aller than the positive abnorm al performance in each of the following two periods."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0060",
+      "index": 60,
+      "page": 20,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Matching by size as well as ROA elim inates this effect. This suggests that there is som e degree of reversion to the mean in pure ROA-matched samples, but not in the others, so that this effect is far from sufficient to explain the positive abnorm al performance associated with ISO 9000 certification."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0061",
+      "index": 61,
+      "page": 20,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "3− 2− An event study can never rule out other sources of unobserved heterogeneity, and indeed, we know that firms that will decide to seek ISO 9000 certification already perform better than those that will not. The key question is: is there any unobserved heterogeneity that affects the im pact 20 of ISO 9000 on a firm ’s performance?"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0062",
+      "index": 62,
+      "page": 21,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "The two tests above indicate that whatever unobserved heterogeneity is present is insufficient to fully explain the positive link between abnorm al performance and ISO 9000 certification that we find here. One way to look at these results is to conclude that the prescriptions contained in IS O 9000 themselves lead to superior perform ance."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0063",
+      "index": 63,
+      "page": 21,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Alternatively, firm s m ay use the certificati on procedure as an opportunity for process improvement. In the latter view, it is the firm’s own efforts that lead to superior performance, not the standard in itself, but these efforts are triggered and guided by the ISO 9000 certification process. One firm may have the potential to be more successful than another, but this potential is turned into reality as a result of ISO 9000. One could say that som e firms may have a “gene for good management”, but that this gene is not expressed until ISO 9000 switches it on. (W e are grateful to Paul Kleindorfer for this interpre tation."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0064",
+      "index": 64,
+      "page": 21,
+      "section": "6. Discussion and limitations > 6.2. Effect of matching method, and discussion of alternative explanations",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "This latter view could go a long way to reconciling the apparently conflicting views of those who believe that ISO 9000 is too minimal a standard to be able to drive real perform ance improvements, and those who are convinced that it does just that. If a firm lacks the “good m anagement gene”, ISO 9000 m ay not help them much either. Firms that do have the potential to be su ccessful may need an external trigger to unlock that potential; ISO 9000 appears to be one such trigger. 6.3."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0065",
+      "index": 65,
+      "page": 21,
+      "section": "6. Discussion and limitations > 6.3. Limitations and future research",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Limitations and future research Do our results depend on the degree to which firms have already adopted TQM? Several interactions are possible: firm s with a hi story of TQM m ay have less room left for improvements, and hence reap less benefits from ISO 9000 certification. Conversely, firm s with a TQM program m ay be able to obtain ISO 9000 certification at lower cost and hence reap higher benefits. Evidence on the interaction between ISO 9000 and TQM is scarce, and our study 21 does not address TQM. The survey by Terziovs ki et al."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0066",
+      "index": 66,
+      "page": 22,
+      "section": "6. Discussion and limitations > 6.3. Limitations and future research",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "(1997) found no link between ISO 9000 certification and im proved financial perform ance in Australia and New Zealand, irrespective of the degree of TQM im plementation. To our know ledge, there is no hard evidence that TQM facilitates or hinders ISO 9000 certification, or vice versa, but this needs to be studied further. What do our results im ply for firm s outside th e US?"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0067",
+      "index": 67,
+      "page": 22,
+      "section": "6. Discussion and limitations > 6.3. Limitations and future research",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "One reviewer suggested that firm s in Europe were earlier to adopt ISO 9000 certification, while firms in the US may have been earlier to adopt TQM practices; would the effects of IS O 9000 in Europe be sim ilar to what we found for the US? Again, more evidence on interactions between TQM and ISO 9000 would be needed to determine whether these effects depend on a country’s prior history with TQM. There are several other inevitable lim itations."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0068",
+      "index": 68,
+      "page": 22,
+      "section": "6. Discussion and limitations > 6.3. Limitations and future research",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "First, given the effort involved in m atching the database of ISO 9000 certifications to Com pustat, it was not possible to include certifications after 1997. In fact, the ISO 9000 series was t horoughly revised in 2000, which is likely to introduce a discontinuity in the effect of certification around 1998-1999, as firm s rush to seek certification before the new, tougher standard is introduced. It would be interesting to replicate this study with an even longer tim e horizon in future. Second, the study m atches ISO 9000 certifications, which involve individual sites, with corporate financial performance. This is not a major problem as it makes our tests more conservative, but if reliable disaggregated performance data on individual sites becom e available, it w ould be worthwhile to replicate this study for individual sites. Third, the study only includes US manufacturing firms, so the findings need not apply to non-manufacturing firms or to non-US firm s. Fourth, an event study can never rule out all alternative explanations. For instance, firm s with higher exports to Europe are m ore likely to seek ISO 9000 certification (Anderson et al. 1999)."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0069",
+      "index": 69,
+      "page": 22,
+      "section": "6. Discussion and limitations > 6.3. Limitations and future research",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "If purchases by European firm s grew faster than those by firm s in the US and elsewhere, during the full horizon of our study, US firm s 22 exporting to Europe would presum ably exhibit superior perform ance, which would then be correlated to ISO 9000 certification. However, we are not aware of any reason to believe that purchases from the US by firms in Europe outpaced those by firms elsewhere during 1990-1997. Moreover, in many of our tests the initial occurrence of superior performance coincided in tim e with the years im mediately leading up to each i ndividual firm ’s certification. Such argum ents make it highly unlikely that such an export-focused or any other analogous explanation is the full story either. Finally, this study has only include d ISO 9000 certifications; it would be interesting to replicate this study focusing on QS 9000, IS O 14000, SA 8000, and other com parable current or proposed process standards. 7. Conclusions Using event-study m ethods, we have found that after deciding to seek their first ISO 9000 certification, publicly traded m anufacturing fi rms in the US experience significant abnorm al improvements in financial perform ance."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0070",
+      "index": 70,
+      "page": 23,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "We find that the precise tim ing and m agnitude of the effects vary across different control group specifi cations, but the longer-term effects are strongly significant in all cases. The degree to which the control group specification affects the short-term results indicates the im portance of including exte nsive sensitivity analyses in any event study, e.g., using several combinations of industry, size and pre-event performance as matching criteria, and using both individual firm s and portfolios as control groups. By using control firm s with similar pre-event size and performance, and by performing extensive sensitivity analyses, we can largely rule out the alternative hypothesis that ISO 9000 has no causal effect on perform ance but is simply adopted by firm s that are better m anaged. Of course, this does not m ean that all firm s will reap benefits from ISO 9000 certification: anecdotal evidence abounds that som e firm s 23 implement the standard in a m ore rigorous and com prehensive way than others, and hence are likely to obtain m ore benefits. Overall, though, the evidence presented here does support the view that careful design and im plementation of consistent and docum ented quality management systems can contribute significantly to superior financial performance. Acknowledgements We are grateful to World Preferred for sharing their data on ISO 9000 certifications, and to César Alonso-Borrego, María-José Alvarez, Brad Ba rber, Paul Kleindorfer, Ed Leam er, Marvin Lieberman, Raghavendra Rau, Lena Sernova, se minar participants at the University of Minnesota, the University of Pennsylvania and several conferences, and the Associate Editor and two reviewers for their helpful suggestions; we bear sole responsibility for the interpretations offered here."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0071",
+      "index": 71,
+      "page": 24,
+      "section": "7. Conclusions",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Part of this work was perform ed while the second author was Visiting Scholar and the third author was Visiting Professor at th e UCLA Anderson School of Managem ent. During the final revisions of this work, the second aut hor was a Postdoctoral Research Scholar at the Bren School of Environm ental Science & Managem ent at the University of California, Santa Barbara. W e are grateful for financial support from the University of California Pacific Rim Research Program and from the Harold Price Center for Entrepreneurial Studies. The first author received funding from ISO for a different study on global diffusion of ISO 9000 and ISO 14000. 24 References Adams, M. 1999. Determinants of ISO Accreditation in the New Zealand Manufacturing Sector. Omega 27 285-292. Anderson, S.W., J.D. Daly and M.F. Johnson. 1999. W hy Firms Seek ISO 9000 Certification: Regulatory Com pliance or Com petitive Advantage? Production and Operations Management 8(1) 28-43. Andrews, R.N.L., J. Charm , H. Habicht, T. Knowlton, M. Sale and V. Tschinkel. 2001. Third- Party Auditing of Environmental Management Sy stems: U.S. Registration Practices for ISO 14001. National Academy of Public Administration. Barber, B.M. and J.D. Lyon. 1996. Detecting A bnormal Operating Perform ance: The Empirical Power and Specification of Test Statistics. Journal of Financial Economics 41 359-399. Casadesús, M., G."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0072",
+      "index": 72,
+      "page": 25,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Giménez and I. Heras. 2001. Benefits of ISO 9000 implementation in Spanish industry. European Business Review 3(6) 327-335. Chung, K.H. and S.W . Pruitt. 1994. A Simple Approxim ation of Tobin’s Q. Financial Management 23(3) 70-74. Conover, W.J. 1999. Practical Nonparametric Statistics (3rd Edition). John Wiley & Sons. Corbett, C.J. 2003. Global Diffusion of ISO 9000 Through Supply Chains. Manuscript. Corbett, C.J. and D.A. Kirsch. 2001. Intern ational Diffusion of IS O 14000 Certification. Production and Operations Management 10 (3) 327-342. Docking, D.S. and R.J. Dowen. 1999. Mark et interpretation of ISO 9000 registration. The Journal of Financial Research XXII(2) 147-160. 25 Easton, G.S. and S.L. Jarrell."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0073",
+      "index": 73,
+      "page": 26,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "1998. The Effect s of Total Quality Managem ent on Corporate Performance: An Empirical Investigation. Journal of Business 71(2) 253-307. Elmuti, D. and Y. Kathawala. 1997. An I nvestigation into the Effects of ISO 9000 on Participants’ Attitudes and Job Performance. Production and Inventory Management Journal, 2nd quarter, 52-57. Guenther, D.A. and A.J. Rosm an. 1994. Differe nces between Com pustat and CRSP SIC Codes and Related Effects on Research. Journal of Accounting and Economics 18 115-128. Guler, I., M.F. Guillén, and J.M. MacPherson. 2000. Global Com petition, Institutions, and the Diffusion of Organizational Practices: The In ternational Spread of the ISO 9000 Quality Standards. Administrative Science Quarterly 47(2) 207-232. Hair, J.F., R.E. Anderson, R.L. Tatham and W .C. Black. 1998. Multivariate Data Analysis ( 5th Edition). Prentice Hall. Heckman, J.J. 1978. Dum my Endogenous Variab les in a Sim ultaneous Equation System . Econometrica 46(4) 931-959."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0074",
+      "index": 74,
+      "page": 26,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Hendricks, K.B. and V.R. Singhal. 1996. Quality Awards and the Market Value of the Firm : An Empirical Investigation. Management Science 42(3) 415-436. Hendricks, K.B. and V.R. Singhal. 1997."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0075",
+      "index": 75,
+      "page": 26,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Does Im plementing an Effective TQM Program Actually Im prove Operating Perform ance? Em pirical Evidence from Firm s That Have W on Quality Awards. Management Science 43(9) 1258-1274. Hendricks, K.B. and V.R. Singhal. 2001a. The Long-Run Stock Price Performance of Firms with Effective TQM Programs. Management Science 47(3) 359-368. Hendricks, K.B. and V.R. Singhal. 2001b. Firm characteristics, total quality m anagement, and financial performance. Journal of Operations Management 19 269-285. 26 Heras, I., G.P.M. Dick and M. Casadesús. 2002. ISO 9000 registration’s im pact on sales and profitability: A longitudinal analysis of pe rformance before and after certification. International Journal of Quality and Reliability Management 19(6) 774-791. Hill, T. 1993. Manufacturing Strategy: Text and Cases. IRWIN. Hsiao, C. 1993. Analysis of Panel Data. Cambridge University Press. ISO. 2003. The ISO Survey of ISO 9000 and ISO 14000 Certificates (Twelfth cycle: up to and including 31 December 2002), ISO Central Secretariat, http://www.iso.ch/."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0076",
+      "index": 76,
+      "page": 27,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Ittner, C.D., V. Nagar and M.V. Rajan. 2001. An Em pirical Exam ination of Quality-Based Learning Models. Management Science 47 (4) 563-578. King, A. and M. Lenox. 2001. Lean and Green? An Empirical Examination of the Relationship Between Lean Production and Environm ental Perform ance. Production and Operations Management 10(3) 244-256. King, A. and M. Lenox. 2002. Exploring th e Locus of Profitable Pollution Reduction. Management Science 48 (2) 289-299. Lewellen, W .G. and S.G. Badrinath. 1997. On the Measurem ent of Tobin’s Q. Journal of Financial Economics 44 77-122. Lie, E. 2001. Detecting abnorm al operating perform ance: Revisited. Financial Management 30(2) 77-91. Lima, M.A.M., M. Resende and L. Hasenclever. 2000."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0077",
+      "index": 77,
+      "page": 27,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Quality Certification and Performance of Brazilian Firms: An Empirical Study. Intl Journal of Production Economics 66 143-147."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0078",
+      "index": 78,
+      "page": 27,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Martínez-Costa, M. and A.R. Martínez-Lorent e. 2002. Effects of the ISO 9000 certification on the firm's performance: a vision from the market. POM 2002, San Francisco, April 6-8. 27 Mendel, P.J. 2001. International Standardization and Global Governance: The Spread of Quality and Environm ental Managem ent Standards. In Hoffm an, A. and M. Ventresca (eds.), Organizations, Policy, and the Natural Environm ent: Institutional and Strategic Perspectives , Stanford University Press. Mukherjee, A.S., M.A. Lapré and L.N. Van W assenhove. 1998. Knowledge Driven Quality Improvement. Management Science 44(11, part 2), S35-S49. Naveh, E. and A. Marcus. 2000. Im plementation of A Managem ent Practice: Assim ilation and Going Beyond. Manuscript. Nicolau, J.L. and R. Sellers. 2002. The Stock Market’s Reaction to Quality Certification: Empirical Evidence from Spain. European Journal of Operational Research, forthcoming. Powell, T.C. 1995."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0079",
+      "index": 79,
+      "page": 28,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Total Quality Managem ent as Com petitive Advantage: A Review and Empirical Study. Strategic Management Journal 16 15-37. Reimann, C.W . and H.S. Hertz. 1994. Unders tanding the Im portant Differences between the Malcolm Baldrige National Quality Award and ISO 9000 Registration. Production and Operations Management 3(3) 171-185. Russo, M.V. 2001. Institutional Change and Theories of Organizational Strategy: ISO 14000 and Environmental Management in the Electronics Industry. Manuscript. Simmons, B.L. and M.A. W hite. 1999. The relationship between ISO 9000 and Business Performance: Does Registration Really Matter? Journal of Managerial Issues 11(3) 330-343. Singels, J., G. Ruël and H. van de W ater. 2001. ISO 9000 Series: Certification and Performance. International Journal of Quality and Reliability Management 18(1) 62-75. Smith, J. and P. Todd. 2000. Does Matching Over come Lalonde’s Critique of Nonexperimental Estimators? Penn Institute for Economic Research Working Paper 01-035. 28 Terlaak, A. 2002. The Role of Industry Mana gement Standards in Solving Problem s of Asymmetric Information. Manuscript."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0080",
+      "index": 80,
+      "page": 29,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Terlaak, A. and A.A. King. 2002. The Role of Strategic Foresight in Shaping Adoption Processes. Manuscript. Terziovski, M., D. Sam son and D. Dow. 1997. The business value of quality m anagement systems certification: Evidence fr om Australia and New Zealand. Journal of Operations Management 15 1-18. Terziovski, M., D. Power and A.S. Sohal. 2003. The Longitudinal Effects of the ISO 9000 Certification Process on Business Perform ance. European Journal of Operational Research 146 580-595."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0081",
+      "index": 81,
+      "page": 29,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "29 Table 1a: Summary statistics for certified and control firms using one-to-one matching by industry combined with ROA and/or ASSETS (year 2−t ) N mean median st.dev. min. max. certified firms TOTAL ASSETSa 554 1629.32 218.82 5717.09 1.57 74293.00 SALESa 554 1649.11 252.77 5546.70 3.43 79557.00 ROAb 554 15.72 15.26 8.12 -33.08 60.69 ROSb 554 13.28 12.52 8.30 -60.44 52.93 Tobin’s Qc 501 1.51 1.04 1.49 0.10 14.25 COGS/SALESb 554 63.03 65.45 15.72 17.57 94.80 SALES/ASSETSb 554 127.40 121.62 45.42 18.34 395.47 control firms (matched by industry, ROA and ASSETS) TOTAL ASSETSa 554 1662.83 197.10 6266.39 1.32 86343.00 SALESa 554 1749.33 266.84 7097.30 1.70 110496.00 ROAb 554 15.66 15.16 8.03 -32.14 58.16 ROSb 554 13.30 12.52 15.65 -295.66 48.53 Tobin’s Qc 449 1.50 1.18 1.22 -0.83 11.58 COGS/SALESb 554 63.67 66.48 16.98 12.93 147.36 SALES/ASSETSb 554 127.08 118.65 54.20 10.87 382.25 control firms (matched by industry, ROA) TOTAL ASSETSa 554 1681.39 71.71 9749.92 0.23 121307.70 SALESa 554 1577.76 96.27 8953.79 0.27 118571.60 ROAb 554 15.71 15.31 8.12 -32.14 62.82 ROSb 554 12.81 12.38 15.66 -295.66 42.67 Tobin’s Qc 438 1.58 1.14 1.41 -0.07 11.58 COGS/SALESb 554 62.86 64.21 17.30 8.91 147.36 SALES/ASSETSb 554 133.08 124.34 59.88 10.87 456.15 control firms (matched by industry, ASSETS) TOTAL ASSETSa 554 1643.90 218.76 6275.25 1.48 85280.00 SALESa 554 1588.92 254.20 5755.14 1.25 78394.00 ROAb 554 12.73 12.80 10.55 -32.89 58.79 ROSb 554 9.31 11.15 25.01 -334.40 48.10 Tobin’s Qc 457 1.37 1.00 1.13 -0.51 9.36 COGS/SALESb 554 63.33 65.72 18.10 10.38 162.75 SALES/ASSETSb 554 119.61 114.23 53.62 2.02 372.06 a TOTAL ASSETS and SALES are in millions of dollars. b ROA, ROS, COGS/SALES and SALES/ASSETS are expressed in percentages. c Tobin’s Q is a dimensionless measure. 30 Table 1b: Summary statistics for certified and control firms using portfolio matching by industry combined with ROA and/or ASSETS (year 2−t ) N mean median st.dev. min. max. certified firms TOTAL ASSETSa 554 1629.32 218.82 5717.09 1.57 74293.00 SALESa 554 1649.11 252.77 5546.70 3.43 79557.00 ROAb 554 15.72 15.26 8.12 -33.08 60.69 ROSb 554 13.28 12.52 8.30 -60.44 52.93 Tobin’s Qc 501 1.51 1.04 1.49 0.10 14.25 COGS/SALESb 554 63.03 65.45 15.72 17.57 94.80 SALES/ASSETSb 554 127.40 121.62 45.42 18.34 395.47 control firms (matched by industry, ROA and ASSETS) TOTAL ASSETSa 554 1690.09 200.72 6113.32 2.21 86343.00 SALESa 554 1770.13 254.16 6941.21 2.24 110496.00 ROAb 554 15.54 15.15 7.91 -31.38 58.16 ROSb 554 13.86 13.27 9.60 -115.14 53.68 Tobin’s Qc 515 1.49 1.28 0.98 -0.83 5.62 COGS/SALESb 554 63.46 63.06 13.71 12.93 145.48 SALES/ASSETSb 554 125.76 121.31 44.49 20.99 382.22 control firms (matched by industry, ROA) TOTAL ASSETSa 554 1713.34 289.53 4519.50 7.83 50674.63 SALESa 554 1720.15 330.71 4750.46 5.36 53180.35 ROAb 554 15.66 15.35 8.02 -32.75 60.49 ROSb 554 12.69 13.04 8.72 -136.12 32.72 Tobin’s Qc 548 1.57 1.35 0.98 0.11 7.90 COGS/SALESb 554 62.37 61.93 10.03 32.52 91.62 SALES/ASSETSb 554 137.59 135.69 28.33 47.50 250.52 control firms (matched by industry, ASSETS) TOTAL ASSETSa 554 1679.87 212.17 5806.56 2.16 65985.54 SALESa 554 1656.42 254.87 5744.50 2.64 68241.78 ROAb 554 10.58 11.40 7.01 -48.09 24.07 ROSb 554 1.33 9.73 33.81 -302.28 26.22 Tobin’s Qc 554 1.43 1.31 0.73 0.12 4.82 COGS/SALESb 554 70.65 67.16 27.21 35.76 335.28 SALES/ASSETSb 554 117.82 121.69 25.46 55.11 242.46 a TOTAL ASSETS and SALES are in millions of dollars. b ROA, ROS, COGS/SALES and SALES/ASSETS are expressed in percentages. c Tobin’s Q is a dimensionless measure. 31 Table 2: Abnormal performance in ROA; one-to-one matching, by industry, ROA, ASSETS from year Na AP meanb AP medianb skc p-value (t-test)d p-value (WSR test)d p-value (sign test)d t-3 to t-2 405 0.742 0.423 0.0695 * 0.0595 * 0.0745 * t-2 to t–1 554 0.620 0.124 0.0824 * 0.0766 * 0.2220 t-1 to t 554 1.508 0.584 s 0.0075 ** 0.0017 *** 0.0167 ** t to t+1 363 -0.288 -0.246 0.6913 0.7809 0.7847 t+1 to t+2 233 0.417 0.469 0.2219 0.1151 0.0839 * t+2 to t+3 147 -0.525 0.108 0.7594 0.6171 0.4345 t-2 to t 554 2.128 0.996 0.0009 *** 0.0002 *** 0.0097 *** t-2 to t+1 363 1.911 1.035 0.0014 ** 0.0006 *** 0.0090 *** t-2 to t+2 233 3.183 2.437 0.0001 *** 0.0000 *** 0.0000 *** t-2 to t+3 147 3.936 2.575 s 0.0001 *** 0.0001 *** 0.0008 *** t-1 to t+1 363 1.343 0.953 0.0177 ** 0.0296 ** 0.0090 *** t-1 to t+2 233 2.230 2.597 0.0040 *** 0.0001 *** 0.0000 *** t-1 to t+3 147 3.575 3.371 s 0.0010 *** 0.0002 *** 0.0158 ** a “N” indicates total number of certified firms in the corresponding sample. b AP mean and median indicate the mean and median abnormal performance. c An “s” in column “sk” indicates that the absolute value of the skewness is greater than one. d The p-values"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0082",
+      "index": 82,
+      "page": 32,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": false,
+      "quality_notes": [
+        "line_break_hyphenation"
+      ],
+      "text": "shown are those for the one-sided test of the null hypothesis of no abnormal performance, using a ttest, Wilcoxon signed rank test, and sign test respectively. Note: * p < .1; ** p < .05; *** p < .01. In all cases, the hypothesis of norm ally distributed abnormal performance was rejected by the Shapiro-W ilk test with p-values below 1%, so the ttest is never appropriate, but reported f or completeness; if the skewness is substantial the sign test is appropriate, otherwise one can use the WSR test."
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0083",
+      "index": 83,
+      "page": 32,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "table_artifact",
+      "extraction_eligible": false,
+      "quality_notes": [],
+      "text": "Table 3: Abnormal performance in ROA; portfolio matching, by industry, ROA, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 -0.0173 0.0000 0.5161 0.4905 0.5000 t-2 to t–1 554 0.8906 0.9124 0.0102 ** 0.0001 *** 0.0002 *** t-1 to t 554 1.6709 1.3656 s 0.0018 *** 0.0000 *** 0.0000 *** t to t+1 363 0.2498 0.3803 0.3197 0.0990 * 0.0944 * t+1 to t+2 233 0.5664 0.3695 0.0813 * 0.0738 * 0.1624 t+2 to t+3 147 0.0851 0.6468 0.4519 0.3445 0.1241 t-2 to t 554 2.5615 1.6100 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+1 363 2.8874 1.8706 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+2 233 3.7216 1.9982 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+3 147 4.1047 2.9681 s 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t+1 363 2.3241 1.6970 s 0.0000 *** 0.0000 *** 0.0000 ** t-1 to t+2 233 2.9311 2.1526 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t+3 147 3.5600 2.9978 s 0.0003 *** 0.0001 *** 0.0103 ** 32 Table 4: Abnormal performance in ROA; one-to-one matching, by industry, ROA from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 -0.926 -0.772 0.9359 0.9698 0.9104 t-2 to t–1 554 2.666 1.301 s 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t 554 2.197 0.905 0.0005 *** 0.0001 *** 0.0042 *** t to t+1 363 0.978 0.028 s 0.0884 * 0.2114 0.3964 t+1 to t+2 233 -0.585 0.171 s 0.7070 0.8539 0.3230 t+2 to t+3 147 1.701 0.444 0.0750 * 0.0619 * 0.0346 ** t-2 to t 554 4.863 2.620 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+1 363 5.633 2.824 s 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+2 233 5.714 2.688 s 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+3 147 8.976 3.751 s 0.0000 *** 0.0000 *** 0.0040 *** t-1 to t+1 363 3.424 1.364 0.0004 *** 0.0002 *** 0.0118 ** t-1 to t+2 233 3.166 2.172 0.0123 ** 0.0013 *** 0.0035 *** t-1 to t+3 147 6.965 4.604 0.0006 *** 0.0001 *** 0.0065 *** Table 5: Abnormal performance in ROA; portfolio matching, by industry, ROA from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 -1.338 -1.304 0.9998 1.0000 1.0000 t-2 to t–1 554 2.314 2.377 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t 554 1.395 1.710 s 0.0004 *** 0.0000 *** 0.0000 *** t to t+1 363 0.552 0.573 s 0.1303 0.0219 ** 0.0293 ** t+1 to t+2 233 0.936 0.945 0.0108 ** 0.0035 *** 0.0179 ** t+2 to t+3 147 0.888 1.179 0.0328 ** 0.0048 *** 0.0008 *** t-2 to t 554 3.709 3.550 s 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+1 363 4.577 3.934 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+2 233 5.760 4.458 0.0000 *** 0.0000 *** 0.0000 *** t-2 to t+3 147 7.039 5.037 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t+1 363 2.438 2.543 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t+2 233 3.632 3.504 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t+3 147 5.280 4.353 0.0000 *** 0.0000 *** 0.0000 *** 33 Table 6: Abnormal performance in ROA; one-to-one matching, by industry, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 0.530 0.559 0.1542 0.1026 0.0896 * t-2 to t–1 554 0.232 0.073 0.2997 0.4058 0.3353 t-1 to t 554 0.561 0.097 0.1710 0.4231 0.4325 t to t+1 363 1.029 0.315 s 0.0866 * 0.2375 0.3181 t+1 to t+2 233 -0.709 0.384 0.8817 0.4644 0.2351 t+2 to t+3 147 2.766 0.800 s 0.0025 *** 0.0112 ** 0.0103 ** t-2 to t 554 0.794 -0.151 0.1307 0.3626 0.7380 t-2 to t+1 363 2.026 -0.533 s 0.0204 ** 0.2535 0.7847 t-2 to t+2 233 1.847 2.300 0.0255 ** 0.0208 ** 0.0654 * t-2 to t+3 147 5.825 3.610 s 0.0001 *** 0.0002 *** 0.0005 *** t-1 to t+1 363 1.850 0.150 s 0.0159 ** 0.2526 0.3565 t-1 to t+2 233 1.384 1.097 0.0578 * 0.0407 ** 0.0283 ** t-1 to t+3 147 5.021 2.264 s 0.0005 *** 0.0026 *** 0.0158 ** Table 7: Abnormal performance in ROA; portfolio matching, by industry, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 0.8539 0.9685 0.0103 ** 0.0021 *** 0.0019 *** t-2 to t–1 554 0.5841 0.6719 0.0385 ** 0.0006 *** 0.0029 *** t-1 to t 554 0.2966 0.4386 0.2204 0.0148 ** 0.0804 * t to t+1 363 0.1412 0.1225 s 0.3735 0.3820 0.3373 t+1 to t+2 233 0.3289 0.6346 0.1481 0.0295 ** 0.0578 * t+2 to t+3 147 0.6515 1.0701 0.0727 * 0.0204 ** 0.0103 ** t-2 to t 554 0.8807 1.1045 s 0.0251 ** 0.0001 *** 0.0009 *** t-2 to t+1 363 0.7244 0.3369 0.0605 * 0.0353 ** 0.1241 t-2 to t+2 233 1.3506 1.1356 0.0047 *** 0.0035 *** 0.0179 ** t-2 to t+3 147 2.3401 1.1860 0.0005 *** 0.0018 *** 0.0494 ** t-1 to t+1 363 0.5884 0.4219 0.0812 * 0.0906 * 0.1469 t-1 to t+2 233 1.0446 0.9561 0.0129 ** 0.0039 *** 0.0019 *** t-1 to t+3 147 2.1729 2.2921 0.0007 *** 0.0007 *** 0.0040 *** 34 Table 8: Abnormal performance in ROS; one-to-one matching, by industry, ROA, ASSETS from year N AP mean AP median sk"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0084",
+      "index": 84,
+      "page": 35,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 0.266 0.024 0.2340 0.3584 0.4603 t-2 to t–1 554 0.442 0.347 s 0.2113 0.0097 *** 0.0306 ** t-1 to t 554 1.074 0.255 0.0053 *** 0.0030 *** 0.0252 ** t to t+1 363 0.201 -0.058 0.3199 0.4565 0.6036 t+1 to t+2 233 0.887 0.604 s 0.0579 ** 0.0910 * 0.0208 ** t+2 to t+3 147 -0.177 0.245 0.6121 0.3175 0.3396 t-2 to t 554 1.516 0.973 s 0.0034 *** 0.0001 *** 0.0022 *** t-2 to t+1 363 2.024 0.810 0.0003 *** 0.0001 *** 0.0155 ** t-2 to t+2 233 3.343 1.792 0.0000 *** 0.0000 *** 0.0004 *** t-2 to t+3 147 4.121 2.788 0.0000 *** 0.0000 *** 0.0000 *** t-1 to t+1 363 1.161 0.498 0.0114 ** 0.0081 *** 0.0201 ** t-1 to t+2 233 2.161 1.682 0.0026 *** 0.0002 *** 0.0004 *** t-1 to t+3 147 3.275 2.069 0.0002 *** 0.0000 *** 0.0000 *** Table 9: Abnormal performance in Tobin’s Q; one-to-one matching, by industry, ROA, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 282 0.031 -0.002 0.3321 0.7853 0.5711 t-2 to t–1 406 0.083 0.052 0.0973 * 0.0211 ** 0.0368 ** t-1 to t 468 0.097 0.065 0.0315 ** 0.0089 *** 0.0080 *** t to t+1 315 -0.020 0.018 0.6295 0.4997 0.1987 t+1 to t+2 200 -0.076 -0.003 0.8763 0.4930 0.7146 t+2 to t+3 126 -0.122 -0.067 0.9792 0.9606 0.9634 t-2 to t 405 0.186 0.179 0.0069 *** 0.0002 *** 0.0000 *** t-2 to t+1 256 0.167 0.209 0.0248 ** 0.0011 *** 0.0003 *** t-2 to t+2 160 0.212 0.200 0.0375 ** 0.0015 *** 0.0034 *** t-2 to t+3 102 0.195 0.179 0.0436 ** 0.0308 ** 0.0364 ** t-1 to t+1 298 0.057 0.057 0.2176 0.1279 0.0656 * t-1 to t+2 182 0.061 0.090 s 0.2870 0.0208 ** 0.0265 ** t-1 to t+3 116 0.149 0.164 0.0738 * 0.0221 ** 0.0124 ** 35 Table 10: Abnormal performance in COGS/SALES; one-to-one matching, by industry, ROA, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 -0.432 -0.217 s 0.1155 0.1140 0.0970 * t-2 to t–1 554 -0.215 -0.398 s 0.2566 0.0191 ** 0.0067 *** t-1 to t 554 -0.812 -0.242 s 0.0055 *** 0.0253 ** 0.0625 * t to t+1 363 -0.240 -0.299 0.2011 0.1052 0.0413 ** t+1 to t+2 233 -0.848 -0.404 s 0.0367 ** 0.1380 0.0654 * t+2 to t+3 147 0.349 0.444 0.7561 0.7076 0.8928 t-2 to t 554 -1.027 -0.533 0.0037 *** 0.0088 *** 0.0107 ** t-2 to t+1 363 -1.328 -1.143 0.0024 *** 0.0006 *** 0.0067 *** t-2 to t+2 233 -2.503 -1.559 0.0002 *** 0.0000 *** 0.0000 *** t-2 to t+3 147 -3.283 -2.129 0.0000 *** 0.0000 *** 0.0001 *** t-1 to t+1 363 -0.890 -0.592 0.0135 ** 0.0077 *** 0.0779 * t-1 to t+2 233 -1.803 -1.163 0.0026 *** 0.0010 *** 0.0006 *** t-1 to t+3 147 -2.348 -1.460 0.0014 *** 0.0006 *** 0.0065 *** Table 11: Abnormal relative SALES growth; one-to-one matching, by industry, ROA, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 -0.023 -0.011 0.8829 0.9858 0.8847 t-2 to t–1 554 0.010 -0.018 0.2976 0.8068 0.9427 t-1 to t 554 0.037 0.014 0.0049 *** 0.0119 ** 0.0625 * t to t+1 363 0.049 0.015 0.0071 *** 0.0082 *** 0.0460 ** t+1 to t+2 233 0.006 0.019 0.4056 0.1911 0.1785 t+2 to t+3 147 0.044 0.034 0.0225 ** 0.0347 ** 0.0673 * t-2 to t 554 0.070 0.000 0.0303 ** 0.2785 0.5000 t-2 to t+1 363 0.091 0.031 0.0965 * 0.0301 ** 0.1342 t-2 to t+2 233 0.118 0.016 0.1038 0.1205 0.3466 t-2 to t+3 147 0.220 0.049 s 0.1099 0.1585 0.2533 t-1 to t+1 363 0.090 0.028 0.0099 *** 0.0018 *** 0.0938 * t-1 to t+2 233 0.116 0.049 0.0291 ** 0.0280 ** 0.1462 t-1 to t+3 147 0.236 0.116 s 0.0192 ** 0.0253 ** 0.0919 * Note: “Abnormal relative sales growth” is defined by comparing 1 1 − −− t tt SALES SALESSALES of certified firms with that of the control firms. 36 Table 12: Abnormal performance in SALES/ASSETS; one-to-one matching, by industry, ROA, ASSETS from year N AP mean AP median sk p-value (t-test) p-value (WSR test) p-value (sign test) t-3 to t-2 405 2.468 0.891 0.0765 * 0.1579 0.1850 t-2 to t–1 554 -2.511 -0.947 0.9648 0.8630 0.8463 t-1 to t 554 3.486 3.472 0.0039 *** 0.0004 *** 0.0008 *** t to t+1 363 -1.506 -0.863 0.8252 0.8400 0.9221 t+1 to t+2 233 -3.674 -0.555 0.9672 0.7120 0.6770 t+2 to t+3 147 -4.926 -2.601 0.9956 0.9943 0.9717 t-2 to t 554 0.975 1.097 0.2636 0.1619 0.1344 t-2 to t+1 363 -0.500 0.250 0.5935 0.4675 0.3369 t-2 to t+2 233 -2.465 0.004 0.7836 0.4360 0.4738 t-2 to t+3 147 -6.796 -3.309 s 0.9436 0.8368 0.7187 t-1 to t+1 363 2.152 2.156 0.1256 0.1042 0.0413 ** t-1 to t+2 233 -1.198 2.428 0.6666 0.2602 0.3230 t-1 to t+3 147 -1.833 -2.469 0.6967 0.4527 0.7187 Table 13:"
+    },
+    {
+      "chunk_id": "Corbett_2005_ISO_9001_Performance_fc751696::0085",
+      "index": 85,
+      "page": 37,
+      "section": "14001. National Academy of Public Administration.",
+      "content_role": "main_body",
+      "extraction_eligible": true,
+      "quality_notes": [],
+      "text": "Significance of abnormal performance in ROA under all 6 matching criteria industry, ROA, ASSETS industry, ROA industry, ASSETS one-to-one portfolio one-to-one portfolio one-to-one portfolio from year Na WSRb signb WSRb signb WSRb signb WSRb signb WSRb signb WSRb signb t-3 to t-2 405 * * * *** *** t-2 to t–1 554 * *** *** *** *** *** *** *** *** t-1 to t 554 *** ** *** *** *** *** *** *** ** * t to t+1 363 * * ** ** t+1 to t+2 233 * * *** ** ** * t+2 to t+3 147 * ** *** *** ** ** ** ** t-2 to t 554 *** *** *** *** *** *** *** *** *** *** t-2 to t+1 363 *** *** *** *** *** *** *** *** ** t-2 to t+2 233 *** *** *** *** *** *** *** *** ** * *** ** t-2 to t+3 147 *** *** *** *** *** *** *** *** *** *** *** ** t-1 to t+1 363 ** *** *** *** *** ** *** *** * t-1 to t+2 233 *** *** *** *** *** *** *** *** ** ** *** *** t-1 to t+3 147 *** ** *** ** *** *** *** *** *** ** *** *** a “N” indicates total number of certified firms in the corresponding sample. b The significance levels shown are those for the one-sided test of the null hypothesis of no abnormal performance, using the Wilcoxon signed rank test and sign test respectively. Note: * p < .1; ** p < .05; *** p < .01. 37"
+    }
+  ]
+}
