@@ -96,6 +96,22 @@ def _fetch_overlapping_contradictions(kg: KnowledgeGraph, description_ids: List[
 
 # ---- Neo4j writes -------------------------------------------------------------
 
+def _delete_contradictions(kg: KnowledgeGraph, contradiction_ids: List[str]) -> None:
+    """Used when a cluster's participants previously belonged to a Contradiction
+    node but this run's outcome is SQLite-only (not_a_conflict,
+    insufficient_evidence) — the old node must not survive orphaned, since its
+    participant set no longer corresponds to a valid conflict per this run.
+    Single non-transactional statement (unlike _write_cluster_tx): a plain
+    DETACH DELETE is already atomic and idempotent, no multi-step reconciliation
+    needed."""
+    if not contradiction_ids:
+        return
+    kg.query(
+        "MATCH (c:Contradiction) WHERE c.id IN $ids DETACH DELETE c",
+        params={"ids": contradiction_ids},
+    )
+
+
 def _write_supersedes(kg: KnowledgeGraph, newer_id: str, older_id: str, basis: Optional[str],
                        reason: Optional[str], confidence: Optional[float], pipeline_version: str,
                        generated_at: str, allowed_types: List[str]) -> bool:
@@ -324,11 +340,63 @@ def _process_supersession(
 
 # ---- stage: clustering (§4.2) -------------------------------------------------
 
-def _build_clusters(pairs_for_clustering: List[PassedPairRow]) -> List[List[str]]:
+def _build_clusters(pairs_for_clustering: List[PassedPairRow], max_cluster_size: int) -> List[List[str]]:
+    """
+    Clique-based clustering, not connected components: a connected component
+    ({A,B} passed, {B,C} passed) does NOT mean {A,B,C} is one cluster — A and C
+    were never compared, and a summary spanning both is meaningless (this
+    replaced connected components specifically because it produced exactly
+    that: a 5-participant cluster spanning three unrelated subjects). A set of
+    Descriptions may form one cluster only if EVERY pair among them
+    independently passed the gate — i.e. only if it's a clique.
+
+    Enumerates ALL maximal cliques per component (nx.find_cliques — NP-hard in
+    general, a total non-issue at this corpus's scale of a few hundred
+    Descriptions post-gating; would need revisiting at a much denser graph).
+    Overlapping maximal cliques are NOT deduplicated down to one: if A-B and
+    A-C both passed but B-C did not, {A,B} and {A,C} are two genuinely
+    separate conflicts (A opposes B about one thing, A opposes C about
+    something else) — picking only one would silently discard a real conflict.
+    A component that is already a single clique (this includes every ordinary
+    pairwise case, size 2) produces exactly one cluster, same as before.
+
+    `max_cluster_size` is a separate safety net applied AFTER clique
+    enumeration, per clique — decomposition bounds a non-clique component, but
+    a genuinely dense clique (every pair independently passed) could still
+    exceed a size the classification prompt can reason about sensibly.
+    Truncated deterministically (sorted ids, first N kept) and logged.
+    """
     graph = nx.Graph()
     for pair in pairs_for_clustering:
         graph.add_edge(pair.description_id_a, pair.description_id_b)
-    return [sorted(c) for c in nx.connected_components(graph) if len(c) >= 2]
+
+    clusters: List[List[str]] = []
+    for component in nx.connected_components(graph):
+        if len(component) < 2:
+            continue
+        subgraph = graph.subgraph(component)
+        cliques = [c for c in nx.find_cliques(subgraph) if len(c) >= 2]
+
+        if not (len(cliques) == 1 and len(cliques[0]) == len(component)):
+            logger.info(
+                f"Component of size {len(component)} is not a single clique — "
+                f"decomposed into {len(cliques)} maximal clique(s), sizes "
+                f"{sorted((len(c) for c in cliques), reverse=True)}"
+            )
+
+        for clique in cliques:
+            if len(clique) > max_cluster_size:
+                kept = sorted(clique)[:max_cluster_size]
+                dropped = sorted(set(clique) - set(kept))
+                logger.warning(
+                    f"Clique of size {len(clique)} exceeds max_cluster_size={max_cluster_size} "
+                    f"— truncating to {len(kept)}, dropped: {dropped}"
+                )
+                clusters.append(kept)
+            else:
+                clusters.append(sorted(clique))
+
+    return clusters
 
 
 # ---- stage: cluster classification (§4.3) -------------------------------------
@@ -365,6 +433,18 @@ def _run_cluster_classification(cluster: List[str], client: ClassificationClient
             "insufficient_evidence_reason": reason, "_cacheable": cacheable,
         }
 
+    def _not_a_conflict(reason: str, confidence: Optional[float], cacheable: bool) -> dict:
+        # Reuses the same "insufficient_evidence_reason" dict key / SQLite
+        # column as _insufficient — both are SQLite-only control signals with a
+        # free-text reason; not_a_conflict didn't warrant its own column. The
+        # prompt asks the model for a distinct "not_a_conflict_reason" field
+        # (clearer for the model to fill), mapped into this shared slot here.
+        return {
+            "outcome": "not_a_conflict", "resolution_type": None, "summary": None,
+            "scope_conditions": None, "confidence": confidence, "evidence_used": [], "positions": [],
+            "insufficient_evidence_reason": reason, "_cacheable": cacheable,
+        }
+
     if verdict is None:
         return _insufficient("LLM call failed after retries", None, cacheable=False)
 
@@ -375,6 +455,16 @@ def _run_cluster_classification(cluster: List[str], client: ClassificationClient
     evidence_used = list(verdict.evidence_used)
     positions = [p.model_dump() for p in verdict.positions]
     insufficient_reason = verdict.insufficient_evidence_reason
+
+    # Fix 2, step 0: checked BEFORE any "why do they oppose" branch below —
+    # scope_difference especially is trivially satisfiable for almost any two
+    # claims from different papers, so it must never substitute for asking
+    # whether they oppose each other at all.
+    if resolution_type == "not_a_conflict":
+        return _not_a_conflict(
+            verdict.not_a_conflict_reason or "model determined the claims do not make opposing assertions",
+            confidence, cacheable=True,
+        )
 
     # AMENDMENT 4: "unresolved" asserts scope was checked; it must not mean
     # "we could not look."
@@ -435,7 +525,7 @@ def _classify_clusters(clusters: List[List[str]], kg: KnowledgeGraph, store: Can
         to_process.append((cluster, key, record))
 
     stats = {"skipped": skipped, "processed": 0, "written": 0, "insufficient_evidence": 0,
-              "by_resolution_type": {}, "merges": 0}
+              "not_a_conflict": 0, "by_resolution_type": {}, "merges": 0}
 
     if not to_process:
         return stats
@@ -443,7 +533,20 @@ def _classify_clusters(clusters: List[List[str]], kg: KnowledgeGraph, store: Can
     all_participant_ids = sorted({pid for cluster, _, _ in to_process for pid in cluster})
     overlap_map = _fetch_overlapping_contradictions(kg, all_participant_ids)
 
-    for cluster, cluster_key, record in to_process:
+    # Clique decomposition (§4.2) means a single OLD Contradiction can now need
+    # to become MULTIPLE new clusters — overlap_map is a snapshot from BEFORE
+    # this run's writes, so two sibling cliques split from the same old node
+    # would both see themselves as the sole owner of that old id if not tracked
+    # here. Each old id may be claimed (reused OR deleted) by at most one
+    # cluster per run; every other cluster that maps to an already-claimed id
+    # is treated as having no prior overlap at all, so it correctly spawns a
+    # fresh node instead of stomping on the first cluster's just-written edges.
+    # Processed in a deterministic order (sorted by cluster_key) so which
+    # cluster "wins" a shared old id is reproducible, not networkx-iteration-
+    # order-dependent.
+    claimed_contradiction_ids: set = set()
+
+    for cluster, cluster_key, record in sorted(to_process, key=lambda t: t[1]):
         stats["processed"] += 1
         cache_key = _cluster_cache_key(cluster_key, conf.model, conf.classification_prompt_version, conf.pipeline_version)
 
@@ -461,22 +564,37 @@ def _classify_clusters(clusters: List[List[str]], kg: KnowledgeGraph, store: Can
         cacheable = verdict_fields.pop("_cacheable", True)
         final_cache_key = cache_key if cacheable else None
 
-        if verdict_fields["outcome"] == "insufficient_evidence":
-            stats["insufficient_evidence"] += 1
+        # Computed once per cluster, regardless of outcome, and immediately
+        # claimed — see the comment above the loop for why (clique splits).
+        overlapping: Dict[str, str] = {}
+        for pid in cluster:
+            for c_id, gen_at in overlap_map.get(pid, []):
+                if c_id not in claimed_contradiction_ids:
+                    overlapping[c_id] = gen_at
+        claimed_contradiction_ids.update(overlapping.keys())
+
+        if verdict_fields["outcome"] in ("insufficient_evidence", "not_a_conflict"):
+            stats[verdict_fields["outcome"]] += 1
+            if overlapping:
+                # This outcome asserts nothing should be written — any node the
+                # participants used to belong to (e.g. a mega-cluster that
+                # decomposed and this sub-clique turned out not to be a
+                # conflict, or a previously-written cluster that reclassified)
+                # must not survive orphaned.
+                _delete_contradictions(kg, list(overlapping.keys()))
+                logger.info(
+                    f"Deleted {len(overlapping)} stale Contradiction node(s) for cluster now "
+                    f"classified {verdict_fields['outcome']}: {sorted(overlapping.keys())}"
+                )
             store.upsert_cluster_record(ClusterRecord(
                 cluster_key=cluster_key, participant_ids=cluster, contradiction_node_id=None,
                 resolution_type=None, summary=None, scope_conditions=None,
                 confidence=verdict_fields.get("confidence"), evidence_used=[], positions=[],
-                outcome="insufficient_evidence",
+                outcome=verdict_fields["outcome"],
                 insufficient_evidence_reason=verdict_fields.get("insufficient_evidence_reason"),
                 cache_key=final_cache_key, pipeline_version=conf.pipeline_version,
             ))
             continue
-
-        overlapping: Dict[str, str] = {}
-        for pid in cluster:
-            for c_id, gen_at in overlap_map.get(pid, []):
-                overlapping[c_id] = gen_at
 
         if not overlapping:
             keep_id, drop_ids = f"contradiction-{uuid4().hex}", []
@@ -542,16 +660,17 @@ def _classify_clusters(clusters: List[List[str]], kg: KnowledgeGraph, store: Can
 def run_classification(kg: KnowledgeGraph, store: CandidateStore, conf: ClassificationConfig) -> dict:
     """
     Stage 3 of the whole-KB conflict pass (docs/conflict_pipeline.md §4):
-    supersession test (pairwise) -> clustering -> cluster classification,
-    writing `supersedes` edges and `Contradiction` nodes/edges to Neo4j, with
-    outcomes (including insufficient-evidence) recorded in SQLite.
+    supersession test (pairwise) -> clique-based clustering -> cluster
+    classification, writing `supersedes` edges and `Contradiction` nodes/edges
+    to Neo4j, with SQLite-only outcomes (insufficient_evidence, not_a_conflict)
+    recorded but never written to the graph.
     """
     pairs = store.get_passed_pairs()
     if not pairs:
         logger.info("No gate-passed candidate pairs to classify.")
         return {"pairs_evaluated": 0, "clusters_total": 0, "skipped": 0, "processed": 0,
-                "written": 0, "insufficient_evidence": 0, "by_resolution_type": {}, "merges": 0,
-                "supersedes_written": 0}
+                "written": 0, "insufficient_evidence": 0, "not_a_conflict": 0, "by_resolution_type": {},
+                "merges": 0, "supersedes_written": 0}
 
     source_ids = sorted({p.source_id_a for p in pairs} | {p.source_id_b for p in pairs})
     years = fetch_source_years(kg, source_ids)
@@ -571,7 +690,7 @@ def run_classification(kg: KnowledgeGraph, store: CandidateStore, conf: Classifi
     )
     store.update_supersession_results(supersession_updates)
 
-    clusters = _build_clusters(pairs_for_clustering)
+    clusters = _build_clusters(pairs_for_clustering, max_cluster_size=conf.max_cluster_size)
     existing_records = store.get_cluster_records()
     cluster_stats = _classify_clusters(
         clusters, kg, store, client, conf, desc_fields, scope_context, existing_records

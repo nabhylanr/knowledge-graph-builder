@@ -20,7 +20,7 @@ def build_blocking_config() -> BlockingConfig:
     allowed_types_env = os.getenv("BLOCKING_ALLOWED_TYPES")
     return BlockingConfig(
         k=int(os.getenv("BLOCKING_K", "15")),
-        min_similarity=float(os.getenv("BLOCKING_MIN_SIMILARITY")) if os.getenv("BLOCKING_MIN_SIMILARITY") else None,
+        min_similarity=float(os.getenv("BLOCKING_MIN_SIMILARITY", "0.85")),
         allowed_types=[t.strip() for t in allowed_types_env.split(",")] if allowed_types_env else DEFAULT_ALLOWED_TYPES,
         prepend_topic_name=os.getenv("BLOCKING_PREPEND_TOPIC_NAME", "false").lower() == "true",
         description_index_name=os.getenv("BLOCKING_DESCRIPTION_INDEX_NAME", "description_vector"),
