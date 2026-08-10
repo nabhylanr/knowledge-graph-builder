@@ -23,3 +23,6 @@ conflict_candidates.db
 
 # host-specific compose config (Tailscale bind) — jangan di-commit
 docker-compose.override.yml
+
+# dump/restore lokal — isinya bisa besar, jangan masuk repo
+neo4j_backups/

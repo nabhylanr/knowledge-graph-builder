@@ -144,14 +144,18 @@ class ClusterRecord:
     """
     cluster_key: str  # participants_hash
     participant_ids: List[str]
-    contradiction_node_id: Optional[str]      # None iff outcome == 'insufficient_evidence'
-    resolution_type: Optional[str]            # None iff outcome == 'insufficient_evidence'
+    contradiction_node_id: Optional[str]      # None unless outcome == 'written'
+    resolution_type: Optional[str]            # None unless outcome == 'written'
     summary: Optional[str]
     scope_conditions: Optional[str]
     confidence: Optional[float]
     evidence_used: List[str] = field(default_factory=list)
     positions: List[dict] = field(default_factory=list)  # [{"description_id": ..., "position": ...}]
-    outcome: str = "written"                  # 'written' | 'insufficient_evidence'
+    outcome: str = "written"                  # 'written' | 'insufficient_evidence' | 'not_a_conflict'
+    # Reused for both insufficient_evidence's and not_a_conflict's free-text reason —
+    # same physical column, no schema field added just for the new outcome (the
+    # prompt still asks the model for a distinct `not_a_conflict_reason`, mapped
+    # into this same field at the classifier.py boundary — see _not_a_conflict()).
     insufficient_evidence_reason: Optional[str] = None
     cache_key: Optional[str] = None           # None when not cacheable (e.g. failed LLM call)
     pipeline_version: str = ""
@@ -178,7 +182,7 @@ CREATE TABLE IF NOT EXISTS contradiction_clusters (
     confidence                       REAL,
     evidence_used                     TEXT,
     positions                          TEXT,
-    outcome                             TEXT NOT NULL CHECK(outcome IN ('written','insufficient_evidence')),
+    outcome                             TEXT NOT NULL CHECK(outcome IN ('written','insufficient_evidence','not_a_conflict')),
     insufficient_evidence_reason         TEXT,
     cache_key                             TEXT,
     pipeline_version                       TEXT NOT NULL,
@@ -188,11 +192,38 @@ CREATE TABLE IF NOT EXISTS contradiction_clusters (
 """
 
 
+def _migrate_contradiction_clusters_outcome_check(conn: sqlite3.Connection) -> None:
+    """
+    SQLite CHECK constraints can't be altered in place — `CREATE TABLE IF NOT
+    EXISTS` is a no-op against an existing table, so a pre-existing database
+    file (created before 'not_a_conflict' was added) would keep the OLD
+    CHECK(outcome IN ('written','insufficient_evidence')) forever, and every
+    not_a_conflict upsert would raise a CHECK constraint violation at runtime.
+    Standard SQLite migration: rename the old table aside, let the schema
+    script below create the new one with the updated CHECK, copy the rows
+    across, drop the old one. No-op on a fresh DB (table doesn't exist yet —
+    the CREATE TABLE IF NOT EXISTS already has the new constraint) or an
+    already-migrated one.
+    """
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name='contradiction_clusters'"
+    ).fetchone()
+    if row is None or "not_a_conflict" in row[0]:
+        return
+    conn.execute("ALTER TABLE contradiction_clusters RENAME TO contradiction_clusters_old")
+    conn.executescript(_CONTRADICTION_CLUSTERS_SCHEMA)
+    conn.execute("INSERT INTO contradiction_clusters SELECT * FROM contradiction_clusters_old")
+    conn.execute("DROP TABLE contradiction_clusters_old")
+    conn.commit()
+    logger.info("Migrated contradiction_clusters.outcome CHECK constraint to include 'not_a_conflict'.")
+
+
 def _ensure_classification_schema(conn: sqlite3.Connection) -> None:
     existing = {row[1] for row in conn.execute("PRAGMA table_info(candidate_pairs)")}
     for name, col_type in _CLASSIFICATION_COLUMNS.items():
         if name not in existing:
             conn.execute(f"ALTER TABLE candidate_pairs ADD COLUMN {name} {col_type}")
+    _migrate_contradiction_clusters_outcome_check(conn)
     conn.executescript(_CONTRADICTION_CLUSTERS_SCHEMA)
     conn.commit()
 

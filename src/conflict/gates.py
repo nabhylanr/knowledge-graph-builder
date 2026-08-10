@@ -1,6 +1,6 @@
 import difflib
 import hashlib
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
@@ -138,9 +138,28 @@ def run_gates(kg: KnowledgeGraph, store: CandidateStore, conf: GateConfig) -> di
 
     now = datetime.now(timezone.utc).isoformat()
     results: List[GateResult] = []
+    pending_batch: List[GateResult] = []
+    flush_size = max(1, conf.gate_flush_batch_size)
+
+    def _flush():
+        if not pending_batch:
+            return
+        store.update_gate_results(pending_batch)
+        logger.info(f"Gate progress: {len(results)}/{len(rows)} evaluated")
+        pending_batch.clear()
+
+    # submit + as_completed, not executor.map: map yields in SUBMISSION order,
+    # so one slow row at the front of the list would hide every already-finished
+    # result behind it from ever reaching a flush — the exact "no incremental
+    # progress" symptom this change exists to fix, and it gets worse (not
+    # better) at higher concurrency. as_completed yields as each future actually
+    # finishes. All SQLite writes (via _flush) stay on this thread — _work never
+    # touches `store`.
     with ThreadPoolExecutor(max_workers=max(1, conf.nli_concurrency)) as executor:
-        for pair_key, pending in executor.map(_work, rows):
-            results.append(GateResult(
+        futures = [executor.submit(_work, row) for row in rows]
+        for future in as_completed(futures):
+            pair_key, pending = future.result()
+            result = GateResult(
                 pair_key=pair_key,
                 gate_status=pending.gate_status,
                 gate_reason=pending.gate_reason,
@@ -149,9 +168,12 @@ def run_gates(kg: KnowledgeGraph, store: CandidateStore, conf: GateConfig) -> di
                 nli_label=pending.nli_label,
                 nli_confidence=pending.nli_confidence,
                 nli_cache_key=pending.nli_cache_key,
-            ))
-
-    store.update_gate_results(results)
+            )
+            results.append(result)
+            pending_batch.append(result)
+            if len(pending_batch) >= flush_size:
+                _flush()
+        _flush()  # final partial batch
 
     stats = {
         "evaluated": len(results),

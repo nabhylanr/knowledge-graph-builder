@@ -30,7 +30,9 @@ _CONN_ERROR_MARKERS = (
 
 SUPERSESSION_ALLOWED_DECISIONS = {"yes", "no"}
 SUPERSESSION_ALLOWED_BASIS = {"explicit_correction", "citing_contrast", "claimed_improvement", "retraction"}
-CLUSTER_ALLOWED_RESOLUTION_TYPES = {"scope_difference", "known_controversy", "unresolved", "insufficient_evidence"}
+CLUSTER_ALLOWED_RESOLUTION_TYPES = {
+    "scope_difference", "known_controversy", "unresolved", "insufficient_evidence", "not_a_conflict",
+}
 
 
 class SupersessionVerdict(BaseModel):
@@ -49,10 +51,18 @@ class ClusterVerdict(BaseModel):
     resolution_type: str
     summary: Optional[str] = None
     scope_conditions: Optional[str] = None
-    confidence: float
+    # Default rather than required: observed the model omit this for
+    # not_a_conflict verdicts (the prompt told it to leave "every other field"
+    # null/empty for that case, and it generalised that to confidence too —
+    # fixed in the prompt, but a schema that rejects an otherwise-usable
+    # verdict over one missing number is the wrong trade-off either way).
+    # classify_cluster() logs a warning whenever this default gets applied, so
+    # a recurrence stays visible instead of silently masking a prompt problem.
+    confidence: float = 0.5
     evidence_used: List[str] = []
     positions: List[ParticipantPosition] = []
     insufficient_evidence_reason: Optional[str] = None
+    not_a_conflict_reason: Optional[str] = None
 
 
 def _parse_json_block(content: str) -> Optional[dict]:
@@ -174,4 +184,10 @@ class ClassificationClient:
         if verdict.resolution_type not in CLUSTER_ALLOWED_RESOLUTION_TYPES:
             logger.warning(f"Cluster verdict had invalid resolution_type {verdict.resolution_type!r} — treating as unparseable.")
             return None
+        if "confidence" not in verdict.model_fields_set:
+            logger.warning(
+                f"Cluster verdict (resolution_type={verdict.resolution_type!r}) omitted 'confidence' — "
+                f"defaulted to {verdict.confidence}. The prompt requires confidence for every "
+                f"resolution_type; this should be rare — investigate if it recurs."
+            )
         return verdict

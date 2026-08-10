@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 from src.config import EmbedderConf, KnowledgeGraphConfig
 from src.conflict.candidate_store import CandidateStore
-from src.conflict.config import DEFAULT_GENERIC_TOPIC_BLOCKLIST, GateConfig
+from src.conflict.config import DEFAULT_GENERIC_TOPIC_BLOCKLIST, GateConfig, resolve_ollama_endpoint
 from src.conflict.gates import run_gates
 from src.factory.embeddings import get_embeddings
 from src.graph.knowledge_graph import KnowledgeGraph
@@ -17,17 +17,19 @@ logger = get_logger(__name__)
 def build_gate_config() -> GateConfig:
     load_dotenv()
     blocklist_env = os.getenv("GATE_GENERIC_TOPIC_BLOCKLIST")
+    nli_model = os.getenv("GATE_NLI_MODEL", "qwen3:4b")
+    nli_endpoint = resolve_ollama_endpoint(os.getenv("GATE_NLI_ENDPOINT"))
+    logger.info(f"Gate NLI model resolved to: model={nli_model!r} endpoint={nli_endpoint!r}")
     return GateConfig(
         min_text_length=int(os.getenv("GATE_MIN_TEXT_LENGTH", "40")),
         generic_topic_blocklist=[t.strip() for t in blocklist_env.split(",")] if blocklist_env else DEFAULT_GENERIC_TOPIC_BLOCKLIST,
         intra_doc_similarity_threshold=float(os.getenv("GATE_INTRA_DOC_SIMILARITY_THRESHOLD", "0.9")),
-        nli_model=os.getenv("GATE_NLI_MODEL", "qwen3:4b"),
-        # Falls back to the extraction host: one Ollama box serves both stages
-        # unless GATE_NLI_ENDPOINT says otherwise.
-        nli_endpoint=os.getenv("GATE_NLI_ENDPOINT") or os.getenv("RE_MODEL_ENDPOINT"),
+        nli_model=nli_model,
+        nli_endpoint=nli_endpoint,
         nli_reject_confidence=float(os.getenv("GATE_NLI_REJECT_CONFIDENCE", "0.8")),
         nli_concurrency=int(os.getenv("GATE_NLI_CONCURRENCY", "2")),
-        nli_timeout_seconds=int(os.getenv("GATE_NLI_TIMEOUT_SECONDS", "30")),
+        nli_timeout_seconds=int(os.getenv("GATE_NLI_TIMEOUT_SECONDS", "120")),
+        gate_flush_batch_size=int(os.getenv("GATE_FLUSH_BATCH_SIZE", "25")),
         gate_version=os.getenv("GATE_VERSION", "gate-v1"),
     )
 

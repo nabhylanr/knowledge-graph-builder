@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from src.config import EmbedderConf, KnowledgeGraphConfig
 from src.conflict.candidate_store import CandidateStore
 from src.conflict.classifier import run_classification
-from src.conflict.config import ClassificationConfig, DEFAULT_ALLOWED_TYPES
+from src.conflict.config import ClassificationConfig, DEFAULT_ALLOWED_TYPES, resolve_ollama_endpoint
 from src.factory.embeddings import get_embeddings
 from src.graph.knowledge_graph import KnowledgeGraph
 from src.utils.logger import get_logger
@@ -17,19 +17,23 @@ logger = get_logger(__name__)
 def build_classification_config() -> ClassificationConfig:
     load_dotenv()
     allowed_types_env = os.getenv("CLASSIFICATION_ALLOWED_TYPES")
+    model_type = os.getenv("CLASSIFICATION_MODEL_TYPE", "ollama")
+    model = os.getenv("CLASSIFICATION_MODEL_NAME", "qwen3:4b")
+    endpoint = resolve_ollama_endpoint(os.getenv("CLASSIFICATION_MODEL_ENDPOINT"))
+    logger.info(f"Classification model resolved to: model_type={model_type!r} model={model!r} endpoint={endpoint!r}")
     return ClassificationConfig(
-        model_type=os.getenv("CLASSIFICATION_MODEL_TYPE", "ollama"),
-        model=os.getenv("CLASSIFICATION_MODEL_NAME", "qwen3:4b"),
+        model_type=model_type,
+        model=model,
         temperature=float(os.getenv("CLASSIFICATION_TEMPERATURE", "0.0")),
         api_key=os.getenv("CLASSIFICATION_API_KEY") or os.getenv("RE_API_KEY"),
-        # Falls back to the extraction host, same as run_gates.py's NLI endpoint.
-        endpoint=os.getenv("CLASSIFICATION_MODEL_ENDPOINT") or os.getenv("RE_MODEL_ENDPOINT"),
+        endpoint=endpoint,
         max_retries=int(os.getenv("CLASSIFICATION_MAX_RETRIES", "5")),
         retry_wait_seconds=int(os.getenv("CLASSIFICATION_RETRY_WAIT_SECONDS", "65")),
         conn_retry_wait_seconds=int(os.getenv("CLASSIFICATION_CONN_RETRY_WAIT_SECONDS", "30")),
         allowed_types=[t.strip() for t in allowed_types_env.split(",")] if allowed_types_env else DEFAULT_ALLOWED_TYPES,
         partial_context_confidence_factor=float(os.getenv("CLASSIFICATION_PARTIAL_CONTEXT_FACTOR", "0.7")),
-        pipeline_version=os.getenv("CLASSIFICATION_PIPELINE_VERSION", "classification-v1"),
+        max_cluster_size=int(os.getenv("CLASSIFICATION_MAX_CLUSTER_SIZE", "5")),
+        pipeline_version=os.getenv("CLASSIFICATION_PIPELINE_VERSION", "classification-v2"),
         sqlite_path=os.getenv("BLOCKING_SQLITE_PATH", "conflict_candidates.db"),
     )
 

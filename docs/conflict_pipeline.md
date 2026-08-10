@@ -261,17 +261,52 @@ insufficient-evidence path applies to cluster classification (§4.3) only.
 
 ### 4.2 Step 2 — clustering
 
-Supersession is pairwise; contradiction is not.
+Supersession is pairwise; contradiction is not, but it is also not "everything
+transitively reachable." Take all pairs not resolved as supersession and build
+a graph from them, then cluster by **clique**, not by connected component.
 
-Take all pairs not resolved as supersession and compute connected components
-over them. Each component becomes **one** `Contradiction` node. A component of
-size two is the ordinary pairwise case and needs no special handling.
+A connected component is the wrong unit: if A-B passed the gate and B-C passed
+the gate, that does NOT mean {A,B,C} belong in one cluster — A and C were never
+compared to each other at all. A component becomes one cluster only when it
+*is* a clique — every pair within it independently passed the gate. Where a
+component is not a clique, decompose it into its maximal cliques (every
+maximal subset where all pairs passed) and treat each as its own cluster.
+Maximal cliques within one component may overlap (share a Description) — that
+is not deduplicated away. If A-B and A-C both passed but B-C did not, {A,B} and
+{A,C} are two genuinely separate conflicts (A opposes B about one thing, A
+opposes C about something else); collapsing them to one, or arbitrarily
+keeping only one, would silently discard a real conflict. A component that is
+already a single clique — including every ordinary size-two pair — produces
+exactly one cluster, same as before.
+
+A safety net, `max_cluster_size` (default 5), caps the size of any single
+cluster sent to classification, applied *after* clique enumeration: a
+sufficiently dense clique (every pair among 6+ Descriptions independently
+passed) is still too large for the classification prompt to reason about
+sensibly even though it is a legitimate clique.
 
 Classification then runs **once per cluster**, not once per pair.
 
 ### 4.3 Step 3 — cluster classification
 
-In order:
+**Step 0, checked before anything else: do these claims actually oppose each
+other?** A pair reaching this stage only means an upstream filter flagged it as
+worth checking — not that it is a confirmed conflict. Ask: do the claims make
+OPPOSING assertions about the SAME measurement, outcome, or finding? A shared
+topic is not sufficient — two claims can discuss the same subject while
+measuring or asserting entirely different things, and that is not a conflict.
+
+→ If not: `resolution_type = not_a_conflict`. See §4.4 — this is a control
+signal, not a stored outcome.
+
+This check must come first. Almost any two claims from different papers differ
+in method or dataset, which makes (a) below trivially satisfiable — a cluster
+classifier that starts by asking "why do they oppose" rather than "do they
+oppose" will always find a scope-difference-shaped excuse, including for pairs
+that were never in opposition to begin with.
+
+Only if step 0 finds genuine opposition, decide, in order, which ONE of the
+following best explains it:
 
 **a. Scope difference.** Can the opposition be explained by a difference in
 method, dataset, population, setting, unit of analysis, measurement, or time
@@ -310,15 +345,33 @@ is the more actionable finding. But the controversy marker must be recorded in
 stating the topic is contested is evidence that the field does *not* consider it
 settled by scope alone.
 
-### 4.4 Insufficient evidence
+### 4.4 Insufficient evidence and not-a-conflict
 
-If the required context could not be assembled — no `Method`/`Dataset`
-Descriptions available, texts too thin to judge — **write nothing to the graph.**
+Two distinct control signals, same handling: **write nothing to the graph.**
 
-Record the outcome in the SQLite candidate store instead. This is a statement
-about the pipeline's limits, not about the world, and the graph must contain
-only what we assert about the world. It also keeps the pair re-runnable once
-extraction improves, at far lower cost than sweeping the whole graph again.
+**Insufficient evidence** — the required context could not be assembled: no
+`Method`/`Dataset` Descriptions available, texts too thin to judge. The claims
+may well be in genuine opposition; the pipeline just cannot currently tell.
+
+**Not a conflict** (§4.3 step 0) — the claims were never in opposition at all.
+This is not a pipeline limitation; it is a confident negative finding.
+
+Both are recorded in the SQLite candidate store instead of the graph. This is a
+statement about the pipeline (limits, or a "no") rather than about the world,
+and the graph must contain only what we positively assert about the world. It
+also keeps the cluster re-evaluable at far lower cost than sweeping the whole
+graph again — e.g. `insufficient_evidence` once extraction improves, or
+`not_a_conflict` if a new participant joins the cluster and changes the
+picture.
+
+**If a cluster's participants previously had a `Contradiction` node and this
+run's outcome is one of these two**, that node must be deleted, not left
+orphaned — its participant set no longer corresponds to a valid conflict under
+the current run. This also covers the §4.2 clique-decomposition case: when an
+old mega-cluster splits into several new cliques, exactly one new cluster may
+reuse the old node's id (reconciling its edges down to its own participants);
+every other new cluster claiming the same old id instead gets treated as
+having no prior node at all.
 
 ---
 

@@ -209,9 +209,12 @@ Report:
 
 - clusters classified, by `resolution_type`
 - `supersedes` edges written, by `basis`
-- pairs recorded as `insufficient_evidence`
+- clusters recorded as `insufficient_evidence` (`outcome`, not `resolution_type` — see §4.4)
+- clusters recorded as `not_a_conflict` (§4.3 step 0 / §4.4 — same handling as `insufficient_evidence`, nothing written to the graph)
 - clusters where `unresolved` was overridden to `insufficient_evidence`
   (amendment 4)
+- largest cluster size (should not exceed `max_cluster_size`, default 5) and
+  whether any component was decomposed into multiple cliques (§4.2)
 - LLM calls on first run vs second run (second must be **0**)
 
 ### Checkpoint 4b — Invariants (all must return empty)
