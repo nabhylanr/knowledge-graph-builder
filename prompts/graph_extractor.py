@@ -159,15 +159,9 @@ ONTOLOGY — NODE TYPES (6 only)
    Examples: Author, Co-author, Supervisor, Speaker, Presenter, Moderator, Researcher.
    Required property: name
 
-3. Topic — A concept, system, method, metric, problem, or domain term the text
-   discusses or makes a claim about. NEVER a document container, NEVER a bare
-   label with nothing asserted: "Figure 3", "Table 2", "Section 4", "Appendix A",
-   "Chapter 2", "Equation 1" are FORBIDDEN as Topic names, and so is a metric name
-   alone ("Net Profit As Of Sales Revenues 2004") with no claim attached. If a
-   figure/table is the EVIDENCE for a finding, the Topic is the finding — cite
-   the figure/table via the figureNumber/tableNumber property below, don't make
-   it the Topic. A subtopic is not a separate type — it is a normal Topic linked
-   via has_subtopic.
+3. Topic — Any concept, system, method, metric, problem, section, figure, table, or
+   domain term discussed in the text. A subtopic is not a separate type — it is a
+   normal Topic linked via has_subtopic.
    Build a hierarchy where the text supports it (no forced depth, do not fabricate).
    Required property: name.
    Optional: abbreviation, chapterNumber, tableNumber, figureNumber.
@@ -183,22 +177,11 @@ ONTOLOGY — NODE TYPES (6 only)
 5. Source — The uploaded file the information is extracted from. See SOURCE ID RULES above.
    Required property: name. Optional: format, date.
 
-6. Description — States the paper's claim or finding itself, in its own voice —
-   NOT an explanation of why a Topic was filed under a Type, NOT a narration of
-   the document. FORBIDDEN openers — write the claim directly instead: "The
-   text/paper states that...", "This section describes...", "Figure N shows...".
+6. Description — A textual explanation of why a Topic belongs to a given Type.
    Specific to one Topic-Type pair. Minimum 2 sentences, and MUST contain at least
    ONE specific detail from the text (a number, name, technical term, or measured
    result). Do NOT write generic tautological sentences like "X is a method." or
    "Y is a problem." — such sentences carry no information and are FORBIDDEN.
-   Type Result, Conclusion, Metrics Evaluation specifically: state what the paper
-   FOUND — a number, direction, or outcome — never what it merely measured.
-     BAD:  "Lead time under the proposed policy was measured across three plants."
-     GOOD: "The proposed policy reduced average lead time by 18% across three
-     plants, though variance increased in the smallest facility."
-   Correction/controversy language ("contradicts", "corrects", "revises",
-   "controversial", "paradoxical", "debated") MUST survive into the Description
-   near-verbatim, not be paraphrased away.
    EXCEPTION — Type "Meeting Procedure": ONE plain sentence is enough and no
    specific detail is required, because there is usually none to find. Write what
    procedurally happened ("The participants checked whether the audio was
@@ -445,11 +428,9 @@ SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 3 conditional ones)
 3. Is my Source id EXACTLY equal to "{source_name}"? (check character by character)
 4. Is any Source the SOURCE of any relationship other than "Topic -> has_source ->
    Source"? If yes, the direction is wrong — fix it.
-5. Is there any Description that is tautological, lacks a specific detail,
-   narrates the document ("the text/paper states...") instead of asserting the
-   claim, or duplicates another Description for the same Topic? For Result/
-   Conclusion/Metrics Evaluation: does it state what was FOUND, not just
-   measured? If any of these, rewrite, remove, or drop the extra Type.
+5. Is there any Description that is tautological, lacks a specific detail from the
+   text, or duplicates another Description for the same Topic? If yes, rewrite,
+   remove, or drop the extra Type.
 6. Are all relationship names exactly one of the 10 fixed strings (no
    "has_method"-style variants), lowercase_snake_case, no "::"?
 7. (only if you used relates_to) Does every relates_to edge have a `relation`
