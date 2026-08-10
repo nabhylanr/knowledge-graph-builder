@@ -211,6 +211,13 @@ RELATES_TO_TYPE_PAIRS = {
 
 ACTION_ITEM_TYPE = "Action Item"
 
+# v8.5: the Type for talk that runs the meeting rather than carries its content
+# (audio checks, screen sharing, scheduling, opening/closing). Before it existed
+# the model had to force such a Topic into Issue/Idea/Feedback — an audio problem
+# became an Issue sitting next to the research ones. A Topic typed ONLY with this
+# is barred from has_source in sanitize_graph; see `topic_is_procedural`.
+MEETING_PROCEDURE_TYPE = "Meeting Procedure"
+
 ALLOWED_TOPIC_STATUS = {"open", "in_progress", "done", "blocked"}
 ALLOWED_STANCE = {"raised", "proposed", "decided", "reported", "gave_feedback"}
 ALLOWED_CONTRADICTION_LEVEL = {"direct", "partial", "apparent"}
@@ -255,6 +262,11 @@ _MEETING_TYPES = {
     # v8: discussion-flow types — what a segment of the meeting *is*.
     "issue", "idea", "decision", "action item", "open question",
     "progress update", "feedback",
+    # v8.5: the mechanics of running the meeting, not its content. Kept in this
+    # set (rather than left to fall through to "unknown") so its Type node is
+    # tagged domain="meeting" like the rest — the has_source ban that makes it
+    # useful is enforced separately, in sanitize_graph.
+    "meeting procedure",
     # v8.4: argumentation / reasoning types — what a segment *asserts* and the
     # reasoning around it. Deliberately still Types (a Topic's function), not new
     # node labels: they classify, they are not content. Note none of these appear
@@ -540,6 +552,11 @@ def sanitize_graph(
       validated has_type edge to the Type "Action Item" — this stops the
       model from attaching an assignee to a Topic that isn't actually an
       action item.
+    - `has_source` (Topic -> Source, v8.5): dropped outright when the source
+      Topic's ONLY Type is "Meeting Procedure", before the MAX_HAS_SOURCE cap
+      is consulted. Keeps a transcript's opening audio-check from claiming the
+      document's "core topic" slots ahead of its actual content — see
+      `topic_is_procedural` for the full reasoning.
     - `status` (on Topic nodes) and `stance` (on spoke_about/writes_about
       edges) are kept only when the value is one of the allowed options;
       otherwise the property is dropped, not the whole node/edge.
@@ -697,6 +714,23 @@ def sanitize_graph(
         if ACTION_ITEM_TYPE.lower() in types
     }
 
+    # Topics that are ONLY procedural — the meeting's mechanics, not its content.
+    # `== {…}` and not `in`: a Topic typed both Meeting Procedure and Decision is
+    # a real decision that happens to be about process, and keeps its claim on a
+    # has_source slot.
+    #
+    # WHY they are barred from has_source: the MAX_HAS_SOURCE cap below is
+    # first-come-first-served in chunk order (has_source_state spans the whole
+    # document), and a transcript's chunk 1 is greetings and "can you hear me?".
+    # Left alone it fills all three "document core" slots before the first chunk
+    # of real content is even reached, and every later Topic's has_source is
+    # dropped. That ordering happens to work for papers, whose chunk 1 is the
+    # abstract; it inverts on meetings.
+    topic_is_procedural = {
+        topic for topic, types in topic_type_names.items()
+        if types == {MEETING_PROCEDURE_TYPE.lower()}
+    }
+
     out_rels: List[_Relationship] = []
     seen = set()
     for r in relationships:
@@ -752,6 +786,10 @@ def sanitize_graph(
         if key in seen:                     # dedup before counting so duplicates don't eat the cap
             continue
         if rt == "has_source":
+            # Checked before the cap so a procedural Topic does not merely lose
+            # its own edge — it never consumes a slot a content Topic could use.
+            if src in topic_is_procedural:
+                continue
             if has_source_count >= MAX_HAS_SOURCE:
                 continue
             has_source_count += 1

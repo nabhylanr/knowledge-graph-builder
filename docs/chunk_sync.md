@@ -1,18 +1,20 @@
 # Chunk Hand-off via Supabase
 
-How chunk files get from a producer's machine (Maruf's `academic-pdf-chunker`)
-into this repo's `chunks_data/`.
+How chunk files get from a producer's machine (Maruf's `academic-pdf-chunker`
+for papers, the meeting chunker for transcripts) into this repo's `chunks_data/`.
 
 ```
 producer                     Supabase                     receiving machine
 ────────                     ────────                     ─────────────────
 validate locally  ──┐
-upload .jsonl       ├──►  Storage bucket `chunks`
-insert manifest row ┘     table  `chunk_uploads`
+upload the file     ├──►  Storage bucket `chunks`
+insert manifest row ┘     table  `paper_chunk_uploads`
+                                 `meeting_chunk_uploads`
                                 status=pending  ──push──► run_listen.py  (~1s)
                                                 ◄──poll── run_sync.py    (10 min)
                                                              ├ download
                                                              ├ verify sha256
+                                                             ├ convert (meeting only)
                                                              ├ re-validate schema
                                                              ├ write chunks_data/<doc_type>/…
                                 status=downloaded  ◄─────────┘
@@ -22,6 +24,9 @@ insert manifest row ┘     table  `chunk_uploads`
 
 The file lives in Storage; the *state* lives in a row. Both drains call the same
 idempotent code and only ever claim rows that are still `pending`.
+
+**One manifest table per kind of document**, and the table a row is in *is* its
+`doc_type` — see [Which queue a file goes in](#which-queue-a-file-goes-in).
 
 **The poll is the guarantee; the listener is the optimisation.** See
 [Why both](#why-both-a-listener-and-a-poll) below — this is the one thing not to
@@ -40,17 +45,52 @@ supabase.com. Two differences that matter:
 | Keys | Project Settings → API | the server's own `.env`, or minted from the `app.settings.jwt_secret` Postgres setting |
 
 The dev instance is shared with another project (bucket
-`lab-brain-meeting-audio`); this schema only adds the `chunks` bucket and the
-`public.chunk_uploads` table, and touches nothing else.
+`lab-brain-meeting-audio`, table `ontology_instances`); this schema only adds the
+`chunks` bucket and the two `*_chunk_uploads` tables, and touches nothing else.
 
 Prod (`citi-condor`, `100.122.56.39`) is the same shape — same schema, different
 host and keys.
 
 ## One-time setup (receiving side)
 
+**This side only reads.** Both manifest tables and the `chunks` bucket already
+exist on the lab instances — they belong to whoever runs Supabase, not to this
+repo. There is no schema to apply here; two steps and you are pulling.
+
+1. **Fill in `.env`** (gitignored — keep it that way):
+
+   ```bash
+   SUPABASE_URL=http://100.118.203.111:8080
+   SUPABASE_SERVICE_KEY=<service_role JWT>
+   SUPABASE_BUCKET=chunks
+   CHUNKS_DEST_DIR=chunks_data
+   MEETING_MIN_CHARS=0    # drop meeting chunks shorter than this on the way in
+   ```
+
+   The table names default to `paper_chunk_uploads` / `meeting_chunk_uploads`;
+   `SUPABASE_PAPER_TABLE` and `SUPABASE_MEETING_TABLE` override them if an
+   instance names them differently.
+
+   The **service_role key bypasses RLS entirely**. It stays on this machine —
+   never in the repo, never sent to a producer.
+
+2. **Install the client:** `pip install -r requirements.txt`
+
+Then `python run_sync.py --dry-run`. It prints what it found in each queue and
+writes nothing.
+
+## Standing up a new instance (owner side)
+
+Only needed for a Supabase instance that has never carried this hand-off — a
+fresh dev box, or prod before it is first used. Skip it otherwise.
+
 1. **Run the schema.** [`db/supabase_schema.sql`](../db/supabase_schema.sql), via
-   the Studio SQL Editor or straight over Postgres on `:5432`. It creates the
-   `chunks` bucket, `chunk_uploads`, and the RLS policies. Re-running it is safe.
+   the Studio SQL Editor or straight over Postgres on `:5432` (the service key
+   cannot do this — it is a PostgREST token, not a database login). It creates the
+   `chunks` bucket, `paper_chunk_uploads`, `meeting_chunk_uploads`, and the RLS
+   policies. Re-running it is safe, and on a database that still has the old
+   single `chunk_uploads` table it copies those rows across (split by their
+   `doc_type`) and leaves the original for you to drop by hand.
 
 2. **Create an account per producer.** Studio → Authentication → Users, or the
    admin API with the service key:
@@ -63,20 +103,6 @@ host and keys.
    ```
 
    The account is the trust boundary: only people you create can upload.
-
-3. **Fill in `.env`** (gitignored — keep it that way):
-
-   ```bash
-   SUPABASE_URL=http://100.118.203.111:8080
-   SUPABASE_SERVICE_KEY=<service_role JWT>
-   SUPABASE_BUCKET=chunks
-   CHUNKS_DEST_DIR=chunks_data
-   ```
-
-   The **service_role key bypasses RLS entirely**. It stays on this machine —
-   never in the repo, never sent to a producer.
-
-4. **Install the client:** `pip install -r requirements.txt`
 
 ## One-time setup (producer side)
 
@@ -114,9 +140,10 @@ python scripts/upload_chunks.py out/ --dry-run    # validate only
 
 Every file is validated against [chunk_schema.md](./chunk_schema.md) first, and
 **a batch with any invalid file uploads nothing**. Files land at
-`chunks/<producer>/<doc_id>__<sha8>.jsonl`.
+`chunks/<producer>/<doc_id>__<sha8>.jsonl`, and the row goes into the table for
+their `--doc-type`.
 
-### Where a file lands locally
+### Which queue a file goes in
 
 The receiving side files documents by **what they are**, not by who sent them:
 
@@ -126,23 +153,45 @@ chunks_data/
 └── meeting/    # transcripts, minutes
 ```
 
-`resolve_doc_type` ([supabase_sync.py](../src/sync/supabase_sync.py)) picks the
-folder from the first of these that answers, and logs which one did:
+There is a manifest table per folder, so **the table a row is in decides the
+folder**. Nothing is inferred on this side; the producer chooses a type by
+choosing a table.
 
-| # | Signal | Set by |
-|---|--------|--------|
-| 1 | `doc_type` column on the manifest row (`paper` \| `meeting`) | the producer, explicitly — **preferred** |
-| 2 | a `paper/` or `meeting/` prefix on the bucket path | the producer's upload path |
-| 3 | the file's own `source_kind`/`source_type` (`pdf` → paper, `transcript` → meeting) | already in the chunk records |
-| 4 | `DEFAULT_DOC_TYPE` (`paper`) | nothing — logged as a fallback |
+| doc_type | table | file format uploaded | local folder |
+|---|---|---|---|
+| `paper` | `paper_chunk_uploads` | the pipeline's `.jsonl` | `chunks_data/paper/` |
+| `meeting` | `meeting_chunk_uploads` | the meeting chunker's `*.chunks.json` (or `.jsonl`) | `chunks_data/meeting/` |
 
-Signals 2–4 exist so nothing breaks before a producer starts sending `doc_type`;
-a guess is still a guess, so **set the column**. The receiver writes the
-resolved value back onto the row (when the column exists), which makes a
-misfiled document visible in the manifest rather than only on disk.
+`upload_chunks.py` picks the table with `resolve_doc_type`
+([supabase_sync.py](../src/sync/supabase_sync.py)) — `--doc-type` if given, then a
+`paper/` or `meeting/` prefix on the upload path, then the file's own
+`source_kind` (`pdf` → paper, `transcript` → meeting), then `paper`. That guess
+happens **once, on the producer's machine, where it can still be corrected**;
+after the insert the answer is a fact.
 
-The producer's own folder name is not mirrored — only the file's base name is
-kept.
+The receiver still compares each file's `source_kind` against the queue it
+arrived in and logs a warning when they disagree — a file in the wrong table has
+no other symptom.
+
+The producer's own folder name is not mirrored; only the file's base name is
+kept. A converted meeting is the exception — it is written as
+`<meeting_id>.jsonl`, because the producer's file name is the shared
+`speaker_transcript`.
+
+### Meeting files are converted on the way in
+
+The meeting chunker emits one JSON object with a `chunks` array, which the
+ingestor cannot read. `run_sync.py` runs it through
+`src.ingestion.meeting_chunks` — the same adapter behind
+[`scripts/convert_meeting_chunks.py`](../scripts/convert_meeting_chunks.py) — so
+both routes produce identical `.jsonl`. Two mappings matter: `meeting_id` becomes
+`doc_id` (otherwise every meeting collapses into one Document) and the array
+position becomes `index` (a string `chunk_id` builds zero `NEXT` relationships,
+silently). `MEETING_MIN_CHARS` drops the "Hello." / "you" chunks that cost an LLM
+call and carry nothing.
+
+A file on the meeting queue that is already `.jsonl` is passed through unchanged,
+so a producer who converts on their own side is not broken by this.
 
 **Receiving side pulls:**
 
@@ -286,6 +335,24 @@ The listener ignores the payload of the INSERT it receives and re-queries for
 everything `pending`. The event is a *wake-up*, nothing more. A duplicated,
 reordered or malformed event therefore cannot corrupt anything — at worst it
 triggers a query that finds no work.
+
+### Why a table per doc_type instead of a `doc_type` column
+
+The column version had the receiver reconstruct the type from four signals, three
+of which were guesses, and a wrong guess was silent — the document simply built
+as the wrong kind. A table cannot be guessed at.
+
+It also buys two things the column could not:
+
+- **Separate queues.** A malformed paper upload sitting `failed` does not sit in
+  front of the meeting queue, and either producer can be paused alone.
+- **Different formats per queue.** Papers arrive as `.jsonl`, meetings as the
+  chunker's `*.chunks.json`. Knowing which is which *before* opening the file is
+  what lets the meeting conversion run at all.
+
+The cost is that `mark_built` sweeps both tables, since `main.py` knows a doc_id
+but not which queue it came from. A no-op update on the other table is cheaper
+than threading the type through the build.
 
 ### Why sync never triggers a build
 

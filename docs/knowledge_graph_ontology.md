@@ -1,4 +1,4 @@
-# Knowledge Graph Ontology — `knowledge-graph-builder` (v8.4)
+# Knowledge Graph Ontology — `knowledge-graph-builder` (v8.5)
 
 > Disusun dari kode sumber di `Documents/knowledge-graph-builder`, bukan dari data instance
 > di Neo4j. Ontology-nya memang **fixed di kode**, bukan sesuatu yang "muncul" dari isi
@@ -119,7 +119,7 @@ that matches neither list.
 | Metrics Evaluation | metric / measure reported |
 | Limitation | stated limitation |
 
-| Meeting Types (25) | Meaning |
+| Meeting Types (26) | Meaning |
 |---|---|
 | **— discussion flow (v8)** | *what a segment of the meeting is* |
 | Issue | problem/obstacle reported that triggers discussion |
@@ -129,6 +129,7 @@ that matches neither list.
 | Open Question | question raised, not yet resolved |
 | Progress Update | status report since previous meeting |
 | Feedback | input/critique from a supervisor/participant |
+| Meeting Procedure *(v8.5)* | the mechanics of running the meeting rather than its content: audio/screen checks, greetings and closings, who presents next, scheduling, access to links. **Narrowest, last-resort Type** — see the caveats below |
 | **— reasoning (v8.4)** | *what a segment asserts, and the reasoning around it* |
 | Claim | a proposition that can be supported, contradicted, or qualified |
 | Observation | a claim describing an observed cue, event, or state |
@@ -156,6 +157,30 @@ discussed*. `sanitize_graph` treats all 25 identically (`domain = meeting`).
 
 A single document may legitimately contain Topics typed from **both** lists (e.g. a
 supervision meeting discussing a Method) — that's expected, not an error.
+
+**`Meeting Procedure` (v8.5) — three things that make it work, all required:**
+
+1. **A deterministic `has_source` ban.** A Topic whose *only* Type is
+   `Meeting Procedure` has its `has_source` edge dropped by `sanitize_graph`
+   *before* the `MAX_HAS_SOURCE` cap is consulted, so it never even consumes a
+   slot. This is the point of the Type. That cap is first-come-first-served in
+   chunk order (`has_source_state` spans the document), and a transcript's chunk 1
+   is greetings and "can you hear me?" — left alone it fills all three
+   "document core" slots before the first chunk of real content is reached. The
+   ordering happens to work for papers, whose chunk 1 is the abstract; it inverts
+   on meetings. A Topic typed `Meeting Procedure` **and** something contentful
+   (e.g. `Decision`) is not procedural-only and keeps its claim on a slot.
+2. **A relaxed `Description` rule.** One plain sentence, no required specific
+   detail — the exception to §4's ≥2-sentences-with-a-concrete-detail rule.
+   Without it the model fabricates a number or name to satisfy that rule, which
+   is a worse failure than a short Description.
+3. **Last-resort framing in the prompt.** A catch-all is an attractor for a small
+   model, so it is defined as the narrowest Type and carries its own tie-breaker
+   paragraph: if the text states any problem, plan, claim, result or critique
+   about *the work itself*, it is not `Meeting Procedure`.
+
+It is deliberately **not** in `ALLOWED_TYPES` for conflict detection — it carries
+no assertion, so it can never be a conflict participant.
 
 **Three consequences of the v8.4 expansion, all still open:**
 
@@ -527,6 +552,7 @@ flowchart TB
 | v8.1 | Added `Contradiction` node type + `has_contradiction` edge (per-chunk, single-chunk visibility only). |
 | v8.2 | Added `supersedes` edge (on-demand, whole-graph pass only) — see §7. |
 | v8.3 | `Description` ids scoped per source document (`…\|<CanonicalSource>` + a `source_id` property), so two documents describing the same Topic+Type no longer MERGE into one node — a precondition for cross-document conflict detection. |
+| v8.5 | Added Meeting Type `Meeting Procedure` (26th) for talk that runs the meeting rather than carrying its content, plus the deterministic `has_source` ban that stops a transcript's opening audio-check from claiming the document's core-Topic slots. Also doc-level `date`, `series` and `doc_type` now reach the `Document` node from producer metadata (see [`docs/chunk_schema.md`](./chunk_schema.md)), which is what `PRECEDES` chains a recurring meeting by and what promotes `Source.year` for the supersession pass. |
 | v8.4 | Meeting Type vocabulary 7 → 25: added an argumentation/reasoning layer (Claim, Observation, Rationale, Assumption, Heuristic, Prediction, Option, Evidence, Constraint, Risk, Trade Off, Exception, Uncertainty, Condition, Rule, Action, Outcome, Disagreement). Vocabulary only — no new node type, no new relationship, and `relates_to`'s pair table (§5) is unchanged. |
 
 ---

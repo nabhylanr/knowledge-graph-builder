@@ -34,10 +34,9 @@ from typing import List, Optional
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.ingestion.validate import FileReport, collect_paths, print_report, validate_lines
-from src.sync.supabase_sync import DOC_TYPES, resolve_doc_type
+from src.sync.supabase_sync import DEFAULT_TABLES, DOC_TYPES, resolve_doc_type
 
 BUCKET = os.getenv("SUPABASE_BUCKET", "chunks")
-TABLE = "chunk_uploads"
 
 
 def _doc_id_of(content: bytes) -> Optional[str]:
@@ -79,14 +78,16 @@ def upload_one(client, prefix: str, path: Path, content: bytes, report: FileRepo
     digest = hashlib.sha256(content).hexdigest()
     storage_path = f"{prefix}/{doc_id}__{digest[:8]}.jsonl"
 
-    # Which folder this lands in on the receiving side. `--doc-type` wins;
-    # otherwise it is read off the file's own source_kind. Sending it means the
-    # receiver never has to guess — see resolve_doc_type.
+    # Which queue this goes into — and so which folder it lands in on the
+    # receiving side. `--doc-type` wins; otherwise it is read off the file's own
+    # source_kind. There is a table per kind, so this choice IS the doc_type: the
+    # receiver reads it off the table and never guesses. See resolve_doc_type.
     resolved, _ = resolve_doc_type(
         {"doc_type": doc_type},
         storage_path,
         [doc.source_kind for doc in report.docs.values()],
     )
+    table = DEFAULT_TABLES[resolved]
 
     try:
         client.storage.from_(BUCKET).upload(
@@ -103,27 +104,15 @@ def upload_one(client, prefix: str, path: Path, content: bytes, report: FileRepo
         "storage_path": storage_path,
         "sha256": digest,
         "n_chunks": report.n_records,
-        "doc_type": resolved,
     }
-    note = ""
     try:
-        try:
-            client.table(TABLE).insert(row).execute()
-        except Exception as e:
-            if "doc_type" not in str(e):
-                raise
-            # Server predates the doc_type column. The row is still worth having
-            # — the receiver falls back to inferring the folder — so send it
-            # without, and say so rather than failing the upload.
-            del row["doc_type"]
-            client.table(TABLE).insert(row).execute()
-            note = "  [doc_type not stored: server needs db/supabase_schema.sql]"
+        client.table(table).insert(row).execute()
     except Exception as e:
         if "duplicate key" in str(e).lower() or "23505" in str(e):
             return f"SKIP {path.name}: already uploaded (identical content)"
         return f"FAIL {path.name}: could not register upload: {e}"
 
-    return f"OK   {path.name} -> {storage_path} ({report.n_records} chunks, {resolved}){note}"
+    return f"OK   {path.name} -> {storage_path} ({report.n_records} chunks, {table})"
 
 
 def run(targets: List[str], prefix: Optional[str], dry_run: bool, verbose: bool,
@@ -179,7 +168,9 @@ def main() -> None:
     parser.add_argument("paths", nargs="+", help="A .jsonl file, or a folder searched recursively.")
     parser.add_argument("--as", dest="prefix", default=None, help="Folder prefix in the bucket (default: your email's local part).")
     parser.add_argument("--doc-type", choices=list(DOC_TYPES), default=None,
-                        help="What these files are. Decides which folder the receiver files them into. "
+                        help="What these files are. Decides which manifest table they are announced in "
+                             f"({', '.join(f'{t} -> {n}' for t, n in sorted(DEFAULT_TABLES.items()))}), and so "
+                             "which folder the receiver files them into. "
                              "Default: read from each file's source_kind (pdf -> paper, transcript -> meeting).")
     parser.add_argument("--dry-run", action="store_true", help="Validate only — do not upload.")
     parser.add_argument("--verbose", action="store_true", help="List every validation issue.")

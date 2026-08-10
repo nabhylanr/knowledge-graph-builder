@@ -50,10 +50,29 @@ class GraphMiner:
         # (lower it if the Ollama/GPU server can't keep up); 1 = fully sequential.
         max_workers = max(1, int(os.getenv("EXTRACTOR_MAX_WORKERS", "4")))
 
+        # Chunks the producer marked as carrying nothing to extract (a transcript's
+        # "you", "Thank you.") are not sent to the LLM at all. They are NOT dropped:
+        # `store_chunks_for_doc` writes every chunk's text and embedding regardless
+        # of whether a graph came back, so they keep their place in the NEXT chain
+        # and stay retrievable — only the hallucinated Topic/Type/Description layer
+        # on top of them is skipped. The extraction prompt cannot decline (it
+        # requires 1-3 Topics per chunk), so this is the only place the decision
+        # can be made.
+        eligible = [c for c in doc.chunks if c.extraction_eligible]
+        skipped = len(doc.chunks) - len(eligible)
+        if skipped:
+            logger.info(
+                f"{source_name}: skipping extraction for {skipped}/{len(doc.chunks)} chunk(s) "
+                f"marked extraction_eligible=false (stored and embedded, not extracted)."
+            )
+        if not eligible:
+            logger.warning(f"{source_name}: no chunk is eligible for extraction — storing chunks only.")
+            return doc
+
         # Progress counter — raw_only extraction logs nothing on success, so without
         # this a long run is silent until it finishes. Incremented under a lock since
         # workers run concurrently; logged every 10 chunks (and on the last one).
-        total_chunks = len(doc.chunks)
+        total_chunks = len(eligible)
         progress = {"done": 0}
         progress_lock = Lock()
 
@@ -75,16 +94,16 @@ class GraphMiner:
 
         if max_workers > 1:
             with ThreadPoolExecutor(max_workers=max_workers) as executor:
-                raw_graphs = list(executor.map(_extract, doc.chunks))
+                raw_graphs = list(executor.map(_extract, eligible))
         else:
-            raw_graphs = [_extract(chunk) for chunk in doc.chunks]
+            raw_graphs = [_extract(chunk) for chunk in eligible]
 
         # Phase 2 — sanitize + map, SERIALLY in chunk order. This is deliberate:
         # sanitize mutates has_source_state and topic_registry, whose results are
         # order-dependent (first-3 has_source cap, first-spelling Topic dedup).
         # Parallelizing here would make the output non-deterministic, so it stays a
         # plain in-order loop — matching the previous sequential behaviour exactly.
-        for chunk, graph in zip(doc.chunks, raw_graphs):
+        for chunk, graph in zip(eligible, raw_graphs):
             if graph is None:
                 logger.warning(f"Skipping chunk — graph extraction returned None.")
                 continue
@@ -111,7 +130,7 @@ class GraphMiner:
             except Exception as e:
                 logger.warning(f"Error while mining graph: {e}")
 
-        logger.info(f"Created a graph representation for {len(doc.chunks)} chunks in {source_name}.")
+        logger.info(f"Created a graph representation for {len(eligible)} chunks in {source_name}.")
 
         return doc
 

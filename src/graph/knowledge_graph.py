@@ -623,6 +623,22 @@ class KnowledgeGraph(Neo4jGraph):
                 k: v for k, v in accumulated_source_props.items()
                 if k in ("date_raw", "year", "format")
             }
+
+            # A date the producer supplied as metadata outranks anything the model
+            # read out of the text. For a meeting it is the only date there is —
+            # nobody says the date out loud, and the prompt forbids guessing one —
+            # and it is exact, being taken from the recording's own id. Without
+            # this promotion `Source.year` stays null for every meeting, and the
+            # supersession pass skips any pair missing a year on either side
+            # (src/conflict/classifier.py), permanently excluding the whole
+            # meeting corpus from the one comparison it is best suited for.
+            producer_date = (doc.metadata or {}).get("date")
+            if producer_date:
+                source_meta_props["date_raw"] = str(producer_date)
+                # Stored as a string: _Node.properties is Dict[str, str], and
+                # fetch_source_years reads it back with toInteger().
+                source_meta_props["year"] = str(producer_date)[:4]
+
             if source_meta_props:
                 if "date_raw" in source_meta_props and "year" not in source_meta_props:
                     logger.warning(

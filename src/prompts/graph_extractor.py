@@ -54,6 +54,21 @@ def get_graph_extractor_prompt() -> PromptTemplate:
        SUPERSEDED: construction-time Contradiction emission (STEP D) was disabled
        later — see docs/conflict_pipeline.md, which is now the sole producer.
 
+    10. (v8.5) Added the Meeting Type `Meeting Procedure` for talk that runs the
+       meeting rather than carries its content (audio checks, "who presents
+       next", scheduling). Without it the model had no legal home for such a
+       Topic and forced it into Issue/Idea/Feedback — "I cannot hear you
+       clearly" became an Issue beside the research ones, and, worse, claimed
+       one of the 3 has_source slots, because that cap is first-come in chunk
+       order and a transcript's chunk 1 is greetings. Three parts make it work
+       and all three are required: the vocabulary entry, the Description
+       exception (one sentence, no invented detail — otherwise the model
+       fabricates one to satisfy the >=2-sentence rule), and the deterministic
+       has_source ban in `sanitize_graph` (`topic_is_procedural`). The prompt
+       side alone would leak, per the note below. Being a catch-all it is also
+       an attractor for a small model, so it is defined as the NARROWEST,
+       last-resort Type with its own tie-breaker paragraph.
+
     HONEST NOTE (still true from v7): a better prompt reduces many issues, but
     hard numeric constraints and self-loops may still leak partially on a model
     as small as llama-3.1-8b-instant. Anything that leaks is caught
@@ -80,6 +95,10 @@ STEP A — Read INPUT TEXT and identify the 1-3 MOST IMPORTANT (top-level) Topic
    These are the ONLY Topics allowed to have a has_source edge. Every other Topic
    MUST connect to the graph via has_subtopic (a chain from one of these 1-3
    Topics) and MUST NOT have its own has_source.
+   A Topic whose only Type is Meeting Procedure is NEVER one of these — the
+   mechanics of running a meeting are never what a document is about. If this
+   chunk contains nothing else, emit NO has_source edge at all rather than
+   promoting the procedure to top level.
 
 STEP B — For each Topic, decide its Type from the vocabulary below. Paper Types
    and Meeting Types are DISJOINT — a Topic gets exactly one Type from whichever
@@ -163,6 +182,12 @@ ONTOLOGY — NODE TYPES (6 only)
    ONE specific detail from the text (a number, name, technical term, or measured
    result). Do NOT write generic tautological sentences like "X is a method." or
    "Y is a problem." — such sentences carry no information and are FORBIDDEN.
+   EXCEPTION — Type "Meeting Procedure": ONE plain sentence is enough and no
+   specific detail is required, because there is usually none to find. Write what
+   procedurally happened ("The participants checked whether the audio was
+   audible before starting.") and stop. Do NOT pad it to two sentences and do NOT
+   invent a number, name, or result to satisfy the rule above — inventing one
+   here is a worse error than a short Description.
    If a Topic has more than one Type, each Type's Description must contain a
    DIFFERENT specific detail — if you cannot write a Description that doesn't
    just restate the other Type's Description, the Topic does not need the second
@@ -283,6 +308,9 @@ Use the casing EXACTLY as below. Do not invent a new Type; pick the closest one.
     Open Question   — question raised but not yet answered or resolved
     Progress Update — status report on work completed or in progress since the previous meeting
     Feedback        — input or critique from a supervisor/participant on work presented
+    Meeting Procedure — the mechanics of running the meeting rather than its content:
+                      audio/screen checks, greetings and closings, who presents next,
+                      scheduling, access to links or files, agenda order
 
   MEETING — reasoning (what is ASSERTED, and the reasoning around it):
     Claim           — a proposition that can be supported, contradicted, or qualified
@@ -321,6 +349,13 @@ CHOOSING BETWEEN CLOSE MEETING TYPES (these are the ones most often confused):
   opposition; one-directional critique is Feedback.
 - Rationale vs Assumption: Rationale is stated as the REASON FOR a decision;
   Assumption is a premise taken for granted, not argued for.
+- Meeting Procedure vs everything else: Meeting Procedure is the LAST RESORT and
+  the NARROWEST Type — it covers only running the meeting. If the text states any
+  problem, plan, claim, result, or critique about THE WORK ITSELF, it is NOT
+  Meeting Procedure, even when phrased casually. "I cannot hear you clearly" and
+  "who wants to present next?" are Meeting Procedure; "the chunking method is
+  still fixed and not smart" is an Issue. When genuinely torn between Meeting
+  Procedure and a content Type, choose the content Type.
 When the text does not clearly support one of the reasoning Types, prefer the
 plain discussion-flow Type (Issue / Idea / Decision / ...). Do not upgrade an
 ordinary statement into a Claim, and never give one Topic five Types — a Topic

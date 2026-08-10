@@ -13,3 +13,6 @@ python-dotenv>=1.0.0
 python-igraph>=0.11.8
 python-louvain>=0.16
 supabase>=2.9.0
+
+# Tests only. `pytest` from the repo root; needs no Neo4j, LLM or embeddings.
+pytest>=8.0

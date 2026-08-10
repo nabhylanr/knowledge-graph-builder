@@ -188,6 +188,13 @@ def run(
         if mark_remote:
             mark_remote(doc.filename)
 
+    # Chain each recurring meeting into a timeline. Runs over the series present
+    # in THIS batch but re-chains each one whole, so a meeting added later still
+    # links to the ones already in the graph (the Cypher MERGEs over every
+    # Document sharing the series, not just the new ones).
+    for series in sorted({(doc.metadata or {}).get("series") for doc in docs} - {None, ""}):
+        knowledge_graph.create_precedes_relationships(series=series)
+
     if communities:
         logger.info("Computing centralities and detecting communities...")
         knowledge_graph.update_centralities_and_communities()

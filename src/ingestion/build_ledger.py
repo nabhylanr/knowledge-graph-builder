@@ -37,8 +37,16 @@ LEDGER_VERSION = 1
 
 def content_digest(doc: ProcessedDocument) -> str:
     """
-    Fingerprint of what extraction would actually see: every chunk id and its
-    text, order-independent so a reshuffled file is not mistaken for a new one.
+    Fingerprint of a document's chunk ids and texts, order-independent so a
+    reshuffled file is not mistaken for a new one.
+
+    Deliberately NOT including `extraction_eligible`, even though it decides
+    which chunks reach the LLM: mixing it in changes the digest of every
+    already-built document (the paper corpus carries the flag too), so a run
+    that only re-tuned the threshold would re-extract them from scratch — and
+    `--rebuild` CREATEs Document nodes rather than MERGEing them. The cost of
+    that outweighs catching a threshold change automatically; re-tune with
+    `--rebuild` against a wiped graph when you need it.
     """
     digest = hashlib.sha256()
     for chunk in sorted(doc.chunks or [], key=lambda c: str(c.chunk_id)):

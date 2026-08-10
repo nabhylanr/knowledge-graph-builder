@@ -32,12 +32,21 @@ class ChunksIngestor:
             doc_id = record.effective_doc_id
 
             if doc_id not in docs_map:
+                metadata = record.doc_metadata()
+                # The folder is the document's kind. Recorded on the Document node
+                # too, not only in the build ledger — without it Neo4j has no way
+                # to tell a paper from a meeting, so "every Decision from a
+                # meeting" is not a question the graph can answer.
+                doc_type = Path(source).parent.name if source else ""
+                if doc_type:
+                    metadata["doc_type"] = doc_type
+
                 docs_map[doc_id] = ProcessedDocument(
                     filename=doc_id,
                     # Which file on disk this came from. The build ledger records
                     # it, and its parent folder is the document's doc_type.
                     source=source,
-                    metadata=record.doc_metadata(),
+                    metadata=metadata,
                     chunks=[],
                 )
 

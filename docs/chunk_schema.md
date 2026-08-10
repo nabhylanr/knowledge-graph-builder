@@ -38,7 +38,9 @@ per document is the convention here.
 | `page` | optional | integer | Carried, not consumed yet. |
 | `section` | optional | string | Carried, not consumed yet. |
 | `content_role` | optional | string | e.g. `"abstract"`, `"references"`. Carried, not consumed yet. |
-| `extraction_eligible` | optional | boolean (default `true`) | Producer's judgement on whether the chunk is worth extracting. Reported by the validator; the pipeline does not skip on it yet. |
+| `extraction_eligible` | optional | boolean (default `true`) | **The pipeline now acts on this.** `false` = store and embed the chunk, but never send it to the extraction LLM. See the section below — its meaning is reconciled at ingest, not taken at face value. |
+| `date` | doc-level | string | ISO 8601 (`"2026-01-16"`). Lands on the `Document` node and is promoted to `Source.year`, which the supersession pass requires. Read from the first record of each `doc_id`. |
+| `series` | doc-level | string | Recurring-meeting name (`"llm-bi-weekly-meeting"`). Lands on the `Document` node; `PRECEDES` chains documents sharing a series in `date` order. |
 | `quality_notes` | optional | string[] | Carried, not consumed yet. |
 
 ### Accepted spellings
@@ -49,6 +51,40 @@ Both producers' names resolve to the same field:
 |---|---|
 | `source_path` | `source_file` |
 | `source_kind` | `source_type` |
+
+### `extraction_eligible` — the pipeline's meaning vs yours
+
+The two producers using this field mean different things by it, and only one
+matches what the pipeline does with it (skip the LLM call):
+
+| Producer | Sets `false` for | Honoured? |
+|---|---|---|
+| meeting adapter | chunks with under 70 characters of speech — a transcript's `"you"`, `"Thank you."`. Nothing to extract. | yes |
+| `academic-pdf-chunker` | **any** chunk carrying a `quality_notes` entry, including cosmetic PDF damage (`pdf_ligature`, `line_break_hyphenation`) | only partly |
+
+Most of the second kind are readable paragraphs whose text merely renders as
+`"Thisfinding"` instead of `"This finding"`. Taking those at face value drops 625
+chunks of real content and nearly erases five scanned papers, so
+`ChunkRecord.effective_extraction_eligible` overrides `false` back to eligible
+**when it is fully explained by cosmetic notes**. A `false` with no notes behind
+it — `table_artifact`, `publisher_boilerplate`, `erratum`, and everything the
+meeting adapter marks — is always honoured.
+
+If you are a producer: set `false` only when a chunk has **nothing to extract**.
+Put rendering defects in `quality_notes` and leave the chunk eligible.
+
+### Doc-level fields
+
+`date` and `series` describe the document, not the chunk, but this schema is
+per-record — so repeat them on every record. The ingestor reads them off the
+first record of each `doc_id` (same as `source_path` / `source_kind` /
+`n_chunks`) and writes them onto the `Document` node.
+
+They exist because the extraction prompt is forbidden to guess a date that is
+not in the text, and a meeting's date is essentially never spoken aloud. Without
+them arriving as metadata the graph has no time axis: no `PRECEDES` chain across
+a recurring meeting, and no `Source.year`, which means the supersession pass
+skips every pair involving that document.
 
 ### Unknown fields
 
@@ -120,5 +156,6 @@ that point. The validator reports both cases.
 Locally: `chunks_data/<producer>/<doc_id>.jsonl` — e.g. `chunks_data/maruf/`.
 
 To hand a file over, see [chunk_sync.md](./chunk_sync.md) — upload to Supabase
-Storage and record it in the `chunk_uploads` table; the receiving side pulls,
-verifies the checksum and re-runs this validator before the file is accepted.
+Storage and record it in the manifest table for its kind (`paper_chunk_uploads`
+or `meeting_chunk_uploads`); the receiving side pulls, verifies the checksum and
+re-runs this validator before the file is accepted.

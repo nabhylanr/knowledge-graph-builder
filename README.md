@@ -233,12 +233,15 @@ warnings cover the quieter problems — gapped `index`, missing `source_kind`,
 
 ## Chunk hand-off (Supabase)
 
-Chunk producers upload files to Supabase Storage and register them in a
-`chunk_uploads` table; this machine polls and pulls, filing each download into
-`chunks_data/paper/` or `chunks_data/meeting/` according to the row's `doc_type`
-(with fallbacks — see [Where a file lands
-locally](docs/chunk_sync.md#where-a-file-lands-locally)). Setup, credentials and
-the design rationale: [docs/chunk_sync.md](docs/chunk_sync.md).
+Chunk producers upload files to Supabase Storage and register them in a manifest
+table — `paper_chunk_uploads` or `meeting_chunk_uploads`. This machine polls and
+pulls, filing each download into `chunks_data/paper/` or `chunks_data/meeting/`:
+**the table a row is in is its doc_type**, so nothing is guessed on this side
+(see [Which queue a file goes
+in](docs/chunk_sync.md#which-queue-a-file-goes-in)). Meeting uploads arrive in the
+meeting chunker's `*.chunks.json` format and are converted to the pipeline's
+`.jsonl` on the way in. Setup, credentials and the design rationale:
+[docs/chunk_sync.md](docs/chunk_sync.md).
 
 ```bash
 # producer side — validates first, and one bad file uploads nothing
@@ -281,8 +284,9 @@ main.py                     # entry point (CLI)
 run_sync.py                 # pull chunk uploads from Supabase (poll, then exit)
 run_listen.py               # same, but pushed over Realtime as uploads land
 chunks_data/                # pre-built .jsonl chunks
-db/supabase_schema.sql      # chunk_uploads table, bucket, RLS policies
+db/supabase_schema.sql      # the two *_chunk_uploads tables, bucket, RLS policies
 scripts/upload_chunks.py    # producer-side uploader (run on their machine)
+scripts/convert_meeting_chunks.py  # meeting *.chunks.json -> .jsonl, for local files
 deploy/                     # scheduled-sync install (Windows Task Scheduler)
 src/
   config.py                 # pydantic configuration models
@@ -290,6 +294,7 @@ src/
   factory/                  # LLM + embeddings factories
   ingestion/                # chunks loader, embedder, graph miner
     chunk_record.py         # the .jsonl field contract (aliases, defaults)
+    meeting_chunks.py       # adapter for the meeting chunker's *.chunks.json
     validate.py             # `python -m src.ingestion.validate <path>`
   sync/
     supabase_sync.py        # download, checksum, validate, mark status

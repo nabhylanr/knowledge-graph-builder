@@ -1,9 +1,10 @@
 """
 Realtime listener — the fast half of the hybrid hand-off.
 
-Subscribes to INSERTs on `chunk_uploads` over Supabase Realtime and drains the
-pending queue within a second or so of a producer uploading, instead of waiting
-for the next scheduled poll.
+Subscribes to INSERTs on every manifest table (`paper_chunk_uploads`,
+`meeting_chunk_uploads`) over Supabase Realtime and drains the pending queue
+within a second or so of a producer uploading, instead of waiting for the next
+scheduled poll.
 
 Two properties are deliberate:
 
@@ -109,15 +110,20 @@ class ChunkListener:
         client = AsyncRealtimeClient(self.endpoint, self.conf.service_key, auto_reconnect=True)
         await client.connect()
 
+        # One channel, one binding per table. They share a handler because the
+        # event is only a wake-up: the drain re-queries every table anyway, so
+        # which one fired does not matter.
         channel = client.channel(CHANNEL_TOPIC)
-        channel.on_postgres_changes(
-            "INSERT",
-            callback=self._on_insert,
-            schema="public",
-            table=self.conf.table,
-        )
+        tables = sorted(set(self.conf.tables.values()))
+        for table in tables:
+            channel.on_postgres_changes(
+                "INSERT",
+                callback=self._on_insert,
+                schema="public",
+                table=table,
+            )
         await channel.subscribe(self._on_state)
-        logger.info(f"Listening on {self.endpoint} for INSERTs on {self.conf.table}.")
+        logger.info(f"Listening on {self.endpoint} for INSERTs on {', '.join(tables)}.")
 
         try:
             while client.is_connected:

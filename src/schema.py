@@ -9,6 +9,12 @@ class Chunk(BaseModel):
     chunk_id: Union[int, str]
     text: str
     filename: Optional[str] = None
+    # False = store this chunk (text + embedding + NEXT chain) but do not spend an
+    # LLM call extracting a graph from it. Set by the producer for chunks that
+    # carry no extractable content — a transcript's "you" or "Thank you." — which
+    # the extractor cannot decline to answer for, since its prompt requires 1-3
+    # Topics per chunk. See GraphMiner.mine_graph_from_doc_chunks.
+    extraction_eligible: bool = True
     embedding: Optional[List[float]] = None
     chunk_size: int=1000
     chunk_overlap: int=100
