@@ -14,6 +14,7 @@ langchain, neo4j and the rest of the pipeline.
 See docs/chunk_schema.md for the human-readable version of this contract.
 """
 
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
@@ -36,6 +37,26 @@ DOC_METADATA_FIELDS = ("source_path", "source_kind", "n_chunks", "date", "series
 # those 32 chunks keep the producer's verdict. Move it in here if a closer look
 # says otherwise — that is the only edit this decision should ever need.
 COSMETIC_QUALITY_NOTES = frozenset({"pdf_ligature", "line_break_hyphenation"})
+
+# `content_role == "table_artifact"` chunks with EMPTY quality_notes (so the
+# cosmetic-override above never even applies) are a mixed bag: some are a real
+# sentence interpreting the table ("Table 2 identifies five forms of PSS...",
+# "The data shows that both NERL and..."), most are a raw dump of table
+# headers/numbers with no sentence structure at all. Checked by hand against
+# all 27 such chunks across chunks_data/paper + gold* (2026-08-11): every
+# chunk containing one of these reporting verbs turned out to be real prose
+# worth extracting (16/27), and none of the 11 without one did — so this is a
+# precision-first filter (zero observed false positives), not a recall-complete
+# one. Known gap: a few chunks open with raw table numbers and only assert a
+# finding in a trailing sentence with no reporting verb at all (e.g.
+# Thesis_M10801107_Yu_Ting_Chiu idx=79 — "...can reduce the number of picked
+# pods...") — those still get skipped. Revisit only if a closer look at a
+# larger corpus says this verb list needs to grow; don't broaden it on a guess.
+_TABLE_ARTIFACT_PROSE_VERBS = re.compile(
+    r"\b(shows?|summarizes?|reveals?|identifies?|presents?|outlines?|specifies?|"
+    r"indicates?|suggests?|demonstrates?)\b",
+    re.IGNORECASE,
+)
 
 
 class ChunkRecord(BaseModel):
@@ -130,10 +151,14 @@ class ChunkRecord(BaseModel):
           carries the paper's argument; taking the flag at face value would drop
           625 chunks of real content and nearly erase five scanned papers.
 
-        So a false flag is overridden back to eligible only when it is fully
-        explained by cosmetic notes. A flag with no notes behind it (the
-        producer's `table_artifact` / `publisher_boilerplate` / `erratum` chunks,
-        and every chunk the meeting adapter marks) is always honoured.
+        So a false flag is overridden back to eligible when it is fully
+        explained by cosmetic notes, OR (see `_TABLE_ARTIFACT_PROSE_VERBS`)
+        when it's a table_artifact chunk with NO notes at all whose text still
+        contains a reporting verb — a cheap, precision-first signal that it's
+        real prose interpreting the table, not a raw data dump. A flag with no
+        notes behind it and no such verb (the producer's `publisher_boilerplate`
+        / `erratum` chunks, the rest of `table_artifact`, and every chunk the
+        meeting adapter marks) is always honoured.
 
         Reconciled here rather than by rewriting the .jsonl files because papers
         arrive from Supabase — a re-sync would overwrite any local edit and
@@ -142,7 +167,11 @@ class ChunkRecord(BaseModel):
         if self.extraction_eligible:
             return True
         notes = set(self.quality_notes)
-        return bool(notes) and notes <= COSMETIC_QUALITY_NOTES
+        if notes:
+            return notes <= COSMETIC_QUALITY_NOTES
+        if self.content_role == "table_artifact":
+            return bool(_TABLE_ARTIFACT_PROSE_VERBS.search(self.text))
+        return False
 
     @property
     def unknown_fields(self) -> List[str]:

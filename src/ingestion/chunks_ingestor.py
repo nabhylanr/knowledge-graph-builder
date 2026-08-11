@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 from typing import Dict, Iterable, List
 
@@ -7,6 +8,33 @@ from src.schema import ProcessedDocument
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
+
+# Narrow, evidence-based fixes only — each rule below was checked against the
+# actual chunks_data corpus before being added; a broader "strip anything that
+# looks alien" filter was considered and rejected (see chat history) because
+# it matched Traditional Chinese thesis title pages (e.g.
+# Thesis_M10801107_Yu_Ting_Chiu, 79 CJK characters including an ROC-calendar
+# date) as "alien symbols" and would have deleted real content, not noise.
+_NULL_BYTE = "\x00"
+# JSTOR's semi-transparent download-stamp watermark ("This content downloaded
+# from...") extracts with literal null bytes interspersed — verified in
+# Franke_1978_Hawthorne_Effect, chunk index 1.
+_LIKERT_SCALE_RE = re.compile(r"\b12345\b")
+# A Likert-scale response line ("1 2 3 4 5") that PDF extraction merges into
+# one token with no separators — verified verbatim in Martinez_2009 and
+# Zhao_2015. Exact-match only, deliberately not broadened to other renderings
+# ("1-5", spaced digits, ...) without evidence they occur in this corpus —
+# broadening speculatively risks eating real numeric content instead.
+_WHITESPACE_RE = re.compile(r"\s+")
+
+
+def _clean_chunk_text(text: str) -> str:
+    if not text:
+        return text
+    text = text.replace(_NULL_BYTE, " ")
+    text = _LIKERT_SCALE_RE.sub(" ", text)
+    text = _WHITESPACE_RE.sub(" ", text).strip()
+    return text
 
 
 class ChunksIngestor:
@@ -29,6 +57,7 @@ class ChunksIngestor:
                 continue
 
             record = ChunkRecord.model_validate(json.loads(line))
+            record.text = _clean_chunk_text(record.text)
             doc_id = record.effective_doc_id
 
             if doc_id not in docs_map:
