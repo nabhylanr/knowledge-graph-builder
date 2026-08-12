@@ -12,9 +12,15 @@ so this repo only covers the path **from chunks to a built graph**.
 ## Pipeline
 
 ```
-load chunks (.jsonl)  ->  embed  ->  extract graph (LLM)  ->  store in Neo4j
+load chunks (.jsonl)  ->  per document: embed  ->  per chunk: extract graph (LLM) -> store in Neo4j
                                                                  -> centralities & communities
 ```
+
+Steps 2-4 run one document at a time, and within a document the extract and store
+of step 3-4 are interleaved per chunk. Nothing is batched up in memory: each
+chunk lands in Neo4j as its own extraction finishes, and is checkpointed there
+and then, so an interrupted build costs the chunk it died on rather than every
+document it had processed so far.
 
 1. **Load** — read pre-built chunks from `.jsonl` files ([ChunksIngestor](src/ingestion/chunks_ingestor.py)).
 2. **Embed** — vectorize each chunk ([ChunkEmbedder](src/ingestion/embedder.py)).
@@ -203,6 +209,26 @@ content under a new name is not rebuilt, revised text is. The ledger is
 reconciled against Neo4j on every run, so wiping the graph does not leave it
 claiming documents are still there. Details:
 [docs/chunk_sync.md](docs/chunk_sync.md#not-building-the-same-thing-twice).
+
+### Chunk checkpoint
+
+The ledger works at document granularity, so a document that dies at chunk 80 of
+129 is still "unbuilt" and would restart from chunk 0. `main.py` therefore also
+writes `chunk_checkpoint.json` (gitignored) as it goes: each chunk is recorded
+the moment it is in Neo4j, so a resumed run skips straight to the ones that are
+not. A document's entry is dropped once it is fully built, so this file only
+ever holds work in progress.
+
+```bash
+python -m src.ingestion.chunk_checkpoint              # what is half-built
+python -m src.ingestion.chunk_checkpoint --forget KEY # re-extract one document from scratch
+python main.py --chunk-checkpoint path.json           # use a different file
+```
+
+The entry also carries the cross-chunk sanitizer state (the `has_source` cap,
+the Topic registry), so resuming continues those counters rather than restarting
+them. It is invalidated automatically if the document's content changed under
+it, and `--rebuild` clears it — both cases re-extract every chunk.
 
 ## Chunks format
 

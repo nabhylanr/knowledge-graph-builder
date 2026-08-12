@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from src.config import Configuration, EmbedderConf, KnowledgeGraphConfig, LLMConf
 from src.graph.knowledge_graph import KnowledgeGraph
 from src.ingestion.build_ledger import BuildLedger, content_digest
+from src.ingestion.chunk_checkpoint import ChunkCheckpoint
 from src.ingestion.chunks_ingestor import ChunksIngestor
 from src.ingestion.embedder import ChunkEmbedder
 from src.ingestion.graph_miner import GraphMiner
@@ -122,6 +123,7 @@ def run(
     communities: bool = True,
     rebuild: bool = False,
     ledger_path: Optional[str] = None,
+    checkpoint_path: Optional[str] = None,
     remote_status: bool = True,
 ) -> None:
     conf = build_configuration()
@@ -170,17 +172,33 @@ def run(
     docs = [doc for doc, _ in pending]
     logger.info(f"Building {len(docs)} document(s), {sum(len(d.chunks) for d in docs)} chunks.")
 
-    logger.info("Embedding chunks...")
-    docs = embedder.embed_documents_chunks(docs)
-
-    logger.info("Extracting a Knowledge Graph from each chunk...")
-    docs = graph_miner.mine_graph_from_docs(docs=docs)
-
-    logger.info("Uploading nodes, relationships and chunks to Neo4j...")
     mark_remote = build_remote_marker(remote_status)
     digests = {doc.filename: digest for doc, digest in pending}
+    checkpoint = ChunkCheckpoint(path=checkpoint_path)
+
+    # One document at a time, embedded then extracted-and-stored as it goes,
+    # rather than three whole-batch phases. Batching meant nothing reached Neo4j
+    # until every pending document had been extracted, so a crash on document 3
+    # of 5 also threw away documents 1 and 2. Within a document,
+    # `mine_and_store_doc_chunks` writes and checkpoints each chunk as its own
+    # extraction lands, so a crash costs the in-flight chunk rather than the
+    # document.
     for doc in docs:
-        knowledge_graph.add_documents([doc])
+        if rebuild:
+            # "Rebuild" means redo the work, so stale progress from an earlier
+            # run of this document must not be silently consulted.
+            checkpoint.clear_document(doc.filename, doc.document_version)
+
+        logger.info(f"Embedding chunks for {doc.filename}...")
+        embedder.embed_document_chunks(doc)
+
+        logger.info(f"Extracting and storing {doc.filename}...")
+        graph_miner.mine_and_store_doc_chunks(
+            doc,
+            knowledge_graph=knowledge_graph,
+            checkpoint=checkpoint,
+        )
+
         # Recorded per document, not once at the end: an interrupted run should
         # cost the document it died on, not every document it had finished.
         ledger.record(doc, digests.get(doc.filename))
@@ -237,6 +255,12 @@ def main() -> None:
         help="Build ledger file (default: BUILD_LEDGER_PATH or ./build_ledger.json).",
     )
     parser.add_argument(
+        "--chunk-checkpoint",
+        default=None,
+        help="Chunk-level progress file, used to resume a document that crashed mid-way "
+             "(default: CHUNK_CHECKPOINT_PATH or ./chunk_checkpoint.json).",
+    )
+    parser.add_argument(
         "--no-remote-status",
         action="store_true",
         help="Do not move the Supabase manifest rows to 'built' after a successful build.",
@@ -249,6 +273,7 @@ def main() -> None:
         communities=not args.no_communities,
         rebuild=args.rebuild,
         ledger_path=args.ledger,
+        checkpoint_path=args.chunk_checkpoint,
         remote_status=not args.no_remote_status,
     )
 

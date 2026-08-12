@@ -14,6 +14,8 @@ env/
 
 # Local build state — which documents are already in this machine's graph
 build_ledger.json
+# ...and which chunks of a document that crashed mid-build already made it in
+chunk_checkpoint.json
 conflict_candidates.db
 
 # OS / editor

@@ -45,7 +45,7 @@ sys.path.insert(0, str(ROOT))
 
 from src.agents.graph_extractor import GraphExtractor              # noqa: E402
 from src.config import LLMConf                                     # noqa: E402
-from src.graph.graph_model import sanitize_graph, _canonical_id    # noqa: E402
+from src.graph.graph_model import classify_expected_domain, sanitize_graph, _canonical_id    # noqa: E402
 
 try:
     from src.graph.graph_ds import detect_louvain_communities, detect_leiden_communities
@@ -105,7 +105,10 @@ def mine_method(extractor: GraphExtractor, chunks, doc: str):
             continue
         raw_nodes += len(g.nodes)
         sg = sanitize_graph(g, source_name=doc,
-                            has_source_state=has_source_state, topic_registry=topic_registry)
+                            has_source_state=has_source_state, topic_registry=topic_registry,
+                            # Same enforcement production gets — this corpus is
+                            # papers, and the source_format above says so.
+                            expected_domain=classify_expected_domain("pdf"))
         if sg is None:
             continue
         sanitized_nodes_emitted += len(sg.nodes)

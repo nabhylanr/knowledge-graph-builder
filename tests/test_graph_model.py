@@ -16,10 +16,12 @@ import pytest
 from src.graph.graph_model import (
     MAX_HAS_SOURCE,
     MEETING_PROCEDURE_TYPE,
+    _canonical_id,
     _Graph,
     _Node,
     _Relationship,
     _type_domain,
+    classify_expected_domain,
     sanitize_graph,
 )
 
@@ -238,3 +240,90 @@ class TestTypeDomain:
     ])
     def test_domain_tagging(self, type_name, expected):
         assert _type_domain(type_name) == expected
+
+
+class TestExpectedDomain:
+    """`classify_expected_domain` reads the controlled `source_kind` enum, NOT
+    the free-text `doc_type` folder name — "gold_b1" is a paper corpus but says
+    nothing of the sort, and this value is used to DELETE nodes."""
+
+    @pytest.mark.parametrize("source_kind,expected", [
+        ("pdf", "paper"),
+        ("transcript", "meeting"),
+        ("gold_b1", None),
+        ("jsonl", None),
+        (None, None),
+    ])
+    def test_classification(self, source_kind, expected):
+        assert classify_expected_domain(source_kind) == expected
+
+
+class TestDomainEnforcement:
+    """A paper source cannot legitimately emit a meeting-domain Type. The prompt
+    only lowers the odds (it is a soft hint and does not remove vocabulary), so
+    this is where the guarantee actually lives — ~1-2% of gold_b1 Topics came
+    back typed Claim / Action Item / Progress Update before it existed."""
+
+    def _types(self, graph):
+        return {n.id for n in graph.nodes if n.type == "Type"}
+
+    def _descriptions(self, graph):
+        return {n.id for n in graph.nodes if n.type == "Description"}
+
+    def test_meeting_type_is_dropped_from_a_paper_source(self):
+        out = sanitize_graph(
+            topic_graph("Chunking Approach", "Claim"),
+            source_name=SOURCE, has_source_state={}, expected_domain="paper",
+        )
+        assert self._types(out) == set()
+        assert self._descriptions(out) == set()
+        assert "has_type" not in rel_types(out)
+        assert "has_description" not in rel_types(out)
+
+    def test_the_topic_itself_survives(self):
+        """Only the wrong-domain classification goes — the Topic is real content
+        and keeps its place in the graph, including its has_source claim."""
+        out = sanitize_graph(
+            topic_graph("Chunking Approach", "Claim"),
+            source_name=SOURCE, has_source_state={}, expected_domain="paper",
+        )
+        assert "Chunking Approach" in {n.id for n in out.nodes if n.type == "Topic"}
+        assert has_source_topics(out) == ["Chunking Approach"]
+
+    @pytest.mark.parametrize("expected_domain", ["meeting", None])
+    def test_meeting_type_is_kept_when_the_source_is_not_a_paper(self, expected_domain):
+        """A meeting legitimately produces both vocabularies (Feedback on a
+        Method), and an unrecognised source_kind must not delete anything."""
+        out = sanitize_graph(
+            topic_graph("Chunking Approach", "Claim"),
+            source_name=SOURCE, has_source_state={}, expected_domain=expected_domain,
+        )
+        assert self._types(out) == {"Claim"}
+        assert len(self._descriptions(out)) == 1
+
+    def test_paper_type_is_never_dropped_from_a_meeting_source(self):
+        out = sanitize_graph(
+            topic_graph("Retrieval Method", "Method"),
+            source_name=SOURCE, has_source_state={}, expected_domain="meeting",
+        )
+        assert self._types(out) == {"Method"}
+
+    def test_only_the_wrong_domain_type_of_a_mixed_topic_goes(self):
+        out = sanitize_graph(
+            topic_graph("Retrieval Method", ["Method", "Claim"]),
+            source_name=SOURCE, has_source_state={}, expected_domain="paper",
+        )
+        assert self._types(out) == {"Method"}
+        assert self._descriptions(out) == {f"Description Retrieval Method Method|{_canonical_id(SOURCE)}"}
+        assert rel_types(out) == ["has_description", "has_source", "has_type"]
+
+    def test_a_dropped_type_leaves_no_orphan_description(self):
+        """The Description hangs off the Type, so dropping only the Type would
+        leave a floating Description that anything scanning Description nodes
+        directly (the conflict pass) would still pick up."""
+        out = sanitize_graph(
+            topic_graph("Chunking Approach", ["Claim", "Progress Update"]),
+            source_name=SOURCE, has_source_state={}, expected_domain="paper",
+        )
+        assert self._descriptions(out) == set()
+        assert out.relationships == [] or rel_types(out) == ["has_source"]

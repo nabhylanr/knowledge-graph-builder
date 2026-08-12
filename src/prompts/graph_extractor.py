@@ -69,6 +69,22 @@ def get_graph_extractor_prompt() -> PromptTemplate:
        an attractor for a small model, so it is defined as the NARROWEST,
        last-resort Type with its own tie-breaker paragraph.
 
+    11. (v8.6) The prompt now receives the document's folder classification
+       (`{doc_type}`, set by ChunksIngestor from the chunk file's parent folder)
+       both in INPUT METADATA and as an explicit instruction attached to STEP B.
+       Before this, nothing downstream of the ingestor told the model whether it
+       was reading a paper or a meeting, and ~1-2% of Topics in the `gold_b1`
+       paper corpus came back typed with Meeting Types (Claim, Action Item,
+       Progress Update). The instruction sits next to the decision it affects,
+       not only in the metadata list — a value in a metadata block is easy for a
+       small model to ignore. It is a SOFT signal (it does not remove
+       vocabulary), so it is paired with the deterministic drop in
+       `sanitize_graph` (`expected_domain`), which is what actually guarantees a
+       paper source cannot emit a meeting-domain Type. Note the two use
+       different inputs: the prompt uses this free-text folder name, while
+       sanitize_graph uses the controlled `source_kind` enum — see
+       `classify_expected_domain` for why.
+
     HONEST NOTE (still true from v7): a better prompt reduces many issues, but
     hard numeric constraints and self-loops may still leak partially on a model
     as small as llama-3.1-8b-instant. Anything that leaks is caught
@@ -108,6 +124,22 @@ STEP A — Read INPUT TEXT and identify the 1-3 MOST IMPORTANT (top-level) Topic
    chunk contains nothing else, emit NO has_source edge at all rather than
    promoting the procedure to top level.
 
+This chunk's folder classification is "{doc_type}". Treat it as a strong prior
+for which vocabulary to use in STEP B:
+- If it names or implies a paper/document corpus (e.g. contains "paper", "gold",
+  a benchmark/eval name, or anything not describing spoken interaction), use
+  ONLY the PAPER Type vocabulary for every Topic in this chunk. Do not use a
+  MEETING Type here even if a sentence sounds like an assertion or a task — a
+  PDF paper never runs a meeting. The only exception is a Topic that is
+  unmistakably about the mechanics of running a meeting (audio checks, "who
+  presents next", scheduling) — a paper chunk will essentially never contain
+  this; if genuinely unsure, prefer the PAPER Type.
+- If it names or implies a meeting/transcript corpus, both vocabularies remain
+  in play as before (STEP B is unchanged) — a meeting may legitimately discuss
+  paper concepts (e.g. Feedback on a Method).
+- If "{doc_type}" is "unclassified" or does not clearly indicate either, fall
+  back to judging purely from the text.
+
 STEP B — For each Topic, decide its Type from the vocabulary below. Paper Types
    and Meeting Types are DISJOINT — a Topic gets exactly one Type from whichever
    vocabulary actually describes it. A single document may contain Topics from
@@ -143,6 +175,7 @@ INPUT METADATA
 
 Source file name: {source_name}
 Source format: {source_format}
+Folder classification: {doc_type}
 
 SOURCE ID RULES (MANDATORY, OFTEN VIOLATED):
 - Create EXACTLY ONE Source node with id = "{source_name}" and name = "{source_name}".

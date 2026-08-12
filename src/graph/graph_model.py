@@ -2,7 +2,7 @@ import difflib
 import re
 import networkx as nx
 
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional, Set, Tuple
 
 from langchain.schema import Document
 from langchain.load.serializable import Serializable
@@ -294,6 +294,27 @@ def _type_domain(type_name: str) -> str:
     return "unknown"
 
 
+def classify_expected_domain(source_kind: Optional[str]) -> Optional[str]:
+    """
+    Deterministic doc-level domain from `source_kind` — NOT from `doc_type`.
+
+    `source_kind` is a controlled enum set by producer code ("pdf" from the
+    academic-pdf-chunker, "transcript" from SOURCE_KIND in
+    src/ingestion/meeting_chunks.py), unlike `doc_type`, which is a free-text
+    folder name ("gold_b1" does not literally contain "paper"). The folder name
+    is good enough as a prompt hint; it is not good enough to delete data with,
+    which is what the caller does with this value.
+
+    Returns None when the source_kind is neither — callers must not enforce a
+    domain in that case.
+    """
+    if source_kind == "pdf":
+        return "paper"
+    if source_kind == "transcript":
+        return "meeting"
+    return None
+
+
 _MIN_SANE_YEAR = 1900
 _MAX_SANE_YEAR = 2100
 
@@ -526,6 +547,7 @@ def sanitize_graph(
     has_source_state: Optional[Dict[str, int]] = None,
     topic_registry: Optional[Dict[str, str]] = None,
     source_meta_state: Optional[Dict[str, dict]] = None,
+    expected_domain: Optional[str] = None,
 ) -> Optional[_Graph]:
     """
     Deterministically enforce the ontology on a model-extracted `_Graph`.
@@ -601,6 +623,17 @@ def sanitize_graph(
     purposes) on every chunk. First-write-wins on a date conflict between
     chunks; see `_capture_source_metadata`. If None, capture is scoped to this
     single call only.
+
+    `expected_domain`: "paper", "meeting", or None — the domain the DOCUMENT is,
+    derived from its `source_kind` by `classify_expected_domain`. Unlike the
+    three above it is stateless. Only one direction is enforced:
+    `expected_domain == "paper"` drops every meeting-domain Type node (and the
+    Description hanging off it), because a PDF paper can never legitimately
+    produce one. The reverse is deliberately NOT enforced — a meeting reviewing
+    paper progress genuinely does produce paper-domain Types (Feedback on a
+    Method), which the prompt explicitly allows and the real meeting corpus
+    contains. None disables the check entirely, which is what an unrecognised
+    source_kind must get.
     """
     if graph is None:
         return None
@@ -630,6 +663,42 @@ def sanitize_graph(
     # 1b. Merge near-duplicate Topic strings (see _dedupe_similar_topics for
     #     why this stops short of semantic synonym resolution).
     nodes, relationships = _dedupe_similar_topics(nodes, relationships, topic_registry)
+
+    # 1c. Domain enforcement (only when the caller knows the document's domain).
+    #     A paper source emitting a meeting-domain Type is always a leak, so the
+    #     Type node goes — and with it the Description it owns, which would
+    #     otherwise survive as an orphan with no incoming has_description and
+    #     still be picked up by anything that scans Description nodes directly
+    #     (e.g. the conflict pass). Dropping the Type alone is not enough.
+    #
+    #     A Description shared with a Type that IS kept is spared: Description
+    #     ids are Topic+Type specific so this should not happen, but losing a
+    #     surviving Type's only Description is worse than keeping one extra node.
+    domain_drop_ids: Set[str] = set()
+    if expected_domain == "paper":
+        kept_type_ids, dropped_type_ids = set(), set()
+        for n in nodes:
+            if n.type.capitalize() != "Type":
+                continue
+            cid = _canonical_id(n.id)
+            (dropped_type_ids if _type_domain(cid) == "meeting" else kept_type_ids).add(cid)
+
+        if dropped_type_ids:
+            desc_of_dropped, desc_of_kept = set(), set()
+            for r in relationships:
+                rt = (r.type or "").lower()
+                if not (rt.endswith("_description") or rt.endswith("_desc")):
+                    continue
+                src_cid, tgt_cid = _canonical_id(r.source), _canonical_id(r.target)
+                if src_cid in dropped_type_ids:
+                    desc_of_dropped.add(tgt_cid)
+                elif src_cid in kept_type_ids:
+                    desc_of_kept.add(tgt_cid)
+            domain_drop_ids = dropped_type_ids | (desc_of_dropped - desc_of_kept)
+            logger.info(
+                f"{source_name}: dropping {len(dropped_type_ids)} meeting-domain Type(s) "
+                f"from a paper source: {', '.join(sorted(dropped_type_ids))}"
+            )
 
     # 2. Keep only ontology-labelled nodes; drop placeholders (id == label).
     #    Collapse every Source-labelled node into one canonical Source.
@@ -661,6 +730,12 @@ def sanitize_graph(
             continue
         if label == "Type" and cid.lower().startswith("has "):
             continue  # relationship name leaked in as a Type node
+        if cid in domain_drop_ids:
+            # Wrong-domain Type (or its now-orphaned Description) — see 1c. It
+            # never enters `node_label`, so every has_type / has_description
+            # edge touching it fails the endpoint check in step 3 and is dropped
+            # with it; no separate edge filtering is needed.
+            continue
         if label == "Source":
             source_aliases.add(cid)
             _capture_source_metadata(n.properties or {}, source_meta)

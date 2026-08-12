@@ -13,7 +13,9 @@ import json
 
 import pytest
 
+from src.graph.graph_model import MAX_HAS_SOURCE, _Graph, _Node, _Relationship
 from src.ingestion.build_ledger import content_digest
+from src.ingestion.chunk_checkpoint import ChunkCheckpoint
 from src.ingestion.chunk_record import ChunkRecord
 from src.ingestion.chunks_ingestor import ChunksIngestor
 from src.ingestion.graph_miner import GraphMiner
@@ -192,7 +194,7 @@ class TestExtractionGate:
 
     def _miner(self, calls):
         class Stub:
-            def extract_graph(self, text, source_name, source_format):
+            def extract_graph(self, text, source_name, source_format, doc_type=None):
                 calls.append(text)
                 return None
 
@@ -229,6 +231,234 @@ class TestExtractionGate:
         self._miner(calls).mine_graph_from_doc_chunks(doc)
         assert calls == []
         assert len(doc.chunks) == 1
+
+
+class Crash(BaseException):
+    """A process death, not an error: `except Exception` must not swallow it, or
+    the resume path being tested here never happens in the first place."""
+
+
+class FakeKnowledgeGraph:
+    """Records what reached storage. `crash_on` kills the run the way a real
+    crash would — after some chunks are written and before the rest are."""
+
+    def __init__(self, crash_on=None):
+        self.crash_on = crash_on
+        self.stored = []
+        self.relationships = []
+        self.finalized = []
+
+    def store_single_chunk(self, doc, chunk):
+        if chunk.chunk_id == self.crash_on:
+            raise Crash(f"died on chunk {chunk.chunk_id}")
+        self.stored.append(chunk.chunk_id)
+        self.relationships.extend(chunk.relationships or [])
+        return None
+
+    def finalize_document(self, doc, accumulated_source_props=None, source_node_id=None):
+        self.finalized.append(doc.filename)
+
+
+class TestStreamingIngest:
+    """Extraction and storage interleaved, checkpointed per chunk.
+
+    Before this, nothing reached Neo4j until every chunk of every pending
+    document had been extracted: a crash at chunk 80 of 129 lost all 80, and a
+    crash on document 3 of 5 lost documents 1 and 2 as well. Storage was already
+    idempotent, so what resuming buys is the LLM calls — hours of them.
+    """
+
+    SOURCE = "paper.jsonl"
+
+    def _graph_for(self, topic):
+        """One Topic, typed, described, and claiming a has_source slot — enough
+        to exercise the cross-chunk sanitizer state."""
+        description = f"Description::{topic}::Method"
+        return _Graph(
+            nodes=[
+                _Node(id=topic, type="Topic", properties={}),
+                _Node(id="Method", type="Type", properties={}),
+                _Node(id=description, type="Description", properties={
+                    "text": "A specific detail: 42 robots.", "topicName": topic, "typeName": "Method",
+                }),
+                _Node(id=self.SOURCE, type="Source", properties={}),
+            ],
+            relationships=[
+                _Relationship(source=topic, target="Method", type="has_type", properties={}),
+                _Relationship(source="Method", target=description, type="has_description", properties={}),
+                _Relationship(source=topic, target=self.SOURCE, type="has_source", properties={}),
+            ],
+        )
+
+    def _miner(self, calls, graph=True):
+        outer = self
+
+        class Stub:
+            def extract_graph(self, text, source_name, source_format, doc_type=None):
+                calls.append(text)
+                return outer._graph_for(f"Topic {text}") if graph else None
+
+        miner = GraphMiner.__new__(GraphMiner)
+        miner.graph_extractor = Stub()
+        return miner
+
+    def _doc(self, n=5, ineligible=()):
+        return ProcessedDocument(
+            filename=self.SOURCE,
+            metadata={"source_kind": "pdf"},
+            chunks=[
+                Chunk(chunk_id=i, text=f"c{i}", embedding=[0.1],
+                      extraction_eligible=i not in ineligible)
+                for i in range(n)
+            ],
+        )
+
+    def _checkpoint(self, tmp_path):
+        return ChunkCheckpoint(path=str(tmp_path / "chunk_checkpoint.json"))
+
+    def test_chunks_are_stored_as_their_own_extraction_lands(self, tmp_path):
+        kg, cp = FakeKnowledgeGraph(), self._checkpoint(tmp_path)
+        self._miner([]).mine_and_store_doc_chunks(self._doc(), kg, cp)
+        assert kg.stored == [0, 1, 2, 3, 4]
+        assert kg.finalized == [self.SOURCE]
+
+    def test_a_completed_document_leaves_no_checkpoint_behind(self, tmp_path):
+        """It is redundant with the ledger entry the caller writes next, and
+        keeping it would grow this file without bound across a corpus."""
+        cp = self._checkpoint(tmp_path)
+        self._miner([]).mine_and_store_doc_chunks(self._doc(), FakeKnowledgeGraph(), cp)
+        assert cp.documents() == []
+
+    def test_ineligible_chunks_are_stored_but_never_extracted(self, tmp_path):
+        calls = []
+        kg = FakeKnowledgeGraph()
+        self._miner(calls).mine_and_store_doc_chunks(
+            self._doc(ineligible={0, 4}), kg, self._checkpoint(tmp_path)
+        )
+        # sorted(): extraction runs on a thread pool, so the ORDER calls land in
+        # is not fixed. Only the storage order is (see _extract_in_order).
+        assert sorted(calls) == ["c1", "c2", "c3"]
+        assert sorted(kg.stored) == [0, 1, 2, 3, 4]
+
+    def test_a_crash_keeps_the_chunks_already_written(self, tmp_path):
+        cp = self._checkpoint(tmp_path)
+        kg = FakeKnowledgeGraph(crash_on=3)
+        with pytest.raises(Crash):
+            self._miner([]).mine_and_store_doc_chunks(self._doc(), kg, cp)
+
+        doc = self._doc()
+        assert kg.stored == [0, 1, 2]
+        assert cp.done_chunk_ids(self.SOURCE, 1, content_digest(doc)) == {0, 1, 2}
+        assert kg.finalized == []  # the document is not finished, so it is not finalized
+
+    def test_resuming_does_not_pay_for_the_chunks_already_done(self, tmp_path):
+        cp = self._checkpoint(tmp_path)
+        with pytest.raises(Crash):
+            self._miner([]).mine_and_store_doc_chunks(self._doc(), FakeKnowledgeGraph(crash_on=3), cp)
+
+        calls, kg = [], FakeKnowledgeGraph()
+        self._miner(calls).mine_and_store_doc_chunks(self._doc(), kg, cp)
+
+        assert sorted(calls) == ["c3", "c4"]  # the expensive part: 0-2 are never re-extracted
+        assert kg.stored == [3, 4]
+        assert kg.finalized == [self.SOURCE]
+        assert cp.documents() == []
+
+    def test_resume_does_not_reset_the_has_source_cap(self, tmp_path):
+        """The cap spans a document. Restarting the sanitizer state from empty on
+        resume would let an interrupted document end up with 2x MAX_HAS_SOURCE
+        has_source edges — a graph no uninterrupted run could produce."""
+        cp = self._checkpoint(tmp_path)
+        before = FakeKnowledgeGraph(crash_on=4)
+        with pytest.raises(Crash):
+            self._miner([]).mine_and_store_doc_chunks(self._doc(n=8), before, cp)
+
+        after = FakeKnowledgeGraph()
+        self._miner([]).mine_and_store_doc_chunks(self._doc(n=8), after, cp)
+
+        has_source = [r for r in before.relationships + after.relationships if r.type == "has_source"]
+        assert len(has_source) == MAX_HAS_SOURCE
+
+    def test_a_failed_extraction_is_left_for_the_resume_to_retry(self, tmp_path):
+        """Its text and embedding are stored (re-storing is idempotent), but
+        extraction failures are usually transient — a server blip, unparseable
+        JSON — so the chunk is not marked done."""
+        cp = self._checkpoint(tmp_path)
+        kg = FakeKnowledgeGraph(crash_on=2)
+        with pytest.raises(Crash):
+            self._miner([], graph=False).mine_and_store_doc_chunks(self._doc(), kg, cp)
+
+        assert kg.stored == [0, 1]
+        assert cp.done_chunk_ids(self.SOURCE, 1, content_digest(self._doc())) == set()
+
+    def test_revised_content_is_rebuilt_rather_than_resumed(self, tmp_path):
+        """Chunk ids are positions, and nothing bumps document_version
+        automatically — resuming onto different text would silently skip it."""
+        cp = self._checkpoint(tmp_path)
+        with pytest.raises(Crash):
+            self._miner([]).mine_and_store_doc_chunks(self._doc(), FakeKnowledgeGraph(crash_on=3), cp)
+
+        revised = self._doc()
+        for chunk in revised.chunks:
+            chunk.text = f"revised {chunk.text}"
+
+        calls = []
+        self._miner(calls).mine_and_store_doc_chunks(revised, FakeKnowledgeGraph(), cp)
+        assert sorted(calls) == ["revised c0", "revised c1", "revised c2", "revised c3", "revised c4"]
+
+    def test_it_works_without_a_checkpoint_at_all(self, tmp_path):
+        kg = FakeKnowledgeGraph()
+        self._miner([]).mine_and_store_doc_chunks(self._doc(), kg, checkpoint=None)
+        assert kg.stored == [0, 1, 2, 3, 4]
+        assert kg.finalized == [self.SOURCE]
+
+
+class TestDomainHint:
+    """`doc_type` is the folder the chunks came from. It reached the Document
+    node but never the extraction prompt, which is why ~1-2% of Topics in the
+    gold_b1 paper corpus came back typed with Meeting Types."""
+
+    def _capture(self):
+        seen = {}
+
+        class Stub:
+            def extract_graph(self, text, source_name, source_format, doc_type=None):
+                seen["doc_type"] = doc_type
+                seen["source_format"] = source_format
+                return None
+
+        miner = GraphMiner.__new__(GraphMiner)
+        miner.graph_extractor = Stub()
+        return miner, seen
+
+    def test_the_folder_classification_reaches_the_extractor(self):
+        miner, seen = self._capture()
+        miner.mine_graph_from_doc_chunks(ProcessedDocument(
+            filename="p.jsonl",
+            metadata={"doc_type": "gold_b1", "source_kind": "pdf"},
+            chunks=[Chunk(chunk_id=0, text="a")],
+        ))
+        assert seen == {"doc_type": "gold_b1", "source_format": "pdf"}
+
+    def test_a_document_with_no_folder_classification_sends_none(self):
+        miner, seen = self._capture()
+        miner.mine_graph_from_doc_chunks(ProcessedDocument(
+            filename="p.jsonl", metadata={}, chunks=[Chunk(chunk_id=0, text="a")],
+        ))
+        assert seen["doc_type"] is None
+
+    @pytest.mark.parametrize("source_kind,expected", [
+        ("pdf", "paper"),
+        ("transcript", "meeting"),
+        (None, None),
+    ])
+    def test_the_hard_domain_comes_from_source_kind_not_the_folder(self, source_kind, expected):
+        doc = ProcessedDocument(
+            filename="p.jsonl",
+            metadata={"doc_type": "gold_b1", **({"source_kind": source_kind} if source_kind else {})},
+            chunks=[Chunk(chunk_id=0, text="a")],
+        )
+        assert GraphMiner._doc_context(doc)[3] == expected
 
 
 class TestContentDigest:

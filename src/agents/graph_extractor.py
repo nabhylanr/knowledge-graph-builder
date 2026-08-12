@@ -83,9 +83,23 @@ class GraphExtractor:
         self.prompt = get_graph_extractor_prompt()
 
 
-    def extract_graph(self, text: str, source_name: str = "unknown", source_format: str = "unknown") -> Optional[_Graph]:
+    def extract_graph(
+        self,
+        text: str,
+        source_name: str = "unknown",
+        source_format: str = "unknown",
+        doc_type: Optional[str] = None,
+    ) -> Optional[_Graph]:
         """
         Extracts a graph from a text. Retries on rate limit errors.
+
+        `doc_type` is the folder-derived classification of the document (set by
+        `ChunksIngestor` from the chunk file's parent folder, e.g. "gold_b1",
+        "meeting"). It reaches the prompt as a SOFT prior on which Type
+        vocabulary to use — it does not remove vocabulary, so it only lowers the
+        odds of a paper chunk being tagged with a meeting Type. The hard
+        enforcement is `sanitize_graph(expected_domain=...)`, which keys off
+        `source_kind` rather than this free-text folder name.
         """
 
         if self.llm is None:
@@ -94,7 +108,11 @@ class GraphExtractor:
         prompt_str = self.prompt.format(
             input_text=text,
             source_name=source_name,
-            source_format=source_format
+            source_format=source_format,
+            # PromptTemplate.format() requires every declared variable, and a
+            # None would render literally as "None" — the prompt's fallback
+            # branch keys off the word "unclassified" instead.
+            doc_type=doc_type or "unclassified",
         )
 
         # qwen3 "soft switch": appending /no_think suppresses its reasoning block to
