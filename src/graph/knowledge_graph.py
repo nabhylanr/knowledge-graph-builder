@@ -25,6 +25,20 @@ logger = get_logger(__name__)
 
 BASE_ENTITY_LABEL = "__Entity__"
 
+# Entity labels the extraction ontology produces (src/prompts/graph_extractor.py)
+# that never get `created_at` from `add_graph_documents`: see
+# `_write_source_metadata`'s docstring — `onMatchProperties` is hardcoded empty,
+# so only the chunk whose write FIRST creates a node sets its properties, and
+# the extraction prompt never asks the model for a timestamp in the first
+# place. Document and Chunk already get one elsewhere (`_create_document_node`,
+# `_set_chunk_created_at_if_absent`), so they're not in this list.
+#
+# kg-agent's temporal gate (node_trust.py) is the actual reader of this field
+# (brief R7); that repo was not available to confirm which labels beyond Topic
+# it checks — extend this list if it turns out to read Agent/Type/Source/
+# Description too.
+ENTITY_LABELS_NEEDING_CREATED_AT = ["Topic"]
+
 
 class KnowledgeGraph(Neo4jGraph):
     """
@@ -397,6 +411,35 @@ class KnowledgeGraph(Neo4jGraph):
 
 
     @staticmethod
+    def _set_entity_created_at_if_absent(tx: ManagedTransaction, label: str, created_at: str):
+        """
+        Same fix as `_set_chunk_created_at_if_absent`, for an extracted entity
+        label instead of Chunk: `add_graph_documents` (baseEntityLabel=False)
+        compiles to `apoc.merge.node([type], {id}, row.properties, {})` with
+        onMatchProperties hardcoded empty, so only the chunk that FIRST creates
+        a node writes its properties — and the extraction prompt never asks the
+        model for a timestamp anyway. `WHERE created_at IS NULL` makes this
+        first-write-wins: whichever document's ingest introduces a given node
+        (by id) stamps it once; a later document's write to the same node
+        (MERGE by id, e.g. a Type shared across documents) leaves it untouched.
+
+        `label` is interpolated into the query, not parameterized — Cypher has
+        no way to parameterize a label. Safe here because it only ever comes
+        from `ENTITY_LABELS_NEEDING_CREATED_AT`, a fixed internal list, never
+        user input.
+        """
+        query = f"""
+            MATCH (n:{label})
+            WHERE n.created_at IS NULL
+            SET n.created_at = $created_at
+        """
+        try:
+            tx.run(query, created_at=created_at)
+        except Exception as e:
+            logger.warning(f"Error setting created_at for {label} nodes: {e}")
+
+
+    @staticmethod
     def _write_source_metadata(tx: ManagedTransaction, source_id: str, props: dict):
         """
         `SET s += $props` only touches the keys present in `props` — never clears
@@ -557,6 +600,29 @@ class KnowledgeGraph(Neo4jGraph):
             )
 
 
+    def stamp_entity_created_at(self):
+        """
+        End-of-document pass: stamps `created_at` on every node in
+        `ENTITY_LABELS_NEEDING_CREATED_AT` that doesn't have one yet.
+
+        Call once per document, after all its chunks are stored — same
+        lifetime as `write_source_metadata` / `cleanup_singleton_contradictions`
+        (see `finalize_document`). One timestamp is reused across every label
+        in a single call, so nodes first introduced by the same document's
+        ingest share an ingest moment instead of drifting across each label's
+        own Cypher round-trip.
+        """
+        created_at = datetime.now(timezone.utc).isoformat()
+        with self._driver.session(database=self._database) as session:
+            for label in ENTITY_LABELS_NEEDING_CREATED_AT:
+                session.execute_write(
+                    self._set_entity_created_at_if_absent,
+                    label,
+                    created_at
+                )
+        logger.info(f"Stamped created_at where absent on: {ENTITY_LABELS_NEEDING_CREATED_AT}")
+
+
     def create_mentions_relationships(
             self,
             node_id: str,
@@ -698,6 +764,11 @@ class KnowledgeGraph(Neo4jGraph):
             self.cleanup_singleton_contradictions()
         except Exception as e:
             logger.warning(f"Error cleaning up singleton Contradiction nodes for document {doc.filename}: {e}")
+
+        try:
+            self.stamp_entity_created_at()
+        except Exception as e:
+            logger.warning(f"Error stamping created_at on entity nodes for document {doc.filename}: {e}")
 
         # See `write_source_metadata` docstring for why this explicit pass exists
         # (apoc.merge.node's onMatchProperties is hardcoded empty in add_graph_documents,
