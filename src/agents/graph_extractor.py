@@ -70,7 +70,7 @@ class GraphExtractor:
     """ Agent able to extract informations in a graph representation format from a given text.
     """
 
-    def __init__(self, conf: LLMConf):
+    def __init__(self, conf: LLMConf, corpus_domain: Optional[str] = None):
         self.conf = conf
         self.llm = fetch_llm(conf)
         # NOTE: the ontology (allowed node/relationship types and their directions)
@@ -80,7 +80,15 @@ class GraphExtractor:
         # `ontology: Optional[Ontology]` parameter here that was threaded in from
         # `Configuration` but silently discarded; it was removed since it never
         # did anything.
-        self.prompt = get_graph_extractor_prompt()
+        #
+        # `corpus_domain` is different from that removed param: it actually
+        # changes the prompt (R19 — see get_graph_extractor_prompt's v8.8 note),
+        # restricting the Type vocabulary shown to the model when a whole build
+        # is known to be paper-only or meeting-only. None (default) renders the
+        # full, unrestricted vocabulary — unchanged behaviour for a mixed or
+        # unclassified build.
+        self.corpus_domain = corpus_domain
+        self.prompt = get_graph_extractor_prompt(corpus_domain=corpus_domain)
 
 
     def extract_graph(

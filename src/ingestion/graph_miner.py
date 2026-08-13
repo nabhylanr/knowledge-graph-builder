@@ -23,11 +23,11 @@ logger = get_logger(__name__)
 class GraphMiner:
     """ Contains methods to mine graphs from a (list of) `ProcessedDocument`."""
 
-    def __init__(self, conf: LLMConf):
-        self.graph_extractor = GraphExtractor(conf=conf)
+    def __init__(self, conf: LLMConf, corpus_domain: Optional[str] = None):
+        self.graph_extractor = GraphExtractor(conf=conf, corpus_domain=corpus_domain)
 
         if self.graph_extractor:
-            logger.info(f"GraphMiner initialized.")
+            logger.info(f"GraphMiner initialized (corpus_domain={corpus_domain!r}).")
 
 
     @staticmethod

@@ -218,6 +218,25 @@ ACTION_ITEM_TYPE = "Action Item"
 # is barred from has_source in sanitize_graph; see `topic_is_procedural`.
 MEETING_PROCEDURE_TYPE = "Meeting Procedure"
 
+# R14: a bare figure/table/section/chapter/appendix/equation label that
+# leaked past the prompt's ban (graph_extractor.py's Topic FORBIDDEN list) —
+# small models on the raw-JSON fallback path don't reliably honour prose
+# rules. These aren't concepts, and because every document numbers its own
+# "Table 3"/"Figure 1", they MERGE into one node shared across unrelated
+# papers on write (nodes are matched by canonical name), diluting per-source
+# attribution for anything that queries by Topic. Matched against the
+# CANONICAL id (Title Case, punctuation collapsed to spaces — see
+# `_canonical_id`), so "Fig. 3", "fig 3", and "Figure 3" all normalize to the
+# same "Fig 3" / "Figure 3" shape before this runs. Deliberately narrow: only
+# a label word directly followed by a short number/letter, nothing else in
+# the name — a real Topic that happens to start with one of these words
+# (unlikely in this ontology) would need more than this to match.
+_GENERIC_TOPIC_FRAGMENT_RE = re.compile(
+    r"^(Table|Tab|Figure|Fig|Section|Sec|Chapter|Ch|Appendix|App|Equation|Eq)"
+    r"(\s+([0-9]+[A-Za-z]?|[A-Za-z]))+$",
+    re.IGNORECASE,
+)
+
 ALLOWED_TOPIC_STATUS = {"open", "in_progress", "done", "blocked"}
 ALLOWED_STANCE = {"raised", "proposed", "decided", "reported", "gave_feedback"}
 ALLOWED_CONTRADICTION_LEVEL = {"direct", "partial", "apparent"}
@@ -598,6 +617,19 @@ def sanitize_graph(
       (docs/conflict_ontology.md) impossible — same Topic+Type would always
       resolve to exactly one node. See `description_remap` below.
 
+    - A Topic whose canonical id is a bare figure/table/section/chapter/
+      appendix/equation label (R14, `_GENERIC_TOPIC_FRAGMENT_RE`) is dropped,
+      along with any Description scoped to it — a second-layer guard behind
+      the prompt's own ban, since a small model on the raw-JSON fallback path
+      does not reliably honour prose instructions. Catches the case that
+      matters most: every document numbers its own "Table 3", so an
+      un-caught one MERGEs into one node shared across unrelated papers on
+      write, diluting per-source attribution for anything that queries by
+      Topic. The complementary case — a bare field/subject-name Topic like
+      "Servitization" used by itself — has no fixed lexical signature to
+      regex-match and is NOT covered here; it is the prompt's job alone (see
+      graph_extractor.py's Topic FORBIDDEN list).
+
     Every Type node also gets a deterministic `domain` property ("paper",
     "meeting", or "unknown") via `_type_domain`, so the same Type label is not
     a flat namespace mixing paper and meeting vocabularies with no way to tell
@@ -700,6 +732,32 @@ def sanitize_graph(
                 f"from a paper source: {', '.join(sorted(dropped_type_ids))}"
             )
 
+    # 1d. Generic-fragment guard (R14): drop a Topic whose canonical id is a
+    #     bare figure/table/section/chapter/appendix/equation label, plus any
+    #     Description scoped to it. A Description hangs off its Type node
+    #     (has_description: Type -> Description), not off the Topic directly,
+    #     so it is not caught for free by the Topic simply not being re-added
+    #     to node_label below — its content-only id is reconstructed here as
+    #     "Description <TopicName> <TypeName>" (see step 2's Description
+    #     doc-scoping comment for the id format) and matched by prefix.
+    generic_topic_drop_ids: Set[str] = {
+        _canonical_id(n.id) for n in nodes
+        if n.type.capitalize() == "Topic"
+        and _GENERIC_TOPIC_FRAGMENT_RE.match(_canonical_id(n.id))
+    }
+    if generic_topic_drop_ids:
+        for n in nodes:
+            if n.type.capitalize() != "Description":
+                continue
+            cid = _canonical_id(n.id)
+            if any(cid.startswith(f"Description {topic} ") for topic in generic_topic_drop_ids):
+                generic_topic_drop_ids.add(cid)
+        logger.info(
+            f"{source_name}: dropping {len(generic_topic_drop_ids)} generic-fragment "
+            f"Topic/Description node(s) (bare Table/Figure/Section-style label): "
+            f"{', '.join(sorted(generic_topic_drop_ids))}"
+        )
+
     # 2. Keep only ontology-labelled nodes; drop placeholders (id == label).
     #    Collapse every Source-labelled node into one canonical Source.
     #
@@ -730,11 +788,12 @@ def sanitize_graph(
             continue
         if label == "Type" and cid.lower().startswith("has "):
             continue  # relationship name leaked in as a Type node
-        if cid in domain_drop_ids:
-            # Wrong-domain Type (or its now-orphaned Description) — see 1c. It
-            # never enters `node_label`, so every has_type / has_description
-            # edge touching it fails the endpoint check in step 3 and is dropped
-            # with it; no separate edge filtering is needed.
+        if cid in domain_drop_ids or cid in generic_topic_drop_ids:
+            # Wrong-domain Type (1c) or generic-fragment Topic/Description
+            # (1d) — either way, it never enters `node_label`, so every
+            # has_type / has_source / has_description edge touching it fails
+            # the endpoint check in step 3 and is dropped with it; no separate
+            # edge filtering is needed.
             continue
         if label == "Source":
             source_aliases.add(cid)

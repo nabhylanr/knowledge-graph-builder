@@ -1,7 +1,9 @@
+from typing import Optional
+
 from langchain.prompts import PromptTemplate
 
 
-def get_graph_extractor_prompt() -> PromptTemplate:
+def get_graph_extractor_prompt(corpus_domain: Optional[str] = None) -> PromptTemplate:
     """
     Returns the KG extraction prompt — v8 (English).
 
@@ -85,6 +87,57 @@ def get_graph_extractor_prompt() -> PromptTemplate:
        sanitize_graph uses the controlled `source_kind` enum — see
        `classify_expected_domain` for why.
 
+    12. (v8.7) kg-agent eval (R14) found generic Topics — bare figure/table/
+       section labels that leaked past the existing ban, and field-level
+       umbrella terms ("Servitization" alone) used as a Topic by a specific
+       paper — being claimed by many papers at once (nodes MERGE by name),
+       diluting per-source attribution for anything that queries by Topic
+       (8/20 questions in the eval scored against a diluted source set).
+       R20a confirmed the Type vocabulary itself is fine (Types are meant to
+       be shared category labels); this was purely a Topic NAMING problem.
+       Strengthened the existing figure/table/section ban's wording (now
+       covers any numbering/lettering style, not just the literal examples
+       listed) and added a new ban on bare field/subject-name Topics, both
+       reinforced in a new SELF-CHECK item. Backed by a deterministic regex
+       guard in `sanitize_graph` (`_GENERIC_TOPIC_FRAGMENT_RE`) for the
+       figure/table/section case specifically — the field-umbrella-term case
+       has no fixed lexical signature to regex-match, so it relies on the
+       prompt alone (same class of gap as the rest of the "small model
+       ignores prose instructions" problem this file already documents).
+
+    13. (v8.8) `corpus_domain` param (R19): "paper", "meeting", or None
+       (default). When "paper", the MEETING Type vocabulary (both lists), its
+       tie-breaker section, and the mixed-domain caveat paragraph are omitted
+       from the prompt entirely — the model is never even offered a Meeting
+       Type to misuse. This is a belt-and-suspenders pairing with two things
+       that already existed: the doc_type soft prior (point 11) still nudges
+       a mixed/unclassified build, and `sanitize_graph`'s `expected_domain`
+       guard (also point 11) is what deterministically GUARANTEES no
+       paper-domain Topic ends up HAS_TYPE-linked to a meeting-domain Type
+       node, regardless of what the model emits — that guard does the actual
+       enforcement and does NOT delete the meeting Type vocabulary from the
+       graph (Types are shared cross-corpus by design, R20a), it only
+       prevents a paper source from writing an edge to one. This prompt-level
+       restriction is strictly upstream of that: fewer distractor options
+       shown lowers the odds a small model reaches for one in the first
+       place, purely to cut down how much `sanitize_graph` has to catch and
+       log after the fact. "meeting" and None both render the full,
+       unrestricted vocabulary — unchanged prior behaviour.
+
+    14. (v8.9) R20b: 150/624 existing Topics had NO has_type edge at all — not
+       deliberate scope, a plain instruction-compliance gap on qwen3:4b (same
+       root cause as R14/R19: small-model prompt adherence). STEP B and the
+       Topic node definition now both state plainly that an untyped Topic is
+       INVALID output, not an acceptable gap, and a new SELF-CHECK item (11)
+       asks the model to recount Topics against has_type edges before
+       finishing. Deliberately NOT paired with a sanitize_graph fallback that
+       assigns a synthetic default Type to a Topic missing one — that would
+       artificially close the number while corrupting per-Type analysis
+       (every backfilled Topic would misreport as whatever the default is).
+       A genuinely untyped Topic must stay untyped and simply become rarer
+       through better prompt compliance; see `KnowledgeGraph.log_untyped_topic_count`
+       for the after-the-fact measurement instead of a silent patch.
+
     HONEST NOTE (still true from v7): a better prompt reduces many issues, but
     hard numeric constraints and self-loops may still leak partially on a model
     as small as llama-3.1-8b-instant. Anything that leaks is caught
@@ -140,13 +193,17 @@ for which vocabulary to use in STEP B:
 - If "{doc_type}" is "unclassified" or does not clearly indicate either, fall
   back to judging purely from the text.
 
-STEP B — For each Topic, decide its Type from the vocabulary below. Paper Types
-   and Meeting Types are DISJOINT — a Topic gets exactly one Type from whichever
-   vocabulary actually describes it. A single document may contain Topics from
-   both vocabularies (e.g. a meeting where a supervisor gives Feedback on a
-   Method the student presented) — that is expected, not an error. If two Type
-   candidates look similar, PICK THE CLOSEST ONE — do not invent a new Type for a
-   small nuance.
+STEP B — MANDATORY, no exceptions: every Topic named in STEP A (and every
+   subtopic you add later) MUST get its has_type edge decided HERE, before you
+   move on. A Topic left without one is INVALID output — do not defer this and
+   do not let a Topic reach the final JSON untyped. Paper Types and Meeting
+   Types are DISJOINT — a Topic gets exactly one Type from whichever vocabulary
+   actually describes it. A single document may contain Topics from both
+   vocabularies (e.g. a meeting where a supervisor gives Feedback on a Method
+   the student presented) — that is expected, not an error. If two Type
+   candidates look similar, PICK THE CLOSEST ONE — do not invent a new Type for
+   a small nuance, and do not leave the Topic untyped because none is a
+   perfect fit; the closest one is still required.
 
 STEP C — Only after STEP A and B: look for two Topics the text EXPLICITLY
    connects to each other (not just co-occurring in the same paragraph) and add
@@ -203,12 +260,31 @@ ONTOLOGY — NODE TYPES (6 only)
 3. Topic — A concept, system, method, metric, problem, or domain term the text
    discusses or makes a claim about. NEVER a document container, NEVER a bare
    label with nothing asserted: "Figure 3", "Table 2", "Section 4", "Appendix A",
-   "Chapter 2", "Equation 1" are FORBIDDEN as Topic names, and so is a metric name
-   alone ("Net Profit As Of Sales Revenues 2004") with no claim attached. If a
-   figure/table is the EVIDENCE for a finding, the Topic is the finding — cite
-   the figure/table via the figureNumber/tableNumber property below, don't make
-   it the Topic. A subtopic is not a separate type — it is a normal Topic linked
-   via has_subtopic.
+   "Chapter 2", "Equation 1" (or any other numbered/lettered figure, table,
+   section, chapter, appendix, or equation reference — "Fig. 3", "Sec. 2.1",
+   "Table III", regardless of exact wording or numbering style) are FORBIDDEN
+   as Topic names, and so is a metric name alone ("Net Profit As Of Sales
+   Revenues 2004") with no claim attached. If a figure/table is the EVIDENCE
+   for a finding, the Topic is the finding — cite the figure/table via the
+   figureNumber/tableNumber property below, don't make it the Topic. A subtopic
+   is not a separate type — it is a normal Topic linked via has_subtopic.
+   ALSO FORBIDDEN: the paper's whole research area or field name used BY
+   ITSELF as a Topic ("Servitization", "Supply Chain Integration", "Quality
+   Management") — that names the paper's SUBJECT, not a claim within it, and
+   because every paper in that field shares the same word, it silently merges
+   into one Topic node shared across unrelated papers when written to the
+   graph (nodes are matched by name). Name what THIS paper SPECIFICALLY
+   argues, proposes, or found about it instead — e.g. not "Servitization" but
+   "Twelve Servitization Strategies Identified In OSIRIS Data" or "Financial
+   Consequences Of Servitization For Manufacturing Firms". The paper's
+   top-level contribution (STEP A) must be its specific angle, never the bare
+   field name it belongs to.
+   MANDATORY: every Topic you emit MUST have exactly one has_type edge to a
+   Type from the GUIDED TYPE VOCABULARY below (STEP B) — a Topic with no Type
+   is INVALID output, not an acceptable gap. If you cannot decide which Type
+   fits, that is a signal the string does not belong as a Topic at all (it is
+   not really an assertion-bearing concept) — drop it rather than emit it
+   untyped. Never emit a Topic node and skip its has_type edge.
    Build a hierarchy where the text supports it (no forced depth, do not fabricate).
    Required property: name.
    Optional: abbreviation, chapterNumber, tableNumber, figureNumber.
@@ -351,7 +427,104 @@ GUIDED TYPE VOCABULARY (closed — Paper and Meeting Types are disjoint)
 
 Use the casing EXACTLY as below. Do not invent a new Type; pick the closest one.
 
-  PAPER:
+__TYPE_VOCABULARY__
+
+For each Type you use: link one Topic via has_type, AND create its Description
+(Type -> has_description -> Description).
+
+==============================
+OTHER EXTRACTION RULES
+==============================
+
+1. Merge aliases to the fullest name: "Prof. Chou" + "Shuo-Yan Chou" ->
+   "Prof. Shuo-Yan Chou". Do not create separate nodes for the same concept
+   (e.g. "Digital Twin" and "Digital Twin System" — pick one consistent name if
+   the text shows they are the same concept; only separate them if the text
+   explicitly distinguishes them).
+2. ABBREVIATION: use the full name as the node id: "Robotic Mobile Fulfillment
+   System (RMFS)" not "RMFS". If the full name is not in the text, keep the
+   abbreviation and add property {{"abbreviation": "RMFS"}}.
+3. Store numbers, dates, percentages as node properties — not as separate nodes.
+4. Node ids: Title Case with spaces — never snake_case or ALL CAPS.
+
+==============================
+OUTPUT FORMAT
+==============================
+
+Return ONLY valid JSON. No markdown, no explanation, no text before or after the JSON.
+
+{{
+  "nodes": [
+    {{
+      "id": "node id",
+      "type": "Agent | Role | Topic | Type | Source | Description",
+      "properties": {{"name": "value"}}
+    }}
+  ],
+  "relationships": [
+    {{
+      "source": "source node id",
+      "target": "target node id",
+      "type": "relationship_type",
+      "properties": {{}}
+    }}
+  ]
+}}
+
+Example of a relates_to edge with its required property:
+{{"source": "Proposed Augmentation Method", "target": "Data Sparsity", "type": "relates_to", "properties": {{"relation": "addresses"}}}}
+
+Example of an assigned_to edge with an optional deadline:
+{{"source": "Fix The Pipeline Bug", "target": "Budi", "type": "assigned_to", "properties": {{"due_date": "2026-07-27"}}}}
+
+Example of a spoke_about edge with an optional stance:
+{{"source": "Prof. Shuo-Yan Chou", "target": "Data Sparsity", "type": "spoke_about", "properties": {{"stance": "raised"}}}}
+
+==============================
+SELF-CHECK BEFORE SENDING OUTPUT (top 8 priorities, plus 3 conditional ones)
+==============================
+
+1. Recount: how many has_source edges are in my output? If more than 3, REMOVE
+   the extras and reroute them as has_subtopic.
+2. Is there any relationship where source id == target id? If yes, REMOVE it.
+3. Is my Source id EXACTLY equal to "{source_name}"? (check character by character)
+4. Is any Source the SOURCE of any relationship other than "Topic -> has_source ->
+   Source"? If yes, the direction is wrong — fix it.
+5. Is there any Description that is tautological, lacks a specific detail,
+   narrates the document ("the text/paper states...") instead of asserting the
+   claim, or duplicates another Description for the same Topic? For Result/
+   Conclusion/Metrics Evaluation: does it state what was FOUND, not just
+   measured? If any of these, rewrite, remove, or drop the extra Type.
+6. Are all relationship names exactly one of the 10 fixed strings (no
+   "has_method"-style variants), lowercase_snake_case, no "::"?
+7. (only if you used relates_to) Does every relates_to edge have a `relation`
+   property from the RELATION VOCABULARY list, with source/target Types matching
+   the allowed pair for that relation?
+8. (only if you used assigned_to) Is its source Topic actually typed Action
+   Item? If the Topic's Type is anything else, remove the assigned_to edge.
+9. (only if you used status or stance) Is the value one of the allowed options
+   listed for that property? If not, remove the property rather than invent one.
+10. Is any Topic name a bare figure/table/section/chapter/appendix/equation
+   label (a number or letter with no claim), or just the paper's general field/
+   subject name with no specific angle ("Servitization" alone, "Supply Chain
+   Integration" alone)? If yes, REMOVE that Topic — cite the figure/table
+   number as a property on the real finding-Topic instead, and rename the
+   field-level Topic to state THIS paper's specific claim about that field.
+11. Recount: does EVERY Topic node in my output have a has_type edge to
+   exactly one Type? List your Topics against your has_type edges — any Topic
+   missing one is INVALID. For each one found, either assign the closest
+   Type from the vocabulary or remove the Topic entirely — never submit a
+   Topic with zero Types.
+
+==============================
+BEGIN EXTRACTION
+==============================
+
+INPUT TEXT:
+{input_text}
+"""
+
+    paper_vocab = """  PAPER:
     Background          — research background / context of the paper
     Problem              — problem the paper addresses
     Research Goal         — stated research objective / aim
@@ -365,7 +538,9 @@ Use the casing EXACTLY as below. Do not invent a new Type; pick the closest one.
     Experiment            — what the experiment does
     Result                — result of the paper
     Metrics Evaluation     — metric / measure reported
-    Limitation             — stated limitation
+    Limitation             — stated limitation"""
+
+    meeting_vocab = """
 
   MEETING — discussion flow (what this part of the meeting IS):
     Issue           — problem or obstacle reported/observed that triggers discussion
@@ -432,90 +607,24 @@ A meeting that reviews paper progress may legitimately contain Topics typed from
 BOTH lists in the same document (e.g. Feedback on a Method) — that is expected.
 What is not allowed is picking a Type from the wrong list for a Topic that
 clearly fits a Type in the correct list (e.g. calling something "Problem" when
-"Issue" fits better because the document is a meeting, not a paper).
+"Issue" fits better because the document is a meeting, not a paper)."""
 
-For each Type you use: link one Topic via has_type, AND create its Description
-(Type -> has_description -> Description).
+    if corpus_domain == "paper":
+        # R19: don't even offer the Meeting vocabulary for a paper-only build —
+        # sanitize_graph's expected_domain guard is what actually GUARANTEES no
+        # paper Topic links to a meeting-domain Type (see point 13 above); this
+        # just lowers how often that guard has anything to catch.
+        type_vocabulary = paper_vocab + """
 
-==============================
-OTHER EXTRACTION RULES
-==============================
+This corpus is PAPER-ONLY (corpus_domain="paper"): the Meeting Type
+vocabulary is not available for this build and must never be used, no matter
+what a sentence sounds like. Every Topic's Type MUST come from the PAPER list
+above."""
+    else:
+        # "meeting" and None (unknown/mixed) both get the full vocabulary —
+        # unchanged prior behaviour.
+        type_vocabulary = paper_vocab + meeting_vocab
 
-1. Merge aliases to the fullest name: "Prof. Chou" + "Shuo-Yan Chou" ->
-   "Prof. Shuo-Yan Chou". Do not create separate nodes for the same concept
-   (e.g. "Digital Twin" and "Digital Twin System" — pick one consistent name if
-   the text shows they are the same concept; only separate them if the text
-   explicitly distinguishes them).
-2. ABBREVIATION: use the full name as the node id: "Robotic Mobile Fulfillment
-   System (RMFS)" not "RMFS". If the full name is not in the text, keep the
-   abbreviation and add property {{"abbreviation": "RMFS"}}.
-3. Store numbers, dates, percentages as node properties — not as separate nodes.
-4. Node ids: Title Case with spaces — never snake_case or ALL CAPS.
-
-==============================
-OUTPUT FORMAT
-==============================
-
-Return ONLY valid JSON. No markdown, no explanation, no text before or after the JSON.
-
-{{
-  "nodes": [
-    {{
-      "id": "node id",
-      "type": "Agent | Role | Topic | Type | Source | Description",
-      "properties": {{"name": "value"}}
-    }}
-  ],
-  "relationships": [
-    {{
-      "source": "source node id",
-      "target": "target node id",
-      "type": "relationship_type",
-      "properties": {{}}
-    }}
-  ]
-}}
-
-Example of a relates_to edge with its required property:
-{{"source": "Proposed Augmentation Method", "target": "Data Sparsity", "type": "relates_to", "properties": {{"relation": "addresses"}}}}
-
-Example of an assigned_to edge with an optional deadline:
-{{"source": "Fix The Pipeline Bug", "target": "Budi", "type": "assigned_to", "properties": {{"due_date": "2026-07-27"}}}}
-
-Example of a spoke_about edge with an optional stance:
-{{"source": "Prof. Shuo-Yan Chou", "target": "Data Sparsity", "type": "spoke_about", "properties": {{"stance": "raised"}}}}
-
-==============================
-SELF-CHECK BEFORE SENDING OUTPUT (top 6 priorities, plus 3 conditional ones)
-==============================
-
-1. Recount: how many has_source edges are in my output? If more than 3, REMOVE
-   the extras and reroute them as has_subtopic.
-2. Is there any relationship where source id == target id? If yes, REMOVE it.
-3. Is my Source id EXACTLY equal to "{source_name}"? (check character by character)
-4. Is any Source the SOURCE of any relationship other than "Topic -> has_source ->
-   Source"? If yes, the direction is wrong — fix it.
-5. Is there any Description that is tautological, lacks a specific detail,
-   narrates the document ("the text/paper states...") instead of asserting the
-   claim, or duplicates another Description for the same Topic? For Result/
-   Conclusion/Metrics Evaluation: does it state what was FOUND, not just
-   measured? If any of these, rewrite, remove, or drop the extra Type.
-6. Are all relationship names exactly one of the 10 fixed strings (no
-   "has_method"-style variants), lowercase_snake_case, no "::"?
-7. (only if you used relates_to) Does every relates_to edge have a `relation`
-   property from the RELATION VOCABULARY list, with source/target Types matching
-   the allowed pair for that relation?
-8. (only if you used assigned_to) Is its source Topic actually typed Action
-   Item? If the Topic's Type is anything else, remove the assigned_to edge.
-9. (only if you used status or stance) Is the value one of the allowed options
-   listed for that property? If not, remove the property rather than invent one.
-
-==============================
-BEGIN EXTRACTION
-==============================
-
-INPUT TEXT:
-{input_text}
-"""
+    prompt = prompt.replace("__TYPE_VOCABULARY__", type_vocabulary)
 
     return PromptTemplate.from_template(prompt)

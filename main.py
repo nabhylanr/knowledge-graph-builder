@@ -125,6 +125,7 @@ def run(
     ledger_path: Optional[str] = None,
     checkpoint_path: Optional[str] = None,
     remote_status: bool = True,
+    corpus_domain: Optional[str] = None,
 ) -> None:
     conf = build_configuration()
 
@@ -146,6 +147,7 @@ def run(
     embedder = ChunkEmbedder(conf=conf.embedder_conf)
     graph_miner = GraphMiner(
         conf=conf.re_model_conf,
+        corpus_domain=corpus_domain,
     )
     knowledge_graph = KnowledgeGraph(
         conf=conf.database,
@@ -223,6 +225,7 @@ def run(
         f"{knowledge_graph.number_of_relationships} relationships, "
         f"{knowledge_graph.number_of_docs} documents."
     )
+    knowledge_graph.log_untyped_topic_count()
 
 
 def main() -> None:
@@ -265,6 +268,18 @@ def main() -> None:
         action="store_true",
         help="Do not move the Supabase manifest rows to 'built' after a successful build.",
     )
+    parser.add_argument(
+        "--corpus-domain",
+        choices=["paper", "meeting"],
+        default=None,
+        help="R19: when this whole build is known to be one domain, restrict the "
+             "Type vocabulary shown to the extraction model to that domain only "
+             "(e.g. --corpus-domain paper for a paper-only folder like gold_b1). "
+             "sanitize_graph's expected_domain guard already GUARANTEES a paper "
+             "Topic never links to a meeting Type regardless of this flag — this "
+             "just reduces how often that guard has anything to catch. Omit for a "
+             "mixed or unclassified folder (unchanged prior behaviour).",
+    )
     args = parser.parse_args()
 
     run(
@@ -275,6 +290,7 @@ def main() -> None:
         ledger_path=args.ledger,
         checkpoint_path=args.chunk_checkpoint,
         remote_status=not args.no_remote_status,
+        corpus_domain=args.corpus_domain,
     )
 
 

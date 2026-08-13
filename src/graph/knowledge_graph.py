@@ -181,6 +181,40 @@ class KnowledgeGraph(Neo4jGraph):
         return self._number_of_docs
 
 
+    def untyped_topic_counts(self) -> Tuple[int, int]:
+        """
+        `(untyped, total)` Topic counts — R20b's coverage metric. An untyped
+        Topic (no HAS_TYPE edge to any Type) is an instruction-compliance gap
+        in extraction, not deliberate scope (see graph_extractor.py's v8.9
+        note); this is the after-the-fact measurement, not a fix — nothing
+        here assigns a synthetic default Type, which would artificially close
+        the number while corrupting per-Type analysis. Same query shape as
+        the manual verification query, so a log line here and a query run by
+        hand always agree.
+        """
+        query = """
+            MATCH (t:Topic)
+            OPTIONAL MATCH (t)-[:HAS_TYPE]->(ty:Type)
+            WITH t, count(ty) AS types
+            RETURN sum(CASE WHEN types = 0 THEN 1 ELSE 0 END) AS untyped, count(t) AS total
+        """
+        with self._driver.session(database=self._database) as session:
+            record = session.run(query).single()
+        return record["untyped"] or 0, record["total"] or 0
+
+
+    def log_untyped_topic_count(self) -> None:
+        """
+        Logs `untyped/total` Topics — call once at the end of a build (see
+        `main.py`) so a regression in Type-assignment compliance is visible in
+        every run's output instead of requiring a manual Cypher query to
+        notice.
+        """
+        untyped, total = self.untyped_topic_counts()
+        pct = (untyped / total * 100) if total else 0.0
+        logger.info(f"Topic Type coverage: {untyped}/{total} Topics untyped ({pct:.1f}%).")
+
+
     def document_filenames(self) -> Set[str]:
         """
         Every `filename` a Document node currently carries — the graph's own
